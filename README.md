@@ -38,4 +38,4 @@ Operaciones	cerca, sug
 
 PREDISEÑO
 
-![Diseño previo de la interfaz](../Proyecto_Api_Avansat/FRONTEND/img/propuesta_disenio_proyecto_Avansat.png)
+![Diseño previo de la interfaz](./FRONTEND/img/propuesta_disenio_proyecto_Avansat.png)
