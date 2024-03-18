@@ -34,3 +34,8 @@ Formatos de la respuesta	xml, json, php, txt
 Versión	1.00 (20/05/2010)
 Atajos	Petición, Respuesta
 Operaciones	cerca, sug
+
+
+PREDISEÑO
+
+![Diseño previo de la interfaz](../Proyecto_Api_Avansat/FRONTEND/img/propuesta_disenio_proyecto_Avansat.png)
