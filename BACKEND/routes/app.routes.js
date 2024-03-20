@@ -24,9 +24,19 @@ router.get('/Saludo', async (req, res) => {
 // RUTAS: ALTA DE CLIENTES 
 router.post('/alta_cliente', (req, res) => {
 try {
-    
+    const datosCliente = req.body.datosCliente;
+    const sql = "INSERT INTO clientes VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
+    conexionMySQL.query(sql, [Nombre, Apellidos, Nif, Cif, Direccion, Telefono, Movil, Email], (err) => (
+        res.json({
+            satatus: 500,
+            mensaje: "Error al insertar datos del cliente " + err
+        })
+    ));
 } catch (error) {
-    
+    res.json({
+        status:200,
+        mensaje: "Datos insertados correcatamente"
+    });
 }
 });
 
