@@ -24,18 +24,29 @@ router.get('/Saludo', async (req, res) => {
 // RUTAS: ALTA DE CLIENTES 
 router.post('/alta_cliente', (req, res) => {
 try {
-    const datosCliente = req.body.datosCliente;
-    const sql = "INSERT INTO clientes VALUES( ?, ?, ?, ?, ?, ?, ?, ?)";
-    conexionMySQL.query(sql, [Nombre, Apellidos, Nif, Cif, Direccion, Telefono, Movil, Email], (err) => (
+    const id_clientes = req.body.id_clientes;
+    const nombre = req.body.Nombre;
+    const apellidos = req.body.Apellidos;
+    const nif = req.body.Nif;
+    const cif = req.body.Cif;
+    const direccion = req.body.Direccion;
+    const telefono = req.body.Telefono;
+    const movil = req.body.Movil;
+    const email = req.body.Email;
+
+    const sql = "INSERT INTO clientes VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?)";
+    conexionMySQL.query(sql, [nombre, apellidos, nif, cif, direccion, telefono, movil, email], (err) => {
+    
         res.json({
-            satatus: 500,
-            mensaje: "Error al insertar datos del cliente " + err
-        })
-    ));
-} catch (error) {
+            status: 200,
+            mensaje: "Datos insertados correctamente"
+        });
+});        
+
+} catch (err) {
     res.json({
-        status:200,
-        mensaje: "Datos insertados correcatamente"
+        status:400,
+        mensaje: "Error al insertar datos del cliente " + err
     });
 }
 });
