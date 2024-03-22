@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/alta_clientes.css">
+    <title>Alta Clientes</title>
+</head>
+<body>
+    <!-- FORMULARIO ALTA CLIENTES -->
+   
+    <div id="container_form_clientes">
+        <form id="alta_clientes">
+            <div class="row">
+                <h1>Alta / Nuevo cliente</h1>
+            </div>
+            <div class="row">
+                <div class="col-10">
+                    <label>Persona</label>
+                    <input type="radio" name="" id="persona">
+                </div>
+                <div class="col-10">
+                    <label>Empresa</label>
+                    <input type="radio" name="" id="empresa">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-100">
+                    <h3>Datos del cliente</h3>
+                </div>
+            </div>
+            <div class="row"><!-- NOMBRE Y APELLIDOS -->
+                <div class="col-50">
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Ej: Juan" id="clientes_nombre">
+                </div>
+                <div class="col-50">
+                    <label>Apellidos</label>
+                    <input type="text" placeholder="Ej: Gutierrez" id="clientes_apellido">
+                </div>
+                <div class="col-15">
+                    <label>Número fiscal</label>
+                    <input type="text" placeholder="NIF" id="clientes_idFiscal">
+                </div>
+            </div>
+       
+        <div class="row"><!-- CALLE / NUM / LOCALIDAD / CP/ PAIS -->
+            <div class="col-75">
+                <label>Dirección</label>
+                <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="clientes_direccion">
+            </div>
+            <div class="col-15">
+                <label>C. postal</label>
+                <input type="text" placeholder="Ej: 17300" id="clientes_postal">
+            </div>
+            <div class="col-15">
+                <label>Localidad</label>
+                <input type="text" placeholder="Ej: Barcelona" id="clientes_localidad">
+            </div>
+            <div class="col-15">
+                <label>Pais</label>
+                <input type="text" placeholder="Ej: España" id="clientes_pais">
+            </div>
+
+        </div>
+        <div class="row"> <!-- TELÉFONO / MOVIL / EMAIL -->
+            <div class="col-30">
+                <label>Teléfono</label>
+                <input type="number" placeholder="Ej: 932XXX">
+            </div>
+            <div class="col-30">
+                <label>Móvil</label>
+                <input type="number" placeholder="Ej: 686XXX686 ">
+            </div>
+            <div class="col-40">
+                <label>Email</label>
+                <input type="email" placeholder="Ej: juan@avansat.cat">
+            </div>
+        </div>
+        </form>
+    </div>
+</body>
+</html>
