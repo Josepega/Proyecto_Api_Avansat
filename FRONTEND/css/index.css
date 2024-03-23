@@ -10,6 +10,8 @@ body {
   justify-content: center;
   align-items: center;
   font-family: "montserrat", sans-serif;
+  background: transparent;
+
 }
 /* ----------------- CONTENEDOR GENERAL -----------------*/
 .container {
@@ -18,7 +20,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f2f2f2;
+  background: transparent;
+
 }
 /*----------------- CONTENEDOR MAIN -----------------*/
 #principal {
@@ -30,7 +33,7 @@ body {
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.9585084033613446) 1%,
-    rgb(7, 150, 194) 95%
+    rgb(5, 84, 116)95%
   );
 }
 /*----------------- BARRA NAVEGACIÓN SUPERIOR ---------------- */
@@ -57,6 +60,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 1px 1px 5px #878d91;
 }
 
 .dropdownmenu ul {
@@ -138,14 +142,13 @@ body {
 #container_iframes {
   height: 90%;
   width: 95%;
-  background-color: #ffffff;
+  background: transparent;
   border-radius: 10px;
-  border: solid 1px #d2e3e7;
   display: flex;
-  justify-content: center;
+  justify-content:space-between;
   align-items: center;
   margin-top: 0px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 /*----------------- CONTENEDOR LOGO -----------------*/
 #container_logo {
@@ -174,9 +177,9 @@ body {
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.9585084033613446) 15%,
-    rgb(231, 84, 44) 80%
+    rgb(158, 18, 8) 80%
   );
-  box-shadow: #a78e81 2px 2px 5px;
+  box-shadow: #642401 2px 2px 5px;
   position: relative;
   transition: all 0.9s linear;
 }
@@ -267,7 +270,7 @@ font-size: 0px;
   transition: all 0.9s linear;
 }
 #lista_acciones li a:hover {
-  color: #09abf0;
+  color: #0a9fb3;
   transition: all 0.1s ease;
 }
 #lista_acciones li:hover {
