@@ -22,22 +22,24 @@ USE `avansat_db` ;
 -- Table `avansat_db`.`clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`clientes` (
-  `Id_cliente` INT auto_increment ,
+  `id_cliente` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(255) NULL DEFAULT NULL,
   `Apellidos` VARCHAR(255) NULL DEFAULT NULL,
-  `Id_fiscal` VARCHAR(9) NULL DEFAULT NULL,
+  `Id_fiscal` VARCHAR(12) NULL DEFAULT NULL,
   `Direccion` VARCHAR(255) NULL DEFAULT NULL,
-  `C.P` INT(5) NULL,
+  `C_postal` INT(5) NULL,
   `Localidad` VARCHAR(45) NULL,
   `Pais` VARCHAR(45) NULL,
   `Telefono` VARCHAR(15) NULL DEFAULT NULL,
-  `Movil` VARCHAR(15) NULL DEFAULT NULL,
+  `Movil` INT(9) NULL DEFAULT NULL,
   `Email` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`Id_cliente`))
+  PRIMARY KEY (`id_cliente`))
+  AUTO_INCREMENT = 20240
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 SELECT * FROM clientes;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

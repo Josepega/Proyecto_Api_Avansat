@@ -218,9 +218,64 @@ h3 {
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content:space-between;
+    justify-content:start;
     align-items: center;
     border: solid 1px #ecbfae;
     margin: 10px;
     padding: 20px 10px;
+}
+#lista_clientes {
+    font-family: "montserrat", sans-serif;
+    height: 90%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between; 
+    margin-top: 20px;
+
+}
+#lista_clientes p {
+    border-bottom: solid 1px #ecbfae;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center; 
+    padding:10px 0px;
+}
+
+#container_clientes_icono_editar {
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between; 
+    margin-top: 20px;
+    margin-right: 10px;  
+}
+#container_clientes_icono_editar img {
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center; 
+    padding:12px 0px;
+    cursor: pointer; 
+}
+#container_clientes_icono_borrar {
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between; 
+    margin-top: 20px;
+    margin-right: 10px; 
+}
+#container_clientes_icono_borrar img {
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center; 
+    padding:12px 0px;
+    cursor: pointer; 
 }

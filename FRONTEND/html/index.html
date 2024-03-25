@@ -7,7 +7,9 @@
     <title>Avansat app</title>
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <link rel="stylesheet" href="../css/index.css">
-    <script src="../js/menu_izq.js" defer></script>
+    <script src="../js/index.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -44,11 +46,11 @@
                     <li><a href="#"><img src="../img/icons/usuarios.svg" alt="">Clientes <img id="abajo"
                                 src="../img/icons/abajo-.svg" alt=""> </a>
                         <ul id="submenu">
-                            <li><a href="">Listado</a></li>
+                            <li><a href="../html/listado_clientes.html" target="iframe">Listado</a></li>
                             <li><a href="">Buscar</a></li>
-                            <li><a href="">Añadir</a></li>
-                            <li><a href="">Editar</a></li>
-                            <li><a href="">Borrar</a></li>
+                            <li><a href="./alta_clientes.html" target="iframe">Añadir</a></li>
+                            <li><a href="../html/listado_clientes.html" target="iframe">Editar</a></li>
+                            <li><a href="../html/listado_clientes.html" target="iframe">Borrar</a></li>
                         </ul>
                     </li>
                     <!-- ALBARANES -->
@@ -103,7 +105,7 @@
             </nav>
             <!-- CONTENEDOR IFRAMES -->
             <div id="container_iframes">
-                <iframe src="" frameborder="0" name="iframe" style="height: 100%; width: 100%;"></iframe>
+                <iframe src="../html/index_iframe.html" frameborder="0" name="iframe" style="height: 100%; width: 100%;"></iframe>
             </div>
         </main>
     </div><!-- FIN CONTENEDOR GENERAL -->

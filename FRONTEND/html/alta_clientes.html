@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/alta_clientes.css">
-    <script src="../js/app.js" defer></script>
+    <script src="../js/clientes.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <title>Alta Clientes</title>
 </head>
 <body>
@@ -45,7 +47,7 @@
             </div>
             <div class="col-15">
                 <label>C. postal</label>
-                <input type="text" placeholder="Ej: 17300" id="clientes_postal">
+                <input type="text" placeholder="Ej: 17300" id="clientes_c_postal">
             </div>
             <div class="col-15">
                 <label>Localidad</label>
@@ -86,14 +88,26 @@
         </div>
         </form>
     </div>
-        <div id="container_last_clientes">
-            <div id="interior_contenedor_last_clientes">
+    <div id="container_last_clientes">
+        <div id="interior_contenedor_last_clientes">
             <div class="row">
                 <div class="col-100">
                     <h3>Ultimos añadidos:</h3>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-75">
+                    <div id="lista_clientes"></div>
+                </div>
+                <div class="col-15">
+                    <div id="container_clientes_icono_editar"></div>
+                </div>
+                <div class="col-15">
+                    <div id="container_clientes_icono_borrar"></div>
+                </div>
+            </div>
         </div>
-        </div>
+    </div>
+    
 </body>
 </html>
