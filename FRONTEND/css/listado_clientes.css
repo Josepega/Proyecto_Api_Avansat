@@ -62,6 +62,7 @@ body {
     align-items: center;
     margin: 10px;
     padding:10px;
+    overflow: auto;
 }
 .row {
     width: 100%;
