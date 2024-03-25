@@ -23,7 +23,7 @@ router.get("/Saludo", async (req, res) => {
 // RUTAS: ALTA DE CLIENTES
 router.post("/alta_cliente", (req, res) => {
   try {
-    const id_cliente = req.body.id_clientes;
+    const id_cliente = req.body.id_cliente;
     const nombre = req.body.nombre;
     const apellidos = req.body.apellidos;
     const idFiscal = req.body.idFiscal;

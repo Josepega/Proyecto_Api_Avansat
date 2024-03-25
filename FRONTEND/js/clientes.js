@@ -1,4 +1,5 @@
 
+
 //  ELIMINAR CLIENTE - Llamar a la función para asignar eventos de clic a los íconos de eliminar
 function borrarFuncion() {
     const borrar = document.querySelectorAll(".eliminar-icono");
@@ -24,12 +25,12 @@ function borrarFuncion() {
             })
             .then(response => {
               if (response.ok) {
-                swal("¡Cliente eliminado exitosamente!", {
+                swal({
+                  title:"¡Cliente eliminado!",
+                  text: "El cliente ha sido eliminado satisfactoriamente.",
                   icon: "success",
                 });
-                setTimeout(() => {
-                  location.reload(); // Actualizar la página
-                }, 2000);
+              
               } else {
                 swal("Error al eliminar el cliente", {
                   icon: "error",
@@ -43,8 +44,10 @@ function borrarFuncion() {
               console.error('Error:', error);
             });
           } else {
-            swal("¡Cliente no eliminado!", {
-              icon: "info",
+            swal({
+              title:"¡Cliente NO eliminado!",
+              text: "Todo a salvo!.", 
+              icon: "success",
             });
           }
         });
@@ -110,12 +113,11 @@ document.addEventListener("DOMContentLoaded", function() {
                               })
                               .then(response => {
                                   if (response.ok) {
-                                      swal("¡Cliente eliminado exitosamente!", {
-                                          icon: "success",
-                                      });
-                                      setTimeout(() => {
-                                          location.reload(); // Actualizar la página
-                                      }, 2000);
+                                    swal({
+                                      title:"¡Cliente eliminado!",
+                                      text: "El cliente ha sido eliminado satisfactoriamente.",
+                                      icon: "success",
+                                    });
                                   } else {
                                       swal("Error al eliminar el cliente", {
                                           icon: "error",
@@ -129,9 +131,11 @@ document.addEventListener("DOMContentLoaded", function() {
                                   console.error('Error:', error);
                               });
                           } else {
-                              swal("¡Cliente no eliminado!", {
-                                  icon: "info",
-                              });
+                            swal({
+                              title:"¡Cliente NO eliminado!",
+                              text: "Todo a salvo!.", 
+                              icon: "success",
+                            });
                           }
                       });
                   });
@@ -227,11 +231,23 @@ boton_alta_clientes.addEventListener("click", () => {
       clientes_movil.value == 0 ||
       clientes_email.value == ""
   ) {
-      alert("Campos vacios no permitidos");
-      return
+    swal({
+      title: "Los campos marcados con * son obligatorios",
+      text: "¡Completa los que te falten!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    return
   }
   if (clientes_politica_privacidad.checked == false) {
-      alert("Debes aceptar la politica de privacidad");
+    swal({
+      title: "Debe aceptar la POLITICA DE PRIVACIDAD",
+      text: "Marca la casilla",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
       return
 
   }
@@ -256,11 +272,15 @@ boton_alta_clientes.addEventListener("click", () => {
       })
       .then((res) => res.json())
       .then((mensajes) => {
-          alert("Cliente añadido correctamente ");
+        swal({
+          title: "¡Cliente añadido correctamente!",
+          text: "Recuerda que los datos son solo de uso FACTURACIÓN",
+          icon: "success",
+        });
           setTimeout(() => {
               // refresca página<i class="fc"></i>
               location.reload();
-          }, 1000);
+          }, 3000);
       })
       .catch((error) => (mensajes.innerHTML = error));
 
