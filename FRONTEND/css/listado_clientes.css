@@ -20,8 +20,8 @@ body {
 #container_listado_clientes {
     font-family: "montserrat", sans-serif;
     width: 100%;
-    height: 90vh;
-    margin: 30px 10px 20px 10px;
+    height: 95vh;
+    margin: 30px 10px 10px 10px;
     padding: 0px 10px 0px 10px;
     border-radius: 10px;
     display: flex;
@@ -39,7 +39,7 @@ body {
 #interior_container_listado_clientes {
     font-family: "montserrat", sans-serif;
     width: 100%;
-    height: 100%;  
+    height: 97%;  
     border-radius: 10px;
     background-color: #ffffff;
     display: flex;
@@ -55,7 +55,7 @@ body {
     width: 100%;
     height: 100%;  
     border-radius: 10px;
-    background-color: #f9f0f0;
+    background-color: #fff4f0;
     display: flex;
     flex-direction: column;
     justify-content:start;
@@ -72,6 +72,27 @@ body {
     align-items: center;
     text-align:left;
 
+}
+.row2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    text-align:left;
+}
+.col {
+    display: flex;
+    justify-content:space-around;
+    align-items:center;
+    text-align:center;
+    margin: 0px;
+    font-size: 13px;
+    color: #054149;  
+    padding: 10px 0px;
+    border-bottom: #93320b solid 1px;
+    height: 50px;
+    font-weight: 400;
 
 }
 .col-100 {
@@ -138,16 +159,7 @@ body {
 .col-3 {
     width: 3%;
 }
-.col {
-    display: flex;
-    justify-content:space-around;
-    align-items:center;
-    text-align:center;
-    margin: 0px;
-    font-size: 13px;
-    padding: 0px 10px;
 
-}
 img {
     height: 15px;
     cursor: pointer;
@@ -156,3 +168,9 @@ img {
     display: none;
 }
 
+h4 {
+    color: #0b7593;
+    font-family: "montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}

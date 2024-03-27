@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
           // Si hay datos, crea los divs para cada cliente
           arrayDatosConsulta.forEach((elemento) => {
             const divCliente = document.createElement("div");
-            divCliente.classList.add("row");
+            divCliente.classList.add("row2");
   
             // Asigna los valores de los campos del cliente a divs individuales
             divCliente.innerHTML = `
