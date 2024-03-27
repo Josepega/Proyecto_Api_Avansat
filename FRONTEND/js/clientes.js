@@ -177,12 +177,6 @@ document.addEventListener("DOMContentLoaded", function() {
           arrayDatosConsulta.forEach((elemento) => {
             const divCliente = document.createElement("div");
             divCliente.classList.add("row2");
-            // Agrega un icono de eliminar
-            const iconoEliminar = document.createElement("img");
-            iconoEliminar.src = "../img/icons/eliminar.svg"; // Ruta a la imagen de eliminar
-            iconoEliminar.classList.add("eliminar-icono");
-            iconoEliminar.addEventListener("click", () => {
-                const idCliente = elemento.id_cliente; // Obtener la id del cliente del elemento actual
             
   
             // Asigna los valores de los campos del cliente a divs individuales
