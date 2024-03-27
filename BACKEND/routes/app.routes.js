@@ -130,7 +130,7 @@ module.exports = router;
 
 // RUTAS: EDITAR CLIENTE
 
-router.put("/editar", (req, res) => {
+router.put("/editar_cliente", (req, res) => {
   const id_cliente = req.body.id_cliente;
   const nombre = req.body.nombre;
   const apellidos = req.body.apellidos;
@@ -144,7 +144,7 @@ router.put("/editar", (req, res) => {
   const email = req.body.email;
   
   const sql = "update clientes set descripcion = ?,Nombre = ?, Apellidos = ?, Id_fiscal = ?, Direccion = ?, C_postal = ?, Localidad = ?, Pais = ?, Telefono = ?, Movil = ?, Email = ? where id = ?";
-  conexionMySQL.query(sql, [nombre, apellidos, direccion, idFiscal, c_postal, localidad, pais, telefono, movil, email], error => {
+  conexionMySQL.query(sql, [id_cliente,nombre, apellidos, direccion, idFiscal, c_postal, localidad, pais, telefono, movil, email], error => {
     if (error) {
       res.json({
         "status": 500,
