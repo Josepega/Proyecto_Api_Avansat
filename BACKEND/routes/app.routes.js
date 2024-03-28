@@ -66,7 +66,8 @@ router.post("/alta_cliente", (req, res) => {
   }
 });
 
-// RUTAS: CONSULTA DE ULTIMOS CLIENTES AÑADIDOS POR NOMBRE Y APELLIDOS
+
+// RUTAS: CONSULTA DE ULTIMOS 10 CLIENTES AÑADIDOS POR NOMBRE Y APELLIDOS
 router.get("/listado_clientes", (req, res) => {
   const sql = "SELECT id_cliente, Nombre, Apellidos from clientes order by id_cliente desc limit 10;";
   conexionMySQL.query(sql, (error, resultado) => {
