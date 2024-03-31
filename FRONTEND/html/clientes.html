@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/clientes.css">
+    <script src="../js/clientes.js" defer></script>
+    <script src="../js/modal.js" defer></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <title>Clientes</title>
+</head>
+<body>
+    <div id="container_listado_clientes">
+        <div class="row">
+            <div class="col-70"><h1>CLIENTES</h1></div>
+            <div class="col-30"><button id="boton_clientes_alta">Añadir</button></div>
+        </div>
+        <div id="interior_container_listado_clientes">         
+            <!-- Row de títulos -->
+            <div class="row">
+                <div class="col col-5"><h4>ID Cliente</h4></div>
+                <div class="col col-5"><h4>Tipo Cliente</h4></div>
+                <div class="col col-10"><h4>Nombre</h4></div>
+                <div class="col col-10"><h4>Apellidos</h4></div>
+                <div class="col col-10"><h4>ID Fiscal</h4></div>
+                <div class="col col-20"><h4>Dirección</h4></div>
+                <div class="col col-5"><h4>C. postal</h4></div>
+                <div class="col col-10"><h4>Localidad</h4></div>
+                <div class="col col-5"><h4>País</h4></div>
+                <div class="col col-10"><h4>Teléfono</h4></div>
+                <div class="col col-10"><h4>Móvil</h4></div>
+                <div class="col col-15"><h4>Email</h4></div>
+                <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
+                <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
+            </div>
+
+            <!-- Datos de los clientes -->
+            <div id="listado_clientes"></div>
+            <div class="col-30">
+                <button type="button" class="boton_clientes_guardar">Guardar</button>
+            </div>
+        </div>  
+    </div>
+    <!-- MODAL -->
+    <div id="container_modal_clientes" class="myModal">
+        <div id="container_interior_modal_clientes">
+            <form id="alta_clientes">
+                <div class="row">
+                    <div class="col-50"><h1>Alta / nuevo cliente / persona</h1></div>
+                    <div class="col-15">
+                        <label for="tipo">Tipo de cliente</label>
+                        <select name="tipo" id="tipo">
+                            <option value="Seleccionar">Seleccionar</option>
+                            <option value="persona">Persona</option>
+                            <option value="empresa">Empresa</option>
+                        </select>
+                        
+                    </div>  
+                    <div class="col-15">
+                        <input type="button" id="close" value="cerrar"> <!-- CERRAR MODAL -->
+                    </div>              
+                </div>
+                <div class="col-100" id="cliente_persona">
+                    <div class="row"><!-- NOMBRE Y APELLIDOS -->
+                        <div class="col-40">
+                            <label for="clientes_nombre"><span>*</span>Nombre</label>
+                            <input type="text" placeholder="Ej: Juan Antonio" id="clientes_nombre">
+                        </div>
+
+                        <div class="col-40">
+                            <label for="clientes_apellidos" id="label_apellidos"><span>*</span>Apellidos</label>
+                            <input type="text" placeholder="Ej: Gutierrez Ruiz" id="clientes_apellidos">
+                        </div>
+                        <div class="col-15">
+                            <label for="clientes_idFiscal"><span>*</span>DNI</label>
+                            <input type="text" placeholder="NIF / DNI / NIE" id="clientes_idFiscal">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-100" id="cliente_empresa">
+                    <div class="row"><!-- NOMBRE EMPRESA -->
+                        <div class="col-50">
+                            <label for="clientes_nombre_empresa"><span>*</span>Nombre</label>
+                            <input type="text" placeholder="Ej: Avansat" id="clientes_nombre_empresa">
+                        </div>
+
+                        <div class="col-15">
+                            <label for="clientes_idFiscal_empresa"><span>*</span>CIF</label>
+                            <input type="text" placeholder="Ej: A12345678" id="clientes_idFiscal_empresa">
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><!-- CALLE / NUM / LOCALIDAD / CP/ PAIS -->
+                    <div class="col-50">
+                        <label for="clientes_direccion"><span>*</span>Dirección</label>
+                        <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="clientes_direccion">
+                    </div>
+                    <div class="col-15">
+                        <label for="clientes_c_postal"><span>*</span>C. postal</label>
+                        <input type="number" placeholder="Ej: 17300" id="clientes_c_postal">
+                    </div>
+                    <div class="col-15">
+                        <label for="clientes_localidad"><span>*</span>Localidad</label>
+                        <input type="text" placeholder="Ej: Blanes" id="clientes_localidad">
+                    </div>
+                    <div class="col-15">
+                        <label for="clientes_pais"><span>*</span>Pais</label>
+                        <input type="text" placeholder="Ej: España" id="clientes_pais">
+                    </div>
+                </div>
+                <div class="row"> <!-- TELÉFONO / MOVIL / EMAIL -->
+                    <div class="col-30">
+                        <label for="clientes_telefono">Teléfono</label>
+                        <input type="number" placeholder="Ej: 932XXX932" id="clientes_telefono">
+                    </div>
+                    <div class="col-30">
+                        <label for="clientes_movil">Móvil</label>
+                        <input type="number" placeholder="Ej: 686XXX686 " id="clientes_movil">
+                    </div>
+                    <div class="col-30">
+                        <label for="clientes_email"><span>*</span>Email</label>
+                        <input type="email" placeholder="Ej: juan@avansat.cat" id="clientes_email">
+                    </div>
+                </div>
+                <!-- BOTON GUARDAR -->
+                <div class="row">
+                    <div class="col-30" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
+                        <input type="checkbox" class="clientes_politica_privacidad">
+                        <p style="font-size: 12px; color: rgb(5, 89, 114);">
+                            Aceptar 
+                            <a href="https://avansat.cat/politica-de-privacitat/" target="_blank" style="text-decoration: none ; color: rgb(5, 89, 114);">
+                                <span>*</span>política de privacidad
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-30">
+                        <button type="submit" id="boton_clientes_guardar">Guardar</button>
+                    </div>
+                    <div class="col-30" id="clientes_mensajes">
+                        <p style="font-size: 12px; color: rgb(5, 89, 114);">
+                            El uso de estos datos es únicamente para emisión de facturas
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

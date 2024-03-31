@@ -8,6 +8,8 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <link rel="stylesheet" href="../css/index.css">
     <script src="../js/index.js" defer></script>
+    <script src="../js/modal.js" defer></script>
+    <script src="../js/clientes.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
@@ -21,7 +23,7 @@
                         class="toggle_boton"></span></div>
             <div id="container_lista">
                 <ul id="lista_acciones">
-                    <li><a href="./alta_clientes.html" target="iframe"><img src="../img/icons/usuario+.svg" alt="">Añadir cliente</a></li>
+                    <li ><a id="boton_clientes_alta" href="./clientes.html" target="iframe"><img src="../img/icons/usuario+.svg" alt="">Añadir cliente</a></li>
                     <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear albarán</a></li>
                     <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
                     <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
@@ -46,7 +48,7 @@
                     <li><a href="#"><img src="../img/icons/usuarios.svg" alt="">Clientes <img id="abajo"
                                 src="../img/icons/abajo-.svg" alt=""> </a>
                         <ul id="submenu">
-                            <li><a href="../html/listado_clientes.html" target="iframe">Listado</a></li>
+                            <li><a href="../html/clientes.html" target="iframe">Listado</a></li>
                             <li><a href="">Buscar</a></li>
                             <li><a href="./alta_clientes.html" target="iframe">Añadir</a></li>
                             <li><a href="../html/listado_clientes.html" target="iframe">Editar</a></li>

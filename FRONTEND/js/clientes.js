@@ -1,307 +1,266 @@
-document.addEventListener("DOMContentLoaded", function() {
-  // Cargar y mostrar los últimos 10 clientes añadidos
-  fetch("http://localhost:3000/api/v1/listado_clientes")
-      .then((res) => res.json())
-      .then((data) => {
-          const contenedorDatos = document.querySelector("#lista_clientes");
-          const arrayDatosConsulta = data.resultado;
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.querySelector(".myModal");
+    const tipoCliente = document.querySelector("#tipo");
+    const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
 
-          if (arrayDatosConsulta.length === 0) {
-              contenedorDatos.innerHTML = "<p>No hay ningún CLIENTE registrado.</p>";
-          } else {
-              contenedorDatos.innerHTML = "";
+    // Lógica para mostrar u ocultar formularios dependiendo del tipo de cliente
+    if (tipoCliente.value === "empresa") {
+        document.getElementById("cliente_empresa").style.display = "block";
+        document.getElementById("cliente_persona").style.display = "none";
+    } else {
+        document.getElementById("cliente_empresa").style.display = "none";
+        document.getElementById("cliente_persona").style.display = "block";
+    }
 
-              arrayDatosConsulta.forEach((elemento) => {
-                  const parrafo = document.createElement("p");
-                  parrafo.textContent = elemento.Nombre + " " + elemento.Apellidos;
+    tipoCliente.addEventListener("change", () => {
+        if (tipoCliente.value === "persona") {
+            document.getElementById("cliente_empresa").style.display = "none";
+            document.getElementById("cliente_persona").style.display = "block";
+        } else if (tipoCliente.value === "empresa") {
+            document.getElementById("cliente_empresa").style.display = "block";
+            document.getElementById("cliente_persona").style.display = "none";
+        }
+    });
 
-                  // Agrega un icono de editar
-                  const iconoEditar = document.createElement("img");
-                  iconoEditar.src = "../img/icons/editar.svg"; // Ruta a la imagen de editar
-                  iconoEditar.classList.add("editar-icono");
-                  iconoEditar.addEventListener("click", () => {
-                      abrirFormularioEdicion(elemento);
-                  });
+    // Event listener para el botón de alta de clientes
+    botonAltaClientes.addEventListener("click", () => {
+        const clientesTipo = document.getElementById("tipo");
+        const clientesNombre = document.getElementById("clientes_nombre");
+        const clientesApellidos = document.getElementById("clientes_apellidos");
+        const clientesIdFiscal = document.getElementById("clientes_idFiscal");
+        const clienteDireccion = document.getElementById("clientes_direccion");
+        const clientesCPostal = document.getElementById("clientes_c_postal");
+        const clientesLocalidad = document.getElementById("clientes_localidad");
+        const clientesPais = document.getElementById("clientes_pais");
+        const clientesTelefono = document.getElementById("clientes_telefono");
+        const clientesMovil = document.getElementById("clientes_movil");
+        const clientesEmail = document.getElementById("clientes_email");
+        const clientesPoliticaPrivacidad = document.querySelector(".clientes_politica_privacidad");
 
-                  // Agrega un icono de eliminar
-                  const iconoEliminar = document.createElement("img");
-                  iconoEliminar.src = "../img/icons/eliminar.svg"; // Ruta a la imagen de eliminar
-                  iconoEliminar.classList.add("eliminar-icono");
-                  iconoEliminar.addEventListener("click", () => {
-                      // Lógica para eliminar el cliente
-                      const idCliente = elemento.id_cliente;
-                      swal({
-                          title: "¿Estás seguro de quieres eliminar este cliente?",
-                          text: "¡Esta acción no se puede deshacer!",
-                          icon: "warning",
-                          buttons: true,
-                          dangerMode: true,
-                      }).then((willDelete) => {
-                          if (willDelete) {
-                              fetch("http://localhost:3000/api/v1/borrar_cliente", {
-                                  method: "DELETE",
-                                  headers: { "Content-Type": "application/json" },
-                                  body: JSON.stringify({
-                                      id_cliente: idCliente,
-                                  }),
-                              })
-                                  .then((response) => {
-                                      if (response.ok) {
-                                          swal({
-                                              title: "¡Cliente eliminado!",
-                                              text: "El cliente ha sido eliminado satisfactoriamente.",
-                                              icon: "success",
-                                          });
-                                          setTimeout(() => {
-                                              location.reload();
-                                          }, 3000);
-                                      } else {
-                                          swal("Error al eliminar el cliente", {
-                                              icon: "error",
-                                          });
-                                      }
-                                  })
-                                  .catch((error) => {
-                                      swal("Error al eliminar el cliente", {
-                                          icon: "error",
-                                      });
-                                      console.error("Error:", error);
-                                  });
-                          } else {
-                              swal({
-                                  title: "¡Cliente NO eliminado!",
-                                  text: "Todo a salvo!.",
-                                  icon: "success",
-                              });
-                          }
-                      });
-                  });
+        // Validación de campos obligatorios y política de privacidad
+        if (
+            clientesNombre.value.trim() === "" ||
+            clientesApellidos.value.trim() === "" ||
+            clientesIdFiscal.value.trim() === "" ||
+            clienteDireccion.value.trim() === "" ||
+            clientesCPostal.value.trim() === "" ||
+            clientesLocalidad.value.trim() === "" ||
+            clientesPais.value.trim() === "" ||
+            clientesEmail.value.trim() === ""
+        ) {
+            swal({
+                title: "Los campos marcados con * son obligatorios",
+                text: "¡Completa los que te falten!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+            return;
+        }
 
-                  parrafo.appendChild(iconoEditar);
-                  parrafo.appendChild(iconoEliminar);
+        if (!clientesPoliticaPrivacidad.checked) {
+            swal({
+                title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
+                text: "Marca la casilla",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            });
+            return;
+        }
 
-                  contenedorDatos.appendChild(parrafo);
-              });
-          }
-      })
-      .catch((error) => {
-          const contenedorDatos = document.querySelector("#lista_clientes");
-          contenedorDatos.innerHTML = "Error al cargar los datos: ";
-      });
-
-  // Función para abrir el formulario de edición con los datos del cliente
-  function abrirFormularioEdicion(cliente) {
-      const formulario = document.querySelector("#alta_clientes");
-
-      // Poblar el formulario con los datos del cliente
-      formulario.querySelector("#clientes_nombre").value = cliente.Nombre;
-      formulario.querySelector("#clientes_apellidos").value = cliente.Apellidos;
-
-      // Puedes seguir poblando los demás campos del formulario según sea necesario
-
-      formulario.style.display = "block"; // Mostrar el formulario
-  }
-
-  // Lógica para el evento de envío del formulario de edición
-  const formulario = document.querySelector("alta_clientes.html");
-  formulario.addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const nombre = formulario.querySelector("#clientes_nombre").value;
-      const apellidos = formulario.querySelector("#clientes_apellidos").value;
-      // Puedes seguir obteniendo otros valores del formulario según sea necesario
-
-      // Aquí agregas la lógica para enviar la solicitud de edición del cliente
-      // Utilizando fetch() u otro método apropiado
-  });
-
-  // Llamar a la función para asignar eventos de clic a los íconos de eliminar
-  borrarCliente();
+        // Realizar la solicitud HTTP POST al servidor
+        const url = "http://localhost:3000/api/v1/alta_cliente";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                tipo_cliente: clientesTipo.value,
+                nombre: clientesNombre.value,
+                apellidos: clientesApellidos.value,
+                id_fiscal: clientesIdFiscal.value,
+                direccion: clienteDireccion.value,
+                c_postal: clientesCPostal.value,
+                localidad: clientesLocalidad.value,
+                pais: clientesPais.value,
+                telefono: clientesTelefono.value,
+                movil: clientesMovil.value,
+                email: clientesEmail.value,
+            }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error al agregar el cliente");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            swal({
+                title: "¡Cliente añadido correctamente!",
+                text: "Recuerda que los datos son solo para uso de facturación.",
+                icon: "success",
+            });
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        })
+        .catch((error) => {
+            swal("Error al agregar el cliente", error.message, "error");
+        });
+    });
 });
 
-// Función para asignar eventos de clic a los íconos de eliminar
-function borrarCliente() {
-  const borrar = document.querySelectorAll(".eliminar-icono");
-  for (let i = 0; i < borrar.length; i++) {
-      borrar[i].addEventListener("click", (papelerita) => {
-          const idCliente = papelerita.target.dataset.id; // Obtener la id del cliente del atributo data-id
+// Lógica para mostrar el listado de clientes
+const url = "http://localhost:3000/api/v1/listado_clientes";
+const listado_clientes = document.querySelector('#listado_clientes');
 
-          swal({
-              title: "¿Estás seguro de quieres eliminar este cliente?",
-              text: "¡Esta acción no se puede deshacer!",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-          })
-              .then((willDelete) => {
-                  if (willDelete) {
-                      fetch("http://localhost:3000/api/v1/borrar_cliente", {
-                          method: "DELETE",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                              id_cliente: idCliente,
-                          }),
-                      })
-                          .then((response) => {
-                              if (response.ok) {
-                                  swal({
-                                      title: "¡Cliente eliminado!",
-                                      text: "El cliente ha sido eliminado satisfactoriamente.",
-                                      icon: "success",
-                                  });
-                                  setTimeout(() => {
-                                      location.reload();
-                                  }, 3000);
-                              } else {
-                                  swal("Error al eliminar el cliente", {
-                                      icon: "error",
-                                  });
-                              }
-                          })
-                          .catch((error) => {
-                              swal("Error al eliminar el cliente", {
-                                  icon: "error",
-                              });
-                              console.error("Error:", error);
-                          });
-                  } else {
-                      swal({
-                          title: "¡Cliente NO eliminado!",
-                          text: "Todo a salvo!.",
-                          icon: "success",
-                      });
-                  }
-              });
-      });
-  }
+fetch(url)
+    .then(response => response.json())
+    .then(resultado => mostrar(resultado))
+    .catch(error => console.error('Error al obtener los datos:', error));
+
+const mostrar = (data) => {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.error('Los datos recibidos no son válidos.');
+        return;
+    }
+
+    let resultado = '';
+
+    data.forEach(cliente => {
+        resultado += `
+        <div class="row2">
+            <div class="col col-5">${cliente.id_cliente}</div>
+            <div class="col col-5">${cliente.Tipo_cliente}</div>
+            <div class="col col-10">${cliente.Nombre}</div>
+            <div class="col col-10">${cliente.Apellidos || ''}</div>
+            <div class="col col-10">${cliente.Id_fiscal}</div>
+            <div class="col col-20">${cliente.Direccion}</div>
+            <div class="col col-5">${cliente.C_postal}</div>
+            <div class="col col-10">${cliente.Localidad}</div>
+            <div class="col col-5">${cliente.Pais}</div>
+            <div class="col col-10">${cliente.Telefono}</div>
+            <div class="col col-10">${cliente.Movil || ''}</div>
+            <div class="col col-15">${cliente.Email || ''}</div>
+            <div class="col col-3"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+            <div class="col col-3"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+        </div>`;
+    });
+
+    listado_clientes.innerHTML = resultado;
 }
 
-// Función para cargar y mostrar todos los clientes
-document.addEventListener("DOMContentLoaded", function() {
-  fetch("http://localhost:3000/api/v1/listado_clientes_totales")
-      .then((res) => res.json())
-      .then((data) => {
-          const arrayDatosConsulta = data.resultado;
+// Event listener para eliminar clientes
+const on = (element, event, selector, handler) => {
+    element.addEventListener(event, e => {
+        if (e.target.closest(selector)) {
+            handler(e);
+        }
+    });
+};
 
-          const contenedorClientes = document.getElementById("listado_total_clientes");
+on(document, 'click', '.eliminar-icono', e => {
+    const fila = e.target.parentNode.parentNode;
+    const id = fila.firstElementChild.innerHTML;
 
-          if (arrayDatosConsulta.length === 0) {
-              contenedorClientes.textContent = "No hay ningún cliente registrado.";
-          } else {
-              arrayDatosConsulta.forEach((elemento) => {
-                  const divCliente = document.createElement("div");
-                  divCliente.classList.add("row2");
-
-                  divCliente.innerHTML = `
-                      <div class="col col-5">${elemento.id_cliente}</div>
-                      <div class="col col-10">${elemento.Nombre}</div>
-                      <div class="col col-10">${elemento.Apellidos}</div>
-                      <div class="col col-10">${elemento.Id_fiscal}</div>
-                      <div class="col col-25">${elemento.Direccion}</div>
-                      <div class="col col-5">${elemento.C_postal}</div>
-                      <div class="col col-10">${elemento.Localidad}</div>
-                      <div class="col col-5">${elemento.Pais}</div>
-                      <div class="col col-10">${elemento.Telefono}</div>
-                      <div class="col col-10">${elemento.Movil}</div>
-                      <div class="col col-15">${elemento.Email}</div>
-                      <div class="col col-3"><img src="../img/icons/editar.svg" class="editar-icono" data-id="${elemento.id_cliente}"></div>
-                      <div class="col col-3"><img src="../img/icons/eliminar.svg" class="eliminar-icono" data-id="${elemento.id_cliente}"></div>`;
-
-                  contenedorClientes.appendChild(divCliente);
-              });
-
-              // Llamar a la función para asignar eventos de clic a los íconos de eliminar
-              borrarCliente();
-          }
-      })
-      .catch((error) => {
-          document.getElementById("clientes_nombre").textContent = error;
-      });
+    swal({
+        title: "¿Estás seguro de quieres eliminar este cliente?",
+        text: "¡Esta acción no se puede deshacer!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            const url = "http://localhost:3000/api/v1/borrar_cliente/";
+            fetch(url + id, {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id_cliente: id,
+                }),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    swal({
+                        title: "¡Cliente eliminado!",
+                        text: "El cliente ha sido eliminado satisfactoriamente.",
+                        icon: "success",
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 3000);
+                } else {
+                    swal("Error al eliminar el cliente", {
+                        icon: "error",
+                    });
+                }
+            })
+            .catch((error) => {
+                swal("Error al eliminar el cliente", {
+                    icon: "error",
+                });
+                console.error("Error:", error);
+            });
+        } else {
+            swal({
+                title: "¡Cliente NO eliminado!",
+                text: "Todo a salvo!.",
+                icon: "success",
+            });
+        }
+    });
 });
 
-// Lógica para dar de alta clientes
-const mensajes = document.querySelector("#clientes_mensajes");
-const botonAltaClientes = document.querySelector(".boton_clientes_guardar");
+// Event listener para editar clientes
+let idForm = 0;
+on(document, 'click', '.editar-icono', e => {
+    const fila = e.target.parentNode.parentNode;
+    const id = fila.firstElementChild.innerHTML;
+    idForm = fila.children[0].innerHTML;
 
-botonAltaClientes.addEventListener("click", () => {
-  const clientesNombre = document.getElementById("clientes_nombre");
-  const clientesApellidos = document.getElementById("clientes_apellidos");
-  const clientesIdFiscal = document.getElementById("clientes_idFiscal");
-  const clienteDireccion = document.getElementById("clientes_direccion");
-  const clientesCPostal = document.getElementById("clientes_c_postal");
-  const clientesLocalidad = document.getElementById("clientes_localidad");
-  const clientesPais = document.getElementById("clientes_pais");
-  const clientesTelefono = document.getElementById("clientes_telefono");
-  const clientesMovil = document.getElementById("clientes_movil");
-  const clientesEmail = document.getElementById("clientes_email");
-  const clientesPoliticaPrivacidad = document.querySelector(".clientes_politica_privacidad");
+    const tipoCliente = fila.children[1].innerHTML;
+    const nombre = fila.children[2].innerHTML;
+    const apellidos = fila.children[3].innerHTML;
+    const id_fiscal = fila.children[4].innerHTML;
+    const direccion = fila.children[5].innerHTML;
+    const c_postal = fila.children[6].innerHTML;
+    const localidad = fila.children[7].innerHTML;
+    const pais = fila.children[8].innerHTML;
+    const telefono = fila.children[9].innerHTML;
+    const movil = fila.children[10].innerHTML;
+    const email = fila.children[11].innerHTML;
 
-  if (
-      clientesNombre.value == "" ||
-      clientesApellidos.value == "" ||
-      clientesIdFiscal.value == "" ||
-      clienteDireccion.value == "" ||
-      clientesCPostal.value == "" ||
-      clientesLocalidad.value == "" ||
-      clientesPais.value == "" ||
-      clientesTelefono.value == 0 ||
-      clientesMovil.value == 0 ||
-      clientesEmail.value == ""
-  ) {
-      swal({
-          title: "Los campos marcados con * son obligatorios",
-          text: "¡Completa los que te falten!",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-      });
-      return;
-  }
-  if (clientesPoliticaPrivacidad.checked == false) {
-      swal({
-          title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
-          text: "Marca la casilla",
-          icon: "warning",
-          buttons: true,
-          dangerMode: true,
-      });
-      return;
-  }
+    const tipoSelect = document.querySelector("#tipo");
+    const clientes_nombre = document.querySelector("#clientes_nombre");
+    const clientes_apellidos = document.querySelector("#clientes_apellidos");
+    const clientes_idFiscal = document.querySelector("#clientes_idFiscal");
+    const clientes_direccion = document.querySelector("#clientes_direccion");
+    const clientes_c_postal = document.querySelector("#clientes_c_postal");
+    const clientes_localidad = document.querySelector("#clientes_localidad");
+    const clientes_pais = document.querySelector("#clientes_pais");
+    const clientes_telefono = document.querySelector("#clientes_telefono");
+    const clientes_movil = document.querySelector("#clientes_movil");
+    const clientes_email = document.querySelector("#clientes_email");
 
-  const url = "http://localhost:3000/api/v1/alta_cliente";
-  fetch(url, {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-          nombre: clientesNombre.value,
-          apellidos: clientesApellidos.value,
-          idFiscal: clientesIdFiscal.value,
-          direccion: clienteDireccion.value,
-          c_postal: clientesCPostal.value,
-          localidad: clientesLocalidad.value,
-          pais: clientesPais.value,
-          telefono: clientesTelefono.value,
-          movil: clientesMovil.value,
-          email: clientesEmail.value,
-      }),
-  })
-      .then((res) => res.json())
-      .then((mensajes) => {
-          swal({
-              title: "¡Cliente añadido correctamente!",
-              text: "Recuerda que los datos son solo para uso de facturación.",
-              icon: "success",
-          });
-          setTimeout(() => {
-              location.reload();
-          }, 3000);
-      })
-      .catch((error) => (mensajes.innerHTML = error));
+    tipoSelect.value = tipoCliente;
+    clientes_nombre.value = nombre;
+    clientes_apellidos.value = apellidos;
+    clientes_idFiscal.value = id_fiscal;
+    clientes_direccion.value = direccion;
+    clientes_c_postal.value = c_postal;
+    clientes_localidad.value = localidad;
+    clientes_pais.value = pais;
+    clientes_telefono.value = telefono;
+    clientes_movil.value = movil;
+    clientes_email.value = email;
+
+    modal.style.display = "block";
+
+    const boton_cerrar = document.querySelector("#close");
+    boton_cerrar.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
 });
-
-// Lógica para editar cliente
-function editarCliente() {
-  // Aquí colocar la lógica para editar el cliente
-}
