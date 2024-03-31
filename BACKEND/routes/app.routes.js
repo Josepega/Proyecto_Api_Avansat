@@ -66,7 +66,6 @@ router.post("/alta_cliente", (req, res) => {
 // RUTAS: EDITAR CLIENTE
 router.put("/editar_cliente/:id", (req, res) => {
   try {
-    let id = req.params.id;
     let tipo_cliente = req.body.Tipo_cliente;
     let nombre = req.body.Nombre;
     let apellidos = req.body.Apellidos;
@@ -79,9 +78,9 @@ router.put("/editar_cliente/:id", (req, res) => {
     let movil = req.body.Movil;
     let email = req.body.Email;
     
-    let sql = "UPDATE clientes SET tipo = ?, nombre = ?, apellidos = ?, id_fiscal = ?, direccion = ?, c_postal = ?, localidad = ?, pais = ?, telefono = ?, movil = ?, email = ? WHERE id = ?";
+    let sql = "UPDATE clientes SET tipo = tipo_cliente = ?, nombre = ?, apellidos = ?, id_fiscal = ?, direccion = ?, c_postal = ?, localidad = ?, pais = ?, telefono = ?, movil = ?, email = ? WHERE id_cliente = ?";
     
-    conexionMySQL.query(sql, [tipo_cliente, nombre, apellidos, id_fiscal, direccion, c_postal, localidad, pais, telefono, movil, email, id], function(error, results) {
+    conexionMySQL.query(sql, [tipo_cliente, nombre, apellidos, id_fiscal, direccion, c_postal, localidad, pais, telefono, movil, email], function(error, results) {
       if (error) {
         throw error;
       } else {              

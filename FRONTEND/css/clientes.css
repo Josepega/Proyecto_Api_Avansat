@@ -184,7 +184,7 @@ h4 {
 
 /*---------------------------- MODAL ------------------------------*/
 
-#container_modal_clientes {
+#container_modal_clientes, #container_modal_clientes_edit {
    
     width: 100%;
     height: 100%;
@@ -196,7 +196,7 @@ h4 {
     display:none;
 }
    
-#container_interior_modal_clientes {
+#container_interior_modal_clientes, #container_interior_modal_clientes_edit {
     font-family: "montserrat", sans-serif;
     width: 100%;
     height: 95%;
@@ -216,7 +216,7 @@ h4 {
   );
 }
 /* FORMULARIO */
-#alta_clientes {
+#alta_clientes, #alta_clientes_edit {
     font-family: "montserrat", sans-serif;
     width: 100%;
     height: 100%;  
@@ -247,7 +247,7 @@ input {
     justify-content:space-around;
     background: rgb(255, 255, 255);
 }
-.clientes_politica_privacidad {
+.clientes_politica_privacidad, .clientes_politica_privacidad_edit {
     padding: 0;
     margin: 10px 10px 10px -30px;
     display: flex;
@@ -261,7 +261,7 @@ input {
     appearance: none;
     border: 2px solid #055778;
 }
-.clientes_politica_privacidad:checked {
+.clientes_politica_privacidad:checked, .clientes_politica_privacidad_edit:checked {
     background-color: #055778;
    
 }
@@ -282,10 +282,10 @@ select {
    
 
 }
-#persona, #empresa {
+#persona, #empresa, #persona_edit, #empresa_edit {
     color: rgb(1, 12, 20);
 }
-#tipo > option:selected{
+#tipo, #tipo_edit > option:selected{
     color: #012d3e;
 }
 ::placeholder {
@@ -316,7 +316,7 @@ h3 {
 }
 
 /* BOTONES */
-#close {
+#close, #close_edit {
     width: 70%;
     height: 40px;
     background-color: #055778;
@@ -331,11 +331,11 @@ h3 {
     padding: 10px 20px 10px 20px;
     margin: 10px 10px 10px 80px;
 }
-#close:hover {
+#close:hover, #close_edit:hover {
     background-color: #64abac;
 }
 
-#boton_clientes_guardar {
+#boton_clientes_guardar, #boton_clientes_guardar_edit {
     width: 70%;
     height: 40px;
     background-color: #055778;
@@ -350,10 +350,10 @@ h3 {
     padding: 10px 20px 10px 20px;
     margin: 10px 10px 10px 30px;
 }
-#boton_clientes_guardar:hover {
+#boton_clientes_guardar:hover, #boton_clientes_guardar_edit:hover {
     background-color: #64abac;
 }
-#boton_clientes_alta {
+#boton_clientes_alta, #boton_clientes_alta_edit {
     width: 70%;
     height: 40px;
     background-color: #055778;
