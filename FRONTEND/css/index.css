@@ -172,7 +172,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 300px;
+  width: 350px;
   height: 100vh;
   background: linear-gradient(
     180deg,
@@ -262,6 +262,7 @@ font-size: 0px;
   border-radius: 0px 15px;
   box-shadow: 1px 1px 5px #c6c6c7;
   transition: all 0.9s linear;
+  text-align: center;
 }
 
 #lista_acciones li a {
