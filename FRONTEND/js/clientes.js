@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {});
 
   // MODAL
   const modal = document.querySelector(".myModal");
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clienteEmpresa = document.getElementById("cliente_empresa");
     const clientePersona = document.getElementById("cliente_persona");
     
-    if (tipoCliente.value === "empresa") {
+    if (tipoCliente.value === "Empresa") {
       clienteEmpresa.style.display = "block";
       clientePersona.style.display = "none";
     } else {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     tipoCliente.addEventListener("change", () => {
-      if (tipoCliente.value === "empresa") {
+      if (tipoCliente.value === "Empresa") {
         clienteEmpresa.style.display = "block";
         clientePersona.style.display = "none";
       } else {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const clienteEmpresaEdit = document.getElementById("cliente_empresa_edit");
     const clientePersonaEdit = document.getElementById("cliente_persona_edit");
     
-    if (tipoClienteEdit.value === "empresa_edit") {
+    if (tipoClienteEdit.value === "Empresa") {
       clienteEmpresaEdit.style.display = "block";
       clientePersonaEdit.style.display = "none";
     } else {
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     tipoClienteEdit.addEventListener("change", () => {
-      if (tipoClienteEdit.value === "empresa_edit") {
+      if (tipoClienteEdit.value === "") {
         clienteEmpresaEdit.style.display = "block";
         clientePersonaEdit.style.display = "none";
       } else {
@@ -82,11 +82,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Lógica para mostrar u ocultar formularios dependiendo del tipo de cliente
 
-  // Event listener para el botón de alta de clientes
+
+   // ALTA DE CLIENTES
   const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
   botonAltaClientes.addEventListener("click", () => {
     event.preventDefault();
-    const tipoCliente = document.getElementById("tipo");
     const clientesTipo = document.getElementById("tipo");
     const clientesNombre = document.getElementById("clientes_nombre");
     const clientesApellidos = document.getElementById("clientes_apellidos");
@@ -134,8 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Realizar la solicitud HTTP POST al servidor
-    const url = "http://localhost:3000/api/v1/alta_cliente";
-    fetch(url, {
+    const urlAlta = "http://localhost:3000/api/v1/alta_cliente";
+    fetch(urlAlta, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,13 +174,14 @@ document.addEventListener("DOMContentLoaded", () => {
         swal("Error al agregar el cliente", error.message, "error");
       });
   });
-});
 
-// Lógica para mostrar el listado de clientes
-const url = "http://localhost:3000/api/v1/listado_clientes";
+
+
+// LISTADO DE CLIENTES
+const urlListado = "http://localhost:3000/api/v1/listado_clientes";
 const listado_clientes = document.querySelector("#listado_clientes");
 
-fetch(url)
+fetch(urlListado)
   .then((response) => response.json())
   .then((resultado) => mostrar(resultado))
   .catch((error) => console.error("Error al obtener los datos:", error));
@@ -216,7 +217,7 @@ const mostrar = (data) => {
   listado_clientes.innerHTML = resultado;
 };
 
-// Event listener para eliminar clientes
+// ELIMINAR CLIENTE
 const on = (element, event, selector, handler) => {
   element.addEventListener(event, (e) => {
     if (e.target.closest(selector)) {
@@ -277,12 +278,116 @@ on(document, "click", ".eliminar-icono", (e) => {
   });
 });
 
+
+ // EDITAR CLIENTE
+
+ let urlEditar = "http://localhost:3000/api/v1/editar_cliente/";
+let myModal_edit = document.querySelector(".myModal_edit");
+
+// Cuando se hace clic en el botón de editar cliente
+on(document, "click", ".editar-icono", (e) => {
+    const fila = e.target.parentNode.parentNode;
+    const clienteId = fila.children[0].innerHTML; // Obtener el ID del cliente de la fila de la tabla
+    const tipoCliente = fila.children[1].innerHTML;
+    const nombre = fila.children[2].innerHTML;
+    const apellidos = fila.children[3].innerHTML;
+    const id_fiscal = fila.children[4].innerHTML;
+    const direccion = fila.children[5].innerHTML;
+    const c_postal = fila.children[6].innerHTML;
+    const localidad = fila.children[7].innerHTML;
+    const pais = fila.children[8].innerHTML;
+    const telefono = fila.children[9].innerHTML;
+    const movil = fila.children[10].innerHTML;
+    const email = fila.children[11].innerHTML;
+
+    // Asignar valores a los campos de entrada del modal myModal_edit
+    document.getElementById("id_edit").value = clienteId;
+    document.getElementById("tipo_edit").value = tipoCliente;
+    document.getElementById("clientes_nombre_edit").value = nombre;
+    document.getElementById("clientes_apellidos_edit").value = apellidos;
+    document.getElementById("clientes_idFiscal_edit").value = id_fiscal;
+    document.getElementById("clientes_direccion_edit").value = direccion;
+    document.getElementById("clientes_c_postal_edit").value = c_postal;
+    document.getElementById("clientes_localidad_edit").value = localidad;
+    document.getElementById("clientes_pais_edit").value = pais;
+    document.getElementById("clientes_telefono_edit").value = telefono;
+    document.getElementById("clientes_movil_edit").value = movil;
+    document.getElementById("clientes_email_edit").value = email;
+
+    // Mostrar el modal myModal_edit
+    myModal_edit.style.display = "block";
+});
+
+
+ // Manejar el envío del formulario de edición
+const formEdit = document.getElementById("alta_clientes_edit");
+formEdit.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Obtener el ID del cliente del campo oculto
+    const clienteId = document.getElementById("id_edit").value;
+
+    // Obtener los valores del formulario de edición
+    const tipoCliente = document.getElementById("tipo_edit").value;
+    const nombre = document.getElementById("clientes_nombre_edit").value;
+    const apellidos = document.getElementById("clientes_apellidos_edit").value;
+    const id_fiscal = document.getElementById("clientes_idFiscal_edit").value;
+    const direccion = document.getElementById("clientes_direccion_edit").value;
+    const c_postal = document.getElementById("clientes_c_postal_edit").value;
+    const localidad = document.getElementById("clientes_localidad_edit").value;
+    const pais = document.getElementById("clientes_pais_edit").value;
+    const telefono = document.getElementById("clientes_telefono_edit").value;
+    const movil = document.getElementById("clientes_movil_edit").value;
+    const email = document.getElementById("clientes_email_edit").value;
+
+    // Enviar la solicitud de edición al servidor
+    fetch(urlEditar + clienteId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tipo_cliente: tipoCliente,
+            nombre: nombre,
+            apellidos: apellidos,
+            id_fiscal: id_fiscal,
+            direccion: direccion,
+            c_postal: c_postal,
+            localidad: localidad,
+            pais: pais,
+            telefono: telefono,
+            movil: movil,
+            email: email
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Hubo un problema al editar el cliente. Por favor, inténtalo de nuevo más tarde.');
+        }
+        return response.json();
+    })
+    .then(response => {
+        // Mostrar mensaje de éxito con SweetAlert
+        swal("Cliente actualizado correctamente", "", "success");
+
+        // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+    })
+    .catch(error => {
+        // Mostrar mensaje de error con SweetAlert
+        swal("Error", error.message, "error");
+    });
+});
+
+
+ 
+
 // Event listener para editar clientes
-let idForm = 0;
+/* let idForm = 0;
 on(document, "click", ".editar-icono", (e) => {
   const modalEdit = document.querySelector(".myModal_edit");
-
-  const fila = e.target.parentNode.parentNode;
+ */
+/*   const fila = e.target.parentNode.parentNode;
   const id = fila.firstElementChild.innerHTML;
   idForm = fila.children[0].innerHTML;
 
@@ -373,3 +478,5 @@ on(document, "click", ".editar-icono", (e) => {
       });
   });
 });
+ */
+
