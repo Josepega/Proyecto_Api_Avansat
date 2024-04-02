@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/clientes.css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -12,7 +13,7 @@
     <div id="container_listado_clientes">
         <div class="row">
             <div class="col-70"><h1>CLIENTES</h1></div>
-            <div class="col-30"><button id="boton_clientes_alta">Añadir</button></div>
+            <div class="col-30"><button id="boton_clientes_alta" class="btn">Añadir</button></div>
         </div>
         <div id="interior_container_listado_clientes">         
             <!-- Row de títulos -->
@@ -42,9 +43,9 @@
     </div>
 
     <!-- MODAL ALTA DE CLIENTES -->
-    <div id="container_modal_clientes" class="myModal">
-        <div id="container_interior_modal_clientes">
-            <form id="alta_clientes">
+    <div id= modal_alta_clientes class="modal">
+        <div id="container_interior_modal_clientes" class="modal_interior">
+            <form id="alta_clientes" class="formulario">
                 <div class="row">
                     <div class="col-50"><h1>Alta / nuevo cliente / persona</h1></div>
                     <div class="col-15">
@@ -56,7 +57,7 @@
                         
                     </div>  
                     <div class="col-15">
-                        <input type="button" id="close" value="cerrar"> <!-- CERRAR MODAL -->
+                        <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
                     </div>              
                 </div>
                 <div class="col-100" id="cliente_persona">
@@ -133,7 +134,7 @@
                         </p>
                     </div>
                     <div class="col-30">
-                        <button type="submit" id="boton_clientes_guardar">Guardar</button>
+                        <button type="submit" id="boton_clientes_guardar" class="btn">Guardar</button>
                     </div>
                     <div class="col-30" id="clientes_mensajes">
                         <p style="font-size: 12px; color: rgb(5, 89, 114);">
@@ -146,23 +147,22 @@
     </div>
 
     <!-- MODAL EDICIÓN DE CLIENTES -->
-    <div id="container_modal_clientes_edit" class="myModal_edit">
-        <div id="container_interior_modal_clientesedit">
-            <form id="alta_clientes_edit">
+    <div id="modal_editar_clientes" class="modal">
+        <div id="container_interior_modal_clientes_edit" class="modal_interior">
+            <form id="alta_clientes_edit" class="formulario">
                 <div class="row">
-                    <div class="col-50"><h1>Editar / cliente /</h1>
-                        <div class="col-10"><input type="text" id="id_edit" ></div>
-                    </div>
+                    <div class="col-30"><h1>Editar / cliente /</h1></div>
+                    <div class="col-20"><input type="text" id="id_edit" ></div>
                     
-                    <div class="col-10">
+                    <div class="col-15">
                         <label for="tipo_edit">Tipo de cliente</label>
                         <select name="tipo" id="tipo_edit">
                             <option value="Persona">Persona</option>
                             <option value="Empresa">Empresa</option>
                         </select>
                     </div>  
-                    <div class="col-15">
-                        <input type="button" id="close_edit" value="cerrar"> <!-- CERRAR MODAL -->
+                    <div class="col-30">
+                        <input type="button" id="close_edit" value="cerrar" class="btn"> <!-- CERRAR MODAL -->
                     </div>              
                 </div>
                 <div class="col-100" id="cliente_persona_edit">
@@ -237,7 +237,7 @@
                         </p>
                     </div>
                     <div class="col-30">
-                        <button type="submit" id="boton_clientes_guardar_edit">Guardar</button>
+                        <button type="submit" id="boton_clientes_guardar_edit" class="btn">Guardar</button>
                     </div>
                     <div class="col-30" id="clientes_mensajes_edit">
                         <p style="font-size: 12px; color: rgb(5, 89, 114);">
