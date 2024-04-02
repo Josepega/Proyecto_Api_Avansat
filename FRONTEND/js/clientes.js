@@ -87,7 +87,7 @@ openModalButtons_edit.forEach(function (element) {
 
 
 // ALTA DE CLIENTES
-const botonAltaClientes = document.getElementById("boton_clientes_guardar");
+const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
 botonAltaClientes.addEventListener("click", () => {
 
   const clientesTipo = document.getElementById("tipo");
