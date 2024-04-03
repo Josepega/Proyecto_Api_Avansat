@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/clientes.css">
     <script src="../js/clientes.js" defer></script>
+    <script src="../js/index.js" defer></script>
+    <script src="../js/modals/modal_clientes.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
@@ -16,7 +18,7 @@
     <div id="container_listado_clientes">
         <div class="row">
             <div class="col-70"><h1>CLIENTES</h1></div>
-            <div class="col-30"><button id="boton_clientes_alta" class="btn">Añadir</button></div>
+            <div class="col-30"><button type="button" id="boton_clientes_alta" class="btn">Añadir</button></div>
         </div>
         <div id="interior_container_listado_clientes">         
             <!-- Row de títulos -->
@@ -84,12 +86,12 @@
                     <div class="row"><!-- NOMBRE EMPRESA -->
                         <div class="col-50">
                             <label for="clientes_nombre_empresa"><span>*</span>Nombre</label>
-                            <input type="text" placeholder="Ej: Avansat" id="clientes_nombre_empresa">
+                            <input type="text" placeholder="Ej: Avansat" id="clientes_nombre">
                         </div>
 
                         <div class="col-15">
                             <label for="clientes_idFiscal_empresa"><span>*</span>CIF</label>
-                            <input type="text" placeholder="Ej: A12345678" id="clientes_idFiscal_empresa">
+                            <input type="text" placeholder="Ej: A12345678" id="clientes_idFiscal">
                         </div>
                     </div>
                 </div>
@@ -188,11 +190,11 @@
                     <div class="row"><!-- NOMBRE EMPRESA -->
                         <div class="col-50">
                             <label for="clientes_nombre_empresa_edit"><span>*</span>Nombre</label>
-                            <input type="text" placeholder="Ej: Avansat" id="clientes_nombre_empresa_edit">
+                            <input type="text" placeholder="Ej: Avansat" id="clientes_nombre_edit">
                         </div>
                         <div class="col-15">
                             <label for="clientes_idFiscal_empresa_edit"><span>*</span>CIF</label>
-                            <input type="text" placeholder="Ej: A12345678" id="clientes_idFiscal_empresa_edit">
+                            <input type="text" placeholder="Ej: A12345678" id="clientes_idFiscal_edit">
                         </div>
                     </div>
                 </div>

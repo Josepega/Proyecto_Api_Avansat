@@ -1,93 +1,10 @@
-document.addEventListener("DOMContentLoaded", () => { });
 
-// MODAL
-const modal = document.querySelector("#modal_alta_clientes");
-const openModalButtons = document.querySelectorAll("#boton_clientes_alta");
-const closeModalButton = document.getElementById("close");
-
-function openModal() {
-  modal.style.display = "block";
-  const tipoCliente = document.getElementById("tipo");
-  const clienteEmpresa = document.getElementById("cliente_empresa");
-  const clientePersona = document.getElementById("cliente_persona");
-
-  if (tipoCliente.value === "Empresa") {
-    clienteEmpresa.style.display = "block";
-    clientePersona.style.display = "none";
-  } else {
-    clienteEmpresa.style.display = "none";
-    clientePersona.style.display = "block";
-  }
-
-  tipoCliente.addEventListener("change", () => {
-    if (tipoCliente.value === "Empresa") {
-      clienteEmpresa.style.display = "block";
-      clientePersona.style.display = "none";
-    } else {
-      clienteEmpresa.style.display = "none";
-      clientePersona.style.display = "block";
-    }
-  });
-}
-
-async function  closeModal() {
-  modal.style.display = "none";
-}
-
-openModalButtons.forEach(function (element) {
-  element.addEventListener("click", openModal);
-});
-
-closeModalButton.addEventListener("click", closeModal);
-
-
-
-// MODAL EDIT
-const modal_edit = document.querySelector("#modal_editar_clientes");
-const openModalButtons_edit = document.querySelectorAll(".editar-icono");
-const closeModalButton_edit = document.querySelector("#close_edit");
-const tipoCliente_edit = document.getElementById("tipo_edit");
-const clienteEmpresa_edit = document.getElementById("cliente_empresa_edit");
-const clientePersona_edit = document.getElementById("cliente_persona_edit");
-
-function openModal_edit() {
-  modal_edit.style.display = "block";
-
-
-  if (tipoCliente_edit.value === "Empresa") {
-    clienteEmpresa_edit.style.display = "block";
-    clientePersona_edit.style.display = "none";
-  } else {
-    clienteEmpresa_edit.style.display = "none";
-    clientePersona_edit.style.display = "block";
-  }
-
-  tipoCliente_edit.addEventListener("change", () => {
-    if (tipoCliente_edit.value === "Empresa") {
-      clienteEmpresa_edit.style.display = "block";
-      clientePersona_edit.style.display = "none";
-    } else {
-      clienteEmpresa_edit.style.display = "none";
-      clientePersona_edit.style.display = "block";
-    }
-  });
-}
-
-function closeModal_edit() {
-  modal_edit.style.display = "none";
-}
-closeModalButton_edit.addEventListener("click", closeModal_edit);
-
-
-openModalButtons_edit.forEach(function (element) {
-  element.addEventListener("click", openModal_edit);
-});
 
 // Lógica para mostrar u ocultar formularios dependiendo del tipo de cliente
 
 
 // ALTA DE CLIENTES
-const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
+const botonAltaClientes = document.querySelector("#boton_clientes_alta");
 botonAltaClientes.addEventListener("click", () => {
 
   const clientesTipo = document.getElementById("tipo");
@@ -318,6 +235,7 @@ on(document, "click", ".editar-icono", (e) => {
 
 // Manejar el envío del formulario de edición
 const formEdit = document.getElementById("alta_clientes_edit");
+
 formEdit.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -378,102 +296,4 @@ formEdit.addEventListener("submit", (e) => {
 
 
 
-
-// Event listener para editar clientes
-/* let idForm = 0;
-on(document, "click", ".editar-icono", (e) => {
-  const modalEdit = document.querySelector(".myModal_edit");
- */
-/*   const fila = e.target.parentNode.parentNode;
-  const id = fila.firstElementChild.innerHTML;
-  idForm = fila.children[0].innerHTML;
-
-  const tipoCliente = fila.children[1].innerHTML;
-  const nombre = fila.children[2].innerHTML;
-  const apellidos = fila.children[3].innerHTML;
-  const id_fiscal = fila.children[4].innerHTML;
-  const direccion = fila.children[5].innerHTML;
-  const c_postal = fila.children[6].innerHTML;
-  const localidad = fila.children[7].innerHTML;
-  const pais = fila.children[8].innerHTML;
-  const telefono = fila.children[9].innerHTML;
-  const movil = fila.children[10].innerHTML;
-  const email = fila.children[11].innerHTML;
-
-  const tipoSelect = document.querySelector("#tipo_edit");
-  const clientes_nombre = document.querySelector("#clientes_nombre_edit");
-  const clientes_apellidos = document.querySelector("#clientes_apellidos_edit");
-  const clientes_idFiscal = document.querySelector("#clientes_idFiscal_edit");
-  const clientes_direccion = document.querySelector("#clientes_direccion_edit");
-  const clientes_c_postal = document.querySelector("#clientes_c_postal_edit");
-  const clientes_localidad = document.querySelector("#clientes_localidad_edit");
-  const clientes_pais = document.querySelector("#clientes_pais_edit");
-  const clientes_telefono = document.querySelector("#clientes_telefono_edit");
-  const clientes_movil = document.querySelector("#clientes_movil_edit");
-  const clientes_email = document.querySelector("#clientes_email_edit");
-
-  tipoSelect.value = tipoCliente;
-  clientes_nombre.value = nombre;
-  clientes_apellidos.value = apellidos;
-  clientes_idFiscal.value = id_fiscal;
-  clientes_direccion.value = direccion;
-  clientes_c_postal.value = c_postal;
-  clientes_localidad.value = localidad;
-  clientes_pais.value = pais;
-  clientes_telefono.value = telefono;
-  clientes_movil.value = movil;
-  clientes_email.value = email;
-
-  modalEdit.style.display = "block";
-
-  const botonCerrarEdit = document.querySelector("#close_edit");
-  botonCerrarEdit.addEventListener("click", function () {
-    modalEdit.style.display = "none";
-  });
-
-  // Event listener para el botón de guardar edición
-  const botonGuardarEdit = document.querySelector("#boton_guardar_edicion_edit");
-  botonGuardarEdit.addEventListener("click", () => {
-    const url = `http://localhost:3000/api/v1/editar_cliente/${id}`;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Tipo_cliente: tipoSelect.value,
-        Nombre: clientes_nombre.value,
-        Apellidos: clientes_apellidos.value,
-        Id_fiscal: clientes_idFiscal.value,
-        Direccion: clientes_direccion.value,
-        C_postal: clientes_c_postal.value,
-        Localidad: clientes_localidad.value,
-        Pais: clientes_pais.value,
-        Telefono: clientes_telefono.value,
-        Movil: clientes_movil.value,
-        Email: clientes_email.value,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error al editar el cliente");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        swal({
-          title: "¡Cliente editado correctamente!",
-          text: "Los cambios se han guardado exitosamente.",
-          icon: "success",
-        });
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
-      })
-      .catch((error) => {
-        swal("Error al editar el cliente", error.message, "error");
-      });
-  });
-});
- */
 
