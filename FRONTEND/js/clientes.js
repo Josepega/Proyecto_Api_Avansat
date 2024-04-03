@@ -1,6 +1,6 @@
 
 // ALTA DE CLIENTES
-const botonAltaClientes = document.querySelector("#boton_clientes_alta");
+const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
 botonAltaClientes.addEventListener("click", () => {
 
   const clientesTipo = document.getElementById("tipo");
@@ -28,12 +28,13 @@ botonAltaClientes.addEventListener("click", () => {
     clientesPais.value == "" ||
     clientesEmail.value == ""
   ) {
-    Swal({
+    
+     Swal({
         icon: "error",
         title: "Los campos marcados con * son obligatorios",
         text: "¡Completa los que te falten!",
         footer: '<a href="#">Why do I have this issue?</a>'
-      });
+      }); 
     return
   }
 
