@@ -1,8 +1,4 @@
 
-
-// Lógica para mostrar u ocultar formularios dependiendo del tipo de cliente
-
-
 // ALTA DE CLIENTES
 const botonAltaClientes = document.querySelector("#boton_clientes_alta");
 botonAltaClientes.addEventListener("click", () => {
