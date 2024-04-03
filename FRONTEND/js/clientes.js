@@ -30,7 +30,7 @@ function openModal() {
   });
 }
 
-function closeModal() {
+async function  closeModal() {
   modal.style.display = "none";
 }
 
@@ -105,36 +105,29 @@ botonAltaClientes.addEventListener("click", () => {
 
   // Validación de campos obligatorios y política de privacidad
   if (
-    clientesTipo.value === "" ||
-    clientesNombre.value === "" ||
-    clientesApellidos.value === "" ||
-    clientesIdFiscal.value === "" ||
-    clienteDireccion.value === "" ||
-    clientesCPostal.value === "" ||
-    clientesLocalidad.value === "" ||
-    clientesPais.value === "" ||
-    clientesEmail.value === ""
+    clientesTipo.value == "" ||
+    clientesNombre.value == "" ||
+    clientesApellidos.value == "" ||
+    clientesIdFiscal.value == "" ||
+    clienteDireccion.value == "" ||
+    clientesCPostal.value == "" ||
+    clientesLocalidad.value == "" ||
+    clientesPais.value == "" ||
+    clientesEmail.value == ""
   ) {
-    swal({
-      title: "Los campos marcados con * son obligatorios",
-      text: "¡Completa los que te falten!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    });
-    return;
+    Swal({
+        icon: "error",
+        title: "Los campos marcados con * son obligatorios",
+        text: "¡Completa los que te falten!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
+    return
   }
 
   if (!clientesPoliticaPrivacidad.checked) {
-    swal({
-      title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
-      text: "Marca la casilla",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    });
-    return;
-  }
+    swal("Debe aceptar la POLÍTICA DE PRIVACIDAD");
+     }
+  
 
   // Realizar la solicitud HTTP POST al servidor
   const urlAlta = "http://localhost:3000/api/v1/alta_cliente";
@@ -212,8 +205,8 @@ const mostrar = (data) => {
             <div class="col col-10">${cliente.Telefono}</div>
             <div class="col col-10">${cliente.Movil || ""}</div>
             <div class="col col-15">${cliente.Email || ""}</div>
-            <div class="col col-3"><img src="../img/icons/editar.svg" class="editar-icono"></div>
-            <div class="col col-3"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+            <div class="col col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+            <div class="col col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
         </div>`;
   });
 

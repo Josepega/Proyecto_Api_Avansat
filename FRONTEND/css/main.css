@@ -45,7 +45,7 @@ body {
     font-size: 13px;
     color: #054149;  
     padding:0px 10px;
-    border-bottom: #93320b solid 1px;
+    border-bottom: #5b1b02 solid 1px;
     height: 50px;
     font-weight: 400;
     padding: 5px;
@@ -118,11 +118,10 @@ body {
 
 .modal {
     width: 80%;
-    height: 80%;
+    height: 90%;
     position: absolute;
     margin: auto;
     top: 5%;
-    bottom: 1%;
     z-index: 1;
     display:none;
 }
@@ -138,10 +137,10 @@ body {
     justify-content:space-between;
     align-items: center;
     box-shadow: #012d3e 1px 1px 10px;
-    border: solid 1px #0b7593;
+    border: solid 1px #a22303;
     background: linear-gradient(
     180deg,
-    rgba(205, 233, 240, 0.959) 1%,
+    rgba(247, 250, 251, 0.959) 1%,
     #93100b 95%);
     
 }
@@ -155,7 +154,7 @@ body {
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
-    border: solid 1px #66cce8;
+    border: solid 1px #f3e0d8;
     margin: 10px;
     border-radius: 5px;
     padding: 20px 10px 20px 10px;   
@@ -198,13 +197,14 @@ select {
     border: none;
     border-radius: 5px;
     font-family: "montserrat", sans-serif;
+    text-align: center;
     font-style: normal;
     font-weight: 400;
     color: white;
     font-size: 16px;
     cursor: pointer;
     padding: 10px 20px 10px 20px;
-    margin: 10px 10px 10px 80px;
+    margin: 10px;
 }
 
 .btn:hover {
@@ -242,6 +242,7 @@ h1 {
     color: rgb(2, 103, 128);
     padding-bottom: 40px;
     margin-left: 20px;
+    margin-top: 30px;
 }
 h3 {
     font-family: "montserrat", sans-serif;

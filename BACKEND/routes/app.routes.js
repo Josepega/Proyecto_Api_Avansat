@@ -4,13 +4,13 @@ const conexionMySQL = require("../conexionMySQL");
 
 
 // MANEJO DE MENSAJES
-const handleEror = (res, error, mensaje) => {
+/* const handleEror = (res, error, mensaje) => {
   console.log(error);
   res.status(500).json({
     status: 500,
     message: `${mensaje}. ${error}`,
   });
-};
+}; */
 
 // RUTAS: SALUDO DE PRUEBA
 router.get("/Saludo", async (req, res) => {
@@ -101,7 +101,7 @@ router.delete("/borrar_cliente/:id", (req,res)=>{
       if(error){
           throw error
       }else{              
-          res.send(filas)
+          res.json(filas)
       }
   })
 })
@@ -112,7 +112,7 @@ router.get('/listado_clientes', (req,res)=>{
       if(error){
           throw error
       }else{
-          res.send(filas)
+          res.json(filas)
       }
   })
 })
