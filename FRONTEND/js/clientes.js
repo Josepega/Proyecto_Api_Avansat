@@ -1,4 +1,3 @@
-
 // ALTA DE CLIENTES
 const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
 botonAltaClientes.addEventListener("click", () => {
