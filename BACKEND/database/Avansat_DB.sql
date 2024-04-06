@@ -71,9 +71,35 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`servicios` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `avansat_db`.`facturas`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
+  `Id_factura` VARCHAR(15) NOT NULL,
+  `Fecha_alta` DATE NULL,
+  `Fecha_vencimiento` VARCHAR(45) NULL,
+  `Estado` VARCHAR(45) NULL,
+  `Base_imponible` DECIMAL(5,2) NULL,
+  `Total` DECIMAL(5,2) NULL,
+  PRIMARY KEY (`Id_factura`))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `avansat_db`.`clientes`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `avansat_db`;
+INSERT INTO `avansat_db`.`clientes` (`id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (, 'Persona', 'Antonio', 'Gil', '30125478T', 'Galvan 109 ap 33', '08015', 'Barcelona', 'España', '', '652254789', 'info@info.com');
+INSERT INTO `avansat_db`.`clientes` (`id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (, 'Persona', 'José Manuel', 'Sanchez', '32147895P', 'Marialluisa 22 AtB', '17300', 'Blanes', 'España', '982125478', NULL, 'recrea@info.es');
+INSERT INTO `avansat_db`.`clientes` (`id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (, 'Empresa', 'Aliexpress', NULL, '52148777H', 'Nicaragua 113 20A', '19000', 'Victoria', 'España', '958741236', '666333222', 'ali@aliexpress.es');
+
+COMMIT;
+
 
 -- -----------------------------------------------------
 -- Data for table `avansat_db`.`stock`
@@ -95,6 +121,18 @@ START TRANSACTION;
 USE `avansat_db`;
 INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '012345', 'Horas trabajo', 30, 58, 122, 155);
 INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '123045', 'Revision Caldera', 45, 60, 100, 121);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `avansat_db`.`facturas`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `avansat_db`;
+INSERT INTO `avansat_db`.`facturas` (`Id_factura`, `Fecha_alta`, `Fecha_vencimiento`, `Estado`, `Base_imponible`, `Total`) VALUES (DEFAULT, '01/09/2023', '31/09/2023', 'Pagada', 123, 242);
+INSERT INTO `avansat_db`.`facturas` (`Id_factura`, `Fecha_alta`, `Fecha_vencimiento`, `Estado`, `Base_imponible`, `Total`) VALUES (DEFAULT, '02/03/2024', '02/04/2024', 'Pagada', 258,30, 270,50);
+INSERT INTO `avansat_db`.`facturas` (`Id_factura`, `Fecha_alta`, `Fecha_vencimiento`, `Estado`, `Base_imponible`, `Total`) VALUES (DEFAULT, '04/05/2024', '04/06/2024', 'Pendiente', 23,50, 142,75);
 
 COMMIT;
 
