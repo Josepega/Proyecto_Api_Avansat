@@ -233,25 +233,23 @@ let urlEditar = "http://localhost:3000/api/v1/editar_servicio/";
 on(document, "click", ".editar-icono", (e) => {
   
   const fila = e.target.parentNode.parentNode;
-  const servicioId= fila.children[0].innerHTML;
-  const serviciosCodigo = fila.children[1].innerHTML; // Obtener el ID del cliente de la fila de la tabla
-  const servicioCantidad = fila.children[2].innerHTML; 
-  const serviciosNombre = fila.children[3].innerHTML; 
-  const servicioCoste = fila.children[4].innerHTML; 
-  const servicioCosteIva = fila.children[5].innerHTML; 
-  const servicioVenta = fila.children[6].innerHTML; 
-  const servicioVentaIva = fila.children[7].innerHTML; 
+  const servicioId= fila.children[0].innerHTML;// Obtener el ID del cliente de la fila de la tabla
+  const serviciosCodigo = fila.children[1].innerHTML; 
+  const serviciosNombre = fila.children[2].innerHTML; 
+  const servicioCoste = fila.children[3].innerHTML; 
+  const servicioCosteIva = fila.children[4].innerHTML; 
+  const servicioVenta = fila.children[5].innerHTML; 
+  const servicioVentaIva = fila.children[6].innerHTML; 
 
 
   // Asignar valores a los campos de entrada del modal myModal_edit
-  document.getElementById("servicio_id_edit").value = servicioId;
-  document.getElementById("servicio_codigo_edit").value = serviciosCodigo;
-  document.getElementById("servicio_cantidad_edit").value = servicioCantidad;
-  document.getElementById("servicio_nombre_edit").value = serviciosNombre;
-  document.getElementById("servicio_precio_coste_edit").value = servicioCoste;
-  document.getElementById("servicio_precio_coste_iva_edit").value = servicioCosteIva;
-  document.getElementById("servicio_precio_venta_edit").value = servicioVenta;
-  document.getElementById("servicio_precio_venta_iva_edit").value = servicioVentaIva;
+  document.getElementById("servicios_id_edit").value = servicioId;
+  document.getElementById("servicios_codigo_edit").value = serviciosCodigo;
+  document.getElementById("servicios_nombre_edit").value = serviciosNombre;
+  document.getElementById("servicios_precio_coste_edit").value = servicioCoste;
+  document.getElementById("servicios_precio_coste_iva_edit").value = servicioCosteIva;
+  document.getElementById("servicios_precio_venta_edit").value = servicioVenta;
+  document.getElementById("servicios_precio_venta_iva_edit").value = servicioVentaIva;
 
 
   // Mostrar el modal myModal_edit
@@ -260,21 +258,20 @@ on(document, "click", ".editar-icono", (e) => {
 
 
 // Manejar el envío del formulario de edición
-const formEdit = document.querySelectorAll("#modal_alta_servicio_edit");
+const formEdit = document.querySelectorAll("#modal_alta_servicios_edit");
 
 formEdit.forEach(form => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Obtener los valores del formulario de edición
-    const idservicio = form.querySelector("#servicio_id_edit").value;
-    const codigoId = form.querySelector("#servicio_codigo_edit").value;
-    const cantidad = form.querySelector("#servicio_cantidad_edit").value;
-    const nombre = form.querySelector("#servicio_nombre_edit").value;
-    const coste = form.querySelector("#servicio_precio_coste_edit").value;
-    const costeIva = form.querySelector("#servicio_precio_coste_iva_edit").value;
-    const venta = form.querySelector("#servicio_precio_venta_edit").value;
-    const ventaIva = form.querySelector("#servicio_precio_venta_iva_edit").value;
+    const idservicio = form.querySelector("#servicios_id_edit").value;
+    const codigoId = form.querySelector("#servicios_codigo_edit").value;
+    const nombre = form.querySelector("#servicios_nombre_edit").value;
+    const coste = form.querySelector("#servicios_precio_coste_edit").value;
+    const costeIva = form.querySelector("#servicios_precio_coste_iva_edit").value;
+    const venta = form.querySelector("#servicios_precio_venta_edit").value;
+    const ventaIva = form.querySelector("#servicios_precio_venta_iva_edit").value;
    
     // Enviar la solicitud de edición al servidor
     fetch(urlEditar + idservicio, {
@@ -282,7 +279,6 @@ formEdit.forEach(form => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         codigo: codigoId,
-        cantidad: cantidad,
         nombre: nombre,
         precio_coste: coste,
         precio_coste_iva: costeIva,

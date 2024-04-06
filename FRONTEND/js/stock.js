@@ -237,8 +237,8 @@ let urlEditar = "http://localhost:3000/api/v1/editar_stock/";
 on(document, "click", ".editar-icono", (e) => {
   
   const fila = e.target.parentNode.parentNode;
-  const stockId= fila.children[0].innerHTML;
-  const stockCodigo = fila.children[1].innerHTML; // Obtener el ID del cliente de la fila de la tabla
+  const stockId= fila.children[0].innerHTML;// Obtener el ID del cliente de la fila de la tabla
+  const stockCodigo = fila.children[1].innerHTML; 
   const stockCantidad = fila.children[2].innerHTML; 
   const stockNombre = fila.children[3].innerHTML; 
   const stockCoste = fila.children[4].innerHTML; 
