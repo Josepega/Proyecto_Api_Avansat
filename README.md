@@ -33,9 +33,13 @@ Método HTTP	GET
 Formatos de la respuesta	xml, json, php, txt
 Versión	1.00 (20/05/2010)
 Atajos	Petición, Respuesta
+<<<<<<< HEAD
+Operaciones	cerca, sug
+=======
 Operaciones	cerca, sug
 
 
 PREDISEÑO
 
 ![Diseño previo de la interfaz](./FRONTEND/img/propuesta_disenio_proyecto_Avansat.png)
+>>>>>>> 3882d568a33b0aae7410bf1503797b7aa40b69a1

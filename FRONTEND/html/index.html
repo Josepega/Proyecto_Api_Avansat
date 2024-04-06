@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avansat app</title>
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
-    <link rel="stylesheet" href="../css/plantilla.css">
+    <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/plantilla.js" defer></script>
+    <link rel="stylesheet" href="../css/clientes.css">
     <script src="../js/clientes.js" defer></script>
-    <script src="../js/modals/modal_clientes.js" defer></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="../js/includes_html.js" defer></script>
+    <script src="../js/aside.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
 </head>
 
 <body>
@@ -20,16 +20,17 @@
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
         <aside id="izq">
-            <div id="container_logo"><span id="close"><img src="../img/icons/left.svg" alt=""
-                        class="toggle_boton"></span></div>
+            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
+            </div>
             <div id="container_lista">
                 <ul id="lista_acciones">
-                    <li><a href="./clientes.html" target="iframe"><img src="../img/icons/usuario+.svg" alt="">Añadir cliente</a></li>
-                   
+                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg"
+                                alt="">Añadir cliente</a></li>
                     <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
                     <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
-                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li> 
+                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
                     <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
+
                 </ul>
                 <div id="container_busqueda">
                     <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
@@ -45,76 +46,47 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
-            <nav class="dropdownmenu">
-                <ul><!-- CLIENTES  -->
-                    <li><a href="#"><img src="../img/icons/usuarios.svg" alt="">Clientes <img id="abajo"
-                                src="../img/icons/abajo-.svg" alt=""> </a>
-                        <ul id="submenu">
-                            <li><a href="../html/clientes.html" target="iframe">Listado</a></li>
-                            <li><a href="">Buscar</a></li>
-                            <li id="boton_clientes_alta"><a href="./clientes.html" target="iframe">Añadir</a></li>
-                            <li><a href="../html/listado_clientes.html" target="iframe">Editar</a></li>
-                            <li><a href="../html/listado_clientes.html" target="iframe">Borrar</a></li>
-                        </ul>
-                    </li>
-                   
-                    <!-- FACTURAS -->
-                    <li><a href="#"><img src="../img/icons/facturas.svg" alt="">Facturas<img id="abajo"
-                                src="../img/icons/abajo-.svg" alt=""></a>
-                        <ul id="submenu">
-                            <li><a href="">Listado</a></li>
-                            <li><a href="">Buscar</a></li>
-                            <li><a href="">Añadir</a></li>
-                            <li><a href="">Editar</a></li>
-                            <li><a href="">Borrar</a></li>
-                        </ul>
-                    </li>
-                    <!-- SERVICIOS -->
-                    <li><a href="#"><img src="../img/icons/servicios.svg" alt="">Servicios<img id="abajo"
-                                src="../img/icons/abajo-.svg" alt=""></a>
-                        <ul id="submenu">
-                            <li><a href="">Listado</a></li>
-                            <li><a href="">Buscar</a></li>
-                            <li><a href="">Añadir</a></li>
-                            <li><a href="">Editar</a></li>
-                            <li><a href="">Borrar</a></li>
-                        </ul>
-                    </li>
-                    <!-- STOCK -->
-                    <li><a href="#"><img src="../img/icons/stock.svg" alt="">Stock<img id="abajo"
-                                src="../img/icons/abajo-.svg" alt=""></a>
-                        <ul id="submenu">
-                            <li><a href="">Listado</a></li>
-                            <li><a href="">Buscar</a></li>
-                            <li><a href="">Añadir</a></li>
-                            <li><a href="">Editar</a></li>
-                            <li><a href="">Borrar</a></li>
-                        </ul>
-                    </li>
-                     <!-- PRESUPUESTOS -->
-                     <li><a href="#"><img src="../img/icons/albaranes.svg" alt="">Presupuestos<img id="abajo"
-                        src="../img/icons/abajo-.svg" alt=""></a>
-                <ul id="submenu">
-                    <li><a href="">Listado</a></li>
-                    <li><a href="">Buscar</a></li>
-                    <li><a href="">Añadir</a></li>
-                    <li><a href="">Editar</a></li>
-                    <li><a href="">Borrar</a></li>
-                </ul>
-            </li>
-                </ul>
-                <div id="container_login">
-                    <p>Usuario: admin</p>
-                    <p>Salir</p><img src="../img/icons/exit.svg" alt="">
-                </div>
-            </nav>
-            <!-- CONTENEDOR IFRAMES -->
-            <div id="container_iframes">
-                <iframe src="../html/index_iframe.html" frameborder="0" name="iframe" style="height: 100%; width: 100%;"></iframe>
-            </div>
+            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+
+            <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
+            <div id="container_principal_general">
+                <!-------------------------  aquí va el inicio html por sección ------------------------------------->
+                <div class="container_principal">
+                    <div class="container">
+                        <div class="container_seccion">
+                            <div class="container_seccion_interior">
+                                <div class="row">
+                                    <div class="col-70"><h1>Stock</h1></div>
+                                    <div class="col-30"><button type="button" id="boton_stock_alta" class="btn">Añadir</button></div>
+                                </div>
+                                <div id="interior_container_listado_stock" class="container_seccion_interior">         
+                                    <!-- Row de títulos -->
+                                    <div class="row">
+                                        <div class="col col-10"><h4>Código</h4></div>
+                                        <div class="col col-5"><h4>Cantidad</h4></div>
+                                        <div class="col col-20"><h4>Nombre</h4></div>
+                                        <div class="col col-10"><h4>Precio coste</h4></div>
+                                        <div class="col col-10"><h4>Precio IVA inc</h4></div>
+                                        <div class="col col-10"><h4>Precio venta</h4></div>
+                                        <div class="col col-10"><h4>Precio venta IVA inc</h4></div>
+                                        <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
+                                        <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
+                                    </div>
+                        
+                                    <!-- Datos de los clientes -->
+                                    <div id="listado_stock" class="listado"></div>
+                                   
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+
+
+            </div><!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
     </div><!-- FIN CONTENEDOR GENERAL -->
-
 </body>
 
 </html>

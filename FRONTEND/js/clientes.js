@@ -1,6 +1,95 @@
+
+
+// MODAL
+const modal = document.querySelectorAll("#modal_alta_clientes");
+const openModalButtons = document.querySelectorAll("#boton_clientes_alta");
+const closeModalButtons = document.querySelectorAll("#close");
+
+function openModal() {
+  modal.forEach(function(modal) {
+    modal.style.display = "block";
+  });
+
+  const tipoCliente = document.getElementById("tipo");
+  const clienteApellido = document.getElementById("clientes_apellidos_ocultar");
+
+
+  if (tipoCliente.value === "Empresa") {
+    clienteApellido.style.display = "none";
+  } else {
+    clienteApellido.style.display = "block";
+  }
+
+  tipoCliente.addEventListener("change", () => {
+    if (tipoCliente.value === "Empresa") {
+      clienteApellido.style.display = "none";
+    } else {
+      clienteApellido.style.display = "block";
+    }
+  });
+}
+
+function closeModal() {
+  modal.forEach(function(modal) {
+    modal.style.display = "none";
+  });
+}
+
+openModalButtons.forEach(function(element) {
+  element.addEventListener("click", openModal);
+});
+
+closeModalButtons.forEach(function(element) {
+  element.addEventListener("click", closeModal);
+});
+
+
+
+// MODAL EDIT
+const modal_edit = document.querySelector("#modal_editar_clientes");
+const openModalButtons_edit = document.querySelectorAll(".editar-icono");
+const closeModalButton_edit = document.querySelectorAll("#close_edit");
+
+function openModal_edit() {
+  modal_edit.style.display = "block";
+
+
+  const tipoCliente_edit = document.getElementById("tipo_edit");
+  const clienteApellido_edit = document.getElementById("clientes_apellidos_ocultar_edit");
+
+
+  if (tipoCliente_edit.value === "Empresa") {
+    clienteApellido_edit.style.display = "none";
+  } else {
+    clienteApellido_edit.style.display = "block";
+  }
+
+  tipoCliente_edit.addEventListener("change", () => {
+    if (tipoCliente_edit.value === "Empresa") {
+      clienteApellido_edit.style.display = "none";
+    } else {
+      clienteApellido_edit.style.display = "block";
+    }
+  });
+}
+
+function closeModal_edit() {
+  modal_edit.style.display = "none";
+}
+closeModalButton_edit.forEach(function (element) {
+  element.addEventListener("click", closeModal_edit);
+});
+
+openModalButtons_edit.forEach(function (element) {
+  element.addEventListener("click", openModal_edit);
+});
+
+
 // ALTA DE CLIENTES
-const botonAltaClientes = document.querySelector("#boton_clientes_guardar");
-botonAltaClientes.addEventListener("click", () => {
+const botonGuardarCliente = document.querySelectorAll("#boton_clientes_guardar");
+botonGuardarCliente.forEach(function (element){
+  element.addEventListener("click", () => {
+  
 
   const clientesTipo = document.getElementById("tipo");
   const clientesNombre = document.getElementById("clientes_nombre");
@@ -13,13 +102,12 @@ botonAltaClientes.addEventListener("click", () => {
   const clientesTelefono = document.getElementById("clientes_telefono");
   const clientesMovil = document.getElementById("clientes_movil");
   const clientesEmail = document.getElementById("clientes_email");
-  const clientesPoliticaPrivacidad = document.querySelector(".clientes_politica_privacidad");
+  const clientesPoliticaPrivacidad = document.querySelectorAll(".clientes_politica_privacidad");
 
   // Validación de campos obligatorios y política de privacidad
   if (
     clientesTipo.value == "" ||
     clientesNombre.value == "" ||
-    clientesApellidos.value == "" ||
     clientesIdFiscal.value == "" ||
     clienteDireccion.value == "" ||
     clientesCPostal.value == "" ||
@@ -27,20 +115,31 @@ botonAltaClientes.addEventListener("click", () => {
     clientesPais.value == "" ||
     clientesEmail.value == ""
   ) {
-    
-     Swal({
+    swal({
         icon: "error",
         title: "Los campos marcados con * son obligatorios",
         text: "¡Completa los que te falten!",
-        footer: '<a href="#">Why do I have this issue?</a>'
-      }); 
+        button: "OK",
+      });
     return
   }
 
-  if (!clientesPoliticaPrivacidad.checked) {
-    swal("Debe aceptar la POLÍTICA DE PRIVACIDAD");
-     }
-  
+  let politicaPrivacidadMarcada = false;
+  clientesPoliticaPrivacidad.forEach(politicaPrivacidad => {
+    if (politicaPrivacidad.checked) {
+      politicaPrivacidadMarcada = true;
+    }
+  });
+
+  if (!politicaPrivacidadMarcada) {
+    swal({
+      icon: "error",
+      title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
+      text: "¡Hay que cumplir las normas!",
+      button: "OK",
+    });
+    return;
+  }
 
   // Realizar la solicitud HTTP POST al servidor
   const urlAlta = "http://localhost:3000/api/v1/alta_cliente";
@@ -83,7 +182,7 @@ botonAltaClientes.addEventListener("click", () => {
       swal("Error al agregar el cliente", error.message, "error");
     });
 });
-
+});
 
 
 // LISTADO DE CLIENTES
@@ -102,6 +201,12 @@ const mostrar = (data) => {
   }
 
   let resultado = "";
+  if (listado_clientes) {
+    listado_clientes.innerHTML = resultado;
+  } else {
+    console.error("El elemento #listado_clientes no se encontró en el DOM.");
+  }
+  
 
   data.forEach((cliente) => {
     resultado += `
@@ -230,64 +335,66 @@ on(document, "click", ".editar-icono", (e) => {
 
 
 // Manejar el envío del formulario de edición
-const formEdit = document.getElementById("alta_clientes_edit");
+const formEdit = document.querySelectorAll("#alta_clientes_edit");
 
-formEdit.addEventListener("submit", (e) => {
-  e.preventDefault();
+formEdit.forEach(form => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-  // Obtener el ID del cliente del campo oculto
-  const clienteId = document.getElementById("id_edit").value;
+    // Obtener el ID del cliente del campo oculto
+    const clienteId = form.querySelector("#id_edit").value;
 
-  // Obtener los valores del formulario de edición
-  const tipoCliente = document.getElementById("tipo_edit").value;
-  const nombre = document.getElementById("clientes_nombre_edit").value;
-  const apellidos = document.getElementById("clientes_apellidos_edit").value;
-  const id_fiscal = document.getElementById("clientes_idFiscal_edit").value;
-  const direccion = document.getElementById("clientes_direccion_edit").value;
-  const c_postal = document.getElementById("clientes_c_postal_edit").value;
-  const localidad = document.getElementById("clientes_localidad_edit").value;
-  const pais = document.getElementById("clientes_pais_edit").value;
-  const telefono = document.getElementById("clientes_telefono_edit").value;
-  const movil = document.getElementById("clientes_movil_edit").value;
-  const email = document.getElementById("clientes_email_edit").value;
+    // Obtener los valores del formulario de edición
+    const tipoCliente = form.querySelector("#tipo_edit").value;
+    const nombre = form.querySelector("#clientes_nombre_edit").value;
+    const apellidos = form.querySelector("#clientes_apellidos_edit").value;
+    const id_fiscal = form.querySelector("#clientes_idFiscal_edit").value;
+    const direccion = form.querySelector("#clientes_direccion_edit").value;
+    const c_postal = form.querySelector("#clientes_c_postal_edit").value;
+    const localidad = form.querySelector("#clientes_localidad_edit").value;
+    const pais = form.querySelector("#clientes_pais_edit").value;
+    const telefono = form.querySelector("#clientes_telefono_edit").value;
+    const movil = form.querySelector("#clientes_movil_edit").value;
+    const email = form.querySelector("#clientes_email_edit").value;
 
-  // Enviar la solicitud de edición al servidor
-  fetch(urlEditar + clienteId, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      tipo_cliente: tipoCliente,
-      nombre: nombre,
-      apellidos: apellidos,
-      id_fiscal: id_fiscal,
-      direccion: direccion,
-      c_postal: c_postal,
-      localidad: localidad,
-      pais: pais,
-      telefono: telefono,
-      movil: movil,
-      email: email
-    }),
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Hubo un problema al editar el cliente. Por favor, inténtalo de nuevo más tarde.');
-      }
-      return response.json();
+    // Enviar la solicitud de edición al servidor
+    fetch(urlEditar + clienteId, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tipo_cliente: tipoCliente,
+        nombre: nombre,
+        apellidos: apellidos,
+        id_fiscal: id_fiscal,
+        direccion: direccion,
+        c_postal: c_postal,
+        localidad: localidad,
+        pais: pais,
+        telefono: telefono,
+        movil: movil,
+        email: email
+      }),
     })
-    .then(response => {
-      // Mostrar mensaje de éxito con SweetAlert
-      swal("Cliente actualizado correctamente", "", "success");
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Hubo un problema al editar el cliente. Por favor, inténtalo de nuevo más tarde.');
+        }
+        return response.json();
+      })
+      .then(response => {
+        // Mostrar mensaje de éxito con SweetAlert
+        swal("Cliente actualizado correctamente", "", "success");
 
-      // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
-      setTimeout(() => {
-        location.reload();
-      }, 1500);
-    })
-    .catch(error => {
-      // Mostrar mensaje de error con SweetAlert
-      swal("Error", error.message, "error");
-    });
+        // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      })
+      .catch(error => {
+        // Mostrar mensaje de error con SweetAlert
+        swal("Error", error.message, "error");
+      });
+  });
 });
 
 

@@ -1,75 +1,33 @@
 
-/* -------------------------------------------- LISTADO CLIENTES ------------------------------------------------*/
-#container_listado_clientes {
-    font-family: "montserrat", sans-serif;
-    width: 100%;
-    height: 92vh;
-    margin: 30px 10px 10px 10px;
-    padding: 0px 10px 0px 10px;
-    border-radius: 10px;
+#container_clientes_icono_editar {
+    height: 100%;
+    background-color: #f5f5f4;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between; 
+    margin-top: 20px;
+    margin-right: 10px;  
+}
+ img.editar-icono, img.eliminar-icono {
+    height: 40px;
     display: flex;
     flex-direction: column;
     justify-content:space-between;
-    align-items: center;
-    box-shadow: #012d3e 1px 1px 10px;
-    border: solid 1px #0b7593;
-    background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.959) 1%,
-    #0b7593 95%
-  );
+    align-items: center; 
+    padding:12px 5px;
+    cursor: pointer; 
 }
-#interior_container_listado_clientes {
-    font-family: "montserrat", sans-serif;
-    width: 100%;
-    height: 97%;  
-    border-radius: 10px;
-    background:#ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content:start;
-    align-items: center;
-    border: solid 1px #571801;
-    margin: 10px;
-    padding: 20px 10px;
-}
-#listado_clientes {
-    font-family: "montserrat", sans-serif;
-    width: 100%;
-    height: 100%;  
-    border-radius: 10px;
+#container_clientes_icono_borrar {
+    height: 100%;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    justify-content:start;
-    align-items: center;
-    margin: 10px;
-    padding:10px;
-    overflow: auto;
+    justify-content:space-between; 
+    margin-top: 20px;
+    margin-right: 10px; 
 }
 
-
-
-
-img {
-    height: 15px;
-    cursor: pointer;
-}
-.boton_clientes_guardar {
-    display: none;
-}
-
-h4 {
-    color: #93380b;
-    font-family: "montserrat", sans-serif;
-    font-weight: 500;
-    font-size: 13px;
-    margin: 0px 0px 15px 0px;
-}
-
-
-
-
+/* -----------------------------------MODALS---------------------------------------- */
 
 .clientes_politica_privacidad, .clientes_politica_privacidad_edit {
     padding: 0;
@@ -98,94 +56,6 @@ h4 {
 }
 
 
-/* BOTONES */
-
-
-
-
-
-/* CONTENEDOR ULTIMOS CLIENTES */
-#container_last_clientes {
-    font-family: "montserrat", sans-serif;
-    width: 24%;
-    height: 90vh;
-    margin: 20px;
-    padding: 0px 10px 0px 10px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    align-items: center;
-    box-shadow: #012d3e 1px 1px 10px;
-    border: solid 1px  rgb(158, 18, 8);
-    background: linear-gradient(
-    180deg,
-    rgba(245, 241, 241, 0.959) 1%,
-    rgb(158, 18, 8) 100%
-  );
-}
-#interior_contenedor_last_clientes {
-    font-family: "montserrat", sans-serif;
-    width: 100%;
-    height: 100%;  
-    border-radius: 10px;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content:start;
-    align-items: center;
-    border: solid 1px #ecbfae;
-    margin: 10px;
-    padding: 20px 10px;
-}
-#lista_clientes {
-    font-family: "montserrat", sans-serif;
-    height: 90%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content:space-between; 
-    margin-top: 20px;
-
-}
-#lista_clientes p {
-    border-bottom: solid 1px #ecbfae;
-    display: flex;
-    flex-direction:row;
-    justify-content:space-between;
-    align-items: center; 
-    padding:10px 0px;
-}
-
-#container_clientes_icono_editar {
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between; 
-    margin-top: 20px;
-    margin-right: 10px;  
-}
- img.editar-icono, img.eliminar-icono {
-    height: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    align-items: center; 
-    padding:12px 5px;
-    cursor: pointer; 
-}
-#container_clientes_icono_borrar {
-    height: 100%;
-    background-color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between; 
-    margin-top: 20px;
-    margin-right: 10px; 
-}
  #id_edit {
     padding: 0px;
     font-size: 18px;

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avansat app</title>
+    <link rel="icon" type="image/jpg" href="../img/favicon.png" />
+    <!-- <link rel="stylesheet" href="../css/index.css"> -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/stock.js" defer></script>
+    <script src="../js/includes_html.js" defer></script>
+    <script src="../js/aside.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
+</head>
+
+<body>
+    <!-- CONTENEDOR GENERAL -->
+    <div class="container">
+        <!-- LATERAL IZQUIERDA -->
+        <aside id="izq">
+            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
+            </div>
+            <div id="container_lista">
+                <ul id="lista_acciones">
+                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg"
+                                alt="">Añadir cliente</a></li>
+                    <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
+                    <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
+                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
+                    <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
+
+                </ul>
+                <div id="container_busqueda">
+                    <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
+                    <input type="text" id="busqueda">
+                </div>
+            </div>
+            <!-- FOOTER IZQ -->
+            <div id="mini_footer_izq">
+                <p>APP Gestion Clientes V1.0 </p>
+                <p>© 2024 Avansat</p>
+            </div>
+        </aside>
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main id="principal">
+            <!-- BARRA NAV  -->
+            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+
+            <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
+            <div id="container_principal_general" class="container_principal">
+                <!-------------------------  aquí va el inicio html por sección ------------------------------------->
+
+                
+                        <div class="container_seccion">
+                                <div class="row">
+                                    <div class="col-70"><h1>Stock</h1></div>
+                                    <div class="col-30"><button type="button" id="boton_stock_alta" class="btn">Añadir</button></div>
+                                </div>
+                                <div id="interior_container_listado_stock" class="container_seccion_interior">         
+                                    <!-- Row de títulos -->
+                                    <div class="row">
+                                        <div class="col col-5"><h4>ID</h4></div>
+                                        <div class="col col-10"><h4>Código</h4></div>
+                                        <div class="col col-5"><h4>Cantidad</h4></div>
+                                        <div class="col col-30"><h4>Nombre</h4></div>
+                                        <div class="col col-10"><h4>Precio coste</h4></div>
+                                        <div class="col col-10"><h4>Precio IVA inc</h4></div>
+                                        <div class="col col-10"><h4>Precio venta</h4></div>
+                                        <div class="col col-10"><h4>Precio venta IVA inc</h4></div>
+                                        <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
+                                        <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
+                                    </div>
+                        
+                                    <!-- Datos de los clientes -->
+                                    <div id="listado_stock" class="listado"></div>
+                                   
+                                </div>  
+                          
+                        </div>
+                    
+                
+
+      <!-- MODAL ALTA STOCK -->
+      <div id= modal_alta_stock class="modal">
+        <div id="container_interior_modal_clientes" class="modal_interior">
+            <form id="alta_clientes" class="formulario">
+                <div class="row">
+                    <div class="col-50"><h1>Alta / nuevo artículo / Stock</h1></div>
+                    <div class="col-20"></div>  
+                    <div class="col-20" id="cont_btn">
+                        <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
+                    </div>              
+                </div>               
+                    <div class="row"><!-- CANTIDAD - NOMBRE- CÓDIGO -->
+                        <div class="col-10">
+                            <label><span>*</span>Cantidad</label>
+                            <input type="number"  id="stock_cantidad">
+                        </div>
+                       <div class="col-5"></div>
+                        <div class="col-20">
+                            <label><span>*</span>Código artículo</label>
+                            <input type="text" placeholder="Ej: 0123456789" id="stock_codigo">
+                        </div>
+                        <div class="col-5"></div>
+                        <div class="col-40">
+                            <label><span>*</span>Nombre</label>
+                            <input type="text" placeholder="Ej: Repuestos Varios" id="stock_nombre">
+                        </div>
+                    </div>
+         
+                <div class="row"><!-- PRECIOS -->
+                    
+                    <div class="col-15">
+                        <label><span>*</span>Precio coste</label>
+                        <input type="number" placeholder="Ej: 20,50" id="stock_precio_coste">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label>Precio coste IVA inc</label>
+                        <input type="number" placeholder="Automático" id="stock_precio_coste_iva">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label><span>*</span>Precio venta </label>
+                        <input type="number" placeholder="Ej: 41,55" id="stock_precio_venta">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label>Precio venta IVA inc</label>
+                        <input type="number" placeholder="Automático"  id="stock_precio_venta_iva">
+                    </div>
+                    
+                </div>
+                <!-- BOTON GUARDAR -->
+                <div class="row">
+                    
+                    <div class="col-30">
+                        <button type="button" id="boton_stock_guardar" class="btn">Guardar</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL EDICIÓN DE STOCK -->
+    <div id= modal_alta_stock_edit class="modal">
+        <div id="container_interior_modal_clientes_edit" class="modal_interior">
+            <form id="alta_clientes_edit" class="formulario">
+                <div class="row">
+                    <div class="col-30"><h1>Editar / artículo / </h1></div>
+                    <div class="col-10"><input type="text" id="stock_id_edit" ></div>
+                    <div class="col-40"></div>
+                    <div class="col-20">
+                        <input type="button" id="close_edit" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
+                    </div>              
+                </div>               
+                    <div class="row"><!-- CANTIDAD - NOMBRE- CÓDIGO -->
+                        <div class="col-10">
+                            <label><span>*</span>Cantidad</label>
+                            <input type="number"  id="stock_cantidad_edit">
+                        </div>
+                       <div class="col-5"></div>
+                        <div class="col-20">
+                            <label><span>*</span>Código artículo</label>
+                            <input type="text" placeholder="Ej: 0123456789" id="stock_codigo_edit">
+                        </div>
+                        <div class="col-5"></div>
+                        <div class="col-40">
+                            <label><span>*</span>Nombre</label>
+                            <input type="text" placeholder="Ej: Repuestos Varios" id="stock_nombre_edit">
+                        </div>
+                    </div>
+         
+                <div class="row"><!-- PRECIOS -->
+                    
+                    <div class="col-15">
+                        <label><span>*</span>Precio coste</label>
+                        <input type="number" placeholder="Ej: 20,50" id="stock_precio_coste_edit">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label>Precio coste IVA inc</label>
+                        <input type="number" placeholder="Automático" id="stock_precio_coste_iva_edit">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label><span>*</span>Precio venta </label>
+                        <input type="number" placeholder="Ej: 41,55" id="stock_precio_venta_edit">
+                    </div>
+                    <div class="col-5"></div>
+                    <div class="col-15">
+                        <label>Precio venta IVA inc</label>
+                        <input type="number" placeholder="Automático"  id="stock_precio_venta_iva_edit">
+                    </div>
+                    
+                </div>
+                <!-- BOTON GUARDAR -->
+                <div class="row">
+                    
+                    <div class="col-30">
+                        <button type="submit" id="boton_stock_guardar_edit" class="btn">Guardar</button>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+    </div>
+
+            </div><!-------------------------  aquí va el final html por sección ------------------------------------->
+        </main>
+    </div><!-- FIN CONTENEDOR GENERAL -->
+</body>
+
+</html>
