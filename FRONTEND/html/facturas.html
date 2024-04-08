@@ -55,25 +55,26 @@
                         <div class="container_seccion">
                                 <div class="row">
                                     <div class="col-70"><h1>Facturas</h1></div>
-                                    <div class="col-30"><button type="button" id="boton_stock_alta" class="btn">Añadir</button></div>
+                                    <div class="col-30"><button type="button" id="boton_facturas_alta" class="btn">Añadir</button></div>
                                 </div>
                                 <div id="interior_container_listado_stock" class="container_seccion_interior">         
                                     <!-- Row de títulos -->
                                     <div class="row">
                                         <div class="col col-5"><h4>ID</h4></div>
-                                        <div class="col col-10"><h4>Código</h4></div>
-                                        <div class="col col-5"><h4>Cantidad</h4></div>
-                                        <div class="col col-30"><h4>Nombre</h4></div>
-                                        <div class="col col-10"><h4>Precio coste</h4></div>
-                                        <div class="col col-10"><h4>Precio IVA inc</h4></div>
-                                        <div class="col col-10"><h4>Precio venta</h4></div>
-                                        <div class="col col-10"><h4>Precio venta IVA inc</h4></div>
+                                        <div class="col col-10"><h4>Fecha alta</h4></div>
+                                        <div class="col col-5"><h4>Vencimiento</h4></div>
+                                        <div class="col col-30"><h4>Cliente</h4></div>
+                                        <div class="col col-10"><h4>Base imponible</h4></div>
+                                        <div class="col col-10"><h4>Total</h4></div>
+                                        <div class="col col-10"><h4>Estado</h4></div>
+                                        <div class="col col-10"><h4>Acciones</h4></div>
                                         <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
                                         <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
+                                        <div class="col col-5"><h4>Ver</h4></div> <!-- Espacio para el ícono de borrar -->
                                     </div>
                         
-                                    <!-- Datos de los clientes -->
-                                    <div id="listado_stock" class="listado"></div>
+                                    <!-- Datos de FACTURAS -->
+                                    <div id="listado_facturas" class="listado"></div>
                                    
                                 </div>  
                           
@@ -81,62 +82,103 @@
                     
                 
 
-      <!-- MODAL ALTA STOCK -->
-      <div id= modal_alta_stock class="modal">
-        <div id="container_interior_modal_clientes" class="modal_interior">
-            <form id="alta_clientes" class="formulario">
+      <!-- MODAL ALTA FACTURA -->
+      <div id= modal_alta_facturas class="modal">
+        <div id="container_interior_modal_facturas" class="modal_interior">
+            <form id="alta_facturas" class="formulario">
                 <div class="row">
-                    <div class="col-50"><h1>Alta / nuevo artículo / Stock</h1></div>
-                    <div class="col-20"></div>  
+                    <div class="col-50"><h1>Alta / nueva factura / Facturas</h1></div>
+                    <div class="col-10">
+                        <label><span>*</span>Vencimiento</label>
+                        <select name="vencimiento" id="facturas_vencimiento">
+                            <option value="quincena">15 días</option>
+                            <option value="mes" selected="selected">30 días</option>
+                            <option value="trimestre">90 días</option>
+                        </select>
+                    </div>
                     <div class="col-20" id="cont_btn">
                         <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
-                    </div>              
+                    </div> 
+                    <div class="col-10"><input type="text" id="id_cliente"></div>             
                 </div>               
-                    <div class="row"><!-- CANTIDAD - NOMBRE- CÓDIGO -->
+                    <div class="row"><!-- ROW DATOS CLIENTE 1-->
                         <div class="col-10">
-                            <label><span>*</span>Cantidad</label>
-                            <input type="number"  id="stock_cantidad">
+                            <label>Tipo</label>
+                            <select name="tipo" id="tipo">
+                                <option value="Persona">Persona</option>
+                                <option value="Empresa">Empresa</option>
+                            </select>                        
+                        </div>  
+                        <div class="col-40 autocomplete">
+                        <label><span>*</span>Nombre</label>
+                        <input type="text" id="facturas_nombre">
+                        <ul id="autocomplete-results" class="autocomplete-results">
+                        </ul>
                         </div>
-                       <div class="col-5"></div>
-                        <div class="col-20">
-                            <label><span>*</span>Código artículo</label>
-                            <input type="text" placeholder="Ej: 0123456789" id="stock_codigo">
-                        </div>
-                        <div class="col-5"></div>
                         <div class="col-40">
-                            <label><span>*</span>Nombre</label>
-                            <input type="text" placeholder="Ej: Repuestos Varios" id="stock_nombre">
+                            <label><span>*</span>Apellidos</label>
+                            <input type="text" id="facturas_apellidos">
+                        </div>
+                        <div class="col-10">
+                            <label><span>*</span>Id fiscal</label>
+                            <input type="text" id="facturas_fiscal">
+                        </div>
+                    </div>
+                       <div class="row"><!-- ROW DATOS CLIENTE 2 -->
+                        <div class="col-60">
+                            <label><span>*</span>Dirección</label>
+                            <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="facturas_direccion">
+                        </div>
+                        <div class="col-15">
+                            <label><span>*</span>C. postal</label>
+                            <input type="number" placeholder="Ej: 17300" id="facturas_c_postal">
+                        </div>
+                        <div class="col-15">
+                            <label><span>*</span>Localidad</label>
+                            <input type="text" placeholder="Ej: Blanes" id="facturas_localidad">
+                        </div>
+                        <div class="col-15">
+                            <label><span>*</span>Pais</label>
+                            <input type="text" placeholder="Ej: España" id="facturas_pais">
+                        </div>
+                       </div>
+                       <div class="row"><!--  DATOS OCULTOS -->                   
+                    
+                      <div class="col-30" type="hidden">
+                        <label><span>*</span>Fecha alta</label> <input type="date" id="facturas_alta">
+                    </div>                 
+                      <div class="col-30" type="hidden">
+                            <label><span>*</span>Estado</label>
+                            <select name="estado" id="facturas_estado">
+                                <option value="pendiente" selected="selected">Pendiente</option>
+                                <option value="cobrada">Cobrada</option>
+                            </select>
+                        </div>                      
+                    </div>
+                    <div class="row"><!-- ROW DATOS ARTICULO 1 -->
+                        <div class="col-5">
+                            <label><span>*</span>Cantidad</label>
+                            <input type="number" placeholder="Ej: 5" id="facturas_cantidad">
+                        </div>
+                        <div class="col-10">
+                            <label><span>*</span>Código</label>
+                            <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
+                        </div>
+                        <div class="col-40">
+                            <label><span>*</span>Descripción</label>
+                            <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion">
+                        </div>
+                        <div class="col-15">
+                            <label><span>*</span>Precio</label>
+                            <input type="number" placeholder="Ej: 20,50" id="facturas_precio">
                         </div>
                     </div>
          
-                <div class="row"><!-- PRECIOS -->
-                    
-                    <div class="col-15">
-                        <label><span>*</span>Precio coste</label>
-                        <input type="number" placeholder="Ej: 20,50" id="stock_precio_coste">
-                    </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
-                        <label>Precio coste IVA inc</label>
-                        <input type="number" placeholder="Automático" id="stock_precio_coste_iva">
-                    </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
-                        <label><span>*</span>Precio venta </label>
-                        <input type="number" placeholder="Ej: 41,55" id="stock_precio_venta">
-                    </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
-                        <label>Precio venta IVA inc</label>
-                        <input type="number" placeholder="Automático"  id="stock_precio_venta_iva">
-                    </div>
-                    
-                </div>
                 <!-- BOTON GUARDAR -->
                 <div class="row">
                     
                     <div class="col-30">
-                        <button type="button" id="boton_stock_guardar" class="btn">Guardar</button>
+                        <button type="button" id="boton_facturas_guardar" class="btn">Guardar</button>
                     </div>
                     
                 </div>

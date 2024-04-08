@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avansat app</title>
+    <link rel="icon" type="image/jpg" href="../img/favicon.png" />
+    <!-- <link rel="stylesheet" href="../css/index.css"> -->
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/includes_html.js" defer></script>
+    <script src="../js/aside.js" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
+</head>
+
+<body>
+    <!-- CONTENEDOR GENERAL -->
+    <div class="container">
+        <!-- ASIDE LATERAL IZQUIERDA -->
+        <aside id="izq">
+            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
+            </div>
+            <div id="container_lista">
+                <ul id="lista_acciones">
+                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg" alt="">Añadir cliente</a></li>
+                    <li><a href="#" id="boton_facturas_alta"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
+                    <li><a href="#" id="boton_servicios_alta"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
+                    <li><a href="#" id="boton_stock_alta"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
+                    <li><a href="#" id="boton_presupuestos_alta"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
+
+                </ul>
+                <div id="container_busqueda">
+                    <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
+                    <input type="text" id="busqueda">
+                </div>
+            </div>
+            <!-- FOOTER IZQ -->
+            <div id="mini_footer_izq">
+                <p>APP Gestion Clientes V1.0 </p>
+                <p>© 2024 Avansat</p>
+            </div>
+        </aside>
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main id="principal">
+            <!-- BARRA NAV  -->
+            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+
+            <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
+             <!-------------------------  aquí va el inicio html por sección ------------------------------------->
+            <div id="container_principal">
+                
+
+
+
+            </div><!-------------------------  aquí va el final html por sección ------------------------------------->
+        </main>
+    </div><!-- FIN CONTENEDOR GENERAL -->
+</body>
+
+</html>

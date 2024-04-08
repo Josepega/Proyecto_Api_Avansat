@@ -6,6 +6,15 @@ const api = express();
 api.use(express.json());
 api.use(cors());
 api.use('/api/v1', require('./routes/app.routes.js'));
+api.use('/api/v1', require('./routes/clientes.routes.js'));
+api.use('/api/v1', require('./routes/servicios.routes.js'));
+api.use('/api/v1', require('./routes/facturas.routes.js'));
+api.use('/api/v1', require('./routes/stock.routes.js'));
+api.use('/api/v1', require('./routes/presupuestos.routes.js'));
+
+
+
+
 
 // go to: http://localhost:3000/api-docs/ for api documentation
 require("./swagger/swagger.config.js")(api);
