@@ -55,7 +55,7 @@ router.post("/alta_cliente", (req, res) => {
         }
     })
   })
-  // RUTAS: LISTADO DE CLIENTE
+ /*  // RUTAS: LISTADO DE CLIENTE
   router.get('/listado_clientes?Nombre=', (req,res)=>{
   
     conexionMySQL.query('SELECT * FROM clientes', (error,cliente)=>{
@@ -65,7 +65,7 @@ router.post("/alta_cliente", (req, res) => {
             res.json(cliente)
         }
     })
-  })
+  }) */
   // RUTAS: BORRAR CLIENTE
   router.delete("/borrar_cliente/:id", (req,res)=>{
     conexionMySQL.query('DELETE FROM clientes WHERE id_cliente = ?', [req.params.id], function(error, filas){

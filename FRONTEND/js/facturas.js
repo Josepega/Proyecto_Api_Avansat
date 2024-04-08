@@ -70,9 +70,15 @@ autocompleteResults.addEventListener("click", (e) => {
     
     // Rellenar los otros inputs con los datos del cliente seleccionado
     input.value = selectedCliente.Nombre;
+    document.getElementById('id_cliente').value = selectedCliente.id_cliente;
+    document.getElementById('facturas_nombre').value = selectedCliente.Nombre;
     document.getElementById('facturas_apellidos').value = selectedCliente.Apellidos;
     document.getElementById('facturas_direccion').value = selectedCliente.Direccion;
     document.getElementById('facturas_fiscal').value = selectedCliente.Id_fiscal;
+    document.getElementById('facturas_direccion').value = selectedCliente.Direccion;
+    document.getElementById('facturas_c_postal').value = selectedCliente.C_postal;
+    document.getElementById('facturas_localidad').value = selectedCliente.Localidad;
+    document.getElementById('facturas_pais').value = selectedCliente.Pais;
 
     // Ocultar la lista de resultados
     autocompleteResults.style.display = "none";
@@ -86,6 +92,9 @@ function resetearCamposModal() {
   const apellidosInput = document.getElementById('facturas_apellidos');
   const direccionInput = document.getElementById('facturas_direccion');
   const idFiscalInput = document.getElementById('facturas_fiscal');
+  const cPostalInput = document.getElementById('facturas_c_postal');
+  const localidadInput = document.getElementById('facturas_localidad');
+  const paisInput = document.getElementById('facturas_pais');
 
 
   // Resetear el valor de cada campo del formulario a una cadena vacía
@@ -93,6 +102,9 @@ function resetearCamposModal() {
   apellidosInput.value = '';
   direccionInput.value = '';
   idFiscalInput.value = '';
+  cPostalInput.value = '';
+  localidadInput.value = '';
+  paisInput.value = '';
 }
 
 
@@ -106,6 +118,23 @@ function openModal() {
     modal.style.display = "block";
     resetearCamposModal();
   });
+  const tipoCliente = document.getElementById("tipo");
+  const clienteApellido = document.getElementById("facturas_apellidos_ocultar");
+
+
+  if (tipoCliente.value === "Empresa") {
+    clienteApellido.style.display = "none";
+  } else {
+    clienteApellido.style.display = "block";
+  }
+
+  tipoCliente.addEventListener("change", () => {
+    if (tipoCliente.value === "Empresa") {
+      clienteApellido.style.display = "none";
+    } else {
+      clienteApellido.style.display = "block";
+    }
+  });
 }
 
 function closeModal() {
@@ -116,6 +145,7 @@ function closeModal() {
 
 openModalButtons.forEach(function(element) {
   element.addEventListener("click", openModal);
+  resetearCamposModal();
 });
 
 closeModalButtons.forEach(function(element) {

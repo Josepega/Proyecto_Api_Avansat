@@ -211,20 +211,20 @@ const mostrar = (data) => {
   data.forEach((cliente) => {
     resultado += `
         <div class="row2">
-            <div class="col col-5">${cliente.id_cliente}</div>
-            <div class="col col-5">${cliente.Tipo_cliente}</div>
-            <div class="col col-10">${cliente.Nombre}</div>
-            <div class="col col-10">${cliente.Apellidos || ""}</div>
-            <div class="col col-10">${cliente.Id_fiscal}</div>
-            <div class="col col-20">${cliente.Direccion}</div>
-            <div class="col col-5">${cliente.C_postal}</div>
-            <div class="col col-10">${cliente.Localidad}</div>
-            <div class="col col-5">${cliente.Pais}</div>
-            <div class="col col-10">${cliente.Telefono}</div>
-            <div class="col col-10">${cliente.Movil || ""}</div>
-            <div class="col col-15">${cliente.Email || ""}</div>
-            <div class="col col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
-            <div class="col col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+            <div class="col2 col-5">${cliente.id_cliente}</div>
+            <div class="col2 col-5">${cliente.Tipo_cliente}</div>
+            <div class="col2 col-10">${cliente.Nombre}</div>
+            <div class="col2 col-10">${cliente.Apellidos || ""}</div>
+            <div class="col2 col-10">${cliente.Id_fiscal}</div>
+            <div class="col2 col-20">${cliente.Direccion}</div>
+            <div class="col2 col-5">${cliente.C_postal}</div>
+            <div class="col2 col-10">${cliente.Localidad}</div>
+            <div class="col2 col-5">${cliente.Pais}</div>
+            <div class="col2 col-10">${cliente.Telefono}</div>
+            <div class="col2 col-10">${cliente.Movil || ""}</div>
+            <div class="col2 col-15">${cliente.Email || ""}</div>
+            <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+            <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
         </div>`;
   });
 

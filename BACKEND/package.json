@@ -9,11 +9,10 @@
   "author": "Josepe Gallicchio",
   "license": "ISC",
   "dependencies": {
-    "alertifyjs": "^1.13.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "jsdoc": "^4.0.2",
-    "mysql2": "^3.9.2",
+    "mysql2": "^3.9.3",
     "nodemon": "^3.1.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",

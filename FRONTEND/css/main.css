@@ -391,10 +391,10 @@ h4 {
 .row {
     width: 100%;
     display: flex;
-    justify-content:center;
+    justify-content:space-around;
     flex-direction: row;
     align-items: center;
-    text-align:center;
+   
 
 }
 .row2 {
@@ -408,6 +408,12 @@ h4 {
 
 }
 .col {
+  width: 100%;  
+  align-items:center;
+padding: 10px;
+  margin: 0px 10px 0px 10px;
+}
+.col2 {
     width: 100%;
     display: flex;
     justify-content:space-around;
@@ -546,14 +552,14 @@ h4 {
     padding: 0px 10px 30px 10px;   
 }
 input {
-    width: 90%;
+    width: 100%;
     font-family: "montserrat", sans-serif;
     color: #023d54;
     height: 20px;
     outline: 0;
     border: 0;
-    margin: 10px 10px 20px 10px;
-    padding: 20px;
+    margin:10px;
+    padding: 10px;
     font-size: 16px;
     border-bottom:dotted 1px #025154;  
     display: flex;
@@ -562,32 +568,28 @@ input {
 }
 
 
-.autocomplete {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: top;
-  padding-top: 100px;
-}
+/* .autocomplete {
+
+} */
 
 
 
 .autocomplete-results {
   display: none;
-  width: 300px;
-  margin-top: -2px;
-  font-size: 1.3em;
-  color: #eee;
+  width: 100%;
+  font-family: "montserrat", sans-serif;
+  font-size: 16px;
+ color: #012d3e;
   list-style: none;
   margin: 0;
+  margin-top: 0px;
   padding: 0;
 }
 
 .autocomplete-results li {
   margin: 0;
   padding: 0;
-  padding: 10px 0 10px 10px;
+  padding: 10px;
   border-right: 2px solid #eee;
   border-bottom: 2px solid #eee;
   border-left: 2px solid #eee;
@@ -595,22 +597,21 @@ input {
 
 .autocomplete-results li:hover {
   background-color: #eee;
-  color: blue;
+  color: rgb(151, 37, 3);
   cursor: pointer;
 }
 select {
-    width: 70%;
+    width: 100%;
     font-family: "montserrat", sans-serif;
     height: 30px;
     outline: 0;
     border: 0;
     padding: 5px;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 5px;
     display: flex;
-    justify-content:right;
-    margin-left: 45px;
-    margin-top: 10px;
+    justify-content:center;
+    margin:10px;
     color: #035170;
 
 }
@@ -636,30 +637,16 @@ select {
 }
 
 label {
-    color: #b02505;
+    color: #912108;
     font-family: "montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
     text-align: center;
-    margin-top: 10px;
+    padding-bottom: 100px;
+  
   }
-select {
-    width: 70%;
-    font-family: "montserrat", sans-serif;
-    height: 30px;
-    outline: 0;
-    border: 0;
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 5px;
-    display: flex;
-    justify-content:right;
-    margin-left: 45px;
-    margin-top: 10px;
-    color: #035170;
 
-}
 ::placeholder {
     color: rgb(201, 208, 219);
     font-family: "montserrat", sans-serif;
