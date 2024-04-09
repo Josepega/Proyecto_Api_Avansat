@@ -7,20 +7,15 @@
 
 body {
     font-family: "montserrat", sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content:space-between;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
     background: transparent;
+    height: 100vh;
 
 }
 .container {
   width: 100%;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content:start;
   align-items: center;
   background: transparent;
 
@@ -29,9 +24,10 @@ body {
 #principal {
   width: 100%;
   height: 100%;
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items:start;
   background: linear-gradient(
     180deg,
     rgba(255, 255, 255, 0.9585084033613446) 1%,
@@ -40,21 +36,21 @@ body {
 }
 /*----------------- CONTENEDOR GENERAL PRINCIPAL EX IFRAME --------------*/
 .container_principal {
-  height: 100%;
-  width: 100%;
+  height: 90%;
+  width: 90%;
   background: transparent;
   border-radius: 10px;
   display: flex;
   justify-content:center;
   align-items: center;
-  margin: 0px 20px;
+  margin: 0px 20px 0px 20px;
 }
 
 .container_seccion {
   font-family: "montserrat", sans-serif;
   width: 100%;
   height: 90%;
-  margin: 10px ;
+  margin: 0px ;
   padding: 0px 10px 0px 10px;
   border-radius: 10px;
   display: flex;
@@ -391,10 +387,10 @@ h4 {
 .row {
     width: 100%;
     display: flex;
-    justify-content:space-around;
+    justify-content:center;
     flex-direction: row;
     align-items: center;
-   
+    text-align:center;
 
 }
 .row2 {
@@ -407,26 +403,28 @@ h4 {
 
 
 }
-.col {
-  width: 100%;  
-  align-items:center;
-padding: 10px;
-  margin: 0px 10px 0px 10px;
-}
 .col2 {
+  width: 100%;
+  display: flex;
+  justify-content:space-around;
+  align-items:center;
+  text-align:center;
+  margin: 0px;
+  font-size: 13px;
+  color: #054149;  
+  padding:0px 10px;
+  border-bottom: #5b1b02 solid 1px;
+  height: 50px;
+  font-weight: 400;
+  padding: 5px;
+}
+.col {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content:space-around;
     align-items:center;
     text-align:center;
-    margin: 0px;
-    font-size: 13px;
-    color: #054149;  
-    padding:0px 10px;
-    border-bottom: #5b1b02 solid 1px;
-    height: 50px;
-    font-weight: 400;
-    padding: 5px;
 
 }
 .col-100 {
@@ -552,66 +550,39 @@ padding: 10px;
     padding: 0px 10px 30px 10px;   
 }
 input {
-    width: 100%;
+  
+    width: 90%;
     font-family: "montserrat", sans-serif;
-    color: #023d54;
-    height: 20px;
+    color: #055079;
     outline: 0;
     border: 0;
     margin:10px;
-    padding: 10px;
+    padding: 5px;
     font-size: 16px;
     border-bottom:dotted 1px #025154;  
     display: flex;
     justify-content:space-around;
+    align-items: center;
+    text-align: center;
     background: rgb(255, 255, 255);
+
 }
 
 
-/* .autocomplete {
 
-} */
-
-
-
-.autocomplete-results {
-  display: none;
-  width: 100%;
-  font-family: "montserrat", sans-serif;
-  font-size: 16px;
- color: #012d3e;
-  list-style: none;
-  margin: 0;
-  margin-top: 0px;
-  padding: 0;
-}
-
-.autocomplete-results li {
-  margin: 0;
-  padding: 0;
-  padding: 10px;
-  border-right: 2px solid #eee;
-  border-bottom: 2px solid #eee;
-  border-left: 2px solid #eee;
-}
-
-.autocomplete-results li:hover {
-  background-color: #eee;
-  color: rgb(151, 37, 3);
-  cursor: pointer;
-}
 select {
-    width: 100%;
+    width: 70%;
     font-family: "montserrat", sans-serif;
     height: 30px;
     outline: 0;
     border: 0;
     padding: 5px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 5px;
     display: flex;
-    justify-content:center;
-    margin:10px;
+    justify-content:right;
+    margin-left: 45px;
+    margin-top: 10px;
     color: #035170;
 
 }
@@ -637,16 +608,30 @@ select {
 }
 
 label {
-    color: #912108;
+    color: #b02505;
     font-family: "montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
     text-align: center;
-    padding-bottom: 100px;
-  
+    margin-top: 10px;
   }
+select {
+    width: 70%;
+    font-family: "montserrat", sans-serif;
+    height: 30px;
+    outline: 0;
+    border: 0;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    display: flex;
+    justify-content:right;
+    margin-left: 45px;
+    margin-top: 10px;
+    color: #035170;
 
+}
 ::placeholder {
     color: rgb(201, 208, 219);
     font-family: "montserrat", sans-serif;

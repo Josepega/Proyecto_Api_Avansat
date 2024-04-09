@@ -1,3 +1,77 @@
+#facturas_add {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 20px;
+
+}
+#facturas_items_add {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction:row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+#alta_facturas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height:80%;
+}
+.autocomplete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  
+  .autocomplete-results {
+    display: none;
+    position: absolute;
+    width: 300px;
+    top: 300px;
+    margin-top: -2px;
+    font-size: 1.3em;
+    color: #2c5a82;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+  }
+  
+  .autocomplete-results li {
+    margin: 0;
+    padding: 0;
+    padding: 10px 0 10px 10px;
+    border-right: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-left: 2px solid #eee;
+  }
+  
+  .autocomplete-results li:hover {
+    background-color: #eee;
+    color: rgb(151, 50, 6);
+    cursor: pointer;
+  }
+.row3 {
+  display: block;
+    margin-bottom: 10px; /* Espacio entre filas */
+}
+.col3 {
+  display: inline-block;
+  width: 100%;
+  margin: 5px;
+  padding: 5px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #5c6064;
+}
+
 #bloque-1 {
    
     width: 100%;
@@ -25,7 +99,7 @@
     padding-top: 10px;
    align-items: start;
     width: 100%;
-    height: 60%;
+    height: 70%;
     background-color: rgb(243, 243, 243);
 }
 #bloque-4 {

@@ -1,13 +1,13 @@
 
 
-// MODAL
-const modal = document.querySelectorAll("#modal_alta_clientes");
-const openModalButtons = document.querySelectorAll("#boton_clientes_alta");
-const closeModalButtons = document.querySelectorAll("#close");
+// MODALClientes
+const modalClientes = document.querySelectorAll("#modal_alta_clientes");
+const openModalClientesButtons = document.querySelectorAll("#boton_clientes_alta");
+const closeModalClientesButtons = document.querySelectorAll("#close");
 
-function openModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "block";
+function openModalClientes() {
+  modalClientes.forEach(function(modalClientes) {
+    modalClientes.style.display = "block";
   });
 
   const tipoCliente = document.getElementById("tipo");
@@ -29,29 +29,29 @@ function openModal() {
   });
 }
 
-function closeModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "none";
+function closeModalClientes() {
+  modalClientes.forEach(function(modalClientes) {
+    modalClientes.style.display = "none";
   });
 }
 
-openModalButtons.forEach(function(element) {
-  element.addEventListener("click", openModal);
+openModalClientesButtons.forEach(function(element) {
+  element.addEventListener("click", openModalClientes);
 });
 
-closeModalButtons.forEach(function(element) {
-  element.addEventListener("click", closeModal);
+closeModalClientesButtons.forEach(function(element) {
+  element.addEventListener("click", closeModalClientes);
 });
 
 
 
-// MODAL EDIT
-const modal_edit = document.querySelector("#modal_editar_clientes");
-const openModalButtons_edit = document.querySelectorAll(".editar-icono");
-const closeModalButton_edit = document.querySelectorAll("#close_edit");
+// MODALClientes EDIT
+const modalClientes_edit = document.querySelector("#editar_clientes");
+const openModalClientesButtons_edit = document.querySelectorAll(".editar-icono");
+const closeModalClientesButton_edit = document.querySelectorAll("#close_edit");
 
-function openModal_edit() {
-  modal_edit.style.display = "block";
+function openModalClientes_edit() {
+  modalClientes_edit.style.display = "block";
 
 
   const tipoCliente_edit = document.getElementById("tipo_edit");
@@ -73,15 +73,15 @@ function openModal_edit() {
   });
 }
 
-function closeModal_edit() {
-  modal_edit.style.display = "none";
+function closeModalClientes_edit() {
+  modalClientes_edit.style.display = "none";
 }
-closeModalButton_edit.forEach(function (element) {
-  element.addEventListener("click", closeModal_edit);
+closeModalClientesButton_edit.forEach(function (element) {
+  element.addEventListener("click", closeModalClientes_edit);
 });
 
-openModalButtons_edit.forEach(function (element) {
-  element.addEventListener("click", openModal_edit);
+openModalClientesButtons_edit.forEach(function (element) {
+  element.addEventListener("click", openModalClientes_edit);
 });
 
 
@@ -211,8 +211,8 @@ const mostrar = (data) => {
   data.forEach((cliente) => {
     resultado += `
         <div class="row2">
-            <div class="col2 col-5">${cliente.id_cliente}</div>
-            <div class="col2 col-5">${cliente.Tipo_cliente}</div>
+            <div class="col2 col-10">${cliente.id_cliente}</div>
+            <div class="col2 col-10">${cliente.Tipo_cliente}</div>
             <div class="col2 col-10">${cliente.Nombre}</div>
             <div class="col2 col-10">${cliente.Apellidos || ""}</div>
             <div class="col2 col-10">${cliente.Id_fiscal}</div>
@@ -315,7 +315,7 @@ on(document, "click", ".editar-icono", (e) => {
   const movil = fila.children[10].innerHTML;
   const email = fila.children[11].innerHTML;
 
-  // Asignar valores a los campos de entrada del modal myModal_edit
+  // Asignar valores a los campos de entrada del modalClientes myModalClientes_edit
   document.getElementById("id_edit").value = clienteId;
   document.getElementById("tipo_edit").value = tipoCliente;
   document.getElementById("clientes_nombre_edit").value = nombre;
@@ -329,8 +329,8 @@ on(document, "click", ".editar-icono", (e) => {
   document.getElementById("clientes_movil_edit").value = movil;
   document.getElementById("clientes_email_edit").value = email;
 
-  // Mostrar el modal myModal_edit
-  openModal_edit();
+  // Mostrar el modalClientes myModalClientes_edit
+  openModalClientes_edit();
 });
 
 

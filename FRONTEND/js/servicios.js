@@ -147,16 +147,16 @@ const mostrar = (data) => {
   data.forEach((servicio) => {
     resultado += `
         <div class="row2">
-            <div class="col col-10">${servicio.Id_servicio}</div>
-            <div class="col col-10">${servicio.Codigo}</div>
-            <div class="col col-30">${servicio.Nombre}</div>
-            <div class="col col-10">${servicio.Precio_coste}</div>
-            <div class="col col-10">${servicio.Precio_coste_iva}</div>
-            <div class="col col-10">${servicio.Precio_venta}</div>
-            <div class="col col-10">${servicio.Precio_venta_iva}</div>
+            <div class="col2 col-10">${servicio.Id_servicio}</div>
+            <div class="col2 col-10">${servicio.Codigo}</div>
+            <div class="col2 col-30">${servicio.Nombre}</div>
+            <div class="col2 col-10">${servicio.Precio_coste}</div>
+            <div class="col2 col-10">${servicio.Precio_coste_iva}</div>
+            <div class="col2 col-10">${servicio.Precio_venta}</div>
+            <div class="col2 col-10">${servicio.Precio_venta_iva}</div>
            
-            <div class="col col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
-            <div class="col col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+            <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+            <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
         </div>`;
   });
 
