@@ -46,5 +46,28 @@ router.post("/alta_factura", (req, res) => {
 
 // RUTAS: EDITAR FACTURAS
 
+router.get("/listado_autocomplete", async (req, res) => {
+  try {
+    const key = req.params.key;
+
+    const sqlServicios = SELECT * FROM servicios WHERE id_servicios = ${key};;
+    await conexionMySQL.query(sqlServicios);
+    const sqlStock = SELECT * FROM stock WHERE id_stock = ${key};;
+    await conexionMySQL.query(sqlStock);
+    res.json({
+      "status": 200,
+      "mensaje": "consulta creada exitosamente"
+    });
+  } catch (error) {
+    res.json({
+      "status": 500,
+      "mensaje": "Error al crear la consulta. Error:" + error
+    });
+  }
+ 
+});
+
+
+
 
 module.exports = router;

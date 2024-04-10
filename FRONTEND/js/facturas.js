@@ -1,7 +1,7 @@
 // Declarar la variable clientes en un ámbito global
 let clientes = [];
 
-
+// AUTO COMPLET CLIENTES
 // Función para buscar clientes por nombre
 const searchClientes = (key) => {
   fetch(`http://localhost:3000/api/v1/listado_clientes?Nombre=${key}`)
@@ -87,6 +87,174 @@ autocompleteResults.addEventListener("click", (e) => {
   }
 });
 
+ // AUTOCOMPLET SERVICIOS
+// Declarar la variable clientes en un ámbito global
+let servicios = [];
+
+
+// Función para buscar clientes por nombre
+const searchServicios = (key) => {
+  fetch(`http://localhost:3000/api/v1/listado_autocomplete?nombre=${key}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
+        servicios = data; // Asignar los datos de los clientes a la variable clientes
+        buildListServicios();
+      }
+    })
+    .catch(error => {
+      console.error("Error al buscar servicios:", error);
+    });
+};
+
+// Función para construir la lista de resultados
+const buildListServicios = () => {
+  const inputServicios = document.getElementById("facturas_descripcion");
+  const autocompleteResultsServicios = document.getElementById("autocomplete-results_servicios");
+
+  console.log("servicios:", servicios);
+
+  if (!servicios || servicios.length === 0) {
+    autocompleteResultsServicios.innerHTML = "";
+    return;
+  }
+
+  const key = inputServicios.value.toLowerCase();
+
+  const filteredServicios = servicios.filter(servicios => {
+    return servicios.Nombre.toLowerCase().startsWith(key);
+  }).sort((a, b) => {
+    // Ordenar alfabéticamente por el nombre
+    if (a.Nombre < b.Nombre) return -1;
+    if (a.Nombre > b.Nombre) return 1;
+    return 0;
+  });
+
+  autocompleteResultsServicios.innerHTML = "";
+
+  filteredServicios.slice(0, 10).forEach((servicios) => {
+    autocompleteResultsServicios.innerHTML += `<li>${servicios.Nombre} </li>`;
+  });
+};
+
+// Agregar evento al input para buscar clientes
+const inputServicios = document.getElementById("facturas_descripcion");
+const autocompleteResultsServicios = document.getElementById("autocomplete-results_servicios");
+
+inputServicios.addEventListener("keyup", (event) => {
+  autocompleteResultsServicios.style.display = "block";
+  const key = event.target.value;
+
+  console.log(key);
+
+  if (key.length > 0) {
+    searchServicios(key);
+  } else {
+    buildListServicios();
+  }
+});
+
+// Agregar evento a los elementos de la lista de resultados para seleccionar un cliente
+autocompleteResultsServicios.addEventListener("click", (e) => {
+  if (e.target && e.target.nodeName == "LI") {
+    const selectedNameServicios = e.target.innerHTML;
+    const selectedServicios = servicios.find(servicios => `${servicios.Nombre} ` === selectedNameServicios);
+    
+    // Rellenar los otros inputs con los datos del cliente seleccionado
+    inputServicios.value = selectedServicios.Nombre;
+   
+    document.getElementById('facturas_descripcion').value = selectedServicios.Nombre;
+    document.getElementById('facturas_codigo').value = selectedServicios.Codigo;
+    document.getElementById('facturas_precio').value = selectedServicios.Precio_coste;
+    
+
+    // Ocultar la lista de resultados
+    autocompleteResultsServicios.style.display = "none";
+  }
+}); 
+
+// AUTOCOMPLET STOCK
+
+
+/* // Función para buscar clientes por nombre
+let stock = [];
+
+const searchStock = (key) => {
+  fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
+        stock = data; // Asignar los datos de los clientes a la variable clientes
+        buildListStock();
+      }
+    })
+    .catch(error => {
+      console.error("Error al buscar clientes:", error);
+    });
+};
+
+// Función para construir la lista de resultados
+const buildListStock = () => {
+  const inputStock = document.getElementById("facturas_descripcion");
+  const autocompleteResultsStock = document.getElementById("autocomplete-results_servicios");
+
+  
+  if (!stock || stock.length === 0) {
+    autocompleteResultsStock.innerHTML = "";
+    return;
+  }
+
+  const key = inputStock.value.toLowerCase();
+
+  const filteredStock = stock.filter(stock => {
+    return stock.Nombre.toLowerCase().startsWith(key);
+  }).sort((a, b) => {
+    // Ordenar alfabéticamente por el nombre
+    if (a.Nombre < b.Nombre) return -1;
+    if (a.Nombre > b.Nombre) return 1;
+    return 0;
+  });
+
+  autocompleteResultsStock.innerHTML = "";
+
+  filteredStock.slice(0, 10).forEach((stock) => {
+    autocompleteResultsStock.innerHTML += `<li>${stock.Nombre} </li>`;
+  });
+};
+
+// Agregar evento al input para buscar clientes
+const inputStock = document.getElementById("facturas_descripcion");
+const autocompleteResultsStock = document.getElementById("autocomplete-results_servicios");
+
+inputStock.addEventListener("keyup", (event) => {
+  autocompleteResultsStock.style.display = "block";
+  const key = event.target.value;
+
+  console.log(key);
+
+  if (key.length > 0) {
+    searchStock(key);
+  } else {
+    buildListStock();
+  }
+});
+
+// Agregar evento a los elementos de la lista de resultados para seleccionar un cliente
+autocompleteResultsStock.addEventListener("click", (e) => {
+  if (e.target && e.target.nodeName == "LI") {
+    const selectedNameStock = e.target.innerHTML;
+    const selectedStock = stock.find(stock => `${stock.Nombre} ` === selectedNameStock);
+    
+    // Rellenar los otros inputs con los datos del cliente seleccionado
+    input.value = selectedStock.Nombre;
+    document.getElementById('facturas_descripcion').value = selectedStock.Nombre;
+    document.getElementById('facturas_codigo').value = selectedStock.Codigo;
+    document.getElementById('facturas_precio').value = selectedStock.Precio_coste;
+
+    // Ocultar la lista de resultados
+    autocompleteResultsStock.style.display = "none";
+  }
+});
 
 // Datos imputs clientes
 
@@ -102,19 +270,29 @@ const facturasPais = document.getElementById("facturas_pais");
 
 
   const tipoCliente = document.getElementById("tipo");
-  const clienteApellido = document.getElementById("facturas_apellidos_ocultar");
+  const clienteApellidoOcultar = document.getElementById("facturas_apellidos_ocultar");
+  const clienteNombreOcultar = document.getElementById("facturas_nombre_ocultar");
+  const clienteNombreEmpresaOcular = document.getElementById("facturas_nombreEmpresa_ocultar");
 
   if (tipoCliente.value === "Empresa") {
-    clienteApellido.style.display = "none";
+    clienteNombreEmpresaOcular.style.display = "block";
+    clienteApellidoOcultar.style.display = "none";
+    clienteNombreOcultar.style.display = "none";
   } else {
-    clienteApellido.style.display = "block";
+    clienteApellidoOcultar.style.display = "block";
+    clienteNombreOcultar.style.display = "block";
+    clienteNombreEmpresaOcular.style.display = "none";
   }
 
   tipoCliente.addEventListener("change", () => {
     if (tipoCliente.value === "Empresa") {
-      clienteApellido.style.display = "none";
+      clienteNombreEmpresaOcular.style.display = "block";
+      clienteApellidoOcultar.style.display = "none";
+      clienteNombreOcultar.style.display = "none";
     } else {
-      clienteApellido.style.display = "block";
+      clienteNombreEmpresaOcular.style.display = "none";
+      clienteApellidoOcultar.style.display = "block";
+      clienteNombreOcultar.style.display = "block";
     }
   });
 
@@ -183,7 +361,7 @@ const facturasPais = document.getElementById("facturas_pais");
     arregloDetalle.push(objetoDetalle);
     redibujarTabla();
 });
-
+ */
   /* 
   imagenAgregar.addEventListener("click", () => {
     let facturasCantidad = parseInt(document.getElementById("facturas_cantidad").value);

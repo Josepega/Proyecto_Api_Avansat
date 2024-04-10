@@ -564,26 +564,13 @@ input {
     align-items: center;
     text-align: center;
     background: rgb(255, 255, 255);
+ 
 
 }
-
-
-
-select {
-    width: 70%;
-    font-family: "montserrat", sans-serif;
-    height: 30px;
-    outline: 0;
-    border: 0;
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 5px;
-    display: flex;
-    justify-content:right;
-    margin-left: 45px;
-    margin-top: 10px;
-    color: #035170;
-
+input:-webkit-text-fill-color {
+  background-color:transparent !important;
+  -webkit-text-fill-color: #feffff !important;
+  -webkit-box-shadow: 0 0 0 30px transparent !important;
 }
 .btn {
     width: 50%;

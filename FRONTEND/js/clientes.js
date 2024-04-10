@@ -11,20 +11,30 @@ function openModalClientes() {
   });
 
   const tipoCliente = document.getElementById("tipo");
+  const clienteNombre = document.getElementById("clientes_nombre_ocultar");
   const clienteApellido = document.getElementById("clientes_apellidos_ocultar");
+  const clienteNombreEmpresa = document.getElementById("clientes_nombreEmpresa_ocultar");
 
 
   if (tipoCliente.value === "Empresa") {
+    clienteNombreEmpresa.style.display = "block";
+    clienteNombre.style.display = "none";
     clienteApellido.style.display = "none";
   } else {
     clienteApellido.style.display = "block";
+    clienteNombre.style.display = "block";
+    clienteNombreEmpresa.style.display = "none";
   }
 
   tipoCliente.addEventListener("change", () => {
     if (tipoCliente.value === "Empresa") {
+      clienteNombreEmpresa.style.display = "block";
+      clienteNombre.style.display = "none";
       clienteApellido.style.display = "none";
     } else {
       clienteApellido.style.display = "block";
+      clienteNombre.style.display = "block";
+      clienteNombreEmpresa.style.display = "none";
     }
   });
 }
@@ -46,7 +56,7 @@ closeModalClientesButtons.forEach(function(element) {
 
 
 // MODALClientes EDIT
-const modalClientes_edit = document.querySelector("#editar_clientes");
+const modalClientes_edit = document.querySelector("#modal_editar_clientes");
 const openModalClientesButtons_edit = document.querySelectorAll(".editar-icono");
 const closeModalClientesButton_edit = document.querySelectorAll("#close_edit");
 
@@ -56,19 +66,30 @@ function openModalClientes_edit() {
 
   const tipoCliente_edit = document.getElementById("tipo_edit");
   const clienteApellido_edit = document.getElementById("clientes_apellidos_ocultar_edit");
+  const clienteNombre_edit = document.getElementById("clientes_nombre_ocultar_edit");
+  const clienteNombreEmpresa_edit = document.getElementById("clientes_nombreEmpresa_ocultar_edit");
+
 
 
   if (tipoCliente_edit.value === "Empresa") {
+    clienteNombreEmpresa_edit.style.display = "block";
+    clienteNombre_edit.style.display = "none";
     clienteApellido_edit.style.display = "none";
   } else {
     clienteApellido_edit.style.display = "block";
+    clienteNombre_edit.style.display = "block";
+    clienteNombreEmpresa_edit.style.display = "none";
   }
 
   tipoCliente_edit.addEventListener("change", () => {
     if (tipoCliente_edit.value === "Empresa") {
+      clienteNombreEmpresa_edit.style.display = "block";
+      clienteNombre_edit.style.display = "none";
       clienteApellido_edit.style.display = "none";
     } else {
       clienteApellido_edit.style.display = "block";
+      clienteNombre_edit.style.display = "block";
+      clienteNombreEmpresa_edit.style.display = "none";
     }
   });
 }
