@@ -389,8 +389,7 @@ h4 {
     display: flex;
     justify-content:center;
     flex-direction: row;
-    align-items: center;
-    text-align:center;
+    align-items:space-around; 
 
 }
 .row2 {

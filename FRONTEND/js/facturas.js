@@ -148,12 +148,12 @@ const facturasPais = document.getElementById("facturas_pais");
           let fila = document.createElement("div");
           fila.classList.add("row");
           fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
-                            <div class="col3 col-10">${detalle.codigo}</div>
-                            <div class="col3 col-30">${detalle.descripcion}</div>
-                            <div class="col3 col-10">${detalle.precio}</div>
-                            <div class="col3 col-10">${detalle.impuestos}</div>
-                            <div class="col3 col-10">${detalle.precioIva}</div>                
-                            <div class="col3 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>`;
+                            <div class="col3 col-15">${detalle.codigo}</div>
+                            <div class="col3 col-40">${detalle.descripcion}</div>
+                            <div class="col3 col-15">${detalle.precio}</div>
+                            <div class="col3 col-15">${detalle.impuestos}</div>
+                            <div class="col3 col-15">${detalle.precioIva}</div>                                         
+                            <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>`;
           facturasAdd.appendChild(fila);
       });
   };

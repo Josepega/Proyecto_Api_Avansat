@@ -146,7 +146,7 @@
                                     <h4>Precio unitario</h4>
                                 </div>
                                 <div class="col2 col-15">
-                                    <h4>Impuestos</h4>
+                                    <h4>IVA %</h4>
                                 </div>
                                 <div class="col2 col-15">
                                     <h4>Precio IVA inc</h4>
@@ -164,14 +164,14 @@
                                 <div class="col col-10">
                                     <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
                                 </div>
-                                <div class="col col-30">
+                                <div class="col col-35">
                                     <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion">
                                 </div>
                               
                                 <div class="col col-15">
                                     <input type="number" placeholder="Ej: 20,50" id="facturas_precio">
                                 </div>
-                                <div class="col col-15">
+                                <div class="col col-10">
                                     <select name="impuestos" id="facturas_impuestos">
                                         <option value="21" selected="selected">21%</option>
                                         <option value="15">15%</option>
@@ -180,11 +180,12 @@
                                         <option value="0">0%</option>                    
                                     </select>
                                 </div>
-                                <div class="col-15"></div>                               
-                                <div class="col col-15"><img id="icono-agregar" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
+                                <div class="col-20"></div>                               
+                                <div class="col col-10"><img id="icono-agregar" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
                             </div>
 
                             <!-- BOTON GUARDAR TOTALES -->
+                            <div id="separador"></div>
                             <div class="row">
                                 <div class="col col-40">
                                     <button type="button" id="boton_facturas_guardar" class="btn">Guardar factura</button>
