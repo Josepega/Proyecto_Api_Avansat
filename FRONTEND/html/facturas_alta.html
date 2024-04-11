@@ -83,19 +83,19 @@
                                         <option value="Empresa">Empresa</option>
                                     </select>
                                 </div>
-                                <div class="col col-30 autocomplete" id="facturas_nombre_ocultar">
+                                <div class="col col-30 autocomplete_clientes" id="facturas_nombre_ocultar">
                                     <label><span>*</span>Nombre</label>
-                                    <input type="text" id="facturas_nombre" placeholder="Ej: Juan Antonio">
-                                    <ul id="autocomplete-results" class="autocomplete-results" >
-                                    </ul>
+                                    <input type="text" id="facturas_nombre_cliente" placeholder="Ej: Juan Antonio">
+                                    <ul id="autocomplete-results_clientes" class="autocomplete-results_clientes"></ul>
                                 </div>
+
                                 <div class="col col-30" id="facturas_apellidos_ocultar">
                                     <label><span>*</span>Apellidos</label>
                                     <input type="text" id="facturas_apellidos" placeholder="Ej: Gómez Perez">
                                 </div>
                                 <div class="col col-50" id="facturas_nombreEmpresa_ocultar" >
                                     <label><span>*</span>Nombre de l empresa</label>
-                                    <input type="text" id="facturas_nombre" placeholder="Ej: Avansat">
+                                    <input type="text" id="facturas_nombre_empresa" placeholder="Ej: Avansat">
                                 </div>
                                 <div class="col col-15">
                                     <label><span>*</span>Id fiscal</label>
@@ -168,10 +168,9 @@
                                 <div class="col col-10">
                                     <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
                                 </div>
-                                <div class="col col-35">
-                                    <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion">
-                                    <ul id="autocomplete-results_servicios" class="autocomplete-results" >
-                                    </ul>
+                                <div class="col col-35 autocomplete_servicios">
+                                    <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock">
+                                    <ul id="autocomplete-results_stock" class="autocomplete-results_stock"></ul>
                                 </div>
                               
                                 <div class="col col-15">

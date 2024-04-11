@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-/* const util = require('util'); */
+//const util = require('util'); 
 
 const conexionMySQL = mysql.createConnection({
     host: 'localhost',
@@ -10,7 +10,7 @@ const conexionMySQL = mysql.createConnection({
 
 // PROMISE
 
-/* conexionMySQL.query = util.promisify(conexionMySQL.query).bind(conexionMySQL); */
+//conexionMySQL.query = util.promisify(conexionMySQL.query).bind(conexionMySQL); 
 
 conexionMySQL.connect(err => {
   if (err) {

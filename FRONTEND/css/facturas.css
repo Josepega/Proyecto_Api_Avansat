@@ -1,7 +1,7 @@
 #separador {
   width: 100%;
   height: 20px;
-margin-bottom: 20px;
+  margin-bottom: 20px;
   border-bottom: #c07254 1px solid;
 }
 #facturas_add {
@@ -27,7 +27,7 @@ margin-bottom: 20px;
     width: 100%;
     height:80%;
 }
-.autocomplete {
+.autocomplete_clientes, .autocomplete_servicios {
     display: flex;
     width: 100%;
     display: flex;
@@ -40,7 +40,7 @@ margin-bottom: 20px;
   
   
   
-  .autocomplete-results {
+  .autocomplete-results_clientes, .autocomplete-results_servicios {
     display: none;
    /*  position: absolute; */
     width: 300px;
@@ -54,7 +54,8 @@ margin-bottom: 20px;
     background-color: #ffffff;
   }
   
-  .autocomplete-results li {
+  .autocomplete-results_clientes li, .autocomplete-results_servicios li {
+    cursor: pointer;
     margin: 0;
     padding: 0;
     border-right: 2px solid #eee;
@@ -62,7 +63,7 @@ margin-bottom: 20px;
     border-left: 2px solid #eee;
   }
   
-  .autocomplete-results li:hover {
+  .autocomplete-results_clientes li:hover, .autocomplete-results_servicios li:hover {
     background-color: #eee;
     color: rgb(151, 50, 6);
     cursor: pointer;
@@ -81,44 +82,3 @@ margin-bottom: 20px;
   color: #5c6064;
 }
 
-#bloque-1 {
-   
-    width: 100%;
-    
-}
-#bloque-2 {
-    width: 100%;
-    display: flex;
-    flex-direction:column;
-    justify-content: space-between;
-    align-items:start;
-    margin-bottom: 10px;
-    padding: 5px;
-    border: solid 1px #c07254;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    border-radius: 5px;
-  
-}
-#bloque-2b {
-   
-    width: 100%;
-   
-}
-#bloque-3 {
-    padding-top: 10px;
-   align-items: start;
-    width: 100%;
-    height: 70%;
-    background-color: rgb(243, 243, 243);
-}
-#bloque-4 {
-   
-    width: 100%;
-    height: 80px;
-    border: solid 1px #c07254;
-    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
-    padding: 5px;
-    border-radius: 5px;
-    align-items: end;
-    
-}

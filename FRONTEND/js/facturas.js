@@ -19,8 +19,8 @@ const searchClientes = (key) => {
 
 // Función para construir la lista de resultados
 const buildList = () => {
-  const input = document.getElementById("facturas_nombre");
-  const autocompleteResults = document.getElementById("autocomplete-results");
+  const input = document.getElementById("facturas_nombre_cliente");
+  const autocompleteResults = document.getElementById("autocomplete-results_clientes");
 
   console.log("Clientes:", clientes);
 
@@ -48,8 +48,8 @@ const buildList = () => {
 };
 
 // Agregar evento al input para buscar clientes
-const input = document.getElementById("facturas_nombre");
-const autocompleteResults = document.getElementById("autocomplete-results");
+const input = document.getElementById("facturas_nombre_cliente");
+const autocompleteResults = document.getElementById("autocomplete-results_clientes");
 
 input.addEventListener("keyup", (event) => {
   autocompleteResults.style.display = "block";
@@ -73,7 +73,7 @@ autocompleteResults.addEventListener("click", (e) => {
     // Rellenar los otros inputs con los datos del cliente seleccionado
     input.value = selectedCliente.Nombre;
     document.getElementById('id_cliente').value = selectedCliente.id_cliente;
-    document.getElementById('facturas_nombre').value = selectedCliente.Nombre;
+    document.getElementById('facturas_nombre_cliente').value = selectedCliente.Nombre;
     document.getElementById('facturas_apellidos').value = selectedCliente.Apellidos;
     document.getElementById('facturas_direccion').value = selectedCliente.Direccion;
     document.getElementById('facturas_fiscal').value = selectedCliente.Id_fiscal;
@@ -87,14 +87,15 @@ autocompleteResults.addEventListener("click", (e) => {
   }
 });
 
+
  // AUTOCOMPLET SERVICIOS
 // Declarar la variable clientes en un ámbito global
-let servicios = [];
+//let servicios = [];
 
 
 // Función para buscar clientes por nombre
-const searchServicios = (key) => {
-  fetch(`http://localhost:3000/api/v1/listado_autocomplete?nombre=${key}`)
+/* const searchServicios = (key) => {
+  fetch(`http://localhost:3000/api/v1/listado_autocomplete?Nombre=${key}`)
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data)) {
@@ -171,34 +172,35 @@ autocompleteResultsServicios.addEventListener("click", (e) => {
     // Ocultar la lista de resultados
     autocompleteResultsServicios.style.display = "none";
   }
-}); 
+});  */
 
 // AUTOCOMPLET STOCK
 
 
-/* // Función para buscar clientes por nombre
+
+// Declarar la variable stock en un ámbito global
 let stock = [];
 
+// Función para buscar stock por nombre
 const searchStock = (key) => {
   fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data)) {
-        stock = data; // Asignar los datos de los clientes a la variable clientes
+        stock = data; // Asignar los datos de stock a la variable stock
         buildListStock();
       }
     })
     .catch(error => {
-      console.error("Error al buscar clientes:", error);
+      console.error("Error al buscar stock:", error);
     });
 };
 
-// Función para construir la lista de resultados
+// Función para construir la lista de resultados del autocompletado de stock
 const buildListStock = () => {
-  const inputStock = document.getElementById("facturas_descripcion");
-  const autocompleteResultsStock = document.getElementById("autocomplete-results_servicios");
+  const inputStock = document.getElementById("facturas_descripcion_stock");
+  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
 
-  
   if (!stock || stock.length === 0) {
     autocompleteResultsStock.innerHTML = "";
     return;
@@ -218,19 +220,17 @@ const buildListStock = () => {
   autocompleteResultsStock.innerHTML = "";
 
   filteredStock.slice(0, 10).forEach((stock) => {
-    autocompleteResultsStock.innerHTML += `<li>${stock.Nombre} </li>`;
+    autocompleteResultsStock.innerHTML += `<li>${stock.Nombre}</li>`;
   });
 };
 
-// Agregar evento al input para buscar clientes
-const inputStock = document.getElementById("facturas_descripcion");
-const autocompleteResultsStock = document.getElementById("autocomplete-results_servicios");
+// Agregar evento al input para buscar stock
+const inputStock = document.getElementById("facturas_descripcion_stock");
+const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
 
 inputStock.addEventListener("keyup", (event) => {
   autocompleteResultsStock.style.display = "block";
   const key = event.target.value;
-
-  console.log(key);
 
   if (key.length > 0) {
     searchStock(key);
@@ -239,15 +239,14 @@ inputStock.addEventListener("keyup", (event) => {
   }
 });
 
-// Agregar evento a los elementos de la lista de resultados para seleccionar un cliente
+// Agregar evento a los elementos de la lista de resultados para seleccionar un stock
 autocompleteResultsStock.addEventListener("click", (e) => {
   if (e.target && e.target.nodeName == "LI") {
     const selectedNameStock = e.target.innerHTML;
-    const selectedStock = stock.find(stock => `${stock.Nombre} ` === selectedNameStock);
+    const selectedStock = stock.find(stock => stock.Nombre === selectedNameStock);
     
-    // Rellenar los otros inputs con los datos del cliente seleccionado
-    input.value = selectedStock.Nombre;
-    document.getElementById('facturas_descripcion').value = selectedStock.Nombre;
+    // Rellenar los inputs relacionados con el stock seleccionado
+    document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
     document.getElementById('facturas_codigo').value = selectedStock.Codigo;
     document.getElementById('facturas_precio').value = selectedStock.Precio_coste;
 
@@ -255,6 +254,7 @@ autocompleteResultsStock.addEventListener("click", (e) => {
     autocompleteResultsStock.style.display = "none";
   }
 });
+
 
 // Datos imputs clientes
 
@@ -305,16 +305,16 @@ const facturasPais = document.getElementById("facturas_pais");
   var facturasPrecio = document.getElementById("facturas_precio");
   var facturasImpuesto = document.getElementById("facturas_impuesto");
   var facturasTotal = document.getElementById("facturas_total");
+  var facturasFecha = document.getElementById("facturas_alta");
+  const fechaActual = new Date().toISOString().split('T')[0];
+  facturasFecha.value = fechaActual;
   var facturasAdd = document.getElementById("facturas_add");
   var imagenAgregar = document.getElementById("icono-agregar");
   var guardarFacturas = document.getElementById("boton_facturas_guardar");
 
-  let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-  let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-  let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
- 
+  
 
-  facturasTotal.innerHTML = facturasTotaldeTotales.toFixed(2);
+  //facturasTotal.innerHTML = facturasTotaldeTotales.toFixed(2);
 
   
   
@@ -337,53 +337,50 @@ const facturasPais = document.getElementById("facturas_pais");
   };
 
   imagenAgregar.addEventListener("click", () => {
-    let facturasCantidad = parseInt(document.getElementById("facturas_cantidad").value);
-    let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value);
-    let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value);
-    let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-    let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-    let facurasBaseImponible = facturasPrecioIva * facturasCantidad;
-    let facturasTotaldeTotales = facurasBaseImponible + facturasPrecioSubTotal;
+    let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
+    if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
+        let facturasCantidad = (facturasCantidadInput);
+        let facturasCodigo = document.getElementById("facturas_codigo").value;
+        let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
+        let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
+        let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
+        let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
+        let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
+        let facturasBaseImponible = facturasPrecioIva - facturasPrecioSubTotal;
+        let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
 
-    // Actualizar el campo de entrada "facturas_total"
-    document.getElementById("facturas_total").value = facturasTotaldeTotales.toFixed(2);
-    document.getElementById("facturas_imponible").value = facurasBaseImponible.toFixed(2);
+        //Actualizar el campo de entrada "facturas_total"
+        document.getElementById("facturas_total").value = facturasTotaldeTotales.toFixed(2);
+        document.getElementById("facturas_imponible").value = facturasBaseImponible.toFixed(2); 
 
-    // Agregar el detalle a la factura
-    const objetoDetalle = {
-        cantidad: facturasCantidad,
-        codigo: document.getElementById("facturas_codigo").value,
-        descripcion: document.getElementById("facturas_descripcion").value,
-        precio: facturasPrecio,
-        impuestos: facturasImpuesto,
-        precioIva: facturasPrecioIva,
-    };
-    arregloDetalle.push(objetoDetalle);
-    redibujarTabla();
-});
- */
-  /* 
-  imagenAgregar.addEventListener("click", () => {
-    let facturasCantidad = parseInt(document.getElementById("facturas_cantidad").value);
-    let facturasCodigo = document.getElementById("facturas_codigo").value;
-    let facturasDescripcion = document.getElementById("facturas_descripcion").value;
-    let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value);
-    let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value);
-    let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-    let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-    let facurasBaseImponible = facturasPrecioIva * facturasCantidad;
-    let facturasTotaldeTotales = facurasBaseImponible + facturasPrecioIva;
-
-     
-      const objetoDetalle = {
-          cantidad: facturasCantidad,
-          codigo: facturasCodigo,
-          descripcion: facturasDescripcion,
-          precio: facturasPrecio,
-          impuestos: facturasImpuesto,
-          precioIva: facturasPrecioIva,
+        // Agregar el detalle a la factura
+        const objetoDetalle = {
+            cantidad: facturasCantidad,
+            codigo: document.getElementById("facturas_codigo").value,
+            descripcion: document.getElementById("facturas_descripcion_stock").value,
+            precio: facturasPrecio,
+            impuestos: facturasImpuesto,
+            precioIva: facturasPrecioIva,
         };
-      arregloDetalle.push(objetoDetalle);
-      redibujarTabla();
-  }); */
-  
+        arregloDetalle.push(objetoDetalle);
+        redibujarTabla();
+    } else {
+        console.error("El valor de 'facturas_cantidad' no es un número válido.");
+    }
+    autocomplete_servicios_reset();
+});
+
+    function autocomplete_servicios_reset() {
+        const input = document.getElementById("facturas_descripcion_stock");
+        const cantidad = document.getElementById("facturas_cantidad");
+        const precio = document.getElementById("facturas_precio");
+        const codigo = document.getElementById("facturas_codigo");
+        const results = document.getElementById("autocomplete-results_stock");
+
+        input.value = "";
+        cantidad.value = "";
+        precio.value = "";
+        codigo.value = "";
+        results.innerHTML = "";
+    
+    };
