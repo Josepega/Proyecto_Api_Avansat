@@ -48,10 +48,10 @@ const buildList = () => {
 };
 
 // Agregar evento al input para buscar clientes
-const input = document.getElementById("facturas_nombre_cliente");
+const inputClientes = document.getElementById("facturas_nombre_cliente");
 const autocompleteResults = document.getElementById("autocomplete-results_clientes");
 
-input.addEventListener("keyup", (event) => {
+inputClientes.addEventListener("keyup", (event) => {
   autocompleteResults.style.display = "block";
   const key = event.target.value;
 
@@ -71,8 +71,8 @@ autocompleteResults.addEventListener("click", (e) => {
     const selectedCliente = clientes.find(cliente => `${cliente.Nombre} ${cliente.Apellidos}` === selectedName);
     
     // Rellenar los otros inputs con los datos del cliente seleccionado
-    input.value = selectedCliente.Nombre;
-    document.getElementById('id_cliente').value = selectedCliente.id_cliente;
+    inputClientes.value = selectedCliente.Nombre;
+    document.getElementById('facturas_id_cliente').value = selectedCliente.id_cliente;
     document.getElementById('facturas_nombre_cliente').value = selectedCliente.Nombre;
     document.getElementById('facturas_apellidos').value = selectedCliente.Apellidos;
     document.getElementById('facturas_direccion').value = selectedCliente.Direccion;
@@ -183,7 +183,7 @@ let stock = [];
 
 // Función para buscar stock por nombre
 const searchStock = (key) => {
-  fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+  fetch(`http://localhost:3000/api/v1/listado_facturas?Nombre=${key}`)
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data)) {
@@ -384,3 +384,183 @@ const facturasPais = document.getElementById("facturas_pais");
         results.innerHTML = "";
     
     };
+
+
+
+// ALTA FACTURAS 
+
+const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
+BotonGuardarFactura.forEach(function (element) {
+    element.addEventListener("click", () => {
+        
+
+        const facturasAlta = document.getElementById("facturas_alta").value;
+        const fechaActual = new Date().toISOString().split('T')[0];
+        facturasAlta.value = fechaActual;
+        const facturasCliente= document.getElementById("facturas_id_cliente").value;
+        const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
+        const facturasEstado = (document.getElementById("facturas_estado").value);
+        const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
+        const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
+
+        // Validación de campos obligatorios
+        if (
+            facturasAlta == "" ||
+            facturasCliente == "" ||
+            facturasVencimiento == "" ||
+            facturasEstado == "" ||
+            isNaN(facturasTotal) ||
+            isNaN(facturasImponible) 
+        ) {
+            swal({
+                icon: "error",
+                title: "Los campos marcados con * son obligatorios",
+                text: "¡Completa los que te falten!",
+                button: "OK",
+            });
+            return;
+        }
+
+        // Realizar la solicitud HTTP POST al servidor
+        const urlAlta = "http://localhost:3000/api/v1/alta_factura";
+        fetch(urlAlta, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              Fecha_alta: facturasAlta ,    
+              Id_cliente: facturasCliente,
+              Fecha_vencimiento: facturasVencimiento ,
+              Estado: facturasEstado,
+              Base_imponible: facturasImponible,
+              Total: facturasTotal
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error al agregar la factura");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                swal({
+                    title: "¡Factura añadida correctamente!",
+                    icon: "success",
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+            })
+            .catch((error) => {
+                swal("Error al agregar la factura", error.message, "error");
+            });
+    });
+});
+
+
+// ELIMINAR STOCK
+const on = (element, event, selector, handler) => {
+  element.addEventListener(event, (e) => {
+    if (e.target.closest(selector)) {
+      handler(e);
+    }
+  });
+};
+
+on(document, "click", ".eliminar-icono", (e) => {
+  const fila = e.target.parentNode.parentNode;
+  const id = fila.firstElementChild.innerHTML;
+
+  swal({
+    title: "¿Estás seguro de quieres eliminar este stock?",
+    text: "¡Esta acción no se puede deshacer!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  }).then((willDelete) => {
+    if (willDelete) {
+      const url = "http://localhost:3000/api/v1/borrar_stock/";
+      fetch(url + id, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          codigo: id,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            swal({
+              title: "¡Stock eliminado!",
+              text: "El artículo ha sido eliminado satisfactoriamente.",
+              icon: "success",
+            });
+            setTimeout(() => {
+              location.reload();
+            }, 3000);
+          } else {
+            swal("Error al eliminar el articulo", {
+              icon: "error",
+            });
+          }
+        })
+        .catch((error) => {
+          swal("Error al eliminar el articulo", {
+            icon: "error",
+          });
+          console.error("Error:", error);
+        });
+    } else {
+      swal({
+        title: "¡Articulo NO eliminado!",
+        text: "Todo a salvo!.",
+        icon: "success",
+      });
+    }
+  });
+});
+
+/* // LISTADO FACTURAS
+
+const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas";
+const listado_facturas = document.querySelector("#listado_facturas");
+
+fetch(urlListadoFacturas)
+  .then((response) => response.json())
+  .then((resultado) => mostrar(resultado))
+  .catch((error) => console.error("Error al obtener los datos:", error));
+
+const mostrar = (data) => {
+  if (!Array.isArray(data) || data.length === 0) {
+    console.error("Los datos recibidos no son válidos.");
+    return;
+  }
+
+  let resultado = "";
+  if (listado_facturas) {
+    listado_facturas.innerHTML = resultado;
+  } else {
+    console.error("El elemento #listado_facturas no se encontró en el DOM.");
+  }
+  
+
+  data.forEach((facturas) => {
+  
+    resultado += `
+        <div class="row2">
+            <div class="col2 col-10">${facturas.Id_factura}</div>
+            <div class="col2 col-10">${facturas.Fecha_alta}</div>
+            <div class="col2 col-10">${facturas.Fecha_vencimiento}</div>
+            <div class="col2 col-30">${facturas.Cliente}</div>
+            <div class="col2 col-10">${facturas.Base_imponible}</div>
+            <div class="col2 col-10">${facturas.Total}</div>
+           
+           
+            <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+            <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+            <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
+        </div>`;
+  });
+
+  listado_facturas.innerHTML = resultado;
+}; */

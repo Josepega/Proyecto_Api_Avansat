@@ -8,7 +8,7 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <link rel="stylesheet" href="../css/facturas.css">
     <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/facturas.js" defer></script>
+    <script src="../js/facturas.js" defer></script>    
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js" defer></script>
@@ -67,12 +67,12 @@
                                 <div class="col col-20">
                                     <label><span>*</span>Vencimiento</label>
                                     <select name="vencimiento" id="facturas_vencimiento">
-                                        <option value="quincena">15 días</option>
-                                        <option value="mes" selected="selected">30 días</option>
-                                        <option value="trimestre">90 días</option>
+                                        <option value="15">15 días</option>
+                                        <option value="30" selected="selected">30 días</option>
+                                        <option value="90">90 días</option>
                                     </select>
                                 </div>
-                                <div class="col col-10" style="display: none;"><input type="text" id="id_cliente"></div>
+                                <div class="col col-10" style="display: none;"><input type="text" id="facturas_id_cliente"></div>
                             </div>
 
                             <div class="row"><!-- ROW DATOS CLIENTE 1-->

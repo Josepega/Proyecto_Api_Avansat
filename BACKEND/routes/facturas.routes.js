@@ -8,26 +8,27 @@ const conexionMySQL = require("../conexionMySQL");
 router.post("/alta_factura", (req, res) => {
   try {
     const data = {
-      Codigo: req.body.Codigo,
-      key: req.body.key,
-      Precio_coste: req.body.Precio_coste,
-      Precio_coste_iva: req.body.Precio_coste_iva,
-      Precio_venta: req.body.Precio_venta,
-      Precio_venta_iva: req.body.Precio_venta_iva,
+      Fecha_alta: req.body.Fecha_alta,    
+      Cliente: req.body.Id_cliente,
+      Fecha_vencimiento: req.body.Fecha_vencimiento,
+      Estado: req.body.Estado,
+      Base_imponible: req.body.Base_imponible,
+      Total: req.body.Total
     };
+     
 
-    const sql = "INSERT INTO servicios SET ?";
+    const sql = "INSERT INTO  facturas SET Id_factura = DEFAULT, ?";
     conexionMySQL.query(sql, data, (error, result) => {
       if (error) {
         res.status(400).json({
           status: 400,
-          mensaje: "Error al insertar Servicio",
+          mensaje: "Error al insertar la nueva factura",
           error: error
         });
       } else {
         res.status(200).json({
           status: 200,
-          mensaje: "Servicio insertado correctamente"
+          mensaje: "Factura insertada correctamente"
         });
       }
     });
@@ -41,6 +42,15 @@ router.post("/alta_factura", (req, res) => {
 });
 
 // RUTAS: LISTADO DE FACTURAS
+router.get('/listado_facturas', (req,res)=>{
+  conexionMySQL.query('SELECT * FROM facturas', (error,filas)=>{
+      if(error){
+          throw error
+      }else{
+          res.json(filas)
+      }
+  })
+})
 
 // RUTAS: BORRAR FACTURAS
 
@@ -71,16 +81,16 @@ router.get("/listado_autocomplete:key=key?", async (req, res) => {
     });
   }
 }); */
-
+/* 
  // RUTAS: LISTADO DE STOCK Y SERVICIOS
-router.get('/listado_stock_servicios', (req, res) => {
+router.get('/listado_facturas', (req, res) => {
   try {
     // Consulta a la tabla de stock
-    conexionMySQL.query('SELECT * FROM stock', (errorStock, filasStock) => {
+    conexionMySQL.query('SELECT * FROM facturas', (errorStock, filasStock) => {
       if (errorStock) {
         throw errorStock;
       } else {
-        // Consulta a la tabla de servicios
+        // Consulta a la tabla de servicios 
         conexionMySQL.query('SELECT * FROM servicios', (errorServicios, filasServicios) => {
           if (errorServicios) {
             throw errorServicios;
@@ -103,7 +113,7 @@ router.get('/listado_stock_servicios', (req, res) => {
     });
   }
 }); 
-
+ */
 
 
 module.exports = router;
