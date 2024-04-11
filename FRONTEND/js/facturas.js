@@ -1,3 +1,62 @@
+// MODALFacturas
+const modalFacturas = document.querySelectorAll("#modal_alta_facturas");
+const openModalFacturasButtons = document.querySelectorAll("#boton_facturas_alta");
+const closeModalFacturasButtons = document.querySelectorAll("#close");
+
+function openModalFacturas() {
+  modalFacturas.forEach(function(modalFacturas) {
+    modalFacturas.style.display = "block";
+  });
+}
+
+function closeModalFacturas() {
+  modalFacturas.forEach(function(modalFacturas) {
+    modalFacturas.style.display = "none";
+  });
+}
+
+openModalFacturasButtons.forEach(function(element) {
+  element.addEventListener("click", openModalFacturas);
+});
+
+closeModalFacturasButtons.forEach(function(element) {
+  element.addEventListener("click", closeModalFacturas);
+});
+
+
+
+// MODALFacturas EDIT
+const modalFacturas_edit = document.querySelectorAll("#modalFacturas_alta_stock_edit");
+const openModalFacturasButtons_edit = document.querySelectorAll("#boton_stock_alta_edit");
+const closeModalFacturasButtons_edit = document.querySelectorAll("#close_edit");
+
+function openModalFacturas_edit() {
+  modalFacturas_edit.forEach(function(modalFacturas_edit) {
+    modalFacturas_edit.style.display = "block";
+  });
+}
+
+function closeModalFacturas_edit() {
+  modalFacturas_edit.forEach(function(modalFacturas_edit) {
+    modalFacturas_edit.style.display = "none";
+  });
+}
+
+openModalFacturasButtons_edit.forEach(function(element) {
+  element.addEventListener("click", openModalFacturas_edit);
+});
+
+closeModalFacturasButtons_edit.forEach(function(element) {
+  element.addEventListener("click", closeModalFacturas_edit);
+});
+
+
+openModalFacturasButtons_edit.forEach(function (element) {
+  element.addEventListener("click", openModalFacturas_edit);
+});
+
+
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
 // Declarar la variable clientes en un ámbito global
 let clientes = [];
 
