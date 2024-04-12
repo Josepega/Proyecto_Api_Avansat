@@ -26,7 +26,7 @@ closeModalFacturasButtons.forEach(function(element) {
 
 
 // MODALFacturas EDIT
-const modalFacturas_edit = document.querySelectorAll("#modalFacturas_alta_stock_edit");
+const modalFacturas_edit = document.querySelectorAll("#modal_Facturas_alta_stock_edit");
 const openModalFacturasButtons_edit = document.querySelectorAll("#boton_stock_alta_edit");
 const closeModalFacturasButtons_edit = document.querySelectorAll("#close_edit");
 
@@ -234,9 +234,6 @@ autocompleteResultsServicios.addEventListener("click", (e) => {
 });  */
 
 // AUTOCOMPLET STOCK
-
-
-
 // Declarar la variable stock en un ámbito global
 let stock = [];
 
@@ -471,7 +468,7 @@ BotonGuardarFactura.forEach(function (element) {
             isNaN(facturasTotal) ||
             isNaN(facturasImponible) 
         ) {
-            swal({
+            swal.fire({
                 icon: "error",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
@@ -503,7 +500,7 @@ BotonGuardarFactura.forEach(function (element) {
                 return response.json();
             })
             .then((data) => {
-                swal({
+                swal.fire({
                     title: "¡Factura añadida correctamente!",
                     icon: "success",
                 });
@@ -512,74 +509,14 @@ BotonGuardarFactura.forEach(function (element) {
                 }, 3000);
             })
             .catch((error) => {
-                swal("Error al agregar la factura", error.message, "error");
+                swal.fire("Error al agregar la factura", error.message, "error");
             });
     });
 });
 
 
-// ELIMINAR STOCK
-const on = (element, event, selector, handler) => {
-  element.addEventListener(event, (e) => {
-    if (e.target.closest(selector)) {
-      handler(e);
-    }
-  });
-};
 
-on(document, "click", ".eliminar-icono", (e) => {
-  const fila = e.target.parentNode.parentNode;
-  const id = fila.firstElementChild.innerHTML;
-
-  swal({
-    title: "¿Estás seguro de quieres eliminar este stock?",
-    text: "¡Esta acción no se puede deshacer!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
-      const url = "http://localhost:3000/api/v1/borrar_stock/";
-      fetch(url + id, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          codigo: id,
-        }),
-      })
-        .then((response) => {
-          if (response.ok) {
-            swal({
-              title: "¡Stock eliminado!",
-              text: "El artículo ha sido eliminado satisfactoriamente.",
-              icon: "success",
-            });
-            setTimeout(() => {
-              location.reload();
-            }, 3000);
-          } else {
-            swal("Error al eliminar el articulo", {
-              icon: "error",
-            });
-          }
-        })
-        .catch((error) => {
-          swal("Error al eliminar el articulo", {
-            icon: "error",
-          });
-          console.error("Error:", error);
-        });
-    } else {
-      swal({
-        title: "¡Articulo NO eliminado!",
-        text: "Todo a salvo!.",
-        icon: "success",
-      });
-    }
-  });
-});
-
-/* // LISTADO FACTURAS
+ // LISTADO FACTURAS
 
 const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas";
 const listado_facturas = document.querySelector("#listado_facturas");
@@ -622,4 +559,70 @@ const mostrar = (data) => {
   });
 
   listado_facturas.innerHTML = resultado;
-}; */
+}; 
+
+// ELIMINAR FACTURAS
+const on = (element, event, selector, handler) => {
+  element.addEventListener(event, (e) => {
+    if (e.target.closest(selector)) {
+      handler(e);
+    }
+  });
+};
+
+on(document, "click", ".eliminar-icono", (e) => {
+  const fila = e.target.parentNode.parentNode;
+  const id = fila.firstElementChild.innerHTML;
+  swal.fire({
+    title: "¿Estás seguro de quieres eliminar esta factura?",
+    text: "¡Esta acción no se puede deshacer!",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#055778",
+    cancelButtonColor: "#93100b",
+    iconColor: "#db3208",
+    confirmButtonText: "Borrarla",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const urlBorrarFactura = "http://localhost:3000/api/v1/borrar_factura/";
+      fetch(urlBorrarFactura + id, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          Id_factura: id,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Hubo un problema al eliminar la factura.");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          swal.fire({
+            title: "¡Factura eliminada!",
+            text: "La factura ha sido eliminada satisfactoriamente.",
+            icon: "success",
+            confirmButtonColor: "#055778",
+          });
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        })
+        .catch((error) => {
+          swal.fire("Error al eliminar la factura", error.message, "error");
+        });
+    } else {
+      swal.fire({
+        title: "¡Factura NO eliminada!",
+        text: "Todo a salvo!.",
+        icon: "success",
+        confirmButtonColor: "#055778",
+      });
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    }
+  });
+});

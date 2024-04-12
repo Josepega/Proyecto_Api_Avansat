@@ -136,7 +136,7 @@ botonGuardarCliente.forEach(function (element){
     clientesPais.value == "" ||
     clientesEmail.value == ""
   ) {
-    swal({
+    swal.fire({
         icon: "error",
         title: "Los campos marcados con * son obligatorios",
         text: "¡Completa los que te falten!",
@@ -153,7 +153,7 @@ botonGuardarCliente.forEach(function (element){
   });
 
   if (!politicaPrivacidadMarcada) {
-    swal({
+    swal.fire({
       icon: "error",
       title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
       text: "¡Hay que cumplir las normas!",
@@ -190,7 +190,7 @@ botonGuardarCliente.forEach(function (element){
       return response.json();
     })
     .then((data) => {
-      swal({
+      swal.fire({
         title: "¡Cliente añadido correctamente!",
         text: "Recuerda que los datos son solo para uso de facturación.",
         icon: "success",
@@ -200,7 +200,7 @@ botonGuardarCliente.forEach(function (element){
       }, 3000);
     })
     .catch((error) => {
-      swal("Error al agregar el cliente", error.message, "error");
+      swal.fire("Error al agregar el cliente", error.message, "error");
     });
 });
 });
@@ -265,14 +265,19 @@ on(document, "click", ".eliminar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
   const id = fila.firstElementChild.innerHTML;
 
-  swal({
+  swal.fire({
     title: "¿Estás seguro de quieres eliminar este cliente?",
     text: "¡Esta acción no se puede deshacer!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#055778",
+    cancelButtonColor: "#93100b",
+    iconColor: "#db3208",
+    confirmButtonText: "Borrarla",
+    cancelButtonText: "Cancelar",
+   
+  }).then((result) => {
+    if (result.isConfirmed) {
       const url = "http://localhost:3000/api/v1/borrar_cliente/";
       fetch(url + id, {
         method: "DELETE",
@@ -281,34 +286,44 @@ on(document, "click", ".eliminar-icono", (e) => {
           Id_cliente: id,
         }),
       })
-        .then((response) => {
-          if (response.ok) {
-            swal({
+        .then((result) => {
+          if (result.isConfirmed) {
+            swal.fire({
               title: "¡Cliente eliminado!",
               text: "El cliente ha sido eliminado satisfactoriamente.",
               icon: "success",
+              confirmButtonColor: "#055778",
+
             });
             setTimeout(() => {
               location.reload();
             }, 3000);
           } else {
-            swal("Error al eliminar el cliente", {
+            swal.fire("Error al eliminar el cliente", {
               icon: "error",
+              confirmButtonColor: "#055778",
+
             });
           }
         })
         .catch((error) => {
-          swal("Error al eliminar el cliente", {
+          swal.fire("Error al eliminar el cliente", {
             icon: "error",
+            confirmButtonColor: "#055778",
           });
           console.error("Error:", error);
         });
     } else {
-      swal({
+      swal.fire({
         title: "¡Cliente NO eliminado!",
         text: "Todo a salvo!.",
         icon: "success",
+        confirmButtonColor: "#055778",
+
       });
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
     }
   });
 });
@@ -404,7 +419,7 @@ formEdit.forEach(form => {
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
-        swal("Cliente actualizado correctamente", "", "success");
+        swal.fire("Cliente actualizado correctamente", "", "success");
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
@@ -413,7 +428,7 @@ formEdit.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal("Error", error.message, "error");
+        swal.fire("Error", error.message, "error");
       });
   });
 });

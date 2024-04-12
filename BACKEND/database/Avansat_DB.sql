@@ -113,3 +113,6 @@ INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio
 
 COMMIT;
 
+select * from clientes;
+select * from servicios;
+select * from stock;

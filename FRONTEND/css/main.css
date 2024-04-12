@@ -505,8 +505,8 @@ h4 {
 /* -----------------------------------MODAL-------------------------- */
 .modal {
     width: 80%;
-    height: 80%;
-    position: absolute;
+    height: auto;
+    position: fixed;
     margin: 0 auto;
     text-align: center;
     top: 14%;
@@ -520,13 +520,13 @@ h4 {
     height: 90%;
     margin: 0px;
     padding: 10px;
-    border-radius: 20px 10px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
     box-shadow: #012d3e 1px 1px 10px;
-    border: solid 1px #a22303;
+    border: solid 1px #db3208;
     background: linear-gradient(
     180deg,
     rgba(247, 250, 251, 0.959) 1%,

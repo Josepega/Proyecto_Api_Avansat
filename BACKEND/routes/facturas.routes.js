@@ -53,6 +53,15 @@ router.get('/listado_facturas', (req,res)=>{
 })
 
 // RUTAS: BORRAR FACTURAS
+router.delete("/borrar_factura/:id", (req,res)=>{
+  conexionMySQL.query('DELETE FROM facturas WHERE Id_factura = ?', [req.params.id], function(error, filas){
+      if(error){
+          throw error
+      }else{              
+          res.json(filas)
+      }
+  })
+})
 
 // RUTAS: EDITAR FACTURAS
 /* 

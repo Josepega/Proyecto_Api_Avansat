@@ -76,7 +76,7 @@ BotonGuardarStock.forEach(function (element) {
             isNaN(stockPrecioCoste) ||
             isNaN(stockPrecioVenta)
         ) {
-            swal({
+            swal.fire({
                 icon: "error",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
@@ -109,7 +109,7 @@ BotonGuardarStock.forEach(function (element) {
                 return response.json();
             })
             .then((data) => {
-                swal({
+                swal.fire({
                     title: "¡Stock añadido correctamente!",
                     icon: "success",
                 });
@@ -118,7 +118,7 @@ BotonGuardarStock.forEach(function (element) {
                 }, 3000);
             })
             .catch((error) => {
-                swal("Error al agregar el stock", error.message, "error");
+                swal.fire("Error al agregar el stock", error.message, "error");
             });
     });
 });
@@ -180,14 +180,18 @@ on(document, "click", ".eliminar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
   const id = fila.firstElementChild.innerHTML;
 
-  swal({
+  swal.fire({
     title: "¿Estás seguro de quieres eliminar este stock?",
     text: "¡Esta acción no se puede deshacer!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#055778",
+    cancelButtonColor: "#93100b",
+    iconColor: "#db3208",
+    confirmButtonText: "Borrarla",
+    cancelButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
       const url = "http://localhost:3000/api/v1/borrar_stock/";
       fetch(url + id, {
         method: "DELETE",
@@ -196,33 +200,37 @@ on(document, "click", ".eliminar-icono", (e) => {
           codigo: id,
         }),
       })
-        .then((response) => {
-          if (response.ok) {
-            swal({
+        .then((result) => {
+          if (result.isConfirmed) {
+            swal.fire({
               title: "¡Stock eliminado!",
               text: "El artículo ha sido eliminado satisfactoriamente.",
               icon: "success",
+              confirmButtonColor: "#055778",
             });
             setTimeout(() => {
               location.reload();
             }, 3000);
           } else {
-            swal("Error al eliminar el articulo", {
+            swal.fire("Error al eliminar el articulo", {
               icon: "error",
+              confirmButtonColor: "#055778",
             });
           }
         })
         .catch((error) => {
-          swal("Error al eliminar el articulo", {
+          swal.fire("Error al eliminar el articulo", {
             icon: "error",
+            confirmButtonColor: "#055778",
           });
           console.error("Error:", error);
         });
     } else {
-      swal({
+      swal.fire({
         title: "¡Articulo NO eliminado!",
         text: "Todo a salvo!.",
         icon: "success",
+        confirmButtonColor: "#055778",
       });
     }
   });
@@ -302,7 +310,7 @@ formEdit.forEach(form => {
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
-        swal("Stock actualizado correctamente", "", "success");
+        swal.fire("Stock actualizado correctamente", "", "success");
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
@@ -311,7 +319,7 @@ formEdit.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal("Error", error.message, "error");
+        swal.fire("Error", error.message, "error");
       });
   });
 });
