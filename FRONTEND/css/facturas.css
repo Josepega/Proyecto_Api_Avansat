@@ -29,7 +29,6 @@
 }
 .autocomplete_clientes, .autocomplete_servicios {
     display: flex;
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content:space-around;
@@ -40,7 +39,7 @@
   
   
   
-  .autocomplete-results_clientes, .autocomplete-results_servicios {
+  .autocomplete-results_clientes, .autocomplete-results_servicios, .autocomplete-results_stock{
     display: none;
    /*  position: absolute; */
     width: 300px;
@@ -54,7 +53,7 @@
     background-color: #ffffff;
   }
   
-  .autocomplete-results_clientes li, .autocomplete-results_servicios li {
+  .autocomplete-results_clientes li, .autocomplete-results_servicios li, .autocomplete-results_stock li {
     cursor: pointer;
     margin: 0;
     padding: 0;
@@ -63,7 +62,7 @@
     border-left: 2px solid #eee;
   }
   
-  .autocomplete-results_clientes li:hover, .autocomplete-results_servicios li:hover {
+  .autocomplete-results_clientes li:hover, .autocomplete-results_servicios li:hover, .autocomplete-results_stock li:hover {
     background-color: #eee;
     color: rgb(151, 50, 6);
     cursor: pointer;

@@ -92,11 +92,11 @@
             <form id="alta_facturas" class="formulario">
 
                 <div class="row">
-                    <div class="col col-50">
+                    <div class="col col-40">
                         <h1>Alta / nueva factura / Facturas</h1>
                     </div>
-                    <div class="col-15"><input type="text" id="facturas_id"></div>
-                    <div class="col col-20">
+                    <div class="col-10"><input type="text" id="facturas_id" disabled></div>
+                    <div class="col col-15">
                         <label><span>*</span>Vencimiento</label>
                         <select name="vencimiento" id="facturas_vencimiento">
                             <option value="15">15 días</option>
@@ -104,8 +104,10 @@
                             <option value="90">90 días</option>
                         </select>
                     </div>
-                    <div class="col-20"><button type="button" id="close" class="btn">Cerrar</button></div>
                     <div class="col col-10" style="display: none;"><input type="text" id="facturas_id_cliente"></div>
+                    <div class="col-20"></div>
+                    <div class="col-15"><button type="button" id="close" class="btn">Cerrar</button></div>
+                    
                 </div>
 
                 <div class="row"><!-- ROW DATOS CLIENTE 1-->
@@ -196,7 +198,7 @@
 
                 <div id="facturas_items_add"><!-- ROW DATOS ARTICULO 1 -->
                     <div class="col col-10">
-                        <input type="number" placeholder="Ej: 5" id="facturas_cantidad">
+                        <input type="number" step="any" placeholder="Ej: 5" id="facturas_cantidad">
                     </div>
                     <div class="col col-10">
                         <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
@@ -207,7 +209,7 @@
                     </div>
                   
                     <div class="col col-15">
-                        <input type="number" placeholder="Ej: 20,50" id="facturas_precio">
+                        <input type="number" step="any" placeholder="Ej: 20,50" id="facturas_precio">
                     </div>
                     <div class="col col-10">
                         <select name="impuestos" id="facturas_impuestos">

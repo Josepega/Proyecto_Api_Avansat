@@ -74,11 +74,12 @@ BotonGuardarServicio.forEach(function (element) {
             isNaN(serviciosPrecioCoste) ||
             isNaN(serviciosPrecioVenta)
         ) {
-            swal({
-                icon: "error",
-                title: "Los campos marcados con * son obligatorios",
-                text: "¡Completa los que te falten!",
-                button: "OK",
+            swal.fire({
+              icon: "error",
+              iconColor: "#fa5807",
+              title: "Los campos marcados con * son obligatorios",
+              text: "¡Completa los que te falten!",
+              confirmButtonColor: "#055778",
             });
             return;
         }
@@ -106,16 +107,24 @@ BotonGuardarServicio.forEach(function (element) {
                 return response.json();
             })
             .then((data) => {
-                swal({
-                    title: "¡Servicio añadido correctamente!",
-                    icon: "success",
-                });
+              swal.fire({
+                title: "¡Servicio añadido correctamente!",
+                icon: "success",
+                iconColor: "#0b7593",
+                confirmButtonColor: "#055778",
+              });
                 setTimeout(() => {
                     location.reload();
                 }, 3000);
             })
             .catch((error) => {
-                swal("Error al agregar el servicio", error.message, "error");
+              swal.fire({
+                title: "Error al agregar el servicio",
+                text: "Por favor, intenta de nuevo.",
+                icon: "error",
+                iconColor: "#fa5807",
+                confirmButtonColor: "#055778",
+              });
             });
     });
 });
@@ -132,7 +141,13 @@ fetch(urlListado)
 
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
-    console.error("Los datos recibidos no son válidos.");
+    swal.fire({
+      icon: "error",
+      iconColor: "#fa5807",
+      title: "No hay Servicios registrados",
+      text: "Puedes crear servicios en el boton AÑADIR",
+      confirmButtonColor: "#055778",
+    });
     return;
   }
 
@@ -176,14 +191,19 @@ on(document, "click", ".eliminar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
   const id = fila.firstElementChild.innerHTML;
 
-  swal({
+  swal.fire({
     title: "¿Estás seguro de quieres eliminar este servicio?",
     text: "¡Esta acción no se puede deshacer!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  }).then((willDelete) => {
-    if (willDelete) {
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonColor: "#055778",
+    cancelButtonColor: "#a0360f",
+    iconColor: "#db3208",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+
+  }).then((result) => {
+    if (result.isConfirmed) {
       const url = "http://localhost:3000/api/v1/borrar_servicio/";
       fetch(url + id, {
         method: "DELETE",
@@ -192,33 +212,38 @@ on(document, "click", ".eliminar-icono", (e) => {
           codigo: id,
         }),
       })
-        .then((response) => {
-          if (response.ok) {
-            swal({
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Hubo un problema al eliminar la factura.");
+        }
+        return response.json();
+      })
+        .then((result) => {
+            swal.fire({
               title: "¡servicio eliminado!",
               text: "El artículo ha sido eliminado satisfactoriamente.",
               icon: "success",
+              iconColor: "#0b7593",
+              confirmButtonColor: "#055778",
             });
             setTimeout(() => {
               location.reload();
             }, 3000);
-          } else {
-            swal("Error al eliminar el articulo", {
-              icon: "error",
-            });
-          }
+         
         })
         .catch((error) => {
-          swal("Error al eliminar el articulo", {
+          swal.fire("Error al eliminar el servicio", {
             icon: "error",
+            confirmButtonColor: "#055778",
           });
-          console.error("Error:", error);
         });
     } else {
-      swal({
+      swal.fire({
         title: "¡Articulo NO eliminado!",
         text: "Todo a salvo!.",
         icon: "success",
+        iconColor: "#0b7593",
+        confirmButtonColor: "#055778",
       });
     }
   });
@@ -294,7 +319,13 @@ formEdit.forEach(form => {
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
-        swal("servicio actualizado correctamente", "", "success");
+        swal.fire({
+          title: "¡Servicio editado!",
+          text: "El servicio ha sido editado satisfactoriamente.",
+          icon: "success",
+          iconColor: "#0b7593",
+          confirmButtonColor: "#055778",
+        });
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
@@ -303,7 +334,7 @@ formEdit.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal("Error", error.message, "error");
+        swal.fire("Error", error.message, "error");
       });
   });
 });

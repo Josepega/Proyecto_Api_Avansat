@@ -239,7 +239,7 @@ let stock = [];
 
 // Función para buscar stock por nombre
 const searchStock = (key) => {
-  fetch(`http://localhost:3000/api/v1/listado_facturas?Nombre=${key}`)
+  fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data)) {
@@ -421,7 +421,7 @@ const facturasPais = document.getElementById("facturas_pais");
         arregloDetalle.push(objetoDetalle);
         redibujarTabla();
     } else {
-        console.error("El valor de 'facturas_cantidad' no es un número válido.");
+        swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
     }
     autocomplete_servicios_reset();
 });
@@ -470,9 +470,11 @@ BotonGuardarFactura.forEach(function (element) {
         ) {
             swal.fire({
                 icon: "error",
+                iconColor: "#fa5807",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
-                button: "OK",
+                confirmButtonColor: "#055778",
+           
             });
             return;
         }
@@ -503,6 +505,8 @@ BotonGuardarFactura.forEach(function (element) {
                 swal.fire({
                     title: "¡Factura añadida correctamente!",
                     icon: "success",
+                    iconColor: "#0b7593",
+                    confirmButtonColor: "#055778",
                 });
                 setTimeout(() => {
                     location.reload();
@@ -528,7 +532,14 @@ fetch(urlListadoFacturas)
 
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
-    console.error("Los datos recibidos no son válidos.");
+    swal.fire({
+      icon: "error",
+      iconColor: "#fa5807",
+      title: "No hay facturas registradas",
+      text: "Puedes crear una en el boton AÑADIR",
+      confirmButtonColor: "#055778",
+    }
+    );
     return;
   }
 
@@ -579,9 +590,9 @@ on(document, "click", ".eliminar-icono", (e) => {
     icon: "question",
     showCancelButton: true,
     confirmButtonColor: "#055778",
-    cancelButtonColor: "#93100b",
+    cancelButtonColor: "#a0360f",
     iconColor: "#db3208",
-    confirmButtonText: "Borrarla",
+    confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
@@ -604,6 +615,7 @@ on(document, "click", ".eliminar-icono", (e) => {
             title: "¡Factura eliminada!",
             text: "La factura ha sido eliminada satisfactoriamente.",
             icon: "success",
+            iconColor: "#0b7593",
             confirmButtonColor: "#055778",
           });
           setTimeout(() => {
@@ -611,13 +623,17 @@ on(document, "click", ".eliminar-icono", (e) => {
           }, 2000);
         })
         .catch((error) => {
-          swal.fire("Error al eliminar la factura", error.message, "error");
+          swal.fire("Error al eliminar el articulo", {
+            icon: "error",
+            confirmButtonColor: "#055778",
+          });
         });
     } else {
       swal.fire({
         title: "¡Factura NO eliminada!",
         text: "Todo a salvo!.",
         icon: "success",
+        iconColor: "#0b7593",
         confirmButtonColor: "#055778",
       });
       setTimeout(() => {

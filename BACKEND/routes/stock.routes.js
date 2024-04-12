@@ -7,16 +7,16 @@ const conexionMySQL = require("../conexionMySQL");
 router.post("/alta_stock", (req, res) => {
     try {
       const data = {
-        Codigo: req.body.codigo,
-        Cantidad: req.body.cantidad,
-        Nombre: req.body.nombre,
-        Precio_coste: req.body.precio_coste,
-        Precio_coste_iva: req.body.precio_coste_iva,
-        Precio_venta: req.body.precio_venta,
-        Precio_venta_iva: req.body.precio_venta_iva,
+        Codigo: req.body.Codigo,
+        Cantidad: req.body.Cantidad,
+        Nombre: req.body.Nombre,
+        Precio_coste: req.body.Precio_coste,
+        Precio_coste_iva: req.body.Precio_coste_iva,
+        Precio_venta: req.body.Precio_venta,
+        Precio_venta_iva: req.body.Precio_venta_iva,
       };
   
-      const sql = "INSERT INTO stock SET ?";
+      const sql = "INSERT INTO stock SET  ?";
       conexionMySQL.query(sql, data, (error, result) => {
         if (error) {
           res.status(400).json({
@@ -53,7 +53,7 @@ router.post("/alta_stock", (req, res) => {
   
   // RUTAS: BORRAR STOCK
   router.delete("/borrar_stock/:id", (req,res)=>{
-    conexionMySQL.query('DELETE FROM stock WHERE codigo = ?', [req.params.id], function(error, filas){
+    conexionMySQL.query('DELETE FROM stock WHERE Id_stock = ?', [req.params.id], function(error, filas){
         if(error){
             throw error
         }else{              

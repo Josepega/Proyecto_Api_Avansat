@@ -77,24 +77,25 @@ BotonGuardarStock.forEach(function (element) {
             isNaN(stockPrecioVenta)
         ) {
             swal.fire({
-                icon: "error",
-                title: "Los campos marcados con * son obligatorios",
-                text: "¡Completa los que te falten!",
-                button: "OK",
+              icon: "error",
+              iconColor: "#fa5807",
+              title: "Los campos marcados con * son obligatorios",
+              text: "¡Completa los que te falten!",
+              confirmButtonColor: "#055778",
             });
             return;
         }
 
         // Realizar la solicitud HTTP POST al servidor
-        const urlAlta = "http://localhost:3000/api/v1/alta_stock";
-        fetch(urlAlta, {
+        const urlAltaStock = "http://localhost:3000/api/v1/alta_stock";
+        fetch(urlAltaStock, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                Cantidad: stockCantidad,
                 Codigo: stockCodigo,
+                Cantidad: stockCantidad,               
                 Nombre: stockNombre,
                 Precio_coste: stockPrecioCoste,
                 Precio_coste_iva: stockPrecioCosteIva,
@@ -110,15 +111,23 @@ BotonGuardarStock.forEach(function (element) {
             })
             .then((data) => {
                 swal.fire({
-                    title: "¡Stock añadido correctamente!",
-                    icon: "success",
+                  title: "¡Stock añadido correctamente!",
+                  icon: "success",
+                  iconColor: "#0b7593",
+                  confirmButtonColor: "#055778",
                 });
                 setTimeout(() => {
                     location.reload();
                 }, 3000);
             })
             .catch((error) => {
-                swal.fire("Error al agregar el stock", error.message, "error");
+                swal.fire({
+                  title: "Error al agregar el stock",
+                  text: "Por favor, intenta de nuevo.",
+                  icon: "error",
+                  iconColor: "#fa5807",
+                  confirmButtonColor: "#055778",
+                });
             });
     });
 });
@@ -135,7 +144,13 @@ fetch(urlListado)
 
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
-    console.error("Los datos recibidos no son válidos.");
+    swal.fire({
+      icon: "error",
+      iconColor: "#fa5807",
+      title: "No hay stock registrado",
+      text: "Puedes crear stock en el boton AÑADIR",
+      confirmButtonColor: "#055778",
+    });
     return;
   }
 
@@ -150,9 +165,9 @@ const mostrar = (data) => {
   data.forEach((stock) => {
     resultado += `
         <div class="row2">
-            <div class="col2 col-10">${stock.Id_stock}</div>
+            <div class="col2 col-5">${stock.Id_stock}</div>
             <div class="col2 col-10">${stock.Codigo}</div>
-            <div class="col2 col-10">${stock.Cantidad}</div>
+            <div class="col2 col-5">${stock.Cantidad}</div>
             <div class="col2 col-30">${stock.Nombre}</div>
             <div class="col2 col-10">${stock.Precio_coste}</div>
             <div class="col2 col-10">${stock.Precio_coste_iva}</div>
@@ -186,50 +201,53 @@ on(document, "click", ".eliminar-icono", (e) => {
     icon: "question",
     showCancelButton: true,
     confirmButtonColor: "#055778",
-    cancelButtonColor: "#93100b",
+    cancelButtonColor: "#a0360f",
     iconColor: "#db3208",
-    confirmButtonText: "Borrarla",
+    confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
+
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = "http://localhost:3000/api/v1/borrar_stock/";
-      fetch(url + id, {
+      const urlDeleteStock = "http://localhost:3000/api/v1/borrar_stock/";
+      fetch(urlDeleteStock + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           codigo: id,
         }),
       })
-        .then((result) => {
-          if (result.isConfirmed) {
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Hubo un problema al eliminar la factura.");
+        }
+        return response.json();
+      })
+        .then((result) => {          
             swal.fire({
               title: "¡Stock eliminado!",
               text: "El artículo ha sido eliminado satisfactoriamente.",
               icon: "success",
+              iconColor: "#0b7593",
               confirmButtonColor: "#055778",
             });
             setTimeout(() => {
               location.reload();
             }, 3000);
-          } else {
-            swal.fire("Error al eliminar el articulo", {
-              icon: "error",
-              confirmButtonColor: "#055778",
-            });
-          }
+       
         })
         .catch((error) => {
-          swal.fire("Error al eliminar el articulo", {
+          swal.fire({
+            title: "Error al eliminar el articulo", 
             icon: "error",
             confirmButtonColor: "#055778",
           });
-          console.error("Error:", error);
         });
     } else {
       swal.fire({
-        title: "¡Articulo NO eliminado!",
+        title: "¡Factura NO eliminada!",
         text: "Todo a salvo!.",
         icon: "success",
+        iconColor: "#0b7593",
         confirmButtonColor: "#055778",
       });
     }
@@ -265,7 +283,7 @@ on(document, "click", ".editar-icono", (e) => {
   document.getElementById("stock_precio_venta_edit").value = stockVenta;
   document.getElementById("stock_precio_venta_iva_edit").value = stockVentaIva;
 
-
+ 
   // Mostrar el modal myModal_edit
   openModal_edit();
 });
@@ -279,14 +297,17 @@ formEdit.forEach(form => {
     e.preventDefault();
 
     // Obtener los valores del formulario de edición
-    const idStock = form.querySelector("#stock_id_edit").value;
-    const codigoId = form.querySelector("#stock_codigo_edit").value;
-    const cantidad = form.querySelector("#stock_cantidad_edit").value;
-    const nombre = form.querySelector("#stock_nombre_edit").value;
-    const coste = form.querySelector("#stock_precio_coste_edit").value;
-    const costeIva = form.querySelector("#stock_precio_coste_iva_edit").value;
-    const venta = form.querySelector("#stock_precio_venta_edit").value;
-    const ventaIva = form.querySelector("#stock_precio_venta_iva_edit").value;
+    let idStock = form.querySelector("#stock_id_edit").value;
+    let cantidad = form.querySelector("#stock_cantidad_edit").value;
+    let codigoId = form.querySelector("#stock_codigo_edit").value;
+    let nombre = form.querySelector("#stock_nombre_edit").value;
+    let coste = form.querySelector("#stock_precio_coste_edit").value;
+    let costeIva = form.querySelector("#stock_precio_coste_iva_edit").value;
+    let venta = form.querySelector("#stock_precio_venta_edit").value;
+    let ventaIva = form.querySelector("#stock_precio_venta_iva_edit").value;
+
+    costeIva = (coste * 1.21).toFixed(2);
+    ventaIva = (venta * 1.21).toFixed(2);
    
     // Enviar la solicitud de edición al servidor
     fetch(urlEditar + idStock, {
@@ -310,12 +331,19 @@ formEdit.forEach(form => {
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
-        swal.fire("Stock actualizado correctamente", "", "success");
+        swal.fire({
+          title: "¡Stock editado!",
+          text: "El stock ha sido editado satisfactoriamente.",
+          icon: "success",
+          iconColor: "#0b7593",
+          confirmButtonColor: "#055778",
+        });
+        
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
           location.reload();
-        }, 1500);
+        }, 2000);
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert

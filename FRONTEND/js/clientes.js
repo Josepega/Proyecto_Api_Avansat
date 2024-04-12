@@ -137,10 +137,11 @@ botonGuardarCliente.forEach(function (element){
     clientesEmail.value == ""
   ) {
     swal.fire({
-        icon: "error",
-        title: "Los campos marcados con * son obligatorios",
-        text: "¡Completa los que te falten!",
-        button: "OK",
+      icon: "error",
+      iconColor: "#fa5807",
+      title: "Los campos marcados con * son obligatorios",
+      text: "¡Completa los que te falten!",
+      confirmButtonColor: "#055778",
       });
     return
   }
@@ -155,9 +156,10 @@ botonGuardarCliente.forEach(function (element){
   if (!politicaPrivacidadMarcada) {
     swal.fire({
       icon: "error",
+      iconColor: "#fa5807",
       title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
       text: "¡Hay que cumplir las normas!",
-      button: "OK",
+      confirmButtonColor: "#055778",
     });
     return;
   }
@@ -194,13 +196,21 @@ botonGuardarCliente.forEach(function (element){
         title: "¡Cliente añadido correctamente!",
         text: "Recuerda que los datos son solo para uso de facturación.",
         icon: "success",
+        iconColor: "#0b7593",
+        confirmButtonColor: "#055778",
       });
       setTimeout(() => {
         location.reload();
       }, 3000);
     })
     .catch((error) => {
-      swal.fire("Error al agregar el cliente", error.message, "error");
+      swal.fire({
+        title: "Error al agregar el cliente",
+        text: "Por favor, intenta de nuevo.",
+        icon: "error",
+        iconColor: "#fa5807",
+        confirmButtonColor: "#055778",
+      });
     });
 });
 });
@@ -217,7 +227,13 @@ fetch(urlListado)
 
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
-    console.error("Los datos recibidos no son válidos.");
+    swal.fire({
+      icon: "error",
+      iconColor: "#fa5807",
+      title: "No hay Clientes registrados",
+      text: "Puedes crear clientes en el boton AÑADIR",
+      confirmButtonColor: "#055778",
+    });
     return;
   }
 
@@ -271,9 +287,9 @@ on(document, "click", ".eliminar-icono", (e) => {
     icon: "question",
     showCancelButton: true,
     confirmButtonColor: "#055778",
-    cancelButtonColor: "#93100b",
+    cancelButtonColor: "#a0360f",
     iconColor: "#db3208",
-    confirmButtonText: "Borrarla",
+    confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
    
   }).then((result) => {
@@ -286,48 +302,45 @@ on(document, "click", ".eliminar-icono", (e) => {
           Id_cliente: id,
         }),
       })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Hubo un problema al eliminar la factura.");
+        }
+        return response.json();
+      })
         .then((result) => {
-          if (result.isConfirmed) {
             swal.fire({
               title: "¡Cliente eliminado!",
               text: "El cliente ha sido eliminado satisfactoriamente.",
               icon: "success",
+              iconColor: "#0b7593",
               confirmButtonColor: "#055778",
-
             });
             setTimeout(() => {
               location.reload();
             }, 3000);
-          } else {
-            swal.fire("Error al eliminar el cliente", {
-              icon: "error",
-              confirmButtonColor: "#055778",
-
-            });
-          }
+            
+          
         })
         .catch((error) => {
           swal.fire("Error al eliminar el cliente", {
             icon: "error",
             confirmButtonColor: "#055778",
           });
-          console.error("Error:", error);
         });
     } else {
       swal.fire({
         title: "¡Cliente NO eliminado!",
         text: "Todo a salvo!.",
-        icon: "success",
+        iconColor: "#0b7593",
         confirmButtonColor: "#055778",
 
       });
-      setTimeout(() => {
-        location.reload();
-      }, 2000);
+     
     }
   });
-});
 
+ });
 
 // EDITAR CLIENTE
 
@@ -419,12 +432,18 @@ formEdit.forEach(form => {
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
-        swal.fire("Cliente actualizado correctamente", "", "success");
+        swal.fire({
+          title: "¡Cliente editado!",
+          text: "Cliente actualizado correctamente",
+          icon: "success",
+          iconColor: "#0b7593",
+          confirmButtonColor: "#055778",
+        });
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
           location.reload();
-        }, 1500);
+        }, 2000);
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
