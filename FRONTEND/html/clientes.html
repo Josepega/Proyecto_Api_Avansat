@@ -53,8 +53,8 @@
                 <!-------------------------  aquí va el inicio html por sección ------------------------------------->
                 <div class="container_seccion">
                     <div class="row">
-                        <div class="col-70"><h1>CLIENTES</h1></div>
-                        <div class="col-30"><button type="button" id="boton_clientes_alta" class="btn">Añadir</button></div>
+                        <div class="col col-70"><h1>CLIENTES</h1></div>
+                        <div class="col col-10"><button type="button" id="boton_clientes_alta" class="btn">Añadir</button></div>
                     </div>
                     <div class="container_seccion_interior">         
                         <!-- Row de títulos -->
@@ -88,9 +88,9 @@
                     <div id="container_interior_modal_clientes" class="modal_interior">
                         <form id="alta_clientes" class="formulario">
                             <div class="row">
-                                <div class="col col-50"><h1>Alta / nuevo cliente / persona</h1></div>
+                                <div class="col col-70"><h1>Alta / nuevo cliente / persona</h1></div>
                                
-                                <div class="col col-20">
+                                <div class="col col-10">
                                     <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
                                 </div>              
                             </div>
@@ -106,16 +106,16 @@
                                     </div>  
                                     <div class="col col-40" id="clientes_nombre_ocultar">
                                         <label><span>*</span>Nombre</label>
-                                        <input type="text" placeholder="Ej: Juan Antonio "id="clientes_nombre">
+                                        <input type="text" placeholder="Ej: Juan Antonio "class="clientes_nombre">
                                     </div>
             
                                     <div class="col col-40" id="clientes_apellidos_ocultar">
                                         <label><span>*</span>Apellidos</label>
                                         <input type="text" placeholder="Ej: Gutierrez Ruiz" id="clientes_apellidos">
                                     </div>
-                                    <div class="col col-50" id="clientes_nombreEmpresa_ocultar" >
+                                    <div class="col col-50" id="clientes_nombreEmpresa_ocultar"  style="display: none;">
                                         <label><span>*</span>Nombre de la empresa</label>
-                                        <input type="text" id="clientes_nombre" placeholder="Ej: Avansat">
+                                        <input type="text"  placeholder="Ej: Avansat" class="clientes_nombre">
                                     </div>
                                     <div class="col col-15">
                                         <label><span>*</span>DNI</label>
@@ -157,7 +157,7 @@
                             </div>
                             <!-- BOTON GUARDAR -->
                             <div class="row">
-                                <div class="col col-30" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
+                                <div class="col col-40" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
                                     <input type="checkbox" class="clientes_politica_privacidad">
                                     <p style="font-size: 12px; color: rgb(5, 89, 114);">
                                         Aceptar 
@@ -166,10 +166,10 @@
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col col-30">
+                                <div class="col col-10">
                                     <button type="button" id="boton_clientes_guardar" class="btn">Guardar</button>
                                 </div>
-                                <div class="col col-30" id="clientes_mensajes">
+                                <div class="col col-40" id="clientes_mensajes">
                                     <p style="font-size: 12px; color: rgb(5, 89, 114);">
                                         El uso de estos datos es únicamente para emisión de facturas
                                     </p>
@@ -184,22 +184,23 @@
                     <div id="container_interior_modal_clientes_edit" class="modal_interior">
                         <form id="alta_clientes_edit" class="formulario">
                             <div class="row">
-                                <div class="col col-40" id="titulo_edit"><h1>Editar / cliente /</h1>
-                                <div class="col col-20"><input type="text" id="id_edit" ></div>
+                                <div class="col col-70" id="titulo_edit"><h1>Editar / cliente /</h1>
+                                <div class="col col-15"><input type="text" id="id_edit" ></div>
                             </div>
-                                <div class="col col-20">
-                                    <label>Tipo de cliente</label>
-                                    <select  id="tipo_edit">
-                                        <option value="Persona">Persona</option>
-                                        <option value="Empresa">Empresa</option>
-                                    </select>
-                                </div>  
-                                <div class="col col-20" id="cont_btn_edit">
+                               
+                                <div class="col col-10" id="cont_btn_edit">
                                     <input type="button" id="close_edit" value="cerrar" class="btn"> <!-- CERRAR MODAL -->
                                 </div>              
                             </div>
                             <div class="col col-100" id="cliente_persona_edit">
                                 <div class="row"><!-- NOMBRE Y APELLIDOS -->
+                                    <div class="col col-20">
+                                        <label>Tipo de cliente</label>
+                                        <select  id="tipo_edit">
+                                            <option value="Persona">Persona</option>
+                                            <option value="Empresa">Empresa</option>
+                                        </select>
+                                    </div>  
                                     <div class="col col-40" id="clientes_nombre_ocultar_edit">
                                         <label><span>*</span>Nombre</label>
                                         <input type="text" placeholder="Ej: Juan Antonio  o  Empresa S.A." id="clientes_nombre_edit">
@@ -253,7 +254,7 @@
                             </div>
                             <!-- BOTON GUARDAR -->
                             <div class="row">
-                                <div class="col col-30" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
+                                <div class="col col-40" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
                                     <input type="checkbox" class="clientes_politica_privacidad_edit">
                                     <p style="font-size: 12px; color: rgb(5, 89, 114);">
                                         Aceptar 
@@ -262,10 +263,10 @@
                                         </a>
                                     </p>
                                 </div>
-                                <div class="col col-30">
+                                <div class="col col-10">
                                     <button type="submit" id="boton_clientes_guardar_edit" class="btn">Guardar</button>
                                 </div>
-                                <div class="col col-30" id="clientes_mensajes_edit">
+                                <div class="col col-40" id="clientes_mensajes_edit">
                                     <p style="font-size: 12px; color: rgb(5, 89, 114);">
                                         El uso de estos datos es únicamente para emisión de facturas
                                     </p>

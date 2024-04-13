@@ -367,117 +367,151 @@ const facturasPais = document.getElementById("facturas_pais");
   var facturasAdd = document.getElementById("facturas_add");
   var imagenAgregar = document.getElementById("icono-agregar");
   var guardarFacturas = document.getElementById("boton_facturas_guardar");
-
   
-
-  //facturasTotal.innerHTML = facturasTotaldeTotales.toFixed(2);
-
-  
+  // Inicializar las sumas totales
+  let totalSum = 0;
+  let baseImponibleSum = 0;
   
   const arregloDetalle = [];
   
   const redibujarTabla = () => {
-      facturasAdd.innerHTML = "";
-      arregloDetalle.forEach((detalle) => {
-          let fila = document.createElement("div");
-          fila.classList.add("row");
-          fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
-                            <div class="col3 col-15">${detalle.codigo}</div>
-                            <div class="col3 col-40">${detalle.descripcion}</div>
-                            <div class="col3 col-15">${detalle.precio}</div>
-                            <div class="col3 col-15">${detalle.impuestos}</div>
-                            <div class="col3 col-15">${detalle.precioIva}</div>                                         
-                            <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>`;
-          facturasAdd.appendChild(fila);
+    facturasAdd.innerHTML = "";
+    arregloDetalle.forEach((detalle, index) => {
+      let fila = document.createElement("div");
+      fila.classList.add("row");
+      fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
+                        <div class="col3 col-15">${detalle.codigo}</div>
+                        <div class="col3 col-40">${detalle.descripcion}</div>
+                        <div class="col3 col-15">${detalle.precio}</div>
+                        <div class="col3 col-15">${detalle.impuestos}</div>
+                        <div class="col3 col-15">${detalle.precioIva}</div>                                         
+                        <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
+      facturasAdd.appendChild(fila);
+    });
+  
+    // Agregar el evento de clic al botón de eliminar para cada fila
+    const eliminarBotones = document.querySelectorAll(".eliminar-icono_fila");
+    eliminarBotones.forEach((eliminarBoton) => {
+      eliminarBoton.addEventListener("click", (event) => {
+        const index = event.target.dataset.index;
+        eliminarFilaDetalle(index);
       });
+    });
   };
-
-  imagenAgregar.addEventListener("click", () => {
-    let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
-    if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
-        let facturasCantidad = (facturasCantidadInput);
-        let facturasCodigo = document.getElementById("facturas_codigo").value;
-        let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
-        let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
-        let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
-        let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-        let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-        let facturasBaseImponible = facturasPrecioIva - facturasPrecioSubTotal;
-        let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
-
-        //Actualizar el campo de entrada "facturas_total"
-        document.getElementById("facturas_total").value = facturasTotaldeTotales.toFixed(2);
-        document.getElementById("facturas_imponible").value = facturasBaseImponible.toFixed(2); 
-
-        // Agregar el detalle a la factura
-        const objetoDetalle = {
-            cantidad: facturasCantidad,
-            codigo: document.getElementById("facturas_codigo").value,
-            descripcion: document.getElementById("facturas_descripcion_stock").value,
-            precio: facturasPrecio,
-            impuestos: facturasImpuesto,
-            precioIva: facturasPrecioIva,
-        };
-        arregloDetalle.push(objetoDetalle);
-        redibujarTabla();
+  
+  // Función para eliminar la fila del detalle seleccionada
+  const eliminarFilaDetalle = (index) => {
+    // Eliminar la fila del detalle en la posición index
+    if (arregloDetalle.length > index) {
+      arregloDetalle.splice(index, 1);
+      redibujarTabla();
+     
     } else {
-        swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
+      swal.fire({
+        icon: "error",
+        iconColor: "#0798c4",
+        title: "No se pudo eliminar la fila del detalle",
+        text: "La fila del detalle especificada no existe",
+        confirmButtonColor: "#0798c4",
+      });
     }
-    autocomplete_servicios_reset();
-});
-
-    function autocomplete_servicios_reset() {
-        const input = document.getElementById("facturas_descripcion_stock");
-        const cantidad = document.getElementById("facturas_cantidad");
-        const precio = document.getElementById("facturas_precio");
-        const codigo = document.getElementById("facturas_codigo");
-        const results = document.getElementById("autocomplete-results_stock");
-
-        input.value = "";
-        cantidad.value = "";
-        precio.value = "";
-        codigo.value = "";
-        results.innerHTML = "";
-    
-    };
-
-
+  };
+  
+  
+  imagenAgregar.addEventListener("click", () => {
+      let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
+      if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
+          let facturasCantidad = (facturasCantidadInput);
+          let facturasCodigo = document.getElementById("facturas_codigo").value;
+          let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
+          let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
+          let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
+          let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
+          let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
+          let facturasBaseImponible = facturasPrecioIva - facturasPrecioSubTotal;
+          let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
+  
+          //Actualizar el campo de entrada "facturas_total"
+          document.getElementById("facturas_total").value = facturasTotaldeTotales.toFixed(2);
+          document.getElementById("facturas_imponible").value = facturasBaseImponible.toFixed(2);
+          facturasPrecioIva = facturasPrecioIva.toFixed(2); 
+  
+          // Agregar el detalle a la factura
+          const objetoDetalle = {
+              cantidad: facturasCantidad,
+              codigo: document.getElementById("facturas_codigo").value,
+              descripcion: document.getElementById("facturas_descripcion_stock").value,
+              precio: facturasPrecio,
+              impuestos: facturasImpuesto,
+              precioIva: facturasPrecioIva,
+          };
+          arregloDetalle.push(objetoDetalle);
+          redibujarTabla();
+  
+          // Actualizar la suma total y la suma de la base imponible
+          totalSum += facturasTotaldeTotales;
+          baseImponibleSum += facturasBaseImponible;
+  
+          // Actualizar los campos de total y base imponible en el HTML
+          document.getElementById("facturas_total").value = totalSum.toFixed(2);
+          document.getElementById("facturas_imponible").value = baseImponibleSum.toFixed(2); 
+      } else {
+          swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
+      }
+      autocomplete_servicios_reset();
+  });
+  
+  function autocomplete_servicios_reset() {
+      const input = document.getElementById("facturas_descripcion_stock");
+      const cantidad = document.getElementById("facturas_cantidad");
+      const precio = document.getElementById("facturas_precio");
+      const codigo = document.getElementById("facturas_codigo");
+      const results = document.getElementById("autocomplete-results_stock");
+  
+      input.value = "";
+      cantidad.value = "";
+      precio.value = "";
+      codigo.value = "";
+      results.innerHTML = "";
+  };
+  
 
 // ALTA FACTURAS 
 
 const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
 BotonGuardarFactura.forEach(function (element) {
     element.addEventListener("click", () => {
-        
-
-        const facturasAlta = document.getElementById("facturas_alta").value;
-        const fechaActual = new Date().toISOString().split('T')[0];
-        facturasAlta.value = fechaActual;
-        const facturasCliente= document.getElementById("facturas_id_cliente").value;
-        const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
-        const facturasEstado = (document.getElementById("facturas_estado").value);
+        // Obtener los valores de los campos del formulario
+        const facturasAlta = new Date();
+        const facturasCliente = document.getElementById("facturas_id_cliente").value;
+        const selectVencimiento = document.getElementById("facturas_vencimiento");
+        const diasVencimiento = parseInt(selectVencimiento.options[selectVencimiento.selectedIndex].value); // Obtener valor seleccionado del select
+        const facturasEstado = document.getElementById("facturas_estado").value;
         const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
         const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
 
-        // Validación de campos obligatorios
+        // Validar que los campos obligatorios estén completos
         if (
-            facturasAlta == "" ||
-            facturasCliente == "" ||
-            facturasVencimiento == "" ||
-            facturasEstado == "" ||
-            isNaN(facturasTotal) ||
-            isNaN(facturasImponible) 
+            facturasCliente === "" ||
+            isNaN(diasVencimiento) ||
+            facturasEstado === "" ||
+            isNaN(facturasImponible) ||
+            isNaN(facturasTotal)
         ) {
             swal.fire({
                 icon: "error",
-                iconColor: "#fa5807",
+                iconColor: "#e6381c",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
-                confirmButtonColor: "#055778",
-           
+                confirmButtonColor: "#0798c4",
             });
             return;
         }
+
+        // Calcular la fecha de vencimiento sumando los días recibidos a la fecha actual
+        const tiempoActual = facturasAlta.getTime(); // Obtener valor de tiempo actual en milisegundos
+        const tiempoVencimiento = tiempoActual + (diasVencimiento * 24 * 60 * 60 * 1000); // Sumar días en milisegundos
+        const fechaVencimiento = new Date(tiempoVencimiento).toLocaleDateString();
 
         // Realizar la solicitud HTTP POST al servidor
         const urlAlta = "http://localhost:3000/api/v1/alta_factura";
@@ -487,12 +521,12 @@ BotonGuardarFactura.forEach(function (element) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              Fecha_alta: facturasAlta ,    
-              Id_cliente: facturasCliente,
-              Fecha_vencimiento: facturasVencimiento ,
-              Estado: facturasEstado,
-              Base_imponible: facturasImponible,
-              Total: facturasTotal
+                Fecha_alta: facturasAlta,
+                Id_cliente: facturasCliente,
+                Fecha_vencimiento: fechaVencimiento,
+                Estado: facturasEstado,
+                Base_imponible: facturasImponible,
+                Total: facturasTotal
             }),
         })
             .then((response) => {
@@ -505,8 +539,8 @@ BotonGuardarFactura.forEach(function (element) {
                 swal.fire({
                     title: "¡Factura añadida correctamente!",
                     icon: "success",
-                    iconColor: "#0b7593",
-                    confirmButtonColor: "#055778",
+                    iconColor: "#0798c4",
+                    confirmButtonColor: "#0798c4",
                 });
                 setTimeout(() => {
                     location.reload();
@@ -520,9 +554,10 @@ BotonGuardarFactura.forEach(function (element) {
 
 
 
- // LISTADO FACTURAS
 
-const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas";
+ // LISTADO DE FACTURAS
+
+ const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas";
 const listado_facturas = document.querySelector("#listado_facturas");
 
 fetch(urlListadoFacturas)
@@ -533,13 +568,12 @@ fetch(urlListadoFacturas)
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
-      icon: "error",
-      iconColor: "#fa5807",
+      icon: "info",
+      iconColor: "#0798c4",
       title: "No hay facturas registradas",
       text: "Puedes crear una en el boton AÑADIR",
-      confirmButtonColor: "#055778",
-    }
-    );
+      confirmButtonColor: "#0798c4",
+    });
     return;
   }
 
@@ -549,28 +583,34 @@ const mostrar = (data) => {
   } else {
     console.error("El elemento #listado_facturas no se encontró en el DOM.");
   }
-  
 
   data.forEach((facturas) => {
-  
+    // Convertir la fecha de alta a objeto Date si es un string
+    const fechaAlta = typeof facturas.Fecha_alta === 'string' ? new Date(facturas.Fecha_alta) : facturas.Fecha_alta;
+    
+    // Formatear la fecha de alta como "DD/MM/YYYY"
+    const fechaAltaFormateada = fechaAlta.toLocaleDateString();
+    
+    // Agregar la fila al resultado
     resultado += `
         <div class="row2">
             <div class="col2 col-10">${facturas.Id_factura}</div>
-            <div class="col2 col-10">${facturas.Fecha_alta}</div>
+            <div class="col2 col-10">${fechaAltaFormateada}</div>
             <div class="col2 col-10">${facturas.Fecha_vencimiento}</div>
             <div class="col2 col-30">${facturas.Cliente}</div>
             <div class="col2 col-10">${facturas.Base_imponible}</div>
             <div class="col2 col-10">${facturas.Total}</div>
-           
-           
+            <div class="col2 col-10">${facturas.Estado}</div>
             <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
         </div>`;
-  });
+});
+
 
   listado_facturas.innerHTML = resultado;
 }; 
+
 
 // ELIMINAR FACTURAS
 const on = (element, event, selector, handler) => {
@@ -589,9 +629,9 @@ on(document, "click", ".eliminar-icono", (e) => {
     text: "¡Esta acción no se puede deshacer!",
     icon: "question",
     showCancelButton: true,
-    confirmButtonColor: "#055778",
-    cancelButtonColor: "#a0360f",
-    iconColor: "#db3208",
+    confirmButtonColor: "#0798c4",
+    cancelButtonColor: "#e6381c",
+    iconColor: "#e6381c",
     confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
   }).then((result) => {
@@ -615,8 +655,8 @@ on(document, "click", ".eliminar-icono", (e) => {
             title: "¡Factura eliminada!",
             text: "La factura ha sido eliminada satisfactoriamente.",
             icon: "success",
-            iconColor: "#0b7593",
-            confirmButtonColor: "#055778",
+            iconColor: "#0798c4",
+            confirmButtonColor: "#0798c4",
           });
           setTimeout(() => {
             location.reload();
@@ -625,16 +665,17 @@ on(document, "click", ".eliminar-icono", (e) => {
         .catch((error) => {
           swal.fire("Error al eliminar el articulo", {
             icon: "error",
-            confirmButtonColor: "#055778",
+            iconColor: "#e6381c",
+            confirmButtonColor: "#0798c4",
           });
         });
     } else {
       swal.fire({
         title: "¡Factura NO eliminada!",
         text: "Todo a salvo!.",
-        icon: "success",
-        iconColor: "#0b7593",
-        confirmButtonColor: "#055778",
+        icon: "info",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
       });
       setTimeout(() => {
         location.reload();

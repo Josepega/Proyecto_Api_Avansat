@@ -113,7 +113,7 @@ botonGuardarCliente.forEach(function (element){
   
 
   const clientesTipo = document.getElementById("tipo");
-  const clientesNombre = document.getElementById("clientes_nombre");
+  const clientesNombre = document.querySelector(".clientes_nombre");
   const clientesApellidos = document.getElementById("clientes_apellidos");
   const clientesIdFiscal = document.getElementById("clientes_idFiscal");
   const clienteDireccion = document.getElementById("clientes_direccion");
@@ -228,8 +228,8 @@ fetch(urlListado)
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
-      icon: "error",
-      iconColor: "#fa5807",
+      icon: "info",
+      iconColor: "#0b7593",
       title: "No hay Clientes registrados",
       text: "Puedes crear clientes en el boton AÑADIR",
       confirmButtonColor: "#055778",
@@ -330,6 +330,7 @@ on(document, "click", ".eliminar-icono", (e) => {
         });
     } else {
       swal.fire({
+        icon: "info",
         title: "¡Cliente NO eliminado!",
         text: "Todo a salvo!.",
         iconColor: "#0b7593",

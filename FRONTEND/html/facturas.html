@@ -58,20 +58,19 @@
                 
                         <div class="container_seccion">
                                 <div class="row">
-                                    <div class="col col-70"><h1>Facturas</h1></div>
-                                    <div class="col col-30"><button type="button" id="boton_facturas_alta" class="btn">Añadir</button></div>
+                                    <div class="col col-80"><h1>Facturas</h1></div>
+                                    <div class="col col-10"><button type="button" id="boton_facturas_alta" class="btn">Añadir</button></div>
                                 </div>
                                 <div id="interior_container_listado_stock" class="container_seccion_interior">         
                                     <!-- Row de títulos -->
                                     <div class="row">
                                         <div class="col2 col-5"><h4>ID</h4></div>
-                                        <div class="col2 col-15"><h4>Fecha alta</h4></div>
+                                        <div class="col2 col-10"><h4>Fecha alta</h4></div>
                                         <div class="col2 col-10"><h4>Vencimiento</h4></div>
                                         <div class="col2 col-20"><h4>Cliente</h4></div>
                                         <div class="col2 col-15"><h4>Base imponible</h4></div>
                                         <div class="col2 col-10"><h4>Total</h4></div>
-                                        <div class="col2 col-10"><h4>Estado</h4></div>
-                                        <div class="col2 col-10"><h4>Acciones</h4></div>
+                                        <div class="col2 col-10"><h4>Estado</h4></div>                                    
                                         <div class="col2 col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
                                         <div class="col2 col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
                                         <div class="col2 col-5"><h4>Ver</h4></div> <!-- Espacio para el ícono de borrar -->
@@ -106,7 +105,7 @@
                     </div>
                     <div class="col col-10" style="display: none;"><input type="text" id="facturas_id_cliente"></div>
                     <div class="col-20"></div>
-                    <div class="col-15"><button type="button" id="close" class="btn">Cerrar</button></div>
+                    <div class="col-10"><button type="button" id="close" class="btn">Cerrar</button></div>
                     
                 </div>
 
@@ -227,10 +226,10 @@
                 <!-- BOTON GUARDAR TOTALES -->
                 <div id="separador"></div>
                 <div class="row">
-                    <div class="col col-40">
+                    <div class="col col-20">
                         <button type="button" id="boton_facturas_guardar" class="btn">Guardar factura</button>
                     </div>
-                    <div class="col-20"></div>
+                    <div class="col-30"></div>
                     <div class="col-20">
                         <label>Base imponible</label>
                         <input type="number" id="facturas_imponible" disabled>

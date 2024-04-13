@@ -145,8 +145,8 @@ fetch(urlListado)
 const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
-      icon: "error",
-      iconColor: "#fa5807",
+      icon: "info",
+      iconColor: "#0b7593",
       title: "No hay stock registrado",
       text: "Puedes crear stock en el boton AÑADIR",
       confirmButtonColor: "#055778",
@@ -246,7 +246,7 @@ on(document, "click", ".eliminar-icono", (e) => {
       swal.fire({
         title: "¡Factura NO eliminada!",
         text: "Todo a salvo!.",
-        icon: "success",
+        icon: "info",
         iconColor: "#0b7593",
         confirmButtonColor: "#055778",
       });

@@ -54,10 +54,10 @@
 
                 <div class="container_seccion">
                     <div class="row">
-                        <div class="col-70">
+                        <div class="col col-70">
                             <h1>Servicios</h1>
                         </div>
-                        <div class="col-30"><button type="button" id="boton_servicios_alta" class="btn">Añadir</button>
+                        <div class="col col-10"><button type="button" id="boton_servicios_alta" class="btn">Añadir</button>
                         </div>
                     </div>
                     <div id="interior_container_listado_servicios" class="container_seccion_interior">
@@ -106,21 +106,20 @@
                     <div id="container_interior_modal_servicios" class="modal_interior">
                         <form id="alta_servicios" class="formulario">
                             <div class="row">
-                                <div class="col-50">
+                                <div class="col col-70">
                                     <h1>Alta / nuevo servicio / servicios</h1>
                                 </div>
-                                <div class="col-20"></div>
-                                <div class="col-20" id="cont_btn">
+                                <div class="col col-10" id="cont_btn">
                                     <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
                                 </div>
                             </div>
                             <div class="row"><!-- ID - NOMBRE- CÓDIGO -->
-                                <div class="col-20">
+                                <div class="col col-20">
                                     <label><span>*</span>Código servicio</label>
                                     <input type="text" placeholder="Ej: 0123456789" id="servicios_codigo">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-40">
+                                <div class="col col-5"></div>
+                                <div class="col col-40">
                                     <label><span>*</span>Nombre</label>
                                     <input type="text" placeholder="Ej: Servicios Varios" id="servicios_nombre">
                                 </div>
@@ -128,22 +127,22 @@
 
                             <div class="row"><!-- PRECIOS -->
 
-                                <div class="col-15">
+                                <div class="col col-15">
                                     <label><span>*</span>Precio coste</label>
                                     <input type="number" step="any" placeholder="Ej: 20,50" id="servicios_precio_coste">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label>Precio coste IVA inc</label>
                                     <input type="number" step="any" placeholder="Automático" id="servicios_precio_coste_iva">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label><span>*</span>Precio venta </label>
                                     <input type="number" step="any" placeholder="Ej: 41,55" id="servicios_precio_venta">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label>Precio venta IVA inc</label>
                                     <input type="number" step="any" placeholder="Automático" id="servicios_precio_venta_iva">
                                 </div>
@@ -152,7 +151,7 @@
                             <!-- BOTON GUARDAR -->
                             <div class="row">
 
-                                <div class="col-30">
+                                <div class="col col-10">
                                     <button type="button" id="boton_servicios_guardar" class="btn">Guardar</button>
                                 </div>
 
@@ -166,7 +165,7 @@
                     <div id="container_interior_modal_servicios_edit" class="modal_interior">
                         <form id="alta_servicios_edit" class="formulario">
                             <div class="row">
-                                <div class="col-30">
+                                <div class="col col-30">
                                     <h1>Editar / servicio / </h1>
                                 </div>
                                 <div class="col-10"><input type="text" id="servicios_id_edit"></div>
