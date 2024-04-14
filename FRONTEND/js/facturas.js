@@ -26,8 +26,8 @@ closeModalFacturasButtons.forEach(function(element) {
 
 
 // MODALFacturas EDIT
-const modalFacturas_edit = document.querySelectorAll("#modal_Facturas_alta_stock_edit");
-const openModalFacturasButtons_edit = document.querySelectorAll("#boton_stock_alta_edit");
+const modalFacturas_edit = document.querySelectorAll("#modal_alta_facturas_edit");
+const openModalFacturasButtons_edit = document.querySelectorAll("#boton_facturas_alta_edit");
 const closeModalFacturasButtons_edit = document.querySelectorAll("#close_edit");
 
 function openModalFacturas_edit() {
@@ -146,92 +146,12 @@ autocompleteResults.addEventListener("click", (e) => {
   }
 });
 
-
- // AUTOCOMPLET SERVICIOS
-// Declarar la variable clientes en un ámbito global
-//let servicios = [];
-
-
-// Función para buscar clientes por nombre
-/* const searchServicios = (key) => {
-  fetch(`http://localhost:3000/api/v1/listado_autocomplete?Nombre=${key}`)
-    .then((res) => res.json())
-    .then((data) => {
-      if (Array.isArray(data)) {
-        servicios = data; // Asignar los datos de los clientes a la variable clientes
-        buildListServicios();
-      }
-    })
-    .catch(error => {
-      console.error("Error al buscar servicios:", error);
-    });
-};
-
-// Función para construir la lista de resultados
-const buildListServicios = () => {
-  const inputServicios = document.getElementById("facturas_descripcion");
-  const autocompleteResultsServicios = document.getElementById("autocomplete-results_servicios");
-
-  console.log("servicios:", servicios);
-
-  if (!servicios || servicios.length === 0) {
-    autocompleteResultsServicios.innerHTML = "";
-    return;
-  }
-
-  const key = inputServicios.value.toLowerCase();
-
-  const filteredServicios = servicios.filter(servicios => {
-    return servicios.Nombre.toLowerCase().startsWith(key);
-  }).sort((a, b) => {
-    // Ordenar alfabéticamente por el nombre
-    if (a.Nombre < b.Nombre) return -1;
-    if (a.Nombre > b.Nombre) return 1;
-    return 0;
-  });
-
-  autocompleteResultsServicios.innerHTML = "";
-
-  filteredServicios.slice(0, 10).forEach((servicios) => {
-    autocompleteResultsServicios.innerHTML += `<li>${servicios.Nombre} </li>`;
-  });
-};
-
-// Agregar evento al input para buscar clientes
-const inputServicios = document.getElementById("facturas_descripcion");
-const autocompleteResultsServicios = document.getElementById("autocomplete-results_servicios");
-
-inputServicios.addEventListener("keyup", (event) => {
-  autocompleteResultsServicios.style.display = "block";
-  const key = event.target.value;
-
-  console.log(key);
-
-  if (key.length > 0) {
-    searchServicios(key);
-  } else {
-    buildListServicios();
+// Cerrar la lista de resultados al pulsar fuera de ella
+window.addEventListener("click", (event) => {
+  if (!autocompleteResults.contains(event.target)) {
+    autocompleteResults.style.display = "none";
   }
 });
-
-// Agregar evento a los elementos de la lista de resultados para seleccionar un cliente
-autocompleteResultsServicios.addEventListener("click", (e) => {
-  if (e.target && e.target.nodeName == "LI") {
-    const selectedNameServicios = e.target.innerHTML;
-    const selectedServicios = servicios.find(servicios => `${servicios.Nombre} ` === selectedNameServicios);
-    
-    // Rellenar los otros inputs con los datos del cliente seleccionado
-    inputServicios.value = selectedServicios.Nombre;
-   
-    document.getElementById('facturas_descripcion').value = selectedServicios.Nombre;
-    document.getElementById('facturas_codigo').value = selectedServicios.Codigo;
-    document.getElementById('facturas_precio').value = selectedServicios.Precio_coste;
-    
-
-    // Ocultar la lista de resultados
-    autocompleteResultsServicios.style.display = "none";
-  }
-});  */
 
 // AUTOCOMPLET STOCK
 // Declarar la variable stock en un ámbito global
@@ -374,92 +294,151 @@ const facturasPais = document.getElementById("facturas_pais");
   
   const arregloDetalle = [];
   
-  const redibujarTabla = () => {
-    facturasAdd.innerHTML = "";
-    arregloDetalle.forEach((detalle, index) => {
-      let fila = document.createElement("div");
-      fila.classList.add("row");
-      fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
-                        <div class="col3 col-15">${detalle.codigo}</div>
-                        <div class="col3 col-40">${detalle.descripcion}</div>
-                        <div class="col3 col-15">${detalle.precio}</div>
-                        <div class="col3 col-15">${detalle.impuestos}</div>
-                        <div class="col3 col-15">${detalle.precioIva}</div>                                         
-                        <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
-      facturasAdd.appendChild(fila);
-    });
-  
-    // Agregar el evento de clic al botón de eliminar para cada fila
-    const eliminarBotones = document.querySelectorAll(".eliminar-icono_fila");
-    eliminarBotones.forEach((eliminarBoton) => {
-      eliminarBoton.addEventListener("click", (event) => {
-        const index = event.target.dataset.index;
-        eliminarFilaDetalle(index);
-      });
-    });
-  };
-  
-  // Función para eliminar la fila del detalle seleccionada
-  const eliminarFilaDetalle = (index) => {
-    // Eliminar la fila del detalle en la posición index
-    if (arregloDetalle.length > index) {
-      arregloDetalle.splice(index, 1);
-      redibujarTabla();
-     
-    } else {
-      swal.fire({
-        icon: "error",
-        iconColor: "#0798c4",
-        title: "No se pudo eliminar la fila del detalle",
-        text: "La fila del detalle especificada no existe",
-        confirmButtonColor: "#0798c4",
-      });
+
+  // Función para redibujar la tabla y recalcular los totales
+const redibujarTabla = () => {
+  facturasAdd.innerHTML = "";
+  let camposVacios = false; // Variable para rastrear si hay campos vacíos
+
+  arregloDetalle.forEach((detalle, index) => {
+    // Verificar si algún campo en el detalle está vacío
+    if (
+      detalle.cantidad === "" ||
+      detalle.codigo === "" ||
+      detalle.descripcion === "" ||
+      detalle.precio === "" ||
+      detalle.impuestos === ""
+    ) {
+      camposVacios = true; // Marcar que hay campos vacíos
+      return; // Detener la ejecución si hay algún campo vacío
     }
-  };
-  
-  
-  imagenAgregar.addEventListener("click", () => {
-      let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
-      if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
-          let facturasCantidad = (facturasCantidadInput);
-          let facturasCodigo = document.getElementById("facturas_codigo").value;
-          let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
-          let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
-          let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
-          let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-          let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-          let facturasBaseImponible = facturasPrecioIva - facturasPrecioSubTotal;
-          let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
-  
-          //Actualizar el campo de entrada "facturas_total"
-          document.getElementById("facturas_total").value = facturasTotaldeTotales.toFixed(2);
-          document.getElementById("facturas_imponible").value = facturasBaseImponible.toFixed(2);
-          facturasPrecioIva = facturasPrecioIva.toFixed(2); 
-  
-          // Agregar el detalle a la factura
-          const objetoDetalle = {
-              cantidad: facturasCantidad,
-              codigo: document.getElementById("facturas_codigo").value,
-              descripcion: document.getElementById("facturas_descripcion_stock").value,
-              precio: facturasPrecio,
-              impuestos: facturasImpuesto,
-              precioIva: facturasPrecioIva,
-          };
-          arregloDetalle.push(objetoDetalle);
-          redibujarTabla();
-  
-          // Actualizar la suma total y la suma de la base imponible
-          totalSum += facturasTotaldeTotales;
-          baseImponibleSum += facturasBaseImponible;
-  
-          // Actualizar los campos de total y base imponible en el HTML
-          document.getElementById("facturas_total").value = totalSum.toFixed(2);
-          document.getElementById("facturas_imponible").value = baseImponibleSum.toFixed(2); 
-      } else {
-          swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
-      }
-      autocomplete_servicios_reset();
+
+    // Si todos los campos del detalle están llenos, procede con la creación de la fila
+    let fila = document.createElement("div");
+    fila.classList.add("row");
+    fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
+                      <div class="col3 col-15">${detalle.codigo}</div>
+                      <div class="col3 col-40">${detalle.descripcion}</div>
+                      <div class="col3 col-15">${detalle.precio}</div>
+                      <div class="col3 col-15">${detalle.impuestos}</div>
+                      <div class="col3 col-15">${detalle.precioIva}</div>                                         
+                      <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
+    facturasAdd.appendChild(fila);
   });
+
+  // Agregar el evento de clic al botón de eliminar para cada fila
+  const eliminarBotones = document.querySelectorAll(".eliminar-icono_fila");
+  eliminarBotones.forEach((eliminarBoton) => {
+    eliminarBoton.addEventListener("click", (event) => {
+      const index = event.target.dataset.index;
+      eliminarFilaDetalle(index);
+    });
+  });
+
+  // Si no hay campos vacíos, calcular los totales
+  if (!camposVacios) {
+    calcularTotales();
+  }
+};
+
+// Función para calcular los totales
+const calcularTotales = () => {
+  // Calcular la base imponible
+  const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + (curr.precioIva * curr.cantidad * (curr.impuestos / 100)), 0);
+
+  // Actualizar el campo de base imponible en el HTML
+  document.getElementById("facturas_imponible").value = baseImponibleSum.toFixed(2);
+
+  // Calcular el total
+  const totalSum = arregloDetalle.reduce((acc, curr) => acc + curr.precioIva * curr.cantidad, 0);
+
+  // Actualizar el campo de total en el HTML
+  document.getElementById("facturas_total").value = totalSum.toFixed(2);
+};
+
+// Función para eliminar la fila del detalle seleccionada
+// Función para eliminar la fila del detalle seleccionada
+const eliminarFilaDetalle = (index) => {
+  // Verificar si el índice está dentro del rango de arregloDetalle
+  if (index >= 0 && index < arregloDetalle.length) {
+    // Eliminar la fila del detalle en la posición index
+    arregloDetalle.splice(index, 1);
+    redibujarTabla(); // Llamar a redibujarTabla para recalcular los totales
+    calcularTotales(); // Actualizar los totales después de eliminar la fila
+  } else {
+    swal.fire({
+      icon: "error",
+      iconColor: "#0798c4",
+      title: "No se pudo eliminar la fila del detalle",
+      text: "La fila del detalle especificada no existe",
+      confirmButtonColor: "#0798c4",
+    });
+  }
+};
+
+
+// Función para eliminar la fila del detalle seleccionada
+
+// Función para verificar si algún campo está vacío
+// Función para verificar si algún campo está vacío
+const camposVacios = () => {
+  const cantidad = document.getElementById("facturas_cantidad").value.trim();
+  const codigo = document.getElementById("facturas_codigo").value.trim();
+  const descripcion = document.getElementById("facturas_descripcion_stock").value.trim();
+  const precio = document.getElementById("facturas_precio").value.trim();
+  const impuesto = document.getElementById("facturas_impuestos").value.trim();
+
+  return cantidad === "" || codigo === "" || descripcion === "" || precio === "" || impuesto === "";
+};
+
+// Modificar la función para añadir una fila al detalle
+imagenAgregar.addEventListener("click", () => {
+  if (camposVacios()) {
+    // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
+    swal.fire({
+      icon: "error",
+      title: "Campos vacíos",
+      text: "Todos los campos son obligatorios",
+      confirmButtonColor: "#0798c4",
+    });
+    return; // Detener la ejecución si hay campos vacíos
+  }
+
+  // Si no hay campos vacíos, proceder con la lógica actual de agregar la fila al detalle
+  let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
+  if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
+      let facturasCantidad = (facturasCantidadInput);
+      let facturasCodigo = document.getElementById("facturas_codigo").value;
+      let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
+      let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
+      let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
+      let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
+      let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
+      let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100);
+
+      let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
+
+      // Agregar el detalle a la factura
+      const objetoDetalle = {
+          cantidad: facturasCantidad,
+          codigo: document.getElementById("facturas_codigo").value,
+          descripcion: document.getElementById("facturas_descripcion_stock").value,
+          precio: facturasPrecio,
+          impuestos: facturasImpuesto,
+          precioIva: facturasPrecioIva,
+      };
+      arregloDetalle.push(objetoDetalle);
+      redibujarTabla();
+
+      // Actualizar los totales después de agregar el detalle
+      calcularTotales();
+  } else {
+      swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
+  }
+  autocomplete_servicios_reset();
+});
+
+
   
   function autocomplete_servicios_reset() {
       const input = document.getElementById("facturas_descripcion_stock");
@@ -681,5 +660,125 @@ on(document, "click", ".eliminar-icono", (e) => {
         location.reload();
       }, 2000);
     }
+  });
+});
+
+// EDITAR FACTURAS
+
+let urlEditarFactura = "http://localhost:3000/api/v1/editar_facturas/";
+
+
+// Cuando se hace clic en el botón de editar cliente
+on(document, "click", ".editar-icono", (e) => {
+  
+  const fila = e.target.parentNode.parentNode;
+  const Id_factura = fila.children[0].innerHTML;
+  const Fecha_vencimiento = fila.children[1].innerHTML;
+  const Cliente = fila.children[2].innerHTML;
+  const Tipo = fila.children[3].innerHTML;
+  const NombreCliente = fila.children[4].innerHTML;
+  const ApellidosCliente = fila.children[5].innerHTML;
+  const idFiscal = fila.children[6].innerHTML;
+  const Direccion = fila.children[7].innerHTML;
+  const CPostal = fila.children[8].innerHTML;
+  const localidad = fila.children[9].innerHTML;
+  //const Pais = fila.children[11].innerHTML;  
+  //const stockCantidad = fila.children[13].innerHTML; 
+  //const stockCodigo = fila.children[14].innerHTML; 
+  ////const stockNombre = fila.children[15].innerHTML; 
+  //const stockCoste = fila.children[16].innerHTML; 
+  //const stockCosteIva = fila.children[17].innerHTML; 
+  //const stockVenta = fila.children[18].innerHTML; 
+  //const stockVentaIva = fila.children[19].innerHTML;
+
+
+  // Asignar valores a los campos de entrada del modal myModal_edit
+  document.getElementById("facturas_id_edit").value = Id_factura;
+  document.getElementById("facturas_vencimiento_edit").value = Fecha_vencimiento;
+  document.getElementById("facturas_id_cliente_edit").value = Cliente;
+  document.getElementById("tipo_edit").value = Tipo;
+  document.getElementById("facturas_nombre_cliente_edit").value = NombreCliente;
+  document.getElementById("facturas_apellidos_edit").value = ApellidosCliente;
+  document.getElementById("facturas_fiscal_edit").value = idFiscal;
+  document.getElementById("facturas_direccion_edit").value = Direccion;
+  document.getElementById("facturas_c_postal_edit").value = CPostal;
+  document.getElementById("facturas_localidad_edit").value = localidad;
+ // document.getElementById("facturas_pais_edit").value = Pais;
+  
+ 
+
+ 
+  // Mostrar el modal myModal_edit
+  openModalFacturas_edit();
+});
+
+
+// Manejar el envío del formulario de edición
+const formEditFacturas = document.querySelectorAll("#modal_alta_facturas_edit");
+
+formEditFacturas.forEach(form => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // Obtener los valores del formulario de edición
+    let idFactura = document.getElementById("facturas_id_edit").value;
+    let fecha = document.getElementById("facturas_vencimiento_edit").value;
+    let estado = document.getElementById("facturas_estado_edit").value;
+    let vencimiento = document.getElementById("facturas_vencimiento_edit").value;
+    let idCliente = document.getElementById("facturas_id_cliente_edit").value;
+    let tipo = document.getElementById("facturas_tipo_edit").value;
+    let nombre = document.getElementById("facturas_nombre_edit").value;
+    let apellidos = document.getElementById("facturas_apellidos_edit").value;
+    let idFiscal = document.getElementById("facturas_id_fiscal_edit").value;
+    let direccion = document.getElementById("facturas_direccion_edit").value;
+    let cPostal = document.getElementById("facturas_c_postal_edit").value;
+    let localidad = document.getElementById("facturas_localidad_edit").value;
+    let pais = document.getElementById("facturas_pais_edit").value;
+    let total = document.getElementById("facturas_total_edit").value; 
+    let imponible = document.getElementById("facturas_imponible_edit").value;
+
+    //costeIva = (coste * 1.21).toFixed(2);
+    //ventaIva = (venta * 1.21).toFixed(2);
+   
+    // Enviar la solicitud de edición al servidor
+    fetch(urlEditarFactura + idFactura, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        Fecha_alta: fecha,
+        Cliente: idCliente,
+        Fecha_vencimiento: vencimiento,
+        Estado:estado,
+        Base_imponible:imponible,
+        Total: total,
+        
+      }),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Hubo un problema al editar la factura. Por favor, inténtalo de nuevo más tarde.');
+        }
+        return response.json();
+      })
+      .then(response => {
+        // Mostrar mensaje de éxito con SweetAlert
+        swal.fire({
+          title: "¡Stock editado!",
+          text: "El stock ha sido editado satisfactoriamente.",
+          icon: "success",
+          iconColor: "#0b7593",
+          confirmButtonColor: "#055778",
+        });
+        
+
+        // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
+        setTimeout(() => {
+          location.reload();
+        }, 2000);
+      })
+      .catch(error => {
+        // Mostrar mensaje de error con SweetAlert
+        swal.fire("Error", error.message, "error");
+      });
   });
 });
