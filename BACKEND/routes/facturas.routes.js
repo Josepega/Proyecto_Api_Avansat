@@ -4,72 +4,36 @@ const conexionMySQL = require("../conexionMySQL");
 
 /* -----------------------------------------------------------FACTURAS---------------------------------------------------------------------------------------------------------------- */
 
+// RUTAS: ALTA FACTURAS
+// RUTAS: ALTA FACTURA
 router.post("/alta_factura", (req, res) => {
   try {
-    const facturaData = {
-      Fecha_alta: req.body.factura.Fecha_alta,
-      Id_cliente: req.body.factura.Id_cliente,
-      Albaran: req.body.factura.Albaran,
-      Fecha_vencimiento: req.body.factura.Fecha_vencimiento,
-      Estado: req.body.factura.Estado,
-      Forma_pago: req.body.factura.Forma_pago,
-      Base_imponible: req.body.factura.Base_imponible,
-      Total: req.body.factura.Total
+    const data = {
+      Fecha_alta: req.body.Fecha_alta,    
+      Id_cliente: req.body.Id_cliente,
+      Albaran: req.body.Albaran,
+      Fecha_vencimiento: req.body.Fecha_vencimiento,
+      Estado: req.body.Estado,
+      Forma_pago: req.body.Forma_pago,
+      Base_imponible: req.body.Base_imponible,
+      Total: req.body.Total
     };
+     
 
-    const detalles = req.body.detalles;
-
-    conexionMySQL.beginTransaction(function(err) {
-      if (err) {
-        throw err;
+    const sql = "INSERT INTO  facturas SET Id_factura = DEFAULT, ?";
+    conexionMySQL.query(sql, data, (error, result) => {
+      if (error) {
+        res.status(400).json({
+          status: 400,
+          mensaje: "Error al insertar la nueva factura",
+          error: error
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          mensaje: "Factura insertada correctamente"
+        });
       }
-
-      conexionMySQL.query("INSERT INTO facturas SET ?", facturaData, function(error, result) {
-        if (error) {
-          return conexionMySQL.rollback(function() {
-            res.status(400).json({
-              status: 400,
-              mensaje: "Error al insertar la nueva factura",
-              error: error
-            });
-          });
-        }
-
-        const facturaId = result.insertId;
-
-        const detalleValues = detalles.map(detalle => {
-          return [facturaId, detalle.Id_stock];
-        });
-
-        conexionMySQL.query("INSERT INTO detalle_factura (Id_factura, Id_stock) VALUES ?", [detalleValues], function(error, result) {
-          if (error) {
-            return conexionMySQL.rollback(function() {
-              res.status(400).json({
-                status: 400,
-                mensaje: "Error al insertar los detalles de la factura",
-                error: error
-              });
-            });
-          }
-
-          conexionMySQL.commit(function(err) {
-            if (err) {
-              return conexionMySQL.rollback(function() {
-                res.status(500).json({
-                  status: 500,
-                  mensaje: "Error en el servidor",
-                  error: err
-                });
-              });
-            }
-
-            res.status(200).json({
-              status: 200,
-              mensaje: "Factura y detalles insertados correctamente"
-            });
-          });
-        });
-      });
     });
   } catch (error) {
     res.status(500).json({
@@ -79,8 +43,6 @@ router.post("/alta_factura", (req, res) => {
     });
   }
 });
-
-
 
 // RUTAS: LISTADO DE FACTURAS
 router.get('/listado_facturas', (req,res)=>{
