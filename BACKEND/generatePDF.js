@@ -28,9 +28,9 @@ module.exports = async function generatePDF({
         format: 'a4',
         printBackground: true,
         margin: {
-            top: '2cm',
+            top: '1cm',
             right: '1cm',
-            bottom: '2cm',
+            bottom: '1cm',
             left: '1cm',
         },
     });

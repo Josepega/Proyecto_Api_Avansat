@@ -131,7 +131,7 @@ autocompleteResults.addEventListener("click", (e) => {
     
     // Rellenar los otros inputs con los datos del cliente seleccionado
     inputClientes.value = selectedCliente.Nombre;
-    document.getElementById('facturas_id_cliente').value = selectedCliente.id_cliente;
+    document.getElementById('facturas_id_cliente').value = selectedCliente.Id_cliente;
     document.getElementById('facturas_nombre_cliente').value = selectedCliente.Nombre;
     document.getElementById('facturas_apellidos').value = selectedCliente.Apellidos;
     document.getElementById('facturas_direccion').value = selectedCliente.Direccion;
@@ -223,6 +223,7 @@ autocompleteResultsStock.addEventListener("click", (e) => {
     
     // Rellenar los inputs relacionados con el stock seleccionado
     document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
+    document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
     document.getElementById('facturas_codigo').value = selectedStock.Codigo;
     document.getElementById('facturas_precio').value = selectedStock.Precio_coste;
 
@@ -277,6 +278,7 @@ const facturasPais = document.getElementById("facturas_pais");
   var formFacturas = document.getElementById("alta_facturas");
   var facturasCantidad = document.getElementById("facturas_cantidad");
   var facturasCodigo = document.getElementById("facturas_codigo");
+  var facturasStockCodigo = document.getElementById("facturas_id_detalle_stock");
   var facturasDescripcion = document.getElementById("facturas_descripcion");
   var facturasPrecio = document.getElementById("facturas_precio");
   var facturasImpuesto = document.getElementById("facturas_impuesto");
@@ -356,7 +358,7 @@ const calcularTotales = () => {
   document.getElementById("facturas_total").value = totalSum.toFixed(2);
 };
 
-// Función para eliminar la fila del detalle seleccionada
+
 // Función para eliminar la fila del detalle seleccionada
 const eliminarFilaDetalle = (index) => {
   // Verificar si el índice está dentro del rango de arregloDetalle
@@ -377,9 +379,6 @@ const eliminarFilaDetalle = (index) => {
 };
 
 
-// Función para eliminar la fila del detalle seleccionada
-
-// Función para verificar si algún campo está vacío
 // Función para verificar si algún campo está vacío
 const camposVacios = () => {
   const cantidad = document.getElementById("facturas_cantidad").value.trim();
@@ -409,6 +408,7 @@ imagenAgregar.addEventListener("click", () => {
   if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
       let facturasCantidad = (facturasCantidadInput);
       let facturasCodigo = document.getElementById("facturas_codigo").value;
+      let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
       let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
       let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
       let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
@@ -422,6 +422,7 @@ imagenAgregar.addEventListener("click", () => {
       const objetoDetalle = {
           cantidad: facturasCantidad,
           codigo: document.getElementById("facturas_codigo").value,
+          id_stock: document.getElementById("facturas_id_detalle_stock").value,
           descripcion: document.getElementById("facturas_descripcion_stock").value,
           precio: facturasPrecio,
           impuestos: facturasImpuesto,
@@ -455,82 +456,119 @@ imagenAgregar.addEventListener("click", () => {
   };
   
 
-// ALTA FACTURAS 
-
-const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
-BotonGuardarFactura.forEach(function (element) {
-    element.addEventListener("click", () => {
-        // Obtener los valores de los campos del formulario
-        const facturasAlta = new Date();
-        const facturasCliente = document.getElementById("facturas_id_cliente").value;
-        const selectVencimiento = document.getElementById("facturas_vencimiento");
-        const diasVencimiento = parseInt(selectVencimiento.options[selectVencimiento.selectedIndex].value); // Obtener valor seleccionado del select
-        const facturasEstado = document.getElementById("facturas_estado").value;
-        const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
-        const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
-
-        // Validar que los campos obligatorios estén completos
-        if (
-            facturasCliente === "" ||
-            isNaN(diasVencimiento) ||
-            facturasEstado === "" ||
-            isNaN(facturasImponible) ||
-            isNaN(facturasTotal)
-        ) {
-            swal.fire({
-                icon: "error",
-                iconColor: "#e6381c",
-                title: "Los campos marcados con * son obligatorios",
-                text: "¡Completa los que te falten!",
-                confirmButtonColor: "#0798c4",
-            });
-            return;
-        }
-
-        // Calcular la fecha de vencimiento sumando los días recibidos a la fecha actual
-        const tiempoActual = facturasAlta.getTime(); // Obtener valor de tiempo actual en milisegundos
-        const tiempoVencimiento = tiempoActual + (diasVencimiento * 24 * 60 * 60 * 1000); // Sumar días en milisegundos
-        const fechaVencimiento = new Date(tiempoVencimiento).toLocaleDateString();
-
-        // Realizar la solicitud HTTP POST al servidor
-        const urlAlta = "http://localhost:3000/api/v1/alta_factura";
-        fetch(urlAlta, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                Fecha_alta: facturasAlta,
-                Id_cliente: facturasCliente,
-                Fecha_vencimiento: fechaVencimiento,
-                Estado: facturasEstado,
-                Base_imponible: facturasImponible,
-                Total: facturasTotal
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error al agregar la factura");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                swal.fire({
-                    title: "¡Factura añadida correctamente!",
-                    icon: "success",
-                    iconColor: "#0798c4",
-                    confirmButtonColor: "#0798c4",
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 3000);
-            })
-            .catch((error) => {
-                swal.fire("Error al agregar la factura", error.message, "error");
-            });
-    });
-});
-
+  const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
+  BotonGuardarFactura.forEach(function (element) {
+      element.addEventListener("click", () => {
+          // Obtener los valores de los campos del formulario
+          const facturasAlta = new Date();
+          const facturasCliente = document.getElementById("facturas_id_cliente").value;
+          const facturaAlbaran = document.getElementById("facturas_albaran").value;
+          const selectVencimiento = document.getElementById("facturas_vencimiento");
+          const diasVencimiento = parseInt(selectVencimiento.options[selectVencimiento.selectedIndex].value); // Obtener valor seleccionado del select
+          const facturasEstado = document.getElementById("facturas_estado").value;
+          const facturasPago = document.getElementById("facturas_tipo_pago").value;
+          const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
+          const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
+  
+          // Obtener los productos seleccionados
+          const productosSeleccionados = obtenerProductosSeleccionados();
+  
+          // Validar que los campos obligatorios estén completos
+          if (
+              facturasCliente === "" ||
+              isNaN(diasVencimiento) ||
+              facturasEstado === "" ||
+              isNaN(facturasImponible) ||
+              isNaN(facturasTotal) 
+              //productosSeleccionados.length === 0 // Verificar si se han seleccionado productos
+          ) {
+              swal.fire({
+                  icon: "error",
+                  iconColor: "#e6381c",
+                  title: "Los campos marcados con * son obligatorios",
+                  text: "¡Completa los que te falten y asegúrate de agregar al menos un producto!",
+                  confirmButtonColor: "#0798c4",
+              });
+              return;
+          }
+  
+          // Calcular la fecha de vencimiento sumando los días recibidos a la fecha actual
+          const tiempoActual = facturasAlta.getTime(); // Obtener valor de tiempo actual en milisegundos
+          const tiempoVencimiento = tiempoActual + (diasVencimiento * 24 * 60 * 60 * 1000); // Sumar días en milisegundos
+          const fechaVencimiento = new Date(tiempoVencimiento).toLocaleDateString();
+  
+          // Realizar la solicitud HTTP POST al servidor
+          const urlAlta = "http://localhost:3000/api/v1/alta_factura";
+          fetch(urlAlta, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  factura: {
+                      Fecha_alta: facturasAlta,
+                      Id_cliente: facturasCliente,
+                      Albaran: facturaAlbaran,
+                      Fecha_vencimiento: fechaVencimiento,
+                      Estado: facturasEstado,
+                      Forma_pago: facturasPago,
+                      Base_imponible: facturasImponible,
+                      Total: facturasTotal
+                  },
+                  detalles: productosSeleccionados
+              }),
+          })
+              .then((response) => {
+                  if (!response.ok) {
+                      throw new Error("Error al agregar la factura y sus detalles");
+                  }
+                  return response.json();
+              })
+              .then((data) => {
+                  swal.fire({
+                      title: "¡Factura y detalles añadidos correctamente!",
+                      icon: "success",
+                      iconColor: "#0798c4",
+                      confirmButtonColor: "#0798c4",
+                  });
+                  setTimeout(() => {
+                      location.reload();
+                  }, 3000);
+              })
+              .catch((error) => {
+                  swal.fire("Error al agregar la factura y sus detalles", error.message, "error");
+              });
+      });
+  });
+  
+  function obtenerProductosSeleccionados() {
+      const productosSeleccionados = [];
+      const cantidadInput = document.getElementById("facturas_cantidad").value;
+      const codigoInput = document.getElementById("facturas_id_detalle_stock").value;
+      const descripcionInput = document.getElementById("facturas_descripcion_stock").value;
+      
+      // Validar que los campos no estén vacíos
+      if (cantidadInput.trim() === "" || codigoInput.trim() === "" || descripcionInput.trim() === "") {
+          swal.fire({
+              icon: "error",
+              iconColor: "#e6381c",
+              title: "Los campos de cantidad, código y descripción son obligatorios",
+              text: "¡Completa los que te falten!",
+              confirmButtonColor: "#0798c4",
+          });
+          return productosSeleccionados;
+      }
+  
+      // Agregar los elementos seleccionados al arreglo
+      productosSeleccionados.push({
+          cantidad: cantidadInput,
+          codigo: codigoInput,
+          descripcion: descripcionInput
+      });
+  
+      return productosSeleccionados;
+  }
+  
 
 
 

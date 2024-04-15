@@ -22,7 +22,7 @@ USE `avansat_db` ;
 -- Table `avansat_db`.`clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`clientes` (
-  `id_cliente` INT(15) NOT NULL AUTO_INCREMENT,
+  `Id_cliente` INT(15) NOT NULL AUTO_INCREMENT,
   `Tipo_cliente` VARCHAR(45) NULL,
   `Nombre` VARCHAR(255) NOT NULL,
   `Apellidos` VARCHAR(255) NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`clientes` (
   `Telefono` VARCHAR(15) NULL DEFAULT 'Desconocido',
   `Movil` VARCHAR(15) NULL DEFAULT 'Desconocido',
   `Email` VARCHAR(45) NULL,
-  PRIMARY KEY (`id_cliente`))
+  PRIMARY KEY (`Id_cliente`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 20256
 DEFAULT CHARACTER SET = utf8;
@@ -77,13 +77,47 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
   `Id_factura` INT(15) NOT NULL AUTO_INCREMENT,
   `Fecha_alta` DATE NULL,
-  `Cliente` VARCHAR(45) NULL,
+  `Id_cliente` INT(15) NOT NULL,
+  `Albaran` VARCHAR(45) NULL,
   `Fecha_vencimiento` VARCHAR(45) NULL,
   `Estado` VARCHAR(45) NULL,
+  `Forma_pago` VARCHAR(45) NULL,
   `Base_imponible` DECIMAL(5,2) NULL,
   `Total` DECIMAL(5,2) NULL,
-  PRIMARY KEY (`Id_factura`))
+  PRIMARY KEY (`Id_factura`, `Id_cliente`),
+  CONSTRAINT `fk_facturas_clientes1`
+    FOREIGN KEY (`Id_cliente`)
+    REFERENCES `avansat_db`.`clientes` (`Id_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE INDEX `fk_facturas_clientes1_idx` ON `avansat_db`.`facturas` (`Id_cliente` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `avansat_db`.`Detalle_factura`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avansat_db`.`Detalle_factura` (
+  `stock_Id_stock` INT(15) NOT NULL,
+  `facturas_Id_factura` INT(15) NOT NULL,
+  `facturas_Id_cliente` INT(15) NOT NULL,
+  PRIMARY KEY (`stock_Id_stock`, `facturas_Id_factura`, `facturas_Id_cliente`),
+  CONSTRAINT `fk_stock_has_facturas_stock1`
+    FOREIGN KEY (`stock_Id_stock`)
+    REFERENCES `avansat_db`.`stock` (`Id_stock`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stock_has_facturas_facturas1`
+    FOREIGN KEY (`facturas_Id_factura` , `facturas_Id_cliente`)
+    REFERENCES `avansat_db`.`facturas` (`Id_factura` , `Id_cliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_stock_has_facturas_facturas1_idx` ON `avansat_db`.`Detalle_factura` (`facturas_Id_factura` ASC, `facturas_Id_cliente` ASC) VISIBLE;
+
+CREATE INDEX `fk_stock_has_facturas_stock1_idx` ON `avansat_db`.`Detalle_factura` (`stock_Id_stock` ASC) VISIBLE;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -113,6 +147,3 @@ INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio
 
 COMMIT;
 
-select * from clientes;
-select * from servicios;
-select * from stock;

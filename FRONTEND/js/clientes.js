@@ -248,7 +248,7 @@ const mostrar = (data) => {
   data.forEach((cliente) => {
     resultado += `
         <div class="row2">
-            <div class="col2 col-10">${cliente.id_cliente}</div>
+            <div class="col2 col-10">${cliente.Id_cliente}</div>
             <div class="col2 col-10">${cliente.Tipo_cliente}</div>
             <div class="col2 col-10">${cliente.Nombre}</div>
             <div class="col2 col-10">${cliente.Apellidos || ""}</div>
