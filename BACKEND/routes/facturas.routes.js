@@ -78,7 +78,7 @@ router.post("/alta_factura", (req, res) => {
 
 
 // RUTAS: LISTADO DE FACTURAS
-router.get('/listado_facturas', (req,res)=>{
+router.get('/listado_facturas/', (req,res)=>{
   conexionMySQL.query('SELECT * FROM facturas', (error,filas)=>{
       if(error){
           throw error
@@ -87,6 +87,55 @@ router.get('/listado_facturas', (req,res)=>{
       }
   })
 })
+// RUTA PARA OBTENER LOS DETALLES BÁSICOS DE LA FACTURA
+router.get("/listado_facturas_detalle/:idFactura", (req, res) => {
+  const idFactura = req.params.idFactura;
+
+  // Consultar la base de datos para obtener los detalles básicos de la factura
+  const sqlFactura = `
+    SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total, f.Id_factura
+    FROM clientes c
+    JOIN facturas f ON c.Id_cliente = f.Id_cliente
+    WHERE f.Id_factura = ?
+  `;
+
+  conexionMySQL.query(sqlFactura, idFactura, (error, factura) => {
+    if (error) {
+      return res.status(500).json({ error: "Error al obtener los detalles de la factura." });
+    }
+
+    if (factura.length === 0) {
+      return res.status(404).json({ error: "No se encontraron detalles para la factura especificada." });
+    }
+
+    res.json(factura[0]);
+  });
+});
+
+// RUTA PARA OBTENER LOS DETALLES DE LOS PRODUCTOS ASOCIADOS A LA FACTURA
+router.get("/listado_detalles_factura/:idFactura", (req, res) => {
+  const idFactura = req.params.idFactura;
+
+  // Consultar la base de datos para obtener los detalles de los productos asociados a la factura
+  const sqlDetalles = `
+    SELECT df.Cantidad, s.Nombre AS Nombre_Producto, s.Precio_venta
+    FROM detalle_factura df
+    INNER JOIN stock s ON df.stock_Id_stock = s.Id_stock
+    WHERE df.facturas_Id_factura = ?
+  `;
+
+  conexionMySQL.query(sqlDetalles, idFactura, (error, detalles) => {
+    if (error) {
+      return res.status(500).json({ error: "Error al obtener los detalles asociados a la factura." });
+    }
+
+    res.json(detalles);
+  });
+});
+
+
+
+
 
 // RUTAS: BORRAR FACTURAS
 router.delete("/borrar_factura/:id", (req,res)=>{

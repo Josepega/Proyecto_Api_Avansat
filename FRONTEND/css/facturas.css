@@ -1,12 +1,17 @@
 .plantilla_facturas {
-  width: 800px;
-  height: 1000px;
+  width: 70%;
+  height: 80%;
+  position: fixed;
+  margin: 0 auto;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items:center;
-  border: #0c0c0c 1px solid;
+  text-align: center;
+  top: 14%;
+  left: 22%;
+  z-index: 1;
+  display:none;
+  overflow: auto;
+  border-radius: 10px;
+  background-color: #f5f5f5;
 }
 #separador_plantilla {
   width: 100%;
@@ -31,7 +36,7 @@
   background-color:transparent;
   align-items: center;
   justify-content: left;
-  text-align: left;
+  text-align:center;
   font-size: 1.3em;
   color: #2c5a82;
 }

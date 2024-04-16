@@ -263,7 +263,7 @@
 
     <!-- MODAL EDICIÓN DE STOCK -->
     <div id= modal_alta_facturas_edit class="modal">
-        <div id="container_interior_modal_facturas_edit" class="modal_interior">
+        <div id="container_interior_modal_facturas" class="modal_interior">
             <form id="alta_facturas_edit" class="formulario">
 
                 <div class="row">
@@ -279,7 +279,9 @@
                             <option value="90">90 días</option>
                         </select>
                     </div>
-                    <div class="col col-10" style="display: none;"><input type="text" id="facturas_id_cliente_edit"></div>
+                    <div class="col col-10"><input type="text" id="facturas_id_cliente_edit"></div>
+                    <div class="col col-10"><input type="text" id="facturas_id_detalle_stock_edit"></div>
+
                     <div class="col-20"></div>
                     <div class="col-10"><button type="button" id="close_edit" class="btn">Cerrar</button></div>
                     
@@ -296,7 +298,7 @@
                     <div class="col col-30 autocomplete_clientes" id="facturas_nombre_ocultar_edit">
                         <label><span>*</span>Nombre</label>
                         <input type="text" id="facturas_nombre_cliente_edit" placeholder="Ej: Juan Antonio">
-                        <ul id="autocomplete-results_facturas" class="autocomplete-results_facturas"></ul>
+                        <ul id="autocomplete-results_clientes" class="autocomplete-results_clientes"></ul>
                     </div>
 
                     <div class="col col-30" id="facturas_apellidos_ocultar_edit">
@@ -369,11 +371,11 @@
 
 
                 </div>
-                <div  id="facturas_add"></div>
+                <div  id="facturas_add_edit"></div>
 
                 <div id="facturas_items_add"><!-- ROW DATOS ARTICULO 1 -->
                     <div class="col col-10">
-                        <input type="number" step="any" placeholder="Ej: 5" id="facturas_cantidad_edit">
+                        <input type="number"  placeholder="Ej: 5" id="facturas_cantidad_edit">
                     </div>
                     <div class="col col-10">
                         <input type="text" placeholder="Ej: 123456" id="facturas_codigo_edit">
@@ -396,16 +398,26 @@
                         </select>
                     </div>
                     <div class="col-20"></div>                               
-                    <div class="col col-10"><img id="icono-agregar" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
+                    <div class="col col-10"><img id="icono-agregar_edit" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
                 </div>
 
                 <!-- BOTON GUARDAR TOTALES -->
                 <div id="separador"></div>
                 <div class="row">
                     <div class="col col-20">
-                        <button type="button" id="boton_facturas_guardar_edit" class="btn">Guardar factura</button>
+                        <label>Tipo Pago</label>
+                        <select name="tipo_pago_edit" id="facturas_tipo_pago_edit">   
+                            <option value="Transferencia" selected="selected">Transferencia</option>
+                            <option value="contado">Contado</option>
+                            <option value="efectivo">Efectivo</option>
+                            <option value="tarjeta">Tarjeta</option>
+                        </select>
                     </div>
-                    <div class="col-30"></div>
+                    <div class="col col-20">
+                        <label>N° Albarán</label>
+                        <input type="text" placeholder="Ej:789012" id="facturas_albaran_edit">
+                    </div> 
+                    <div class="col col-20"></div>                 
                     <div class="col-20">
                         <label>Base imponible</label>
                         <input type="number" id="facturas_imponible_edit" disabled>
@@ -416,6 +428,11 @@
                     </div>
         
                 </div>
+                <div class="row">
+                    <div class="col col-20">
+                        <button type="button" id="boton_facturas_guardar_edit" class="btn">Guardar factura</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -425,10 +442,12 @@
     </div><!-- FIN CONTENEDOR GENERAL -->
 
 <!--     -------------------------------PLANTILLA FACTURA------------------------ -->
-<div class="plantilla_facturas" style="display:none;">
+<div class="plantilla_facturas">
     <div class="row">
-        <div class="col col-40"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
-        <div class="col col-30"></div>
+        <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
+        <div class="col col-20"></div>
+        <div class="col col-10"><button id="cerrar_plantilla" class="btn">Cerrar</button></div>
+        <div class="col col-20"></div>
         <div class="col col-30">
             <p>José Manuel Louzán Sánchez</p>
             <p>NIF: 77420607P</p>
@@ -441,11 +460,11 @@
             <div class="col col-50"></div>
             <div class="col col-50">
                 <input class="inputPlantilla" type="text" id="plantilla_nombre" placeholder="Nombre del cliente">
-                <input class="inputPlantilla" type="text" id="plantilla_nif" placeholder="NIF">
+                <input class="inputPlantilla" type="text" id="plantilla_id_fiscal" placeholder="NIF">
                 <input class="inputPlantilla" type="text" id="plantilla_direccion" placeholder="Dirección">
-                <input class="inputPlantilla" type="text" id="plantilla_poblacion" placeholder="Población">
-                <input class="inputPlantilla" type="text" id="plantilla_provincia" placeholder="Provincia">
-                <input class="inputPlantilla" type="text" id="plantilla_cp" placeholder="CP">
+                <input class="inputPlantilla" type="text" id="plantilla_localidad" placeholder="Población">
+                <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Provincia">
+                <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP">
                 
             </div>
         </div>
@@ -453,8 +472,8 @@
             <div class="col col-20">
                 <h1>Factura</h1>
             </div>
-            <div class="col col-10">
-                <input class="inputPlantilla" type="text" placeholder="2024/0123">
+            <div class="col col-20">
+                <input class="inputPlantilla" type="text" id="plantilla_id_factura" placeholder="2024/0123" class="inputPlantilla">
             </div>
             <div class="col col-60"></div>
         </div>
@@ -477,15 +496,15 @@
         <div class="col col-50">
             <div class="row">
                 <div class="col5 col-50">Base imponible</div> 
-                <div class="col5 col-50">€</div>               
+                <div class="col5 col-50"><input type=" number" id="plantilla_base_imponible" class="inputPlantilla"></div>               
             </div>
             <div class="row">
-                <div class="col5 col-50">IVA</div>
-                <div class="col5 col-50">€</div>                
+                <div class="col5 col-50">IVA 21%</div>
+                <div class="col5 col-50"><input type="number" id="plantilla_iva" class="inputPlantilla"></div>                
             </div>
             <div class="row">
                 <div class="col5 col-50">Total</div>
-                <div class="col5 col-50">€</div>                
+                <div class="col5 col-50"><input type="number" id="plantilla_total" class="inputPlantilla"></div>                
             </div>   
         </div>
 
