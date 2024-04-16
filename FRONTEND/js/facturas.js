@@ -487,12 +487,13 @@ imagenAgregar.addEventListener("click", () => {
         }
 
         // Formar el detalle de la factura en formato JSON
-        const detalleFactura = [{
+        const detalleFactura = arregloDetalle.map(detalle => ({
           Id_factura: null, // Aquí se asignará el ID de la factura después de ser creada en el servidor
           Id_cliente: facturasCliente,
-          Cantidad: facturasCantidad,
-          stock_Id_stock: facturasIdStock
-      }];
+          Cantidad: detalle.cantidad,
+          stock_Id_stock: detalle.id_stock
+      }));
+      
 
         // Realizar la solicitud HTTP POST al servidor para agregar la factura
         const urlAltaFactura = "http://localhost:3000/api/v1/alta_factura"; // Cambiar la URL según la ruta en tu servidor
