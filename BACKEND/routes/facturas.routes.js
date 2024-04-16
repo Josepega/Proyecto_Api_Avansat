@@ -4,8 +4,8 @@ const conexionMySQL = require("../conexionMySQL");
 
 /* -----------------------------------------------------------FACTURAS---------------------------------------------------------------------------------------------------------------- */
 
-// RUTAS: ALTA FACTURAS
-// RUTAS: ALTA FACTURA
+
+/* // RUTAS: ALTA FACTURA
 router.post("/alta_factura", (req, res) => {
   try {
     const data = {
@@ -18,9 +18,8 @@ router.post("/alta_factura", (req, res) => {
       Base_imponible: req.body.Base_imponible,
       Total: req.body.Total
     };
-     
 
-    const sql = "INSERT INTO  facturas SET Id_factura = DEFAULT, ?";
+    const sql = "INSERT INTO facturas SET ?";
     conexionMySQL.query(sql, data, (error, result) => {
       if (error) {
         res.status(400).json({
@@ -29,9 +28,11 @@ router.post("/alta_factura", (req, res) => {
           error: error
         });
       } else {
+        const Id_factura = result.insertId; // Obtén el Id_factura insertado
         res.status(200).json({
           status: 200,
-          mensaje: "Factura insertada correctamente"
+          mensaje: "Factura insertada correctamente",
+          Id_factura: Id_factura // Envía el Id_factura insertado en la respuesta
         });
       }
     });
@@ -42,7 +43,39 @@ router.post("/alta_factura", (req, res) => {
       error: error
     });
   }
+}); */
+
+// RUTAS: ALTA DETALLE FACTURA
+router.post("/alta_factura", (req, res) => {
+  const { Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = req.body;
+
+  // Convertir la cadena JSON de detalleFactura en un array de objetos
+  const detalleFactura = JSON.parse(req.body.detalleFactura);
+
+  // Insertar la nueva factura en la base de datos
+  const sqlFactura = `INSERT INTO facturas (Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  conexionMySQL.query(sqlFactura, [Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total], (error, resultadoFactura) => {
+    if (error) {
+      return res.json({ "status": 500, "mensaje": "Error al crear la factura en el servidor. Error: " + error });
+    }
+
+    const idFactura = resultadoFactura.insertId;
+
+    // Insertar el detalle de la factura
+    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock) VALUES ?`;
+    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock]);
+
+    conexionMySQL.query(sqlDetalleFactura, [valoresDetalleFactura], (error, resultadoDetalle) => {
+      if (error) {
+        return res.json({ "status": 500, "mensaje": "Error al asociar detalles a la factura en el servidor. Error: " + error });
+      }
+      return res.json({ "status": 200, "mensaje": "Factura creada exitosamente." });
+    });
+  });
 });
+
+
+
 
 // RUTAS: LISTADO DE FACTURAS
 router.get('/listado_facturas', (req,res)=>{

@@ -73,30 +73,28 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
   CONSTRAINT `fk_facturas_clientes1`
     FOREIGN KEY (`Id_cliente`)
     REFERENCES `avansat_db`.`clientes` (`Id_cliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `avansat_db`.`detalle_factura`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
-  `Id_factura` INT(15) NOT NULL,
-  `Id_cliente` INT(15) NOT NULL,
-  `Id_stock` INT(15) NOT NULL,
+  `facturas_Id_factura` INT(15) NOT NULL,
+  `facturas_Id_cliente` INT(15) NOT NULL,
   `Cantidad` INT(15) NULL,
-  PRIMARY KEY (`Id_factura`, `Id_cliente`, `Id_stock`),
+  `stock_Id_stock` INT(15) NOT NULL,
+  PRIMARY KEY (`facturas_Id_factura`, `facturas_Id_cliente`, `stock_Id_stock`),
   CONSTRAINT `fk_stock_has_facturas_stock1`
-    FOREIGN KEY (`Id_stock`)
+    FOREIGN KEY (`stock_Id_stock`)
     REFERENCES `avansat_db`.`stock` (`Id_stock`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_stock_has_facturas_facturas1`
-    FOREIGN KEY (`Id_factura` , `Id_cliente`)
+    FOREIGN KEY (`facturas_Id_factura` , `facturas_Id_cliente`)
     REFERENCES `avansat_db`.`facturas` (`Id_factura` , `Id_cliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -114,4 +112,4 @@ INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `P
 INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '3650012', 5, 'Conector GR', 32.75, NULL, 60.23, NULL);
 
 COMMIT;
-select * from facturas;
+

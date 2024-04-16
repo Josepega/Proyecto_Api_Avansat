@@ -454,34 +454,28 @@ imagenAgregar.addEventListener("click", () => {
       codigo.value = "";
       results.innerHTML = "";
   };
-  
-// ALTA FACTURA
-
-
-const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
-BotonGuardarFactura.forEach(function (element) {
+  //ALTA FACTURA
+  const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
+  BotonGuardarFactura.forEach(function (element) {
     element.addEventListener("click", () => {
-        
-
-        const facturasAlta = document.getElementById("facturas_alta").value;
-        const fechaActual = new Date().toISOString().split('T')[0];
-        facturasAlta.value = fechaActual;
-        const facturasCliente= document.getElementById("facturas_id_cliente").value;
+        const facturasAlta = new Date().toISOString().split('T')[0];
+        const facturasCliente = document.getElementById("facturas_id_cliente").value;
         const facturasAlbaran = document.getElementById("facturas_albaran").value;
         const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
         const facturasEstado = document.getElementById("facturas_estado").value;
         const facturasPago = document.getElementById("facturas_tipo_pago").value;
         const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
         const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
+        const facturasIdStock = document.getElementById("facturas_id_detalle_stock").value;
+        const facturasCantidad = document.getElementById("facturas_cantidad").value;
 
         // Validación de campos obligatorios
         if (
-            facturasAlta == "" ||
-            facturasCliente == "" ||
-            facturasVencimiento == "" ||
-            facturasEstado == "" ||
+            facturasCliente === "" ||
+            facturasVencimiento === "" ||
+            facturasEstado === "" ||
             isNaN(facturasTotal) ||
-            isNaN(facturasImponible) 
+            isNaN(facturasImponible)
         ) {
             swal.fire({
                 icon: "error",
@@ -492,22 +486,31 @@ BotonGuardarFactura.forEach(function (element) {
             return;
         }
 
-        // Realizar la solicitud HTTP POST al servidor
-        const urlAlta = "http://localhost:3000/api/v1/alta_factura";
-        fetch(urlAlta, {
+        // Formar el detalle de la factura en formato JSON
+        const detalleFactura = [{
+          Id_factura: null, // Aquí se asignará el ID de la factura después de ser creada en el servidor
+          Id_cliente: facturasCliente,
+          Cantidad: facturasCantidad,
+          stock_Id_stock: facturasIdStock
+      }];
+
+        // Realizar la solicitud HTTP POST al servidor para agregar la factura
+        const urlAltaFactura = "http://localhost:3000/api/v1/alta_factura"; // Cambiar la URL según la ruta en tu servidor
+        fetch(urlAltaFactura, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              Fecha_alta: facturasAlta ,    
-              Id_cliente: facturasCliente,
-              Albaran: facturasAlbaran,
-              Fecha_vencimiento: facturasVencimiento ,
-              Estado: facturasEstado,
-              Forma_pago: facturasPago,
-              Base_imponible: facturasImponible,
-              Total: facturasTotal
+                Fecha_alta: facturasAlta,
+                Id_cliente: facturasCliente,
+                Albaran: facturasAlbaran,
+                Fecha_vencimiento: facturasVencimiento,
+                Estado: facturasEstado,
+                Forma_pago: facturasPago,
+                Base_imponible: facturasImponible,
+                Total: facturasTotal,
+                detalleFactura: JSON.stringify(detalleFactura) // Convertir a cadena JSON
             }),
         })
             .then((response) => {
@@ -532,6 +535,7 @@ BotonGuardarFactura.forEach(function (element) {
 });
 
 
+  
 // LISTADO DE FACTURAS
 
 const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas";
@@ -567,14 +571,14 @@ const mostrar = (data) => {
     
     // Formatear la fecha de alta como "DD/MM/YYYY"
     const fechaAltaFormateada = fechaAlta.toLocaleDateString();
-    
+        
     // Agregar la fila al resultado
     resultado += `
         <div class="row2">
             <div class="col2 col-10">${facturas.Id_factura}</div>
             <div class="col2 col-10">${fechaAltaFormateada}</div>
             <div class="col2 col-10">${facturas.Fecha_vencimiento}</div>
-            <div class="col2 col-30">${facturas.Cliente}</div>
+            <div class="col2 col-30">${facturas.Id_cliente}</div>
             <div class="col2 col-10">${facturas.Base_imponible}</div>
             <div class="col2 col-10">${facturas.Total}</div>
             <div class="col2 col-10">${facturas.Estado}</div>
