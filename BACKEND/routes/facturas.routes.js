@@ -62,8 +62,8 @@ router.post("/alta_factura", (req, res) => {
     const idFactura = resultadoFactura.insertId;
 
     // Insertar el detalle de la factura
-    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock) VALUES ?`;
-    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock]);
+    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
+    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
 
     conexionMySQL.query(sqlDetalleFactura, [valoresDetalleFactura], (error, resultadoDetalle) => {
       if (error) {
@@ -111,14 +111,15 @@ router.get("/listado_facturas_detalle/:idFactura", (req, res) => {
     res.json(factura[0]);
   });
 });
+// RUTA PARA OBTENER LOS DETALLES DE LOS PRODUCTOS DE LA FACTURA
 
-// RUTA PARA OBTENER LOS DETALLES DE LOS PRODUCTOS ASOCIADOS A LA FACTURA
 router.get("/listado_detalles_factura/:idFactura", (req, res) => {
   const idFactura = req.params.idFactura;
+  console.log("ID de la factura recibida:", idFactura); // Agregar esta línea para imprimir la ID de la factura
 
   // Consultar la base de datos para obtener los detalles de los productos asociados a la factura
   const sqlDetalles = `
-    SELECT df.Cantidad, s.Nombre AS Nombre_Producto, s.Precio_venta
+    SELECT df.Cantidad, s.Nombre AS Nombre_Producto, s.Precio_venta, s.Codigo
     FROM detalle_factura df
     INNER JOIN stock s ON df.stock_Id_stock = s.Id_stock
     WHERE df.facturas_Id_factura = ?
@@ -132,6 +133,8 @@ router.get("/listado_detalles_factura/:idFactura", (req, res) => {
     res.json(detalles);
   });
 });
+
+
 
 
 

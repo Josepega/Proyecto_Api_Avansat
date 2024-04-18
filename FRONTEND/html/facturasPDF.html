@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/facturas.css">
+</head>
+<body>
+    <div class="plantilla_facturas" id="plantilla_facturas">
+        <div class="row">
+            <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
+            <div class="col col-20"></div>
+            <div class="col col-10"><button id="cerrar_plantilla" class="btn">Cerrar</button></div>
+            <div class="col col-20"></div>
+            <div class="col col-30">
+                <p>José Manuel Louzán Sánchez</p>
+                <p>NIF: 77420607P</p>
+                <p>Maria Lluisa 25 Atic B</p>
+                <p>17300 Blanes (Girona) España</p></div>
+        </div>
+        <div class="row" id="separador_plantilla"></div>
+        <div class="container_plantilla_datos">
+            <div class="row">
+                <div class="col col-50"></div>
+                <div class="col col-50">
+                    <input class="inputPlantilla" type="text" id="plantilla_nombre" placeholder="Nombre del cliente">
+                    <input class="inputPlantilla" type="text" id="plantilla_id_fiscal" placeholder="NIF">
+                    <input class="inputPlantilla" type="text" id="plantilla_direccion" placeholder="Dirección">
+                    <!-- <input class="inputPlantilla" type="text" id="plantilla_localidad" placeholder="Población"> -->                
+                    <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP">
+                    <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Pais">
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-20">
+                    <h1>Factura</h1>
+                </div>
+                <div class="col col-20">
+                    <input class="inputPlantilla" type="text" id="plantilla_id_factura" placeholder="2024/0123" class="inputPlantilla">
+                </div>
+                <div class="col col-60"></div>
+            </div>
+            <div class="row">
+                <div class="col5 col-15"><h4>Código</h4></div>
+                <div class="col5 col-30"><h4>Descripción</h4></div>
+                <div class="col5 col-10"><h4>Cantidad</h4></div>
+                <div class="col5 col-15"><h4>Precio unitario</h4></div>
+                <div class="col5 col-10"><h4>IVA %</h4></div>
+                <div class="col5 col-10"><h4>Total IVA exc </h4></div>
+            </div>
+            <div class="row" id="plantilla_add"></div>
+        </div>
+        <div class="row">
+            <div class="col col-50">
+                FORMA DE PAGO: TRANSFERENCIA BANCARIA
+     ES19 0081 0120 3700 0137 4041
+     Payment Communication: Albarán 1572
+            </div>
+            <div class="col col-50">
+                <div class="row">
+                    <div class="col5 col-50">Base imponible</div> 
+                    <div class="col5 col-50"><input type=" text" id="plantilla_base_imponible" class="inputPlantilla"></div>               
+                </div>
+                <div class="row">
+                    <div class="col5 col-50">IVA 21%</div>
+                    <div class="col5 col-50"><input type="text" id="plantilla_iva" class="inputPlantilla"></div>                
+                </div>
+                <div class="row">
+                    <div class="col5 col-50" style="color: brown;"><b>TOTAL</b></div>
+                    <div class="col5 col-50"><input type="text"  id="plantilla_total" class="inputPlantilla"></div>                
+                </div>   
+            </div>
+    
+        </div>
+        <div class="row" id="separador_plantilla"></div>
+        <div class="row">
+            <div class="col-10" id="icono_imprimir"><img src="../img/icons/print-icono.svg" alt=""></div>
+            <div class="col-10" id="icono_pdf"><img src="../img/icons/pdf-icono.svg" alt=""></div>
+            <div class="col col-40"><a href="https://www.avansat.cat">www.avansat.cat</a></div>
+            <div class="col col-30"><p>2021 © AVANSAT</p></div>
+        </div>
+        
+    </div>
+</body>
+</html>

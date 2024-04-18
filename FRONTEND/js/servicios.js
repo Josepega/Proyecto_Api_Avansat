@@ -131,10 +131,10 @@ BotonGuardarServicio.forEach(function (element) {
 
 
 // LISTADO DE SERVICIOS
-const urlListado = "http://localhost:3000/api/v1/listado_servicios";
+const urlListadoServicios = "http://localhost:3000/api/v1/listado_servicios";
 const listado_servicios = document.querySelector("#listado_servicios");
 
-fetch(urlListado)
+fetch(urlListadoServicios)
   .then((response) => response.json())
   .then((resultado) => mostrar(resultado))
   .catch((error) => console.error("Error al obtener los datos:", error));

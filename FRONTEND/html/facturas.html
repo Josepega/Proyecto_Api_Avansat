@@ -9,10 +9,14 @@
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/facturas.css">
+    <link id="miCSS" rel="stylesheet" type="text/css" href="../css/imprimir.css">
+
     <script src="../js/facturas.js" defer></script>
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
 
 
     
@@ -442,13 +446,13 @@
     </div><!-- FIN CONTENEDOR GENERAL -->
 
 <!--     -------------------------------PLANTILLA FACTURA------------------------ -->
-<div class="plantilla_facturas">
+<div class="plantilla_facturas" id="plantilla_facturas">
     <div class="row">
         <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
-        <div class="col col-20"></div>
+        <div class="col col-10"></div>
         <div class="col col-10"><button id="cerrar_plantilla" class="btn">Cerrar</button></div>
-        <div class="col col-20"></div>
-        <div class="col col-30">
+        <div class="col col-10"></div>
+        <div class="col col-40">
             <p>José Manuel Louzán Sánchez</p>
             <p>NIF: 77420607P</p>
             <p>Maria Lluisa 25 Atic B</p>
@@ -462,9 +466,9 @@
                 <input class="inputPlantilla" type="text" id="plantilla_nombre" placeholder="Nombre del cliente">
                 <input class="inputPlantilla" type="text" id="plantilla_id_fiscal" placeholder="NIF">
                 <input class="inputPlantilla" type="text" id="plantilla_direccion" placeholder="Dirección">
-                <input class="inputPlantilla" type="text" id="plantilla_localidad" placeholder="Población">
-                <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Provincia">
+                <!-- <input class="inputPlantilla" type="text" id="plantilla_localidad" placeholder="Población"> -->                
                 <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP">
+                <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Pais">
                 
             </div>
         </div>
@@ -478,12 +482,12 @@
             <div class="col col-60"></div>
         </div>
         <div class="row">
-            <div class="col5 col-10"><h4>Código</h4></div>
-            <div class="col5 col-40"><h4>Descripción</h4></div>
+            <div class="col5 col-15"><h4>Código</h4></div>
+            <div class="col5 col-30"><h4>Descripción</h4></div>
             <div class="col5 col-10"><h4>Cantidad</h4></div>
-            <div class="col5 col-20"><h4>Precio unitario</h4></div>
+            <div class="col5 col-15"><h4>Precio unitario</h4></div>
             <div class="col5 col-10"><h4>IVA %</h4></div>
-            <div class="col5 col-20"><h4>Total IVA exc </h4></div>
+            <div class="col5 col-10"><h4>Total IVA exc </h4></div>
         </div>
         <div class="row" id="plantilla_add"></div>
     </div>
@@ -496,23 +500,27 @@
         <div class="col col-50">
             <div class="row">
                 <div class="col5 col-50">Base imponible</div> 
-                <div class="col5 col-50"><input type=" number" id="plantilla_base_imponible" class="inputPlantilla"></div>               
+                <div class="col5 col-50"><input type=" text" id="plantilla_base_imponible" class="inputPlantilla"></div>               
             </div>
             <div class="row">
                 <div class="col5 col-50">IVA 21%</div>
-                <div class="col5 col-50"><input type="number" id="plantilla_iva" class="inputPlantilla"></div>                
+                <div class="col5 col-50"><input type="text" id="plantilla_iva" class="inputPlantilla"></div>                
             </div>
             <div class="row">
-                <div class="col5 col-50">Total</div>
-                <div class="col5 col-50"><input type="number" id="plantilla_total" class="inputPlantilla"></div>                
+                <div class="col5 col-50" style="color: brown;"><b>TOTAL</b></div>
+                <div class="col5 col-50"><input type="text"  id="plantilla_total" class="inputPlantilla"></div>                
             </div>   
         </div>
 
     </div>
     <div class="row" id="separador_plantilla"></div>
     <div class="row">
-        <div class="col col-40">www.avansat.cat</div>
+        <div class="col-10" id="icono_imprimir"><img src="../img/icons/print-icono.svg" alt=""></div>
+        <div class="col-10" id="icono_pdf"><img src="../img/icons/pdf-icono.svg" alt=""></div>
+        <div class="col col-40"><a href="https://www.avansat.cat">www.avansat.cat</a></div>
+        <div class="col col-30"><p>2021 © AVANSAT</p></div>
     </div>
+    
 </div>
 </body>
 

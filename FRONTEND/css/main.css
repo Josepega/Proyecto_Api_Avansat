@@ -9,6 +9,7 @@ body {
     font-family: "montserrat", sans-serif;
     background: transparent;
     height: 100vh;
+    position: relative;
 
 }
 .container {
@@ -503,6 +504,7 @@ h4 {
 .col-3 {
     width: 3%;
 }
+
 /* -----------------------------------MODAL-------------------------- */
 .modal {
     width: 80%;

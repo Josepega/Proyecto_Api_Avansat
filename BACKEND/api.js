@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const api = express();
 
 const generatePDF = require("./generatePDF");
@@ -39,4 +39,22 @@ require("./swagger/swagger.config.js")(api);
 // PUERTO EN ESCUCHA
 api.listen(port, () => {
   console.log(`Servidor arrancado y escuchando por el puerto: ${port}`); 
+});
+
+
+api.use(express.urlencoded({ extended: true }));
+api.use(express.json());
+
+api.post('/savePDF', (req, res) => {
+    const pdfData = req.body.pdf;
+
+    // Guardar el PDF en el sistema de archivos
+    const fs = require('fs');
+    fs.writeFileSync('factura.pdf', pdfData);
+
+    res.send('PDF guardado correctamente');
+});
+
+api.listen(3000, () => {
+    console.log('Servidor iniciado en el puerto 3000');
 });

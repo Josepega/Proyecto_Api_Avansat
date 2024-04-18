@@ -497,7 +497,8 @@ imagenAgregar.addEventListener("click", () => {
           Id_factura: null, // Aquí se asignará el ID de la factura después de ser creada en el servidor
           Id_cliente: facturasCliente,
           Cantidad: detalle.cantidad,
-          stock_Id_stock: detalle.id_stock
+          stock_Id_stock: detalle.id_stock,
+          Codigo: detalle.codigo
       }));
       
 
@@ -829,12 +830,13 @@ on(document, "click", ".ver-icono", (e) => {
   console.log('Mostrar detalles de la factura con ID:', idFactura);
   // O llamar a una función para mostrar los detalles de la factura
   mostrarDetallesFactura(idFactura);
+  mostrarDetallesProductos(idFactura);
 });
 
 
 function mostrarDetallesFactura(idFactura) {
   // Mostrar la plantilla de factura antes de obtener los detalles
-  document.querySelector('.plantilla_facturas').style.display = 'block';
+  document.querySelector('#plantilla_facturas').style.display = 'block';
 
   // Realizar la solicitud Fetch para obtener los detalles de la factura
   fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
@@ -852,14 +854,16 @@ function mostrarDetallesFactura(idFactura) {
       document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
       document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
       document.getElementById('plantilla_direccion').value = data.Direccion;
-      document.getElementById('plantilla_c_postal').value = data.C_postal;
-      document.getElementById('plantilla_localidad').value = data.Localidad;
+      document.getElementById('plantilla_c_postal').value = data.C_postal + ' ' + data.Localidad;
+      //document.getElementById('plantilla_localidad').value = data.Localidad;
       document.getElementById('plantilla_pais').value = data.Pais;
-      document.getElementById('plantilla_base_imponible').value = data.Base_imponible;
-      document.getElementById('plantilla_iva').value = data.Total ;
-      document.getElementById('plantilla_total').value = data.Total;
+      document.getElementById('plantilla_base_imponible').value = data.Base_imponible+ ' €';
+      document.getElementById('plantilla_iva').value = data.Total - data.Base_imponible+ ' €' ;
+      document.getElementById('plantilla_total').value = data.Total + ' €';
       document.getElementById('plantilla_id_factura').value = data.Id_factura;
       //document.getElementById('plantilla_descripcion').value = data.Descripcion;
+
+      
     })
     .catch(error => {
       console.error('Error:', error);
@@ -871,7 +875,7 @@ function mostrarDetallesFactura(idFactura) {
         text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
       });
     });
-}
+} 
 // Función para mostrar los detalles de los productos asociados a la factura
 function mostrarDetallesProductos(idFactura) {
   // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
@@ -893,15 +897,16 @@ function mostrarDetallesProductos(idFactura) {
         productoDiv.classList.add('producto');
         productoDiv.innerHTML = `
           <div class="row2">
+            <div class="col2 col-15">${producto.Codigo}</div>           
+            <div class="col2 col-30">${producto.Nombre_Producto}</div>
             <div class="col2 col-10">${producto.Cantidad}</div>
-            <div class="col2 col-40">${producto.Nombre_producto}</div>
-            <div class="col2 col-20">${producto.Precio_venta}</div>            
+            <div class="col2 col-15">${producto.Precio_venta+" €"}</div>
+            <div class="col2 col-10">21%</div>
+            <div class="col2 col-10">${producto.Cantidad * producto.Precio_venta+" €"}</div>           
           </div>`;
           
         detallesDiv.appendChild(productoDiv);
-       
       });
-      console.log('Producto:', productoDiv);
     })
     .catch(error => {
       console.error('Error:', error);
@@ -916,9 +921,41 @@ function mostrarDetallesProductos(idFactura) {
 }
 
 
+
 function cerrarPlantilla() {
-  document.querySelector('.plantilla_facturas').style.display = 'none';
+  document.querySelector('#plantilla_facturas').style.display = 'none';
 }
 const botonCerrarPlantilla = document.querySelector('#cerrar_plantilla');
 botonCerrarPlantilla.addEventListener('click', cerrarPlantilla);
+
+// IMPRIMIR FACTURA
+
+async function imprimirFactura() {
+  try {
+    // Mostrar el contenido de la factura
+    document.querySelector('#plantilla_facturas').style.display = 'block';
+
+    // Aplicar la clase de impresión para mostrar solo el área de la factura
+    document.body.classList.add('impresion');
+
+    // Hacer la impresión (puedes ajustar esto según sea necesario)
+    await window.print();
+
+    // Ocultar nuevamente el contenido de la factura después de imprimir
+    document.querySelector('#plantilla_facturas').style.display = 'none';
+
+    // Quitar la clase de impresión después de imprimir
+    document.body.classList.remove('impresion');
+  } catch (error) {
+    console.error('Error al imprimir la factura:', error);
+    // Manejar el error aquí
+  }
+}
+
+
+
+
+
+// Asociar eventos de clic a los botones de imprimir y descargar
+document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura);
 
