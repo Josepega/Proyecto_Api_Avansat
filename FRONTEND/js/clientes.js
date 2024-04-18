@@ -137,11 +137,11 @@ botonGuardarCliente.forEach(function (element){
     clientesEmail.value == ""
   ) {
     swal.fire({
-      icon: "error",
-      iconColor: "#fa5807",
+      icon: "info",
+      iconColor: "#e6381c",
       title: "Los campos marcados con * son obligatorios",
       text: "¡Completa los que te falten!",
-      confirmButtonColor: "#055778",
+      confirmButtonColor: "#0798c4",
       });
     return
   }
@@ -155,11 +155,11 @@ botonGuardarCliente.forEach(function (element){
 
   if (!politicaPrivacidadMarcada) {
     swal.fire({
-      icon: "error",
-      iconColor: "#fa5807",
+      icon: "info",
+      iconColor: "#e6381c",
       title: "Debe aceptar la POLÍTICA DE PRIVACIDAD",
       text: "¡Hay que cumplir las normas!",
-      confirmButtonColor: "#055778",
+      confirmButtonColor: "#0798c4",
     });
     return;
   }
@@ -196,8 +196,8 @@ botonGuardarCliente.forEach(function (element){
         title: "¡Cliente añadido correctamente!",
         text: "Recuerda que los datos son solo para uso de facturación.",
         icon: "success",
-        iconColor: "#0b7593",
-        confirmButtonColor: "#055778",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
       });
       setTimeout(() => {
         location.reload();
@@ -208,8 +208,8 @@ botonGuardarCliente.forEach(function (element){
         title: "Error al agregar el cliente",
         text: "Por favor, intenta de nuevo.",
         icon: "error",
-        iconColor: "#fa5807",
-        confirmButtonColor: "#055778",
+        iconColor: "#e6381c",
+        confirmButtonColor: "#0798c4",
       });
     });
 });
@@ -229,10 +229,10 @@ const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
       icon: "info",
-      iconColor: "#0b7593",
+      iconColor: "#0798c4",
       title: "No hay Clientes registrados",
       text: "Puedes crear clientes en el boton AÑADIR",
-      confirmButtonColor: "#055778",
+      confirmButtonColor: "#0798c4",
     });
     return;
   }
@@ -286,9 +286,9 @@ on(document, "click", ".eliminar-icono", (e) => {
     text: "¡Esta acción no se puede deshacer!",
     icon: "question",
     showCancelButton: true,
-    confirmButtonColor: "#055778",
-    cancelButtonColor: "#a0360f",
-    iconColor: "#db3208",
+    confirmButtonColor: "#0798c4",
+    cancelButtonColor: "#e6381c",
+    iconColor: "#e6381c",
     confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
    
@@ -313,8 +313,8 @@ on(document, "click", ".eliminar-icono", (e) => {
               title: "¡Cliente eliminado!",
               text: "El cliente ha sido eliminado satisfactoriamente.",
               icon: "success",
-              iconColor: "#0b7593",
-              confirmButtonColor: "#055778",
+              iconColor: "#0798c4",
+              confirmButtonColor: "#0798c4",
             });
             setTimeout(() => {
               location.reload();
@@ -323,9 +323,12 @@ on(document, "click", ".eliminar-icono", (e) => {
           
         })
         .catch((error) => {
-          swal.fire("Error al eliminar el cliente", {
+          swal.fire(
+            {
+            title:"Error al eliminar el cliente", 
             icon: "error",
-            confirmButtonColor: "#055778",
+            iconColor: "#e6381c",
+            confirmButtonColor: "#0798c4",
           });
         });
     } else {
@@ -333,8 +336,8 @@ on(document, "click", ".eliminar-icono", (e) => {
         icon: "info",
         title: "¡Cliente NO eliminado!",
         text: "Todo a salvo!.",
-        iconColor: "#0b7593",
-        confirmButtonColor: "#055778",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
 
       });
      
@@ -437,8 +440,8 @@ formEdit.forEach(form => {
           title: "¡Cliente editado!",
           text: "Cliente actualizado correctamente",
           icon: "success",
-          iconColor: "#0b7593",
-          confirmButtonColor: "#055778",
+          iconColor: "#0798c4",
+          confirmButtonColor: "#0798c4",
         });
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
@@ -448,7 +451,13 @@ formEdit.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal.fire("Error", error.message, "error");
+        swal.fire({
+           title: "Error al editar el cliente",
+           text :error.message,
+           icon: "error",
+           iconColor: "#e6381c",
+           confirmButtonColor: "#0798c4",
+          });
       });
   });
 });

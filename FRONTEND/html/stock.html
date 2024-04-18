@@ -61,16 +61,16 @@
                                 <div id="interior_container_listado_stock" class="container_seccion_interior">         
                                     <!-- Row de títulos -->
                                     <div class="row">
-                                        <div class="col col-5"><h4>ID</h4></div>
-                                        <div class="col col-10"><h4>Código</h4></div>
-                                        <div class="col col-5"><h4>Cantidad</h4></div>
-                                        <div class="col col-30"><h4>Nombre</h4></div>
-                                        <div class="col col-10"><h4>Precio coste</h4></div>
-                                        <div class="col col-10"><h4>Precio IVA inc</h4></div>
-                                        <div class="col col-10"><h4>Precio venta</h4></div>
-                                        <div class="col col-10"><h4>Precio venta IVA inc</h4></div>
-                                        <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
-                                        <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
+                                        <div class="col2 col-5"><h4>ID</h4></div>
+                                        <div class="col2 col-10"><h4>Código</h4></div>
+                                        <div class="col2 col-5"><h4>Cantidad</h4></div>
+                                        <div class="col2 col-30"><h4>Nombre</h4></div>
+                                        <div class="col2 col-10"><h4>Precio coste</h4></div>
+                                        <div class="col2 col-10"><h4>Precio IVA inc</h4></div>
+                                        <div class="col2 col-10"><h4>Precio venta</h4></div>
+                                        <div class="col2 col-10"><h4>Precio venta IVA inc</h4></div>
+                                        <div class="col2 col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
+                                        <div class="col2 col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
                                     </div>
                         
                                     <!-- Datos de los clientes -->
@@ -87,24 +87,24 @@
         <div id="container_interior_modal_clientes" class="modal_interior">
             <form id="alta_clientes" class="formulario">
                 <div class="row">
-                    <div class="col-50"><h1>Alta / nuevo artículo / Stock</h1></div>
-                    <div class="col-20"></div>  
-                    <div class="col-20" id="cont_btn">
+                    <div class="col col-40"><h1>Alta / nuevo artículo / Stock</h1></div>
+                    <div class="col col-40"></div>  
+                    <div class="col col-10" id="cont_btn">
                         <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
                     </div>              
                 </div>               
                     <div class="row"><!-- CANTIDAD - NOMBRE- CÓDIGO -->
-                        <div class="col-10">
+                        <div class="col col-10">
                             <label><span>*</span>Cantidad</label>
                             <input type="number" step="any" id="stock_cantidad">
                         </div>
-                       <div class="col-5"></div>
-                        <div class="col-20">
+                       <div class="col col-5"></div>
+                        <div class="col col-20">
                             <label><span>*</span>Código artículo</label>
                             <input type="text" placeholder="Ej: 0123456789" id="stock_codigo">
                         </div>
-                        <div class="col-5"></div>
-                        <div class="col-40">
+                        <div class="col col-5"></div>
+                        <div class="col col-40">
                             <label><span>*</span>Nombre</label>
                             <input type="text" placeholder="Ej: Repuestos Varios" id="stock_nombre">
                         </div>
@@ -112,22 +112,22 @@
          
                 <div class="row"><!-- PRECIOS -->
                     
-                    <div class="col-15">
+                    <div class="col col-15">
                         <label><span>*</span>Precio coste</label>
                         <input type="number"step="any" placeholder="Ej: 20,50" id="stock_precio_coste">
                     </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
+                    <div class="col col-5"></div>
+                    <div class="col col-15">
                         <label>Precio coste IVA inc</label>
                         <input type="number"step="any" placeholder="Automático" id="stock_precio_coste_iva" disabled>
                     </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
+                    <div class="col col-5"></div>
+                    <div class="col col-15">
                         <label><span>*</span>Precio venta </label>
                         <input type="number"step="any" placeholder="Ej: 41,55" id="stock_precio_venta">
                     </div>
-                    <div class="col-5"></div>
-                    <div class="col-15">
+                    <div class="col col-5"></div>
+                    <div class="col col-15">
                         <label>Precio venta IVA inc</label>
                         <input type="number"step="any" placeholder="Automático"  id="stock_precio_venta_iva" disabled>
                     </div>
@@ -136,7 +136,7 @@
                 <!-- BOTON GUARDAR -->
                 <div class="row">
                     
-                    <div class="col-30">
+                    <div class="col col-20">
                         <button type="button" id="boton_stock_guardar" class="btn">Guardar</button>
                     </div>
                     

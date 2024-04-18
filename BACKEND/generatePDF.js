@@ -1,4 +1,4 @@
-const fs = require('fs');
+/* const fs = require('fs');
 const path = require('path');
 const Puppeteer = require("puppeteer");
 
@@ -53,3 +53,4 @@ module.exports = async function generatePDF({
     // Devolver la ruta del archivo PDF para descargar
     return rutaArchivo;
 }
+ */

@@ -1,58 +1,58 @@
-// MODAL
-const modal = document.querySelectorAll("#modal_alta_stock");
-const openModalButtons = document.querySelectorAll("#boton_stock_alta");
-const closeModalButtons = document.querySelectorAll("#close");
+// MODALStock
+const modalStock = document.querySelectorAll("#modal_alta_stock");
+const openModalStockButtons = document.querySelectorAll("#boton_stock_alta");
+const closeModalStockButtons = document.querySelectorAll("#close");
 
-function openModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "block";
+function openModalStock() {
+  modalStock.forEach(function(modalStock) {
+    modalStock.style.display = "block";
   });
 }
 
-function closeModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "none";
+function closeModalStock() {
+  modalStock.forEach(function(modalStock) {
+    modalStock.style.display = "none";
   });
 }
 
-openModalButtons.forEach(function(element) {
-  element.addEventListener("click", openModal);
+openModalStockButtons.forEach(function(element) {
+  element.addEventListener("click", openModalStock);
 });
 
-closeModalButtons.forEach(function(element) {
-  element.addEventListener("click", closeModal);
+closeModalStockButtons.forEach(function(element) {
+  element.addEventListener("click", closeModalStock);
 });
 
 
 
-// MODAL EDIT
-const modal_edit = document.querySelectorAll("#modal_alta_stock_edit");
-const openModalButtons_edit = document.querySelectorAll("#boton_stock_alta_edit");
-const closeModalButtons_edit = document.querySelectorAll("#close_edit");
+// MODALStock EDIT
+const modalStock_edit = document.querySelectorAll("#modal_alta_stock_edit");
+const openModalStockButtons_edit = document.querySelectorAll("#boton_stock_alta_edit");
+const closeModalStockButtons_edit = document.querySelectorAll("#close_edit");
 
-function openModal_edit() {
-  modal_edit.forEach(function(modal_edit) {
-    modal_edit.style.display = "block";
+function openModalStock_edit() {
+  modalStock_edit.forEach(function(modalStock_edit) {
+    modalStock_edit.style.display = "block";
   });
 }
 
-function closeModal_edit() {
-  modal_edit.forEach(function(modal_edit) {
-    modal_edit.style.display = "none";
+function closeModalStock_edit() {
+  modalStock_edit.forEach(function(modalStock_edit) {
+    modalStock_edit.style.display = "none";
   });
 }
 
-openModalButtons_edit.forEach(function(element) {
-  element.addEventListener("click", openModal_edit);
+openModalStockButtons_edit.forEach(function(element) {
+  element.addEventListener("click", openModalStock_edit);
 });
 
-closeModalButtons_edit.forEach(function(element) {
-  element.addEventListener("click", closeModal_edit);
+closeModalStockButtons_edit.forEach(function(element) {
+  element.addEventListener("click", closeModalStock_edit);
 });
 
 
-openModalButtons_edit.forEach(function (element) {
-  element.addEventListener("click", openModal_edit);
+openModalStockButtons_edit.forEach(function (element) {
+  element.addEventListener("click", openModalStock_edit);
 });
 
 // ALTA DE STOCK
@@ -77,11 +77,11 @@ BotonGuardarStock.forEach(function (element) {
             isNaN(stockPrecioVenta)
         ) {
             swal.fire({
-              icon: "error",
-              iconColor: "#fa5807",
+              icon: "info",
+              iconColor: "#e6381c",
               title: "Los campos marcados con * son obligatorios",
               text: "¡Completa los que te falten!",
-              confirmButtonColor: "#055778",
+              confirmButtonColor: "#0798c4",
             });
             return;
         }
@@ -113,8 +113,8 @@ BotonGuardarStock.forEach(function (element) {
                 swal.fire({
                   title: "¡Stock añadido correctamente!",
                   icon: "success",
-                  iconColor: "#0b7593",
-                  confirmButtonColor: "#055778",
+                  iconColor: "#0798c4",
+                  confirmButtonColor: "#0798c4",
                 });
                 setTimeout(() => {
                     location.reload();
@@ -123,10 +123,10 @@ BotonGuardarStock.forEach(function (element) {
             .catch((error) => {
                 swal.fire({
                   title: "Error al agregar el stock",
-                  text: "Por favor, intenta de nuevo.",
+                  text: "Por favor, intentalo de nuevo.",
                   icon: "error",
-                  iconColor: "#fa5807",
-                  confirmButtonColor: "#055778",
+                  iconColor: "#e6381c",
+                  confirmButtonColor: "#0798c4",
                 });
             });
     });
@@ -146,10 +146,10 @@ const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
       icon: "info",
-      iconColor: "#0b7593",
+      iconColor: "#0798c4",
       title: "No hay stock registrado",
       text: "Puedes crear stock en el boton AÑADIR",
-      confirmButtonColor: "#055778",
+      confirmButtonColor: "#0798c4",
     });
     return;
   }
@@ -200,8 +200,8 @@ on(document, "click", ".eliminar-icono", (e) => {
     text: "¡Esta acción no se puede deshacer!",
     icon: "question",
     showCancelButton: true,
-    confirmButtonColor: "#055778",
-    cancelButtonColor: "#a0360f",
+    confirmButtonColor: "#0798c4",
+    cancelButtonColor: "#e6381c",
     iconColor: "#db3208",
     confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
@@ -227,8 +227,8 @@ on(document, "click", ".eliminar-icono", (e) => {
               title: "¡Stock eliminado!",
               text: "El artículo ha sido eliminado satisfactoriamente.",
               icon: "success",
-              iconColor: "#0b7593",
-              confirmButtonColor: "#055778",
+              iconColor: "#0798c4",
+              confirmButtonColor: "#0798c4",
             });
             setTimeout(() => {
               location.reload();
@@ -239,7 +239,8 @@ on(document, "click", ".eliminar-icono", (e) => {
           swal.fire({
             title: "Error al eliminar el articulo", 
             icon: "error",
-            confirmButtonColor: "#055778",
+            iconColor: "#e6381c",
+            confirmButtonColor: "#0798c4",
           });
         });
     } else {
@@ -247,8 +248,8 @@ on(document, "click", ".eliminar-icono", (e) => {
         title: "¡Factura NO eliminada!",
         text: "Todo a salvo!.",
         icon: "info",
-        iconColor: "#0b7593",
-        confirmButtonColor: "#055778",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
       });
     }
   });
@@ -273,7 +274,7 @@ on(document, "click", ".editar-icono", (e) => {
   const stockVentaIva = fila.children[7].innerHTML; 
 
 
-  // Asignar valores a los campos de entrada del modal myModal_edit
+  // Asignar valores a los campos de entrada del modalStock myModalStock_edit
   document.getElementById("stock_id_edit").value = stockId;
   document.getElementById("stock_codigo_edit").value = stockCodigo;
   document.getElementById("stock_cantidad_edit").value = stockCantidad;
@@ -284,13 +285,13 @@ on(document, "click", ".editar-icono", (e) => {
   document.getElementById("stock_precio_venta_iva_edit").value = stockVentaIva;
 
  
-  // Mostrar el modal myModal_edit
-  openModal_edit();
+  // Mostrar el modalStock myModalStock_edit
+  openModalStock_edit();
 });
 
 
 // Manejar el envío del formulario de edición
-const formEdit = document.querySelectorAll("#modal_alta_stock_edit");
+const formEdit = document.querySelectorAll("#modalStock_alta_stock_edit");
 
 formEdit.forEach(form => {
   form.addEventListener("submit", (e) => {
@@ -335,8 +336,8 @@ formEdit.forEach(form => {
           title: "¡Stock editado!",
           text: "El stock ha sido editado satisfactoriamente.",
           icon: "success",
-          iconColor: "#0b7593",
-          confirmButtonColor: "#055778",
+          iconColor: "#0798c4",
+          confirmButtonColor: "#0798c4",
         });
         
 
@@ -347,7 +348,13 @@ formEdit.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal.fire("Error", error.message, "error");
+        swal.fire({
+           title: "Error", 
+           text: error.message,
+           icon: "error",
+           iconColor: "#e6381c",
+           confirmButtonColor: "#0798c4",
+          });
       });
   });
 });

@@ -63,6 +63,9 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
+CREATE INDEX `fk_facturas_clientes1` ON `avansat_db`.`facturas` (`Id_cliente` ASC) VISIBLE;
+
+
 -- -----------------------------------------------------
 -- Table `avansat_db`.`stock`
 -- -----------------------------------------------------
@@ -103,6 +106,27 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `fk_stock_has_facturas_stock1` ON `avansat_db`.`detalle_factura` (`stock_Id_stock` ASC) VISIBLE;
+
+
+-- -----------------------------------------------------
+-- Table `avansat_db`.`servicios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avansat_db`.`servicios` (
+  `Id_servicio` INT(15) NOT NULL,
+  `Codigo` VARCHAR(45) NOT NULL,
+  `Cantidad` INT(11) NOT NULL,
+  `Nombre` VARCHAR(255) NOT NULL,
+  `Precio_coste` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Precio_coste_iva` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Precio_venta` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Precio_venta_iva` DECIMAL(5,2) NULL DEFAULT NULL,
+  PRIMARY KEY (`Id_servicio`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 5
+DEFAULT CHARACTER SET = utf8;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

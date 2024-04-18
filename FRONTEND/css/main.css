@@ -523,7 +523,7 @@ h4 {
 .modal_interior {
     font-family: "montserrat", sans-serif;
     width: 90%;
-    height: 100%;
+    height:auto;
     margin: 0px;
     padding: 10px;
     border-radius: 10px;
