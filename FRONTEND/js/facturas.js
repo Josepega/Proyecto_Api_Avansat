@@ -376,7 +376,7 @@ const eliminarFilaDetalle = (index) => {
   } else {
     swal.fire({
       icon: "error",
-      iconColor: "#0798c4",
+      iconColor: "#e6381c",
       title: "No se pudo eliminar la fila del detalle",
       text: "La fila del detalle especificada no existe",
       confirmButtonColor: "#0798c4",
@@ -401,7 +401,8 @@ imagenAgregar.addEventListener("click", () => {
   if (camposVacios()) {
     // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
     swal.fire({
-      icon: "error",
+      icon: "info",
+      iconColor: "#e6381c",
       title: "Campos vacíos",
       text: "Todos los campos son obligatorios",
       confirmButtonColor: "#0798c4",
@@ -484,10 +485,12 @@ imagenAgregar.addEventListener("click", () => {
             isNaN(facturasImponible)
         ) {
             swal.fire({
-                icon: "error",
+                icon: "info",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
                 button: "OK",
+                iconColor: "#e6381c",
+                confirmButtonColor: "#0798c4",
             });
             return;
         }
@@ -531,6 +534,8 @@ imagenAgregar.addEventListener("click", () => {
                 swal.fire({
                     title: "¡Factura añadida correctamente!",
                     icon: "success",
+                    iconColor: "#0798c4",
+                    confirmButtonColor: "#0798c4",
                 });
                 setTimeout(() => {
                     location.reload();
