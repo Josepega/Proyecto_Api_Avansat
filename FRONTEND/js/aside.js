@@ -8,15 +8,15 @@
 }
 // MODAL CLIENTES
 
-function gestionarClientes() {
+/* function gestionarClientes() {
     const modalClientes = document.querySelectorAll("#modal_alta_clientes");
     const openModalClientesButtons = document.querySelectorAll("#boton_clientes_alta");
     const closeModalClientesButtons = document.querySelectorAll("#close");
     const botonGuardarCliente = document.querySelectorAll("#boton_clientes_guardar");
 
     function openModalClientes() {
-        modalClientes.forEach(function(modalCliente) {
-            modalCliente.style.display = "block";
+        modalClientes.forEach(function(modal) {
+            modal.style.display = "block";
         });
 
         const tipoCliente = document.getElementById("tipo");
@@ -165,7 +165,7 @@ function gestionarClientes() {
             });
         });
     });
-}
+} */
 
 // MODAL STOCK
 

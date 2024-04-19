@@ -231,7 +231,7 @@ autocompleteResultsStock.addEventListener("click", (e) => {
     document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
     document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
     document.getElementById('facturas_codigo').value = selectedStock.Codigo;
-    document.getElementById('facturas_precio').value = selectedStock.Precio_coste;
+    document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_coste).toFixed(2);
 
     // Ocultar la lista de resultados
     autocompleteResultsStock.style.display = "none";
@@ -286,9 +286,9 @@ const facturasPais = document.getElementById("facturas_pais");
   var facturasCodigo = document.getElementById("facturas_codigo");
   var facturasStockCodigo = document.getElementById("facturas_id_detalle_stock");
   var facturasDescripcion = document.getElementById("facturas_descripcion");
-  var facturasPrecio = document.getElementById("facturas_precio");
+  var facturasPrecio = parseFloat(document.getElementById("facturas_precio")).toFixed(2);
   var facturasImpuesto = document.getElementById("facturas_impuesto");
-  var facturasTotal = document.getElementById("facturas_total");
+  var facturasTotal = parseFloat(document.getElementById("facturas_total")).toFixed(2);
   var facturasFecha = document.getElementById("facturas_alta");
   const fechaActual = new Date().toISOString().split('T')[0];
   facturasFecha.value = fechaActual;
@@ -352,16 +352,16 @@ const redibujarTabla = () => {
 // Función para calcular los totales
 const calcularTotales = () => {
   // Calcular la base imponible
-  const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + (curr.precioIva * curr.cantidad * (curr.impuestos / 100)), 0);
+  const baseImponibleSum = parseFloat(arregloDetalle.reduce((acc, curr) => acc + (curr.cantidad * curr.impuestos) /100)).toFixed(2);
 
   // Actualizar el campo de base imponible en el HTML
-  document.getElementById("facturas_imponible").value = baseImponibleSum.toFixed(2);
+  document.getElementById("facturas_imponible").value = baseImponibleSum;
 
   // Calcular el total
-  const totalSum = arregloDetalle.reduce((acc, curr) => acc + curr.precioIva * curr.cantidad, 0);
+  const totalSum = parseFloat(arregloDetalle.reduce((acc, curr) => acc + curr.precioIva * curr.cantidad, 0)).toFixed(2);
 
   // Actualizar el campo de total en el HTML
-  document.getElementById("facturas_total").value = totalSum.toFixed(2);
+  document.getElementById("facturas_total").value = totalSum;
 };
 
 
@@ -417,13 +417,13 @@ imagenAgregar.addEventListener("click", () => {
       let facturasCodigo = document.getElementById("facturas_codigo").value;
       let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
       let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
-      let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.'));
-      let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.'));
-      let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100);
-      let facturasPrecioSubTotal = facturasPrecio * facturasCantidad;
-      let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100);
+      let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.')).toFixed(2);
+      let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.')).toFixed(2);
+      let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100).toFixed(2);
+      let facturasPrecioSubTotal = (facturasPrecio * facturasCantidad).toFixed(2);
+      let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100).toFixed(2);
 
-      let facturasTotaldeTotales = facturasPrecioIva * facturasCantidad;
+      let facturasTotaldeTotales = (facturasPrecioIva * facturasCantidad).toFixed(2);
 
       // Agregar el detalle a la factura
       const objetoDetalle = {
@@ -441,7 +441,13 @@ imagenAgregar.addEventListener("click", () => {
       // Actualizar los totales después de agregar el detalle
       calcularTotales();
   } else {
-      swal.fire("El valor de 'facturas_cantidad' no es un número válido.");
+      swal.fire({
+        title:"El valor de 'facturas_cantidad' no es un número válido.",
+        icon: "info",
+        iconColor: "#e6381c",
+        confirmButtonColor: "#0798c4",
+
+      });
   }
   autocomplete_servicios_reset();
 });
@@ -471,8 +477,8 @@ imagenAgregar.addEventListener("click", () => {
         const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
         const facturasEstado = document.getElementById("facturas_estado").value;
         const facturasPago = document.getElementById("facturas_tipo_pago").value;
-        const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value);
-        const facturasTotal = parseFloat(document.getElementById("facturas_total").value);
+        const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value).toFixed(2);
+        const facturasTotal = parseFloat(document.getElementById("facturas_total").value).toFixed(2);
         const facturasIdStock = document.getElementById("facturas_id_detalle_stock").value;
         const facturasCantidad = document.getElementById("facturas_cantidad").value;
 
@@ -486,10 +492,9 @@ imagenAgregar.addEventListener("click", () => {
         ) {
             swal.fire({
                 icon: "info",
+                iconColor: "#e6381c",
                 title: "Los campos marcados con * son obligatorios",
                 text: "¡Completa los que te falten!",
-                button: "OK",
-                iconColor: "#e6381c",
                 confirmButtonColor: "#0798c4",
             });
             return;
@@ -542,7 +547,13 @@ imagenAgregar.addEventListener("click", () => {
                 }, 3000);
             })
             .catch((error) => {
-                swal.fire("Error al agregar la factura", error.message, "error");
+                swal.fire({
+                  icon: "error",
+                  title: "Error al agregar la factura",
+                  text: error.message,
+                  iconColor: "#e6381c",
+                  confirmButtonColor: "#0798c4",
+              });
             });
     });
 });
@@ -690,7 +701,7 @@ on(document, "click", ".editar-icono", (e) => {
   //const fila = e.target.parentNode.parentNode;
   const fila = e.target.parentNode.parentNode;
 
-/* console.log("Valor de la primera columna:", fila.children[0].innerHTML);
+ console.log("Valor de la primera columna:", fila.children[0].innerHTML);
 console.log("Valor de la segunda columna:", fila.children[1].innerHTML);
 console.log("Valor de la tercera columna:", fila.children[2].innerHTML);
 console.log("Valor de la cuarta columna:", fila.children[3].innerHTML);
@@ -699,15 +710,9 @@ console.log("Valor de la sexta columna:", fila.children[5].innerHTML);
 console.log("Valor de la septima columna:", fila.children[6].innerHTML);
 console.log("Valor de la octava columna:", fila.children[7].innerHTML);
 console.log("Valor de la novena columna:", fila.children[8].innerHTML);
-console.log("Valor de la decima columna:", fila.children[9].innerHTML); */
-//console.log("Valor de la decima primera columna:", fila.children[10].innerHTML);
-/* console.log("Valor de la decima segunda columna:", fila.children[11].innerHTML);
-console.log("Valor de la decima tercera columna:", fila.children[12].innerHTML);
-console.log("Valor de la decima cuarta columna:", fila.children[13].innerHTML);
-console.log("Valor de la decima quinta columna:", fila.children[14].innerHTML);
-console.log("Valor de la decima sexta columna:", fila.children[15].innerHTML); */
-
-  /* const Id_factura = fila.children[0].innerHTML;
+console.log("Valor de la decima columna:", fila.children[9].innerHTML); 
+/*  */
+  const Id_factura = fila.children[0].innerHTML;
   const Fecha_vencimiento = fila.children[1].innerHTML;
   const Cliente = fila.children[2].innerHTML;
   const Tipo = fila.children[3].innerHTML;
@@ -716,13 +721,13 @@ console.log("Valor de la decima sexta columna:", fila.children[15].innerHTML); *
   const idFiscal = fila.children[6].innerHTML;
   const Direccion = fila.children[7].innerHTML;
   const CPostal = fila.children[8].innerHTML;
-  const localidad = fila.children[9].innerHTML; */
+  const localidad = fila.children[9].innerHTML;
   //const Pais = fila.children[11].innerHTML;  
   //const stockCantidad = fila.children[13].innerHTML; 
   //const stockCodigo = fila.children[14].innerHTML; 
   ////const stockNombre = fila.children[15].innerHTML; 
   //const stockCoste = fila.children[16].innerHTML; 
-  //const stockCosteIva = fila.children[17].innerHTML; 
+  const stockCosteIva = fila.children[4].innerHTML; 
   //const stockVenta = fila.children[18].innerHTML; 
   //const stockVentaIva = fila.children[19].innerHTML;
 
@@ -738,6 +743,7 @@ console.log("Valor de la decima sexta columna:", fila.children[15].innerHTML); *
   document.getElementById("facturas_direccion_edit").value = Direccion;
   document.getElementById("facturas_c_postal_edit").value = CPostal;
   document.getElementById("facturas_localidad_edit").value = localidad;
+  document.getElementById("facturas_imponible_edit").value = stockCosteIva;
  // document.getElementById("facturas_pais_edit").value = Pais;
   
  
@@ -801,8 +807,8 @@ formEditFacturas.forEach(form => {
           title: "¡Stock editado!",
           text: "El stock ha sido editado satisfactoriamente.",
           icon: "success",
-          iconColor: "#0b7593",
-          confirmButtonColor: "#055778",
+          iconColor: "#0798c4",
+          confirmButtonColor: "#0798c4",
         });
         
 
@@ -813,7 +819,13 @@ formEditFacturas.forEach(form => {
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
-        swal.fire("Error", error.message, "error");
+        swal.fire({
+          title: "Error al editar la factura",
+          text:error.message,
+          icon: "error",
+          iconColor: "#e6381c",
+          confirmButtonColor: "#0798c4",
+        });
       });
   });
 });
@@ -862,8 +874,10 @@ function mostrarDetallesFactura(idFactura) {
       document.getElementById('plantilla_c_postal').value = data.C_postal + ' ' + data.Localidad;
       //document.getElementById('plantilla_localidad').value = data.Localidad;
       document.getElementById('plantilla_pais').value = data.Pais;
-      document.getElementById('plantilla_base_imponible').value = data.Base_imponible+ ' €';
-      document.getElementById('plantilla_iva').value = data.Total - data.Base_imponible+ ' €' ;
+      document.getElementById('plantilla_base_imponible').value = (data.Total * facturasImpuesto)/100  + ' €';
+      document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;
+
+  
       document.getElementById('plantilla_total').value = data.Total + ' €';
       document.getElementById('plantilla_id_factura').value = data.Id_factura;
       //document.getElementById('plantilla_descripcion').value = data.Descripcion;
@@ -876,8 +890,11 @@ function mostrarDetallesFactura(idFactura) {
       // Por ejemplo, mostrar un mensaje de error al usuario
       swal.fire({
         icon: 'error',
-        title: 'Error',
+        iconColor: '#e6381c',
+        title: 'Error al obtener detalles',
         text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
+        confirmButtonColor: '#0798c4',
+
       });
     });
 } 
@@ -920,7 +937,9 @@ function mostrarDetallesProductos(idFactura) {
       swal.fire({
         icon: 'error',
         title: 'Error',
+        iconColor: '#e6381c',
         text: 'Hubo un error al obtener los detalles de los productos asociados a la factura. Por favor, inténtelo de nuevo más tarde.',
+        confirmButtonColor: '#0798c4',
       });
     });
 }
