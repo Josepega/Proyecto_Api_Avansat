@@ -8,8 +8,8 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/clientes.css">
-    <script src="../js/clientes.js" defer></script>
+    <link rel="stylesheet" href="../css/index.css">
+    
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
@@ -19,7 +19,32 @@
     <!-- CONTENEDOR GENERAL -->
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
-      <div data-include="../html/aside.html"></div>
+      <aside id="izq"></aside>
+      <script>
+        // Cargar el aside usando JavaScript
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener el contenedor del aside
+            var asideContainer = document.getElementById("izq");
+            
+            // Cargar el aside desde aside.html usando fetch
+            fetch("aside.html")
+                .then(response => response.text())
+                .then(data => {
+                    // Insertar el contenido del aside en el contenedor
+                    asideContainer.innerHTML = data;
+                    
+                    // Ejecutar las funciones asociadas al aside
+                    botonToggle();
+                    gestionarClientes();
+                    gestionarStock();
+                    gestionarServicios();
+                    gestionarFacturas()
+
+
+                })
+                .catch(error => console.error("Error al cargar el aside:", error));
+        });
+    </script>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
@@ -32,28 +57,7 @@
                     <div class="container">
                         <div class="container_seccion">
                             <div class="container_seccion_interior">
-                                <div class="row">
-                                    <div class="col-70"><h1>Stock</h1></div>
-                                    <div class="col-30"><button type="button" id="boton_stock_alta" class="btn">Añadir</button></div>
-                                </div>
-                                <div id="interior_container_listado_stock" class="container_seccion_interior">         
-                                    <!-- Row de títulos -->
-                                    <div class="row">
-                                        <div class="col col-10"><h4>Código</h4></div>
-                                        <div class="col col-5"><h4>Cantidad</h4></div>
-                                        <div class="col col-20"><h4>Nombre</h4></div>
-                                        <div class="col col-10"><h4>Precio coste</h4></div>
-                                        <div class="col col-10"><h4>Precio IVA inc</h4></div>
-                                        <div class="col col-10"><h4>Precio venta</h4></div>
-                                        <div class="col col-10"><h4>Precio venta IVA inc</h4></div>
-                                        <div class="col col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
-                                        <div class="col col-5"><h4>Borrar</h4></div> <!-- Espacio para el ícono de borrar -->
-                                    </div>
-                        
-                                    <!-- Datos de los clientes -->
-                                    <div id="listado_stock" class="listado"></div>
-                                   
-                                </div>  
+                                
                             </div>
                         </div>
                     </div>
@@ -63,6 +67,7 @@
 
             </div><!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
+  
     </div><!-- FIN CONTENEDOR GENERAL -->
 </body>
 
