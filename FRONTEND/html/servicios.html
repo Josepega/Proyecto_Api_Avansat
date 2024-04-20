@@ -11,6 +11,7 @@
     <script src="../js/servicios.js" defer></script>
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
+    <script src="../js/modals.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 </head>
 
@@ -18,30 +19,34 @@
     <!-- CONTENEDOR GENERAL -->
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
-        <aside id="izq">
-            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
-            </div>
-            <div id="container_lista">
-                <ul id="lista_acciones">
-                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg" alt="">Añadir
-                            cliente</a></li>
-                    <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
-                    <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
-                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
-                    <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
+        <aside id="izq"></aside>
+      <script>
+        // Cargar el aside usando JavaScript
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener el contenedor del aside
+            var asideContainer = document.getElementById("izq");
+            
+            // Cargar el aside desde aside.html usando fetch
+            fetch("aside.html")
+                .then(response => response.text())
+                .then(data => {
+                    // Insertar el contenido del aside en el contenedor
+                    asideContainer.innerHTML = data;
+                    
+                    // Ejecutar las funciones asociadas al aside
+                    botonToggle();
+                    manejarModalClientes();
+                    manejarModalStock();
+                    manejarModalFacturas();
+                    manejarModalServicios();
 
-                </ul>
-                <div id="container_busqueda">
-                    <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
-                    <input type="text" id="busqueda">
-                </div>
-            </div>
-            <!-- FOOTER IZQ -->
-            <div id="mini_footer_izq">
-                <p>APP Gestion Clientes V1.0 </p>
-                <p>© 2024 Avansat</p>
-            </div>
-        </aside>
+
+
+
+                })
+                .catch(error => console.error("Error al cargar el aside:", error));
+        });
+    </script>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
@@ -101,64 +106,7 @@
 
 
 
-                <!-- MODAL ALTA SERVICIOS -->
-                <div id=modal_alta_servicios class="modal">
-                    <div id="container_interior_modal_servicios" class="modal_interior">
-                        <form id="alta_servicios" class="formulario">
-                            <div class="row">
-                                <div class="col col-70">
-                                    <h1>Alta / nuevo servicio / servicios</h1>
-                                </div>
-                                <div class="col col-10" id="cont_btn">
-                                    <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
-                                </div>
-                            </div>
-                            <div class="row"><!-- ID - NOMBRE- CÓDIGO -->
-                                <div class="col col-20">
-                                    <label><span>*</span>Código servicio</label>
-                                    <input type="text" placeholder="Ej: 0123456789" id="servicios_codigo">
-                                </div>
-                                <div class="col col-5"></div>
-                                <div class="col col-40">
-                                    <label><span>*</span>Nombre</label>
-                                    <input type="text" placeholder="Ej: Servicios Varios" id="servicios_nombre">
-                                </div>
-                            </div>
-
-                            <div class="row"><!-- PRECIOS -->
-
-                                <div class="col col-15">
-                                    <label><span>*</span>Precio coste</label>
-                                    <input type="number" step="any" placeholder="Ej: 20,50" id="servicios_precio_coste">
-                                </div>
-                                <div class="col col-5"></div>
-                                <div class="col col-15">
-                                    <label>Precio coste IVA inc</label>
-                                    <input type="number" step="any" placeholder="Automático" id="servicios_precio_coste_iva">
-                                </div>
-                                <div class="col col-5"></div>
-                                <div class="col col-15">
-                                    <label><span>*</span>Precio venta </label>
-                                    <input type="number" step="any" placeholder="Ej: 41,55" id="servicios_precio_venta">
-                                </div>
-                                <div class="col col-5"></div>
-                                <div class="col col-15">
-                                    <label>Precio venta IVA inc</label>
-                                    <input type="number" step="any" placeholder="Automático" id="servicios_precio_venta_iva">
-                                </div>
-
-                            </div>
-                            <!-- BOTON GUARDAR -->
-                            <div class="row">
-
-                                <div class="col col-10">
-                                    <button type="button" id="boton_servicios_guardar" class="btn">Guardar</button>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            
 
                 <!-- MODAL EDICIÓN DE SERVICIOS -->
                 <div id=modal_alta_servicios_edit class="modal">

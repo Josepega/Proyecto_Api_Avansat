@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/stock.js" defer></script>
     <script src="../js/includes_html.js" defer></script>
+    <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
@@ -19,30 +20,34 @@
     <!-- CONTENEDOR GENERAL -->
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
-        <aside id="izq">
-            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
-            </div>
-            <div id="container_lista">
-                <ul id="lista_acciones">
-                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg"
-                                alt="">Añadir cliente</a></li>
-                    <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
-                    <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
-                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
-                    <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
-
-                </ul>
-                <div id="container_busqueda">
-                    <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
-                    <input type="text" id="busqueda">
-                </div>
-            </div>
-            <!-- FOOTER IZQ -->
-            <div id="mini_footer_izq">
-                <p>APP Gestion Clientes V1.0 </p>
-                <p>© 2024 Avansat</p>
-            </div>
-        </aside>
+        <aside id="izq"></aside>
+        <script>
+          // Cargar el aside usando JavaScript
+          document.addEventListener("DOMContentLoaded", function() {
+              // Obtener el contenedor del aside
+              var asideContainer = document.getElementById("izq");
+              
+              // Cargar el aside desde aside.html usando fetch
+              fetch("aside.html")
+                  .then(response => response.text())
+                  .then(data => {
+                      // Insertar el contenido del aside en el contenedor
+                      asideContainer.innerHTML = data;
+                      
+                      // Ejecutar las funciones asociadas al aside
+                      botonToggle();
+                      manejarModalClientes();
+                      manejarModalStock();
+                      manejarModalFacturas();
+                      manejarModalServicios();
+  
+  
+  
+  
+                  })
+                  .catch(error => console.error("Error al cargar el aside:", error));
+          });
+      </script>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
@@ -82,68 +87,7 @@
                     
                 
 
-      <!-- MODAL ALTA STOCK -->
-      <div id= modal_alta_stock class="modal">
-        <div id="container_interior_modal_clientes" class="modal_interior">
-            <form id="alta_clientes" class="formulario">
-                <div class="row">
-                    <div class="col col-40"><h1>Alta / nuevo artículo / Stock</h1></div>
-                    <div class="col col-40"></div>  
-                    <div class="col col-10" id="cont_btn">
-                        <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
-                    </div>              
-                </div>               
-                    <div class="row"><!-- CANTIDAD - NOMBRE- CÓDIGO -->
-                        <div class="col col-10">
-                            <label><span>*</span>Cantidad</label>
-                            <input type="number" step="any" id="stock_cantidad">
-                        </div>
-                       <div class="col col-5"></div>
-                        <div class="col col-20">
-                            <label><span>*</span>Código artículo</label>
-                            <input type="text" placeholder="Ej: 0123456789" id="stock_codigo">
-                        </div>
-                        <div class="col col-5"></div>
-                        <div class="col col-40">
-                            <label><span>*</span>Nombre</label>
-                            <input type="text" placeholder="Ej: Repuestos Varios" id="stock_nombre">
-                        </div>
-                    </div>
-         
-                <div class="row"><!-- PRECIOS -->
-                    
-                    <div class="col col-15">
-                        <label><span>*</span>Precio coste</label>
-                        <input type="number"step="any" placeholder="Ej: 20,50" id="stock_precio_coste">
-                    </div>
-                    <div class="col col-5"></div>
-                    <div class="col col-15">
-                        <label>Precio coste IVA inc</label>
-                        <input type="number"step="any" placeholder="Automático" id="stock_precio_coste_iva" disabled>
-                    </div>
-                    <div class="col col-5"></div>
-                    <div class="col col-15">
-                        <label><span>*</span>Precio venta </label>
-                        <input type="number"step="any" placeholder="Ej: 41,55" id="stock_precio_venta">
-                    </div>
-                    <div class="col col-5"></div>
-                    <div class="col col-15">
-                        <label>Precio venta IVA inc</label>
-                        <input type="number"step="any" placeholder="Automático"  id="stock_precio_venta_iva" disabled>
-                    </div>
-                    
-                </div>
-                <!-- BOTON GUARDAR -->
-                <div class="row">
-                    
-                    <div class="col col-20">
-                        <button type="button" id="boton_stock_guardar" class="btn">Guardar</button>
-                    </div>
-                    
-                </div>
-            </form>
-        </div>
-    </div>
+ 
 
     <!-- MODAL EDICIÓN DE STOCK -->
     <div id= modal_alta_stock_edit class="modal">

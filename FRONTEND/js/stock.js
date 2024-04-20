@@ -1,27 +1,4 @@
-// MODALStock
-const modalStock = document.querySelectorAll("#modal_alta_stock");
-const openModalStockButtons = document.querySelectorAll("#boton_stock_alta");
-const closeModalStockButtons = document.querySelectorAll("#close");
 
-function openModalStock() {
-  modalStock.forEach(function(modalStock) {
-    modalStock.style.display = "block";
-  });
-}
-
-function closeModalStock() {
-  modalStock.forEach(function(modalStock) {
-    modalStock.style.display = "none";
-  });
-}
-
-openModalStockButtons.forEach(function(element) {
-  element.addEventListener("click", openModalStock);
-});
-
-closeModalStockButtons.forEach(function(element) {
-  element.addEventListener("click", closeModalStock);
-});
 
 
 
@@ -55,82 +32,7 @@ openModalStockButtons_edit.forEach(function (element) {
   element.addEventListener("click", openModalStock_edit);
 });
 
-// ALTA DE STOCK
-const BotonGuardarStock = document.querySelectorAll("#boton_stock_guardar");
-BotonGuardarStock.forEach(function (element) {
-    element.addEventListener("click", () => {
-        const iva = 0.21; // Porcentaje del IVA
-        const stockCantidad = document.getElementById("stock_cantidad").value;
-        const stockCodigo = document.getElementById("stock_codigo").value;
-        const stockNombre = document.getElementById("stock_nombre").value;
-        const stockPrecioCoste = parseFloat(document.getElementById("stock_precio_coste").value);
-        const stockPrecioVenta = parseFloat(document.getElementById("stock_precio_venta").value);
-        const stockPrecioCosteIva = stockPrecioCoste * (1 + iva);
-        const stockPrecioVentaIva = stockPrecioVenta * (1 + iva);
 
-        // Validación de campos obligatorios
-        if (
-            stockCantidad == "" ||
-            stockCodigo == "" ||
-            stockNombre == "" ||
-            isNaN(stockPrecioCoste) ||
-            isNaN(stockPrecioVenta)
-        ) {
-            swal.fire({
-              icon: "info",
-              iconColor: "#e6381c",
-              title: "Los campos marcados con * son obligatorios",
-              text: "¡Completa los que te falten!",
-              confirmButtonColor: "#0798c4",
-            });
-            return;
-        }
-
-        // Realizar la solicitud HTTP POST al servidor
-        const urlAltaStock = "http://localhost:3000/api/v1/alta_stock";
-        fetch(urlAltaStock, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                Codigo: stockCodigo,
-                Cantidad: stockCantidad,               
-                Nombre: stockNombre,
-                Precio_coste: stockPrecioCoste,
-                Precio_coste_iva: stockPrecioCosteIva,
-                Precio_venta: stockPrecioVenta,
-                Precio_venta_iva: stockPrecioVentaIva,
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error al agregar el stock");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                swal.fire({
-                  title: "¡Stock añadido correctamente!",
-                  icon: "success",
-                  iconColor: "#0798c4",
-                  confirmButtonColor: "#0798c4",
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 3000);
-            })
-            .catch((error) => {
-                swal.fire({
-                  title: "Error al agregar el stock",
-                  text: "Por favor, intentalo de nuevo.",
-                  icon: "error",
-                  iconColor: "#e6381c",
-                  confirmButtonColor: "#0798c4",
-                });
-            });
-    });
-});
 
 
 // LISTADO DE STOCK

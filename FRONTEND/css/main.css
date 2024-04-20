@@ -576,11 +576,7 @@ input {
  
 
 }
-input:-webkit-text-fill-color {
-  background-color:transparent !important;
-  -webkit-text-fill-color: #feffff !important;
-  -webkit-box-shadow: 0 0 0 30px transparent !important;
-}
+
 .btn {
     width: 100%;
     height: 40px;

@@ -1,28 +1,3 @@
-// MODAL
-const modal = document.querySelectorAll("#modal_alta_servicios");
-const openModalButtons = document.querySelectorAll("#boton_servicios_alta");
-const closeModalButtons = document.querySelectorAll("#close");
-
-function openModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "block";
-  });
-}
-
-function closeModal() {
-  modal.forEach(function(modal) {
-    modal.style.display = "none";
-  });
-}
-
-openModalButtons.forEach(function(element) {
-  element.addEventListener("click", openModal);
-});
-
-closeModalButtons.forEach(function(element) {
-  element.addEventListener("click", closeModal);
-});
-
 
 
 // MODAL EDIT
@@ -53,80 +28,6 @@ closeModalButtons_edit.forEach(function(element) {
 
 openModalButtons_edit.forEach(function (element) {
   element.addEventListener("click", openModal_edit);
-});
-
-// ALTA DE SERVICIO
-const BotonGuardarServicio = document.querySelectorAll("#boton_servicios_guardar");
-BotonGuardarServicio.forEach(function (element) {
-    element.addEventListener("click", () => {
-        const iva = 0.21; // Porcentaje del IVA
-        const serviciosCodigo = document.getElementById("servicios_codigo").value;
-        const serviciosNombre = document.getElementById("servicios_nombre").value;
-        const serviciosPrecioCoste = parseFloat(document.getElementById("servicios_precio_coste").value);
-        const serviciosPrecioVenta = parseFloat(document.getElementById("servicios_precio_venta").value);
-        const serviciosPrecioCosteIva = serviciosPrecioCoste * (1 + iva);
-        const serviciosPrecioVentaIva = serviciosPrecioVenta * (1 + iva);
-
-        // Validación de campos obligatorios
-        if (
-            serviciosCodigo == "" ||
-            serviciosNombre == "" ||
-            isNaN(serviciosPrecioCoste) ||
-            isNaN(serviciosPrecioVenta)
-        ) {
-            swal.fire({
-              icon: "error",
-              iconColor: "#fa5807",
-              title: "Los campos marcados con * son obligatorios",
-              text: "¡Completa los que te falten!",
-              confirmButtonColor: "#055778",
-            });
-            return;
-        }
-
-        // Realizar la solicitud HTTP POST al servidor
-        const urlAlta = "http://localhost:3000/api/v1/alta_servicio";
-        fetch(urlAlta, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                Codigo: serviciosCodigo,
-                Nombre: serviciosNombre,
-                Precio_coste: serviciosPrecioCoste,
-                Precio_coste_iva: serviciosPrecioCosteIva,
-                Precio_venta: serviciosPrecioVenta,
-                Precio_venta_iva: serviciosPrecioVentaIva,
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Error al agregar el servicio");
-                }
-                return response.json();
-            })
-            .then((data) => {
-              swal.fire({
-                title: "¡Servicio añadido correctamente!",
-                icon: "success",
-                iconColor: "#0b7593",
-                confirmButtonColor: "#055778",
-              });
-                setTimeout(() => {
-                    location.reload();
-                }, 3000);
-            })
-            .catch((error) => {
-              swal.fire({
-                title: "Error al agregar el servicio",
-                text: "Por favor, intenta de nuevo.",
-                icon: "error",
-                iconColor: "#fa5807",
-                confirmButtonColor: "#055778",
-              });
-            });
-    });
 });
 
 

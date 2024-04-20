@@ -8,8 +8,10 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/facturas.css">
+    <link rel="stylesheet" href="../css/clientes.css">
     <link rel="stylesheet" href="../css/index.css">
     <script src="../js/includes_html.js" defer></script>
+    <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 </head>
@@ -34,10 +36,12 @@
                     
                     // Ejecutar las funciones asociadas al aside
                     botonToggle();
-                    gestionarClientes();
-                    gestionarStock();
-                    gestionarServicios();
-                    gestionarFacturas()
+                    manejarModalClientes();
+                    manejarModalStock();
+                    manejarModalFacturas();
+                    manejarModalServicios();
+
+
 
 
                 })
@@ -66,7 +70,7 @@
 
             </div><!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
-  
+
     </div><!-- FIN CONTENEDOR GENERAL -->
 </body>
 

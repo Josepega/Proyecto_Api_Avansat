@@ -14,6 +14,7 @@
     <script src="../js/facturas.js" defer></script>
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
+    <script src="../js/modals.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
@@ -26,30 +27,34 @@
     <!-- CONTENEDOR GENERAL -->
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
-        <aside id="izq">
-            <div id="container_logo"><span><img src="../img/icons/left.svg" id="close_izq" class="toggle_boton"></span>
-            </div>
-            <div id="container_lista">
-                <ul id="lista_acciones">
-                    <li><a href="#" id="boton_clientes_alta"><img src="../img/icons/usuario+.svg"
-                                alt="">Añadir cliente</a></li>
-                    <li><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
-                    <li><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
-                    <li><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li>
-                    <li><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
-
-                </ul>
-                <div id="container_busqueda">
-                    <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
-                    <input type="text" id="busqueda">
-                </div>
-            </div>
-            <!-- FOOTER IZQ -->
-            <div id="mini_footer_izq">
-                <p>APP Gestion Clientes V1.0 </p>
-                <p>© 2024 Avansat</p>
-            </div>
-        </aside>
+        <aside id="izq"></aside>
+        <script>
+          // Cargar el aside usando JavaScript
+          document.addEventListener("DOMContentLoaded", function() {
+              // Obtener el contenedor del aside
+              var asideContainer = document.getElementById("izq");
+              
+              // Cargar el aside desde aside.html usando fetch
+              fetch("aside.html")
+                  .then(response => response.text())
+                  .then(data => {
+                      // Insertar el contenido del aside en el contenedor
+                      asideContainer.innerHTML = data;
+                      
+                      // Ejecutar las funciones asociadas al aside
+                      botonToggle();
+                      manejarModalClientes();
+                      manejarModalStock();
+                      manejarModalFacturas();
+                      manejarModalServicios();
+  
+  
+  
+  
+                  })
+                  .catch(error => console.error("Error al cargar el aside:", error));
+          });
+      </script>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
@@ -86,186 +91,7 @@
                                 </div>  
                           
                         </div>
-                    
-                
-
-      <!-- MODAL ALTA FACTURA -->
-      <div id= modal_alta_facturas class="modal">
-        <div id="container_interior_modal_facturas" class="modal_interior">
-            <form id="alta_facturas" class="formulario">
-
-                <div class="row">
-                    <div class="col col-40">
-                        <h1>Alta / nueva factura / Facturas</h1>
-                    </div>
-                    <div class="col-10"><input type="text" id="facturas_id" disabled></div>
-                    <div class="col col-15">
-                        <label><span>*</span>Vencimiento</label>
-                        <select name="vencimiento" id="facturas_vencimiento">
-                            <option value="15">15 días</option>
-                            <option value="30" selected="selected">30 días</option>
-                            <option value="90">90 días</option>
-                        </select>
-                    </div>
-                    <div class="col col-10"><input type="text" id="facturas_id_cliente"></div>
-                    <div class="col col-10"><input type="text" id="facturas_id_detalle_stock"></div>
-
-                    <div class="col-20"></div>
-                    <div class="col-10"><button type="button" id="close" class="btn">Cerrar</button></div>
-                    
-                </div>
-
-                <div class="row"><!-- ROW DATOS CLIENTE 1-->
-                    <div class="col col-15">
-                        <label>Tipo</label>
-                        <select name="tipo" id="tipo">
-                            <option value="Persona">Persona</option>
-                            <option value="Empresa">Empresa</option>
-                        </select>
-                    </div>
-                    <div class="col col-30 autocomplete_clientes" id="facturas_nombre_ocultar">
-                        <label><span>*</span>Nombre</label>
-                        <input type="text" id="facturas_nombre_cliente" placeholder="Ej: Juan Antonio">
-                        <ul id="autocomplete-results_clientes" class="autocomplete-results_clientes"></ul>
-                    </div>
-
-                    <div class="col col-30" id="facturas_apellidos_ocultar">
-                        <label><span>*</span>Apellidos</label>
-                        <input type="text" id="facturas_apellidos" placeholder="Ej: Gómez Perez">
-                    </div>
-                    <div class="col col-50" id="facturas_nombreEmpresa_ocultar" >
-                        <label><span>*</span>Nombre de l empresa</label>
-                        <input type="text" id="facturas_nombre_empresa" placeholder="Ej: Avansat">
-                    </div>
-                    <div class="col col-15">
-                        <label><span>*</span>Id fiscal</label>
-                        <input type="text" id="facturas_fiscal" placeholder="Ej: 12345678T">
-                    </div>
-                </div>
-                <div class="row"><!-- ROW DATOS CLIENTE 2 -->
-                    <div class="col col-30">
-                        <label><span>*</span>Dirección</label>
-                        <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="facturas_direccion">
-                    </div>
-                    <div class="col col-15">
-                        <label><span>*</span>C. postal</label>
-                        <input type="number" placeholder="Ej: 17300" id="facturas_c_postal">
-                    </div>
-                    <div class="col col-15">
-                        <label><span>*</span>Localidad</label>
-                        <input type="text" placeholder="Ej: Blanes" id="facturas_localidad">
-                    </div>
-                    <div class="col col-15">
-                        <label><span>*</span>Pais</label>
-                        <input type="text" placeholder="Ej: España" id="facturas_pais">
-                    </div>
-                </div>
-
-                <div class="row"><!--  DATOS OCULTOS -->
-
-                    <div class="col col-30" style="display:none">
-                        <label><span>*</span>Fecha alta</label> <input type="date" id="facturas_alta">
-                    </div>
-                    <div class="col col-30" style="display:none">
-                        <label><span>*</span>Estado</label>
-                        <select name="estado" id="facturas_estado">
-                            <option value="pendiente" selected="selected">Pendiente</option>
-                            <option value="cobrada">Cobrada</option>
-                        </select>
-                    </div>
-                </div>
-                <hr>
-                <div class="row">
-
-                    <div class="col2 col-10">
-                        <h4>Cantidad</h4>
-                    </div>
-                    <div class="col2 col-10">
-                        <h4>Código</h4>
-                    </div>
-                    <div class="col2 col-40">
-                        <h4>Descripción</h4>
-                    </div>
-                    <div class="col2 col-15">
-                        <h4>Precio unitario</h4>
-                    </div>
-                    <div class="col2 col-15">
-                        <h4>IVA %</h4>
-                    </div>
-                    <div class="col2 col-15">
-                        <h4>Precio IVA inc</h4>
-                    </div>
-                    <div class="col2 col-15"><h4>Acciones</h4></div>
-
-
-                </div>
-                <div  id="facturas_add"></div>
-
-                <div id="facturas_items_add"><!-- ROW DATOS ARTICULO 1 -->
-                    <div class="col col-10">
-                        <input type="number"  placeholder="Ej: 5" id="facturas_cantidad">
-                    </div>
-                    <div class="col col-10">
-                        <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
-                    </div>
-                    <div class="col col-35 autocomplete_servicios">
-                        <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock">
-                        <ul id="autocomplete-results_stock" class="autocomplete-results_stock"></ul>
-                    </div>
-                  
-                    <div class="col col-15">
-                        <input type="number" step="any" placeholder="Ej: 20,50" id="facturas_precio">
-                    </div>
-                    <div class="col col-10">
-                        <select name="impuestos" id="facturas_impuestos">
-                            <option value="21" selected="selected">21%</option>
-                            <option value="15">15%</option>
-                            <option value="10">10%</option>                                        
-                            <option value="5">5%</option>
-                            <option value="0">0%</option>                    
-                        </select>
-                    </div>
-                    <div class="col-20"></div>                               
-                    <div class="col col-10"><img id="icono-agregar" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
-                </div>
-
-                <!-- BOTON GUARDAR TOTALES -->
-                <div id="separador"></div>
-                <div class="row">
-                    <div class="col col-20">
-                        <label>Tipo Pago</label>
-                        <select name="tipo_pago" id="facturas_tipo_pago">   
-                            <option value="Transferencia" selected="selected">Transferencia</option>
-                            <option value="contado">Contado</option>
-                            <option value="efectivo">Efectivo</option>
-                            <option value="tarjeta">Tarjeta</option>
-                        </select>
-                    </div>
-                    <div class="col col-20">
-                        <label>N° Albarán</label>
-                        <input type="text" placeholder="Ej:789012" id="facturas_albaran">
-                    </div> 
-                    <div class="col col-20"></div>                 
-                    <div class="col-20">
-                        <label>Base imponible</label>
-                        <input type="number" id="facturas_imponible" disabled>
-                    </div>
-                    <div class="col-20">
-                        <label>TOTAL</label>
-                        <input type="number" id="facturas_total" disabled>
-                    </div>
-        
-                </div>
-                <div class="row">
-                    <div class="col col-20">
-                        <button type="button" id="boton_facturas_guardar" class="btn">Guardar factura</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL EDICIÓN DE STOCK -->
+    <!-- MODAL EDICIÓN DE FACTURAS -->
     <div id= modal_alta_facturas_edit class="modal">
         <div id="container_interior_modal_facturas" class="modal_interior">
             <form id="alta_facturas_edit" class="formulario">
@@ -441,6 +267,7 @@
         </div>
     </div>
 
+
             </div><!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
     </div><!-- FIN CONTENEDOR GENERAL -->
@@ -448,7 +275,7 @@
 <!--     -------------------------------PLANTILLA FACTURA------------------------ -->
 <div class="plantilla_facturas" id="plantilla_facturas">
     <div class="row">
-        <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
+        <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 120px;"></div>
         <div class="col col-10"></div>
         <div class="col col-10"><button id="cerrar_plantilla" class="btn">Cerrar</button></div>
         <div class="col col-10"></div>
