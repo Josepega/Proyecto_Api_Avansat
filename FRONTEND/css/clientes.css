@@ -58,9 +58,10 @@
 
  #id_edit {
     padding: 0px;
-    font-size: 18px;
+    font-size: 22px;
     color: rgb(192, 26, 26);
     border-bottom: #fff 0px solid;
+    margin-bottom: 40px;
  }
  #titulo_edit {
     display: flex;

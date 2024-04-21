@@ -193,7 +193,7 @@ on(document, "click", ".editar-icono", (e) => {
 
 
 // Manejar el envío del formulario de edición
-const formEdit = document.querySelectorAll("#modalStock_alta_stock_edit");
+const formEdit = document.querySelectorAll("#modal_alta_stock_edit");
 
 formEdit.forEach(form => {
   form.addEventListener("submit", (e) => {

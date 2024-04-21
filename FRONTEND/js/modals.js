@@ -71,7 +71,7 @@ function manejarModalClientes() {
       const clientesPoliticaPrivacidad = document.querySelectorAll(".clientes_politica_privacidad");
 
       // Validación de campos obligatorios y política de privacidad
-    /*   if (
+       if (
         clientesTipo.value == "" ||
         clientesNombre.value == "" ||
         clientesIdFiscal.value == "" ||
@@ -107,7 +107,7 @@ function manejarModalClientes() {
           confirmButtonColor: "#0798c4",
         });
         return;
-      } */
+      } 
 
       // Realizar la solicitud HTTP POST al servidor
       const urlAlta = "http://localhost:3000/api/v1/alta_cliente";
@@ -161,10 +161,7 @@ function manejarModalClientes() {
   });
 }
 
-// Esperar a que se cargue completamente el DOM
-document.addEventListener("DOMContentLoaded", function() {
-  manejarModalClientes();
-});
+
 
  //-----------------------------------------STOCK-----------------------------------------
   function manejarModalStock() {
@@ -326,8 +323,8 @@ function manejarModalServicios() {
       }
 
       // Realizar la solicitud HTTP POST al servidor
-      const urlAlta = "http://localhost:3000/api/v1/alta_servicio";
-      fetch(urlAlta, {
+      const urlAltaServicio = "http://localhost:3000/api/v1/alta_servicio";
+      fetch(urlAltaServicio, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

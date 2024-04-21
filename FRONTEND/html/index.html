@@ -51,7 +51,34 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
-            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+            <div id="nav_container"></div><!-- NAV incrustado -->
+            <script>
+                // Cargar el aside usando JavaScript
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Obtener el contenedor del aside
+                    var navContainer = document.querySelector("dropdownmenu");
+                    
+                    // Cargar el aside desde aside.html usando fetch
+                    fetch("nav.html")
+                        .then(response => response.text())
+                        .then(data => {
+                            // Insertar el contenido del aside en el contenedor
+                            nav_container.innerHTML = data;
+                            
+                            // Ejecutar las funciones asociadas al aside
+                            botonToggle();
+                            manejarModalClientes();
+                            manejarModalStock();
+                            manejarModalFacturas();
+                            manejarModalServicios();
+        
+        
+        
+        
+                        })
+                        .catch(error => console.error("Error al cargar el nav:", error));
+                });
+            </script>
 
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
             <div id="container_principal_general">

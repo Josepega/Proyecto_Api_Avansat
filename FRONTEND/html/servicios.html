@@ -8,6 +8,7 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/servicios.css">
     <script src="../js/servicios.js" defer></script>
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/aside.js" defer></script>
@@ -20,33 +21,33 @@
     <div class="container">
         <!-- LATERAL IZQUIERDA -->
         <aside id="izq"></aside>
-      <script>
-        // Cargar el aside usando JavaScript
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obtener el contenedor del aside
-            var asideContainer = document.getElementById("izq");
-            
-            // Cargar el aside desde aside.html usando fetch
-            fetch("aside.html")
-                .then(response => response.text())
-                .then(data => {
-                    // Insertar el contenido del aside en el contenedor
-                    asideContainer.innerHTML = data;
-                    
-                    // Ejecutar las funciones asociadas al aside
-                    botonToggle();
-                    manejarModalClientes();
-                    manejarModalStock();
-                    manejarModalFacturas();
-                    manejarModalServicios();
+        <script>
+            // Cargar el aside usando JavaScript
+            document.addEventListener("DOMContentLoaded", function () {
+                // Obtener el contenedor del aside
+                var asideContainer = document.getElementById("izq");
+
+                // Cargar el aside desde aside.html usando fetch
+                fetch("aside.html")
+                    .then(response => response.text())
+                    .then(data => {
+                        // Insertar el contenido del aside en el contenedor
+                        asideContainer.innerHTML = data;
+
+                        // Ejecutar las funciones asociadas al aside
+                        botonToggle();
+                        manejarModalClientes();
+                        manejarModalStock();
+                        manejarModalFacturas();
+                        manejarModalServicios();
 
 
 
 
-                })
-                .catch(error => console.error("Error al cargar el aside:", error));
-        });
-    </script>
+                    })
+                    .catch(error => console.error("Error al cargar el aside:", error));
+            });
+        </script>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
@@ -59,14 +60,13 @@
 
                 <div class="container_seccion">
                     <div class="row">
-                        <div class="col col-70">
-                            <h1>Servicios</h1>
-                        </div>
-                        <div class="col col-10"><button type="button" id="boton_servicios_alta" class="btn">Añadir</button>
+                        <div class="col col-70"><img src="../img/avansat-app-servicios.png" alt=""
+                                style="height: 40px;margin-bottom: 10px;"></div>
+                        <div class="col col-10"><button type="button" id="boton_servicios_alta"
+                                class="btn">Añadir</button>
                         </div>
                     </div>
                     <div id="interior_container_listado_servicios" class="container_seccion_interior">
-                        <!-- Row de títulos -->
                         <div class="row">
                             <div class="col2 col-5">
                                 <h4>ID</h4>
@@ -106,31 +106,33 @@
 
 
 
-            
+
 
                 <!-- MODAL EDICIÓN DE SERVICIOS -->
                 <div id=modal_alta_servicios_edit class="modal">
                     <div id="container_interior_modal_servicios_edit" class="modal_interior">
                         <form id="alta_servicios_edit" class="formulario">
                             <div class="row">
-                                <div class="col col-30">
-                                    <h1>Editar / servicio / </h1>
+                                <div class="col-20"></div>
+                                <div class="col col-50" id="titulo_edit"><img
+                                        src="../img/avansat-app-servicios-editar.png"
+                                        style="height: 40px; margin-bottom: 40px;" alt="">
+                                    <div class="col col-20"><input type="text" id="servicios_id_edit" class="num_edit"></div>
                                 </div>
-                                <div class="col-10"><input type="text" id="servicios_id_edit"></div>
-                                <div class="col-40"></div>
-                                <div class="col-20">
-                                    <input type="button" id="close_edit" class="btn" value="cerrar">
+                                <div class="col-10"></div>
+                                <div class="col col-10" id="cont_btn_edit">
+                                    <input type="button" id="close_edit" value="cerrar" class="btn">
                                     <!-- CERRAR MODAL -->
                                 </div>
                             </div>
                             <div class="row"><!-- ID - NOMBRE- CÓDIGO -->
-                                <div class="col-5"></div>
-                                <div class="col-20">
+                                <div class="col col-5"></div>
+                                <div class="col col-20">
                                     <label><span>*</span>Código artículo</label>
                                     <input type="text" placeholder="Ej: 0123456789" id="servicios_codigo_edit">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-40">
+                                <div class="col col-5"></div>
+                                <div class="col col-40">
                                     <label><span>*</span>Nombre</label>
                                     <input type="text" placeholder="Ej: Servicios Varios" id="servicios_nombre_edit">
                                 </div>
@@ -138,31 +140,35 @@
 
                             <div class="row"><!-- PRECIOS -->
 
-                                <div class="col-15">
+                                <div class="col col-15">
                                     <label><span>*</span>Precio coste</label>
-                                    <input type="number" step="any" placeholder="Ej: 20,50" id="servicios_precio_coste_edit">
+                                    <input type="number" step="any" placeholder="Ej: 20,50"
+                                        id="servicios_precio_coste_edit">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label>Precio coste IVA inc</label>
-                                    <input type="number" step="any" placeholder="Automático" id="servicios_precio_coste_iva_edit">
+                                    <input type="number" step="any" placeholder="Automático"
+                                        id="servicios_precio_coste_iva_edit">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label><span>*</span>Precio venta </label>
-                                    <input type="number" step="any" placeholder="Ej: 41,55" id="servicios_precio_venta_edit">
+                                    <input type="number" step="any" placeholder="Ej: 41,55"
+                                        id="servicios_precio_venta_edit">
                                 </div>
-                                <div class="col-5"></div>
-                                <div class="col-15">
+                                <div class="col col-5"></div>
+                                <div class="col col-15">
                                     <label>Precio venta IVA inc</label>
-                                    <input type="number" step="any" placeholder="Automático" id="servicios_precio_venta_iva_edit">
+                                    <input type="number" step="any" placeholder="Automático"
+                                        id="servicios_precio_venta_iva_edit">
                                 </div>
 
                             </div>
                             <!-- BOTON GUARDAR -->
                             <div class="row">
 
-                                <div class="col-30">
+                                <div class="col col-20">
                                     <button type="submit" id="boton_servicios_guardar_edit" class="btn">Guardar</button>
                                 </div>
 

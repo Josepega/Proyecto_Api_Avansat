@@ -1,181 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="../js/modals.js " defer></script>
-    <script src="../js/aside.js"></script>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/facturas.css">
+    <script src="../js/aside.js" defer></script>
+    <link rel="stylesheet" href="../css/nav.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/facturas.css" />
     <title>Document</title>
-</head>
-<body>
-    
-<nav class="dropdownmenu">
- 
-    <ul><!-- CLIENTES  -->
-        <li><a href="../html/index.html"><img src="../img/icons/home.svg" alt="">Inicio </a>
-    <ul id="submenu">
+  </head>
+
+  <body>
+    <nav class="dropdownmenu">
+      <ul>
+        <!-- INICIO  -->
         
-    </ul>
-</li>
-        <li><a href="#"><img src="../img/icons/usuarios.svg" alt="">Clientes <img id="abajo"
-                    src="../img/icons/abajo-.svg" alt=""> </a>
-            <ul id="submenu">
-                <li><a href="../html/clientes.html">Listado</a></li>
-                <li><a href="#">Buscar</a></li>
-                <li id="boton_clientes_alta"><a href="#">Añadir</a></li>
-                <li><a href="#" >Editar</a></li>
-                <li><a href="#" >Borrar</a></li>
-            </ul>
+          <a href="../html/index.html"><img src="../img/icons/home.svg" alt="" class="home" /></a>
+        
+        <li>
+          <a href="#"
+            ><img src="../img/icons/usuarios.svg" alt="" />Clientes
+            <img id="abajo" src="../img/icons/abajo-.svg" alt="" />
+          </a>
+          <ul id="submenu">
+            <li><a href="../html/clientes.html">Listado</a></li>
+            <li><a href="#">Buscar</a></li>
+            <li id="boton_clientes_alta"><a href="#">Añadir</a></li>
+            <li><a href="#">Editar</a></li>
+            <li><a href="#">Borrar</a></li>
+          </ul>
         </li>
-       
+
         <!-- FACTURAS -->
-        <li><a href="#"><img src="../img/icons/facturas.svg" alt="">Facturas<img id="abajo"
-                    src="../img/icons/abajo-.svg" alt=""></a>
-            <ul id="submenu">
-                <li><a href="../html/facturas.html">Listado</a></li>
-                <li><a href="">Buscar</a></li>
-                <li id="boton_facturas_alta"><a href="#">Añadir</a></li>
-                <li><a href="">Editar</a></li>
-                <li><a href="">Borrar</a></li>
-            </ul>
+        <li>
+          <a href="#"
+            ><img src="../img/icons/facturas.svg" alt="" />Facturas<img
+              id="abajo"
+              src="../img/icons/abajo-.svg"
+              alt=""
+          /></a>
+          <ul id="submenu">
+            <li><a href="../html/facturas.html">Listado</a></li>
+            <li><a href="">Buscar</a></li>
+            <li id="boton_facturas_alta"><a href="#">Añadir</a></li>
+            <li><a href="">Editar</a></li>
+            <li><a href="">Borrar</a></li>
+          </ul>
         </li>
         <!-- SERVICIOS -->
-        <li><a href="#"><img src="../img/icons/servicios.svg" alt="">Servicios<img id="abajo"
-                    src="../img/icons/abajo-.svg" alt=""></a>
-            <ul id="submenu">
-                <li><a href="../html/servicios.html">Listado</a></li>
-                <li><a href="">Buscar</a></li>
-                <li id="boton_servicios_alta"><a href="#">Añadir</a></li>
-                <li><a href="">Editar</a></li>
-                <li><a href="">Borrar</a></li>
-            </ul>
+        <li>
+          <a href="#"
+            ><img src="../img/icons/servicios.svg" alt="" />Servicios<img
+              id="abajo"
+              src="../img/icons/abajo-.svg"
+              alt=""
+          /></a>
+          <ul id="submenu">
+            <li><a href="../html/servicios.html">Listado</a></li>
+            <li><a href="">Buscar</a></li>
+            <li id="boton_servicios_alta"><a href="#">Añadir</a></li>
+            <li><a href="">Editar</a></li>
+            <li><a href="">Borrar</a></li>
+          </ul>
         </li>
         <!-- STOCK -->
-        <li><a href="#"><img src="../img/icons/stock.svg" alt="">Stock<img id="abajo"
-                    src="../img/icons/abajo-.svg" alt=""></a>
-            <ul id="submenu">
-                <li><a href="../html/stock.html">Listado</a></li>
-                <li><a href="">Buscar</a></li>
-                <li id="boton_stock_alta"><a href="#">Añadir</a></li>
-                <li><a href="">Editar</a></li>
-                <li><a href="">Borrar</a></li>
-            </ul>
+        <li>
+          <a href="#"
+            ><img src="../img/icons/stock.svg" alt="" />Stock<img
+              id="abajo"
+              src="../img/icons/abajo-.svg"
+              alt=""
+          /></a>
+          <ul id="submenu">
+            <li><a href="../html/stock.html">Listado</a></li>
+            <li><a href="">Buscar</a></li>
+            <li id="boton_stock_alta"><a href="#">Añadir</a></li>
+            <li><a href="">Editar</a></li>
+            <li><a href="">Borrar</a></li>
+          </ul>
         </li>
-         <!-- PRESUPUESTOS -->
-         <li><a href="#"><img src="../img/icons/albaranes.svg" alt="">Presupuestos<img id="abajo"
-            src="../img/icons/abajo-.svg" alt=""></a>
-    <ul id="submenu">
-        <li><a href="">Listado</a></li>
-        <li><a href="">Buscar</a></li>
-        <li id="boton_presupuestos_alta"><a href="#">Añadir</a></li>
-        <li><a href="">Editar</a></li>
-        <li><a href="">Borrar</a></li>
-    </ul>
-</li>
-    </ul>
-    <div id="container_login">
+        <!-- PRESUPUESTOS -->
+        <li>
+          <a href="#"
+            ><img src="../img/icons/albaranes.svg" alt="" />Presupuestos<img
+              id="abajo"
+              src="../img/icons/abajo-.svg"
+              alt=""
+          /></a>
+          <ul id="submenu">
+            <li><a href="">Listado</a></li>
+            <li><a href="">Buscar</a></li>
+            <li id="boton_presupuestos_alta"><a href="#">Añadir</a></li>
+            <li><a href="">Editar</a></li>
+            <li><a href="">Borrar</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div id="container_login">
         <p>Usuario: admin</p>
-        <p>Salir</p><img src="../img/icons/exit.svg" alt="">
-    </div>
-</nav>
- <!-- MODAL ALTA DE CLIENTES -->
- <div id= modal_alta_clientes class="modal">
-    <div id="container_interior_modal_clientes" class="modal_interior">
-        <form id="alta_clientes" class="formulario">
-            <div class="row">
-                <div class="col col-70"><h1>Alta / nuevo cliente / persona</h1></div>
-               
-                <div class="col col-10">
-                    <input type="button" id="close" class="btn" value="cerrar"> <!-- CERRAR MODAL -->
-                </div>              
-            </div>
-            <div class="col col-100" id="cliente_persona">
-                <div class="row"><!-- NOMBRE Y APELLIDOS -->
-                    <div class="col col-15">
-                        <label>Tipo de cliente</label>
-                        <select  id="tipo">
-                            <option value="Persona">Persona</option>
-                            <option value="Empresa">Empresa</option>
-                        </select>
-                        
-                    </div>  
-                    <div class="col col-40" id="clientes_nombre_ocultar">
-                        <label><span>*</span>Nombre</label>
-                        <input type="text" placeholder="Ej: Juan Antonio "class="clientes_nombre">
-                    </div>
-
-                    <div class="col col-40" id="clientes_apellidos_ocultar">
-                        <label><span>*</span>Apellidos</label>
-                        <input type="text" placeholder="Ej: Gutierrez Ruiz" id="clientes_apellidos">
-                    </div>
-                    <div class="col col-50" id="clientes_nombreEmpresa_ocultar"  style="display: none;">
-                        <label><span>*</span>Nombre de la empresa</label>
-                        <input type="text"  placeholder="Ej: Avansat" class="clientes_nombre">
-                    </div>
-                    <div class="col col-15">
-                        <label><span>*</span>DNI</label>
-                        <input type="text" placeholder="NIF / DNI / NIE" id="clientes_idFiscal">
-                    </div>
-                </div>
-            </div>
-            <div class="row"><!-- CALLE / NUM / LOCALIDAD / CP/ PAIS -->
-                <div class="col col-60">
-                    <label><span>*</span>Dirección</label>
-                    <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="clientes_direccion">
-                </div>
-                <div class="col col-15">
-                    <label><span>*</span>C. postal</label>
-                    <input type="number" placeholder="Ej: 17300" id="clientes_c_postal">
-                </div>
-                <div class="col col-15">
-                    <label><span>*</span>Localidad</label>
-                    <input type="text" placeholder="Ej: Blanes" id="clientes_localidad">
-                </div>
-                <div class="col col-15">
-                    <label><span>*</span>Pais</label>
-                    <input type="text" placeholder="Ej: España" id="clientes_pais">
-                </div>
-            </div>
-            <div class="row"> <!-- TELÉFONO / MOVIL / EMAIL -->
-                <div class="col col-30">
-                    <label>Teléfono</label>
-                    <input type="number" placeholder="Ej: 932XXX932" id="clientes_telefono">
-                </div>
-                <div class="col col-30">
-                    <label>Móvil</label>
-                    <input type="number" placeholder="Ej: 686XXX686 " id="clientes_movil">
-                </div>
-                <div class="col col-30">
-                    <label><span>*</span>Email</label>
-                    <input type="email" placeholder="Ej: juan@avansat.cat" id="clientes_email">
-                </div>
-            </div>
-            <!-- BOTON GUARDAR -->
-            <div class="row">
-                <div class="col col-40" style="display: flex; align-items: center; justify-content: center; flex-direction: row">
-                    <input type="checkbox" class="clientes_politica_privacidad">
-                    <p style="font-size: 12px; color: rgb(5, 89, 114);">
-                        Aceptar 
-                        <a href="https://avansat.cat/politica-de-privacitat/" target="_blank" style="text-decoration: none ; color: rgb(5, 89, 114);">
-                            <span>*</span>política de privacidad
-                        </a>
-                    </p>
-                </div>
-                <div class="col col-10">
-                    <button type="button" id="boton_clientes_guardar" class="btn">Guardar</button>
-                </div>
-                <div class="col col-40" id="clientes_mensajes">
-                    <p style="font-size: 12px; color: rgb(5, 89, 114);">
-                        El uso de estos datos es únicamente para emisión de facturas
-                    </p>
-                </div>
-            </div>
-        </form>
-    </div>
-</div> 
-</body>
+        <p>Salir</p>
+        <img src="../img/icons/exit.svg" alt="" />
+      </div>
+    </nav>
+  </body>
 </html>
-

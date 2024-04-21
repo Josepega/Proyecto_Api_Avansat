@@ -66,29 +66,38 @@ router.post("/alta_stock", (req, res) => {
   // RUTAS: EDITAR STOCK
   
   router.put("/editar_stock/:idStock", async (req, res) => {
-    try {
-        let Id_stock  = req.params.idStock;
-        let codigo =req.body.codigo;
-        let cantidad = req.body.cantidad;
-        let nombre = req.body.nombre;
-        let precio_coste = req.body.precio_coste;
-        let precio_coste_iva = req.body.precio_coste_iva;
-        let precio_venta = req.body.precio_venta;
-        let precio_venta_iva = req.body.precio_venta_iva;
-      
-      
-  
-    
-      // Realizar la actualización en la base de datos
-      let sql = "UPDATE stock SET codigo = ?, cantidad = ?, nombre = ?, precio_coste = ?, precio_coste_iva = ?, precio_venta = ?, precio_venta_iva = ? WHERE Id_stock = ?";
-      conexionMySQL.query(sql, [codigo, cantidad, nombre, precio_coste, precio_coste_iva, precio_venta, precio_venta_iva, Id_stock]);
-  
-      res.json("Stock actualizado correctamente");
-    } catch (error) {
-      console.error("Error en la edición del stock:", error);
-      res.status(500).send("Error en la edición del stock");
-    }
-  });
+  try {
+    let Id_stock = req.params.idStock;
+    let codigo = req.body.codigo;
+    let cantidad = req.body.cantidad;
+    let nombre = req.body.nombre;
+    let precio_coste = req.body.precio_coste;
+    let precio_coste_iva = req.body.precio_coste_iva;
+    let precio_venta = req.body.precio_venta;
+    let precio_venta_iva = req.body.precio_venta_iva;
 
-  
-module.exports = router
+    // Realizar la actualización en la base de datos
+    let sql = "UPDATE stock SET codigo = ?, cantidad = ?, nombre = ?, precio_coste = ?, precio_coste_iva = ?, precio_venta = ?, precio_venta_iva = ? WHERE Id_stock = ?";
+    conexionMySQL.query(sql, [codigo, cantidad, nombre, precio_coste, precio_coste_iva, precio_venta, precio_venta_iva, Id_stock], (err, result) => {
+      if (err) {
+        console.error("Error en la edición del stock:", err);
+        return res.status(500).send("Error en la edición del stock");
+      }
+      
+      // Verificar si se actualizó correctamente el stock
+      if (result.affectedRows > 0) {
+        return res.json("Stock actualizado correctamente");
+      } else {
+        return res.status(404).send("No se encontró el stock para actualizar");
+      }
+    });
+  } catch (error) {
+    console.error("Error en la edición del stock:", error);
+    res.status(500).send("Error en la edición del stock");
+  }
+});
+
+
+
+
+ module.exports = router;

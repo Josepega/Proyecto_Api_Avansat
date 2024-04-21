@@ -168,95 +168,78 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR FACTURAS
 
-let urlEditarFactura = "http://localhost:3000/api/v1/editar_facturas/";
+const urlEditarFactura = "http://localhost:3000/api/v1/editar_facturas/";
 
-
-// Cuando se hace clic en el botón de editar cliente
+// Cuando se hace clic en el botón de editar factura
+// Cuando se hace clic en el botón de editar factura
 on(document, "click", ".editar-icono", (e) => {
-  
-  //const fila = e.target.parentNode.parentNode;
   const fila = e.target.parentNode.parentNode;
 
- console.log("Valor de la primera columna:", fila.children[0].innerHTML);
-console.log("Valor de la segunda columna:", fila.children[1].innerHTML);
-console.log("Valor de la tercera columna:", fila.children[2].innerHTML);
-console.log("Valor de la cuarta columna:", fila.children[3].innerHTML);
-console.log("Valor de la quinta columna:", fila.children[4].innerHTML);
-console.log("Valor de la sexta columna:", fila.children[5].innerHTML);
-console.log("Valor de la septima columna:", fila.children[6].innerHTML);
-console.log("Valor de la octava columna:", fila.children[7].innerHTML);
-console.log("Valor de la novena columna:", fila.children[8].innerHTML);
-console.log("Valor de la decima columna:", fila.children[9].innerHTML); 
-/*  */
-  const Id_factura = fila.children[0].innerHTML;
-  const Fecha_vencimiento = fila.children[1].innerHTML;
-  const Cliente = fila.children[2].innerHTML;
-  const Tipo = fila.children[3].innerHTML;
-  const NombreCliente = fila.children[4].innerHTML;
-  const ApellidosCliente = fila.children[5].innerHTML;
+  // Obtener los valores de las columnas de la fila
+  const idFactura = fila.children[0].innerHTML;
+  const fechaVencimiento = fila.children[2].innerHTML;
+  const cliente = fila.children[1].innerHTML;
+  const tipo = fila.children[4].innerHTML;
+  const nombreCliente = fila.children[4].innerHTML;
+  const apellidosCliente = fila.children[5].innerHTML;
   const idFiscal = fila.children[6].innerHTML;
-  const Direccion = fila.children[7].innerHTML;
-  const CPostal = fila.children[8].innerHTML;
+  const direccion = fila.children[7].innerHTML;
+  const cPostal = fila.children[8].innerHTML;
   const localidad = fila.children[9].innerHTML;
-  //const Pais = fila.children[11].innerHTML;  
-  //const stockCantidad = fila.children[13].innerHTML; 
-  //const stockCodigo = fila.children[14].innerHTML; 
-  ////const stockNombre = fila.children[15].innerHTML; 
-  //const stockCoste = fila.children[16].innerHTML; 
-  const stockCosteIva = fila.children[4].innerHTML; 
-  //const stockVenta = fila.children[18].innerHTML; 
-  //const stockVentaIva = fila.children[19].innerHTML;
+  const stockCosteIva = fila.children[4].innerHTML;
 
+  // Mostrar los valores en la consola antes de asignarlos al modal
+  console.log("ID Factura:", idFactura);
+  console.log("Fecha de Vencimiento:", fechaVencimiento);
+  console.log("Cliente:", cliente);
+  console.log("Tipo:", tipo);
+  console.log("Nombre del Cliente:", nombreCliente);
+  console.log("Apellidos del Cliente:", apellidosCliente);
+  console.log("ID Fiscal:", idFiscal);
+  console.log("Dirección:", direccion);
+  console.log("Código Postal:", cPostal);
+  console.log("Localidad:", localidad);
+  console.log("Coste con IVA:", stockCosteIva);
 
-  // Asignar valores a los campos de entrada del modal myModal_edit
-  document.getElementById("facturas_id_edit").value = Id_factura;
-  document.getElementById("facturas_vencimiento_edit").value = Fecha_vencimiento;
-  document.getElementById("facturas_id_cliente_edit").value = Cliente;
-  document.getElementById("tipo_edit").value = Tipo;
-  document.getElementById("facturas_nombre_cliente_edit").value = NombreCliente;
-  document.getElementById("facturas_apellidos_edit").value = ApellidosCliente;
+  // Asignar valores a los campos de entrada del modal de edición
+  document.getElementById("facturas_id_edit").value = idFactura;
+  document.getElementById("facturas_vencimiento_edit").value = fechaVencimiento;
+  document.getElementById("facturas_id_cliente_edit").value = cliente;
+  document.getElementById("tipo_edit").value = tipo;
+  document.getElementById("facturas_nombre_cliente_edit").value = nombreCliente;
+  document.getElementById("facturas_apellidos_edit").value = apellidosCliente;
   document.getElementById("facturas_fiscal_edit").value = idFiscal;
-  document.getElementById("facturas_direccion_edit").value = Direccion;
-  document.getElementById("facturas_c_postal_edit").value = CPostal;
+  document.getElementById("facturas_direccion_edit").value = direccion;
+  document.getElementById("facturas_c_postal_edit").value = cPostal;
   document.getElementById("facturas_localidad_edit").value = localidad;
   document.getElementById("facturas_imponible_edit").value = stockCosteIva;
- // document.getElementById("facturas_pais_edit").value = Pais;
-  
- 
 
- 
-  // Mostrar el modal myModal_edit
+  // Mostrar el modal de edición
   openModalFacturas_edit();
 });
 
 
 // Manejar el envío del formulario de edición
-const formEditFacturas = document.querySelectorAll("#modal_alta_facturas_edit");
-
-formEditFacturas.forEach(form => {
+document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Obtener los valores del formulario de edición
-    let idFactura = document.getElementById("facturas_id_edit").value;
-    let fecha = document.getElementById("facturas_vencimiento_edit").value;
-    let estado = document.getElementById("facturas_estado_edit").value;
-    let vencimiento = document.getElementById("facturas_vencimiento_edit").value;
-    let idCliente = document.getElementById("facturas_id_cliente_edit").value;
-    let tipo = document.getElementById("facturas_tipo_edit").value;
-    let nombre = document.getElementById("facturas_nombre_edit").value;
-    let apellidos = document.getElementById("facturas_apellidos_edit").value;
-    let idFiscal = document.getElementById("facturas_id_fiscal_edit").value;
-    let direccion = document.getElementById("facturas_direccion_edit").value;
-    let cPostal = document.getElementById("facturas_c_postal_edit").value;
-    let localidad = document.getElementById("facturas_localidad_edit").value;
-    let pais = document.getElementById("facturas_pais_edit").value;
-    let total = document.getElementById("facturas_total_edit").value; 
-    let imponible = document.getElementById("facturas_imponible_edit").value;
+    const idFactura = form.document.getElementById("facturas_id_edit").value;
+    const fecha = form.document.getElementById("facturas_vencimiento_edit").value;
+    const idCliente = form.document.getElementById("facturas_id_cliente_edit").value;
+    const tipo = form.document.getElementById("tipo_edit").value;
+    const nombre = form.document.getElementById("facturas_nombre_cliente_edit").value;
+    const apellidos = form.document.getElementById("facturas_apellidos_edit").value;
+    const idFiscal = form.document.getElementById("facturas_fiscal_edit").value;
+    const direccion = form.document.getElementById("facturas_direccion_edit").value;
+    const cPostal = form.document.getElementById("facturas_c_postal_edit").value;
+    const localidad = form.document.getElementById("facturas_localidad_edit").value;
+    const vencimiento = form.document.getElementById("facturas_vencimiento_edit").value;
+    const estado = form.document.getElementById("facturas_estado_edit").value;
+    const imponible = form.document.getElementById("facturas_imponible_edit").value;
+    const total = form.document.getElementById("facturas_total_edit").value;
 
-    //costeIva = (coste * 1.21).toFixed(2);
-    //ventaIva = (venta * 1.21).toFixed(2);
-   
     // Enviar la solicitud de edición al servidor
     fetch(urlEditarFactura + idFactura, {
       method: "PUT",
@@ -264,11 +247,17 @@ formEditFacturas.forEach(form => {
       body: JSON.stringify({
         Fecha_alta: fecha,
         Cliente: idCliente,
+        Tipo: tipo,
+        Nombre: nombre,
+        Apellidos: apellidos,
+        Id_fiscal: idFiscal,
+        Direccion: direccion,
+        C_postal: cPostal,
+        Localidad: localidad,
         Fecha_vencimiento: vencimiento,
-        Estado:estado,
-        Base_imponible:imponible,
-        Total: total,
-        
+        Estado: estado,
+        Base_imponible: imponible,
+        Total: total
       }),
     })
       .then(response => {
@@ -280,13 +269,12 @@ formEditFacturas.forEach(form => {
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
         swal.fire({
-          title: "¡Stock editado!",
-          text: "El stock ha sido editado satisfactoriamente.",
+          title: "¡Factura editada!",
+          text: "La factura ha sido editada satisfactoriamente.",
           icon: "success",
           iconColor: "#0798c4",
           confirmButtonColor: "#0798c4",
         });
-        
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
         setTimeout(() => {
@@ -297,7 +285,7 @@ formEditFacturas.forEach(form => {
         // Mostrar mensaje de error con SweetAlert
         swal.fire({
           title: "Error al editar la factura",
-          text:error.message,
+          text: error.message,
           icon: "error",
           iconColor: "#e6381c",
           confirmButtonColor: "#0798c4",
@@ -305,6 +293,7 @@ formEditFacturas.forEach(form => {
       });
   });
 });
+
 
 //VER FACTURAS
 const onVer = (element, event, selector, handler) => {

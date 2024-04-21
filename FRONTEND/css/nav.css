@@ -1,0 +1,108 @@
+/*----------------- BARRA NAVEGACIÓN SUPERIOR ---------------- */
+
+#container_login {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(0, 2, 7);
+  }
+  #container_login p {
+    margin-right: 10px;
+  }
+  #container_login img {
+    width: 20px;
+    height: 20px;
+  }
+  .dropdownmenu {
+    font-family: 'montserrat', sans-serif;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 1px 1px 5px #878d91;
+    margin-top: 0px;
+    background-color: #ffffff;
+  }
+  
+  .dropdownmenu ul {
+    background: transparent;
+    list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  .dropdownmenu li {
+    color: #2d8d3d;
+    position: relative;
+  }
+  
+  .dropdownmenu img {
+    height: 20px;
+    margin-right: 10px;
+    margin-left: 5px;
+  }
+  
+  .dropdownmenu a {
+    color: #000609;
+    display: block;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+  }
+  
+  .dropdownmenu li:hover a {
+    color: white;
+    background-color: #0798c4;
+  }
+  
+  .dropdownmenu ul#submenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+  }
+  
+  .dropdownmenu li:hover > ul#submenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  #submenu li {
+    float: none;
+    width: 100%;
+    margin-bottom: 1px;
+    border: 6px solid #ffffff;
+    background-color: transparent;
+  }
+  
+  #submenu a:hover {
+    background-color: #07a5d5;
+    color: white;
+    transition: all 0.25s ease;
+  }
+  
+  #submenu a {
+    background-color: #e9f1f5;
+    color: #878d91;
+  }
+  .home {
+    background-color:transparent;
+  }

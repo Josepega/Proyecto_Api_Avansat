@@ -59,11 +59,11 @@ body {
   justify-content:center;
   align-items: center;
   box-shadow: #012d3e 1px 1px 10px;
-  border: solid 1px #0b7593;
+  border: solid 1px  rgb(158, 18, 8);
   background: linear-gradient(
   180deg,
-  rgba(255, 255, 255, 0.959) 1%,
-  #057ca0 95%)
+  rgba(255, 255, 255, 0.959) 15%,
+  rgb(158, 18, 8)85%)
 }
 .container_seccion_interior {
   width: 100%;
@@ -74,7 +74,7 @@ body {
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    border: solid 1px #c6dfef;
+    border: solid 1px  rgb(132, 61, 6);
     margin: 10px;
     padding:  10px;
 }
@@ -281,110 +281,7 @@ h4 {
     transition: all 0.9s linear;
   }
   
-/*----------------- BARRA NAVEGACIÓN SUPERIOR ---------------- */
 
-#container_login {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: rgb(121, 122, 126);
-  }
-  #container_login p {
-    margin-right: 10px;
-  }
-  #container_login img {
-    width: 20px;
-    height: 20px;
-  }
-  .dropdownmenu {
-    font-family: 'montserrat', sans-serif;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 1px 1px 5px #878d91;
-    margin-top: 0px;
-  }
-  
-  .dropdownmenu ul {
-    background: transparent;
-    list-style: none;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  .dropdownmenu li {
-    color: #2d8d3d;
-    position: relative;
-  }
-  
-  .dropdownmenu img {
-    height: 20px;
-    margin-right: 10px;
-    margin-left: 5px;
-  }
-  
-  .dropdownmenu a {
-    color: #878d91;
-    display: block;
-    padding: 10px 25px;
-    text-align: center;
-    text-decoration: none;
-    -webkit-transition: all 0.25s ease;
-    -moz-transition: all 0.25s ease;
-    -ms-transition: all 0.25s ease;
-    -o-transition: all 0.25s ease;
-    transition: all 0.25s ease;
-  }
-  
-  .dropdownmenu li:hover a {
-    color: white;
-    background-color: #0798c4;
-  }
-  
-  .dropdownmenu ul#submenu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1;
-  }
-  
-  .dropdownmenu li:hover > ul#submenu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  #submenu li {
-    float: none;
-    width: 100%;
-    margin-bottom: 1px;
-    border: 6px solid #ffffff;
-    background-color: transparent;
-  }
-  
-  #submenu a:hover {
-    background-color: #07a5d5;
-    color: white;
-    transition: all 0.25s ease;
-  }
-  
-  #submenu a {
-    background-color: #e9f1f5;
-    color: #878d91;
-  }
  /*  ------------------------------COLS & ROW------------------------------------------- */
 .row {
     width: 100%;
@@ -507,13 +404,13 @@ h4 {
 
 /* -----------------------------------MODAL-------------------------- */
 .modal {
-    width: 80%;
-    height: 80%;
+    width: 85%;
+    height: 90%;
     position: fixed;
     margin: 0 auto;
     text-align: center;
-    top: 14%;
-    left: 22%;
+    top: 9%;
+    left: 20%;
     z-index: 1;
     display:none;
     overflow: auto;
@@ -525,14 +422,13 @@ h4 {
     width: 90%;
     height:auto;
     margin: 0px;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
-    box-shadow: #012d3e 1px 1px 10px;
-    border: solid 1px #db3208;
+    box-shadow: #9b9696 1px 1px 10px;
     background: linear-gradient(
     180deg,
     rgba(247, 250, 251, 0.959) 1%,
@@ -550,10 +446,10 @@ h4 {
     flex-direction: column;
     justify-content:space-between;
     align-items: center;
-    border: solid 1px #f3e0d8;
+    border: solid 1px #d99286;
     margin: 0px;
     border-radius: 5px;
-    padding: 0px 10px 30px 10px; 
+    padding: 20px 10px 30px 10px; 
     overflow: auto;
   
 }
@@ -561,13 +457,13 @@ input {
   
     width: 90%;
     font-family: "montserrat", sans-serif;
-    color: #055079;
+    color: #000203;
     outline: 0;
     border: 0;
     margin:10px;
     padding: 5px;
     font-size: 16px;
-    border-bottom:dotted 1px #025154;  
+    border-bottom:dotted 1px #000707;  
     display: flex;
     justify-content:space-around;
     align-items: center;
@@ -578,6 +474,9 @@ input {
 }
 
 .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
     width: 100%;
     height: 40px;
     background-color: #0798c4;
@@ -591,7 +490,7 @@ input {
     font-size: 16px;
     cursor: pointer;
     padding: 10px 20px 10px 20px;
-    margin: 20px 10px 0px 10px;
+    margin:10px;
     box-shadow: #5f6368 1px 1px 5px;
 }
 
@@ -606,7 +505,7 @@ label {
     font-weight: 400;
     font-size: 15px;
     text-align: center;
-    margin-top: 0px;
+    margin: 10px;
   }
 select {
     font-family: "montserrat", sans-serif;
@@ -614,12 +513,12 @@ select {
     border: 0;
     padding: 5px;
     font-size: 16px;
-    color: #035170;
+    color: #000406;
     margin-top: -10px;
 
 }
 ::placeholder {
-    color: rgb(201, 208, 219);
+    color: rgb(193, 193, 194);
     font-family: "montserrat", sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -645,4 +544,11 @@ h3 {
     text-align: left;
     margin-left: 40px;
    
+}
+.num_edit {
+  padding: 0px;
+  font-size: 22px;
+  color: rgb(192, 26, 26);
+  border-bottom: #fff 0px solid;
+  margin-bottom: 40px;
 }
