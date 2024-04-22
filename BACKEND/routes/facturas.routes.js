@@ -2,50 +2,9 @@ const express = require("express");
 const router = express.Router();
 const conexionMySQL = require("../conexionMySQL");
 
-/* -----------------------------------------------------------FACTURAS---------------------------------------------------------------------------------------------------------------- */
 
 
-/* // RUTAS: ALTA FACTURA
-router.post("/alta_factura", (req, res) => {
-  try {
-    const data = {
-      Fecha_alta: req.body.Fecha_alta,    
-      Id_cliente: req.body.Id_cliente,
-      Albaran: req.body.Albaran,
-      Fecha_vencimiento: req.body.Fecha_vencimiento,
-      Estado: req.body.Estado,
-      Forma_pago: req.body.Forma_pago,
-      Base_imponible: req.body.Base_imponible,
-      Total: req.body.Total
-    };
-
-    const sql = "INSERT INTO facturas SET ?";
-    conexionMySQL.query(sql, data, (error, result) => {
-      if (error) {
-        res.status(400).json({
-          status: 400,
-          mensaje: "Error al insertar la nueva factura",
-          error: error
-        });
-      } else {
-        const Id_factura = result.insertId; // Obtén el Id_factura insertado
-        res.status(200).json({
-          status: 200,
-          mensaje: "Factura insertada correctamente",
-          Id_factura: Id_factura // Envía el Id_factura insertado en la respuesta
-        });
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 500,
-      mensaje: "Error en el servidor",
-      error: error
-    });
-  }
-}); */
-
-// RUTAS: ALTA DETALLE FACTURA
+// RUTAS: ALTA FACTURA / ALTA DETALLE FACTURA
 router.post("/alta_factura", (req, res) => {
   const { Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = req.body;
 

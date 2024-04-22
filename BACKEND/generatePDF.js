@@ -1,11 +1,11 @@
-/* const fs = require('fs');
-const path = require('path');
-const Puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer");
+
 
 module.exports = async function generatePDF({
     url
 }) {
-    const browser = await Puppeteer.launch({
+
+    const browser = await puppeteer.launch({
         headless: true,
         defaultViewport: {
             width: 750,
@@ -22,15 +22,7 @@ module.exports = async function generatePDF({
     await page.goto(url, {
         waitUntil: 'networkidle0'
     });
-
-    // Ocultar el título de la página y la URL antes de generar el PDF
-    await page.evaluate(() => {
-        document.querySelector('title').style.display = 'none'; // Ocultar el título
-        const metaUrl = document.querySelector('meta[name="url"]');
-        if (metaUrl) {
-            metaUrl.parentNode.removeChild(metaUrl); // Eliminar el nodo de la URL
-        }
-    });
+    await page.emulateMediaType('screen');
 
     const pdf = await page.pdf({
         format: 'a4',
@@ -45,12 +37,5 @@ module.exports = async function generatePDF({
 
     await browser.close();
 
-    // Guardar el archivo PDF en el sistema de archivos del servidor
-    const nombreArchivo = 'factura.pdf';
-    const rutaArchivo = path.join(__dirname, nombreArchivo);
-    fs.writeFileSync(rutaArchivo, pdf);
-
-    // Devolver la ruta del archivo PDF para descargar
-    return rutaArchivo;
+    return pdf;
 }
- */

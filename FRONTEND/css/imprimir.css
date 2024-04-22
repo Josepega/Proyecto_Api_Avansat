@@ -1,6 +1,5 @@
 @media print {
   /* Ocultar elementos no necesarios */
-  body > *:not(#plantilla_facturas),
   #cerrar_plantilla,
   #icono_imprimir,
   #icono_pdf {
@@ -10,15 +9,7 @@
   /* Ajustar los márgenes */
   
   /* Cambiar el tamaño de los elementos */
-  #plantilla_facturas {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    width: 100%;
-    height: auto; /* Ajustar el ancho para que se ajuste al tamaño de la página */
-    font-size: 12px; /* Ajustar el tamaño de la fuente */
-  }
+  
   
   /* Establecer el formato de página */
   @page {
@@ -36,41 +27,5 @@
     display: none !important; /* Usamos !important para asegurarnos de que esta regla prevalezca */
   }
 
-  /* Establecer el ancho de las columnas */
-  #separador_plantilla,
-  .container_plantilla_datos,
-  .inputPlantilla,
-  #plantilla_base,
-  #plantilla_total,
-  #plantilla_iva,
-  .col2,
-  .col,
-  .col-100,
-  .col-95,
-  .col-90,
-  .col-85,
-  .col-80,
-  .col-75,
-  .col-70,
-  .col-65,
-  .col-60,
-  .col-55,
-  .col-50,
-  .col-45,
-  .col-40,
-  .col-35,
-  .col-30,
-  .col-25,
-  .col-20,
-  .col-15,
-  .col-10,
-  .col-5,
-  .col-3 {
-    width: 100%; /* Establecer el ancho como el 80% del tamaño original */
-    height: auto;
-    
-  }
-  #separador_plantilla, .container_plantilla_datos {
-    margin: 20px 0;
-  }
+  
 }

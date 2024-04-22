@@ -1,47 +1,34 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-color:transparent;
+}
 #plantilla_add {
   /* width: 100%; */
-  height: 100%;
+  
   display: flex;
   flex-direction: column;
   justify-content:start;
  
 }
-#plantilla_facturas {
-  width: 70%;
-  height: 80%;
-  position: absolute;
-  margin: 0 auto;
+.plantilla_facturas {
+  width: 100%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* position: absolute; */
+  margin:20px;
   padding: 20px;
   text-align: center;
-  top: 14%;
-  left: 22%;
-  display:none;
-  overflow: auto;
-  border-radius: 10px;
-  background-color:#ffffff;
 }
 /* Media Query para dispositivos con una anchura máxima de 768px (tablets, móviles) */
-@media (max-width: 768px) {
-  #plantilla_facturas {
-    width: 130%; /* Reducir el ancho para adaptarse a pantallas más pequeñas */
-    height: auto; /* Permitir que la altura se ajuste automáticamente */
-    top: 10%; /* Ajustar la posición verticalmente */
-    left: 0; /* Ajustar la ubicación horizontalmente */
-    right: 0;
-    margin: 0 auto;
-    padding: 10px; /* Reducir el relleno para evitar superposición */
-    
-    
-  }
-}
-
-/* Media Query para dispositivos con una anchura máxima de 480px (móviles) */
-@media (max-width: 480px) {
-  #plantilla_facturas {
-    width: 50%; /* Reducir aún más el ancho para adaptarse a dispositivos móviles */
-    padding: 10px; /* Reducir el relleno para aprovechar mejor el espacio */
-  }
-}
 .plantilla_facturas p {
   font-size: 16px;
   color: #6b2f05;

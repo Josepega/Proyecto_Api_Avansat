@@ -296,7 +296,52 @@ document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
 
 
 //VER FACTURAS
-const onVer = (element, event, selector, handler) => {
+
+// Cuando se hace clic en el icono-ver
+document.addEventListener('click', (event) => {
+  if (event.target.classList.contains('ver-icono')) {
+      const idFactura = obtenerIdFactura(event.target);
+      mostrarDetallesFacturaEnFacturasPDF(idFactura);
+  }
+});
+
+// Función para obtener el ID de la factura desde el icono-ver
+function obtenerIdFactura(iconoVer) {
+  const fila = iconoVer.parentNode.parentNode;
+  return fila.firstElementChild.innerHTML;
+}
+
+// Función para mostrar los detalles de la factura en facturasPDF.html
+async function mostrarDetallesFacturaEnFacturasPDF(idFactura) {
+  const url = `facturasPDF.html?id=${idFactura}`;
+  const response = await fetch(url);
+  if (response.ok) {
+      // La solicitud fue exitosa, abre la página facturasPDF.html en una nueva pestaña o ventana
+      window.open(url);
+  } else {
+      // La solicitud falló, muestra un mensaje de error al usuario
+      console.error('Error al obtener los datos de la factura');
+      alert('Hubo un error al obtener los datos de la factura. Por favor, inténtelo de nuevo más tarde.');
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const onVer = (element, event, selector, handler) => {
   element.addEventListener(event, (e) => {
     if (e.target.closest(selector)) {
       handler(e);
@@ -307,15 +352,15 @@ const onVer = (element, event, selector, handler) => {
 on(document, "click", ".ver-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
   const idFactura = fila.firstElementChild.innerHTML; //Obtener el ID de la factura desde el atributo data
-
+ */
   // Aquí puedes utilizar el ID de la factura para mostrar los detalles, realizar una solicitud Fetch, etc.
-  console.log('Mostrar detalles de la factura con ID:', idFactura);
+/*   console.log('Mostrar detalles de la factura con ID:', idFactura);
   // O llamar a una función para mostrar los detalles de la factura
   mostrarDetallesFactura(idFactura);
   mostrarDetallesProductos(idFactura);
 });
-
-
+ */
+/* 
 function mostrarDetallesFactura(idFactura) {
   // Mostrar la plantilla de factura antes de obtener los detalles
   document.querySelector('#plantilla_facturas').style.display = 'block';
@@ -446,5 +491,5 @@ async function imprimirFactura() {
 
 
 // Asociar eventos de clic a los botones de imprimir y descargar
-document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura);
+document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura); */
 

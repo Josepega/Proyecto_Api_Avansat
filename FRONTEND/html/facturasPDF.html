@@ -6,15 +6,19 @@
     <title>Document</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/facturas.css">
+    <link rel="stylesheet" type="text/css" href="../css/imprimir.css">
+    
+    
+    
 </head>
 <body>
-    <div class="plantilla_facturas" id="plantilla_facturas">
+    <div class="plantilla_facturas" >
         <div class="row">
-            <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 100px;"></div>
-            <div class="col col-20"></div>
-            <div class="col col-10"><button id="cerrar_plantilla" class="btn">Cerrar</button></div>
-            <div class="col col-20"></div>
-            <div class="col col-30">
+            <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 120px;"></div>
+            <div class="col col-10"></div>
+            <div class="col col-10"><button id="cerrar_plantilla" class="btn" style="display: none;">Cerrar</button></div>
+            <div class="col col-10"></div>
+            <div class="col col-40">
                 <p>José Manuel Louzán Sánchez</p>
                 <p>NIF: 77420607P</p>
                 <p>Maria Lluisa 25 Atic B</p>
@@ -84,5 +88,164 @@
         </div>
         
     </div>
+    <script>
+        const idFactura = obtenerIdFacturaDeURL();
+    
+        // Mostrar los detalles de la factura usando el ID obtenido
+        if (idFactura) {
+            mostrarDetallesFactura(idFactura);
+            mostrarDetallesProductos(idFactura);
+        } else {
+            console.error('No se proporcionó un ID de factura en la URL');
+            alert('No se proporcionó un ID de factura en la URL. Por favor, inténtelo de nuevo.');
+        }
+    
+        // Función para obtener el ID de la factura de la URL
+        function obtenerIdFacturaDeURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+    
+        // Función para mostrar los detalles de la factura
+        function mostrarDetallesFactura(idFactura) {
+            // Lógica para obtener y mostrar los detalles de la factura
+            fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener los detalles de la factura');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length === 0) {
+                        throw new Error('No se encontraron detalles para la factura especificada');
+                    }
+                    //Rellenar los campos de la plantilla de factura con los datos obtenidos
+                    document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
+                    document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
+                    document.getElementById('plantilla_direccion').value = data.Direccion;
+                    document.getElementById('plantilla_c_postal').value = data.C_postal + ' ' + data.Localidad;
+                    //document.getElementById('plantilla_localidad').value = data.Localidad;
+                    document.getElementById('plantilla_pais').value = data.Pais;
+    
+                    document.getElementById('plantilla_base_imponible').value = (data.Base_imponible)  + ' €';
+                    document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;  
+                    document.getElementById('plantilla_total').value = data.Total + ' €';
+                    document.getElementById('plantilla_id_factura').value = data.Id_factura;
+                    //document.getElementById('plantilla_descripcion').value = data.Descripcion;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Manejar cualquier error que pueda ocurrir durante la solicitud Fetch
+    
+                    swal.fire({
+                        icon: 'error',
+                        iconColor: '#e6381c',
+                        title: 'Error al obtener detalles',
+                        text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
+                        confirmButtonColor: '#0798c4',
+                    });
+                });
+        } 
+    
+        // Función para mostrar los detalles de los productos asociados a la factura
+        function mostrarDetallesProductos(idFactura) {
+            // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
+            fetch(`http://localhost:3000/api/v1/listado_detalles_factura/${idFactura}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al obtener los detalles de los productos asociados a la factura');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Limpiar el div antes de agregar nuevos elementos
+                    const detallesDiv = document.getElementById('plantilla_add');
+                    detallesDiv.innerHTML = '';
+    
+                    // Iterar sobre los datos recibidos y crear un elemento para cada producto
+                    data.forEach(producto => {
+                        const productoDiv = document.createElement('div');
+                        productoDiv.classList.add('producto');
+                        productoDiv.innerHTML = `
+                            <div class="row2">
+                                <div class="col2 col-15">${producto.Codigo}</div>           
+                                <div class="col2 col-30">${producto.Nombre_Producto}</div>
+                                <div class="col2 col-10">${producto.Cantidad}</div>
+                                <div class="col2 col-15">${producto.Precio_venta+" €"}</div>
+                                <div class="col2 col-10">21%</div>
+                                <div class="col2 col-10">${producto.Cantidad * producto.Precio_venta+" €"}</div>           
+                            </div>`;
+                        
+                        detallesDiv.appendChild(productoDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Manejar cualquier error que pueda ocurrir durante la solicitud Fetch
+                    // Por ejemplo, mostrar un mensaje de error al usuario
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        iconColor: '#e6381c',
+                        text: 'Hubo un error al obtener los detalles de los productos asociados a la factura. Por favor, inténtelo de nuevo más tarde.',
+                        confirmButtonColor: '#0798c4',
+                    });
+                });
+        }
+    
+        // Función para descargar la factura como PDF
+      // Función para descargar la factura como PDF
+function descargarFacturaComoPDF(idFactura) {
+    fetch('/generatePDF', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ idFactura: idFactura }) // Utiliza idFactura en lugar de id
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `factura_${idFactura}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('Error al descargar el PDF:', error);
+        swal.fire({
+            icon: 'error',
+            title: 'Error al descargar el PDF',
+            text: 'Hubo un error al descargar el PDF. Por favor, inténtelo de nuevo más tarde.',
+            confirmButtonColor: '#0798c4',
+        });
+    });
+}
+
+// Asociar la función de descarga de PDF al evento click del botón de descarga
+document.getElementById('icono_pdf').addEventListener('click', () => {
+    const idFactura = obtenerIdFacturaDeURL(); // Obtener el idFactura antes de descargar el PDF
+    if (idFactura) {
+        descargarFacturaComoPDF(idFactura);
+    } else {
+        console.error('No se proporcionó un ID de factura en la URL');
+        alert('No se proporcionó un ID de factura en la URL. Por favor, inténtelo de nuevo.');
+    }
+});
+
+
+
+// Función para imprimir la factura
+function imprimirFactura() {
+    window.print(); // Utilizamos el método print() del objeto window para imprimir la página actual
+}
+
+// Asociar la función de impresión al evento click del icono de imprimir
+document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura);
+
+    </script>
 </body>
 </html>
