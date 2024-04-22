@@ -30,7 +30,7 @@ router.get("/Saludo", async (req, res) => {
 // Ruta para generar el PDF
 router.post('/generatePDF', async (req, res) => {
   try {
-    const { id } = req.body; // Asegúrate de obtener el ID de la solicitud POST
+    const { idFactura } = req.body; // Asegúrate de obtener el ID de la solicitud POST
     const pdfBuffer = await generatePDF({ url: `facturasPDF.html?id=${idFactura}` }); // Utiliza el ID en la URL
     res.status(200)
        .set({

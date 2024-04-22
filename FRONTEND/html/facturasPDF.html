@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/facturas.css">
     <link rel="stylesheet" type="text/css" href="../css/imprimir.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     
     
     
@@ -18,7 +19,7 @@
             <div class="col col-10"></div>
             <div class="col col-10"><button id="cerrar_plantilla" class="btn" style="display: none;">Cerrar</button></div>
             <div class="col col-10"></div>
-            <div class="col col-40">
+            <div class="col col-40" style="text-align: left;">
                 <p>José Manuel Louzán Sánchez</p>
                 <p>NIF: 77420607P</p>
                 <p>Maria Lluisa 25 Atic B</p>
@@ -27,26 +28,31 @@
         <div class="row" id="separador_plantilla"></div>
         <div class="container_plantilla_datos">
             <div class="row">
-                <div class="col col-50"></div>
-                <div class="col col-50">
-                    <input class="inputPlantilla" type="text" id="plantilla_nombre" placeholder="Nombre del cliente">
-                    <input class="inputPlantilla" type="text" id="plantilla_id_fiscal" placeholder="NIF">
-                    <input class="inputPlantilla" type="text" id="plantilla_direccion" placeholder="Dirección">
+                
+                <div class="col col-40">
+                    <input class="inputPlantilla" type="text" id="plantilla_nombre" placeholder="Nombre del cliente" style="font-weight: 500; font-size: 18px; text-align: left;">
+                    <input class="inputPlantilla" type="text" id="plantilla_id_fiscal" placeholder="NIF" style="text-align: left;">
+                    <input class="inputPlantilla" type="text" id="plantilla_direccion" placeholder="Dirección"style="text-align: left;">
                     <!-- <input class="inputPlantilla" type="text" id="plantilla_localidad" placeholder="Población"> -->                
-                    <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP">
-                    <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Pais">
-                    
+                    <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP"style="text-align: left;">
+                    <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Pais"style="text-align: left;">                    
+                </div>
+                <div class="col-40"></div>
+                <div class="col col-20" style="align-items: end;">
+                    <h1>Factura Nº </h1>
+                </div>
+                <div class="col col-15">
+                    <input class="inputPlantilla" type="text" id="plantilla_id_factura" placeholder="2024/0123" style="align-items: start;" >
                 </div>
             </div>
             <div class="row">
-                <div class="col col-20">
-                    <h1>Factura</h1>
-                </div>
-                <div class="col col-20">
-                    <input class="inputPlantilla" type="text" id="plantilla_id_factura" placeholder="2024/0123" class="inputPlantilla">
-                </div>
-                <div class="col col-60"></div>
+                <div class="col col-40"></div>
+               <div class="col col-20">Fecha de emisión: </div>
+               <input type="text" id="plantilla_emision"  class="inputPlantilla">
+               <div class="col col-20">Fecha de Vencimiento: </div>
+               <input type="text" id="plantilla_vencimiento"  class="inputPlantilla">                
             </div>
+            <div class="row" style="height: 60px;" ></div>
             <div class="row">
                 <div class="col5 col-15"><h4>Código</h4></div>
                 <div class="col5 col-30"><h4>Descripción</h4></div>
@@ -58,23 +64,23 @@
             <div class="row" id="plantilla_add"></div>
         </div>
         <div class="row">
-            <div class="col col-50">
-                FORMA DE PAGO: TRANSFERENCIA BANCARIA
-     ES19 0081 0120 3700 0137 4041
-     Payment Communication: Albarán 1572
+            <div class="col col-50" id="mensaje_transferencia">
+                <p style="color: rgb(27, 9, 1); font-weight: 400; font-size: 18px;">FORMA DE PAGO:</p><span>TRANSFERENCIA BANCARIA</span>
+           <p style="color: rgb(182, 60, 4);font-weight: 600; font-size: 20px;">ES19 0081 0120 3700 0137 4041</p>
+   
             </div>
             <div class="col col-50">
                 <div class="row">
                     <div class="col5 col-50">Base imponible</div> 
-                    <div class="col5 col-50"><input type=" text" id="plantilla_base_imponible" class="inputPlantilla"></div>               
+                    <div class="col5 col-50"style="background-color: rgb(236, 236, 231); font-weight: 600;"><input type=" text" id="plantilla_base_imponible" class="inputPlantilla"></div>               
                 </div>
                 <div class="row">
                     <div class="col5 col-50">IVA 21%</div>
-                    <div class="col5 col-50"><input type="text" id="plantilla_iva" class="inputPlantilla"></div>                
+                    <div class="col5 col-50"style="background-color: rgb(236, 236, 231); font-weight: 600;"><input type="text" id="plantilla_iva" class="inputPlantilla"></div>                
                 </div>
                 <div class="row">
                     <div class="col5 col-50" style="color: brown;"><b>TOTAL</b></div>
-                    <div class="col5 col-50"><input type="text"  id="plantilla_total" class="inputPlantilla"></div>                
+                    <div class="col5 col-50" style="background-color: #a13104; font-weight: 600;"><input type="text"  id="plantilla_total" class="inputPlantilla" style="font-weight: 600; font-size: 18px; color: white;"></div>                
                 </div>   
             </div>
     
@@ -174,7 +180,7 @@
                                 <div class="col2 col-10">${producto.Cantidad}</div>
                                 <div class="col2 col-15">${producto.Precio_venta+" €"}</div>
                                 <div class="col2 col-10">21%</div>
-                                <div class="col2 col-10">${producto.Cantidad * producto.Precio_venta+" €"}</div>           
+                                <div class="col2 col-10" style="background-color: rgb(236, 236, 231); font-weight: 600;">${producto.Cantidad * producto.Precio_venta+" €"}</div>           
                             </div>`;
                         
                         detallesDiv.appendChild(productoDiv);
@@ -197,7 +203,7 @@
         // Función para descargar la factura como PDF
       // Función para descargar la factura como PDF
 function descargarFacturaComoPDF(idFactura) {
-    fetch('/generatePDF', {
+    fetch ('/generatePDF', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

@@ -25,7 +25,7 @@ module.exports = async function generatePDF({
     await page.emulateMediaType('screen');
 
     const pdf = await page.pdf({
-        format: 'a4',
+        format: '4',
         printBackground: true,
         margin: {
             top: '1cm',
