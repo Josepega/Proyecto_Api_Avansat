@@ -1,47 +1,47 @@
 
 
-// MODALFacturas EDIT
-const modalFacturas_edit = document.querySelectorAll("#modal_alta_facturas_edit");
-const openModalFacturasButtons_edit = document.querySelectorAll("#boton_facturas_alta_edit");
-const closeModalFacturasButtons_edit = document.querySelectorAll("#close_edit");
+// MODALpresupuestos EDIT
+const modalpresupuestos_edit = document.querySelectorAll("#modal_alta_presupuestos_edit");
+const openModalpresupuestosButtons_edit = document.querySelectorAll("#boton_presupuestos_alta_edit");
+const closeModalpresupuestosButtons_edit = document.querySelectorAll("#close_edit");
 
 
-function openModalFacturas_edit() {
-  modalFacturas_edit.forEach(function(modalFacturas_edit) {
-    modalFacturas_edit.style.display = "block";
-    console.log("Posición del primer elemento dentro del modal:", modalFacturas_edit.children[0]);
-    console.log("Posición del segundo elemento dentro del modal:", modalFacturas_edit.children[1]);
+function openModalpresupuestos_edit() {
+  modalpresupuestos_edit.forEach(function(modalpresupuestos_edit) {
+    modalpresupuestos_edit.style.display = "block";
+    console.log("Posición del primer elemento dentro del modal:", modalpresupuestos_edit.children[0]);
+    console.log("Posición del segundo elemento dentro del modal:", modalpresupuestos_edit.children[1]);
   });
 }
 
-function closeModalFacturas_edit() {
-  modalFacturas_edit.forEach(function(modalFacturas_edit) {
-    modalFacturas_edit.style.display = "none";
-    console.log("Posición del primer elemento dentro del modal:", modalFacturas_edit.children[0]);
-    console.log("Posición del segundo elemento dentro del modal:", modalFacturas_edit.children[1]);
+function closeModalpresupuestos_edit() {
+  modalpresupuestos_edit.forEach(function(modalpresupuestos_edit) {
+    modalpresupuestos_edit.style.display = "none";
+    console.log("Posición del primer elemento dentro del modal:", modalpresupuestos_edit.children[0]);
+    console.log("Posición del segundo elemento dentro del modal:", modalpresupuestos_edit.children[1]);
   });
 }
 
-openModalFacturasButtons_edit.forEach(function(element) {
-  element.addEventListener("click", openModalFacturas_edit);
+openModalpresupuestosButtons_edit.forEach(function(element) {
+  element.addEventListener("click", openModalpresupuestos_edit);
 });
 
-closeModalFacturasButtons_edit.forEach(function(element) {
-  element.addEventListener("click", closeModalFacturas_edit);
+closeModalpresupuestosButtons_edit.forEach(function(element) {
+  element.addEventListener("click", closeModalpresupuestos_edit);
 });
 
 
-openModalFacturasButtons_edit.forEach(function (element) {
-  element.addEventListener("click", openModalFacturas_edit);
+openModalpresupuestosButtons_edit.forEach(function (element) {
+  element.addEventListener("click", openModalpresupuestos_edit);
 });
 
   
-// LISTADO DE FACTURAS
+// LISTADO DE presupuestos
 
-const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas/";
-const listado_facturas = document.querySelector("#listado_facturas");
+const urlListadopresupuestos = "http://localhost:3000/api/v1/listado_presupuestos/";
+const listado_presupuestos = document.querySelector("#listado_presupuestos");
 
-fetch(urlListadoFacturas)
+fetch(urlListadopresupuestos)
   .then((response) => response.json())
   .then((resultado) => mostrar(resultado))
   .catch((error) => console.error("Error al obtener los datos:", error));
@@ -51,7 +51,7 @@ const mostrar = (data) => {
     swal.fire({
       icon: "info",
       iconColor: "#0798c4",
-      title: "No hay facturas registradas",
+      title: "No hay presupuestos registradas",
       text: "Puedes crear una en el boton AÑADIR",
       confirmButtonColor: "#0798c4",
     });
@@ -59,15 +59,15 @@ const mostrar = (data) => {
   }
 
   let resultado = "";
-  if (listado_facturas) {
-    listado_facturas.innerHTML = resultado;
+  if (listado_presupuestos) {
+    listado_presupuestos.innerHTML = resultado;
   } else {
-    console.error("El elemento #listado_facturas no se encontró en el DOM.");
+    console.error("El elemento #listado_presupuestos no se encontró en el DOM.");
   }
 
-  data.forEach((facturas) => {
+  data.forEach((presupuestos) => {
     // Convertir la fecha de alta a objeto Date si es un string
-    const fechaAlta = typeof facturas.Fecha_alta === 'string' ? new Date(facturas.Fecha_alta) : facturas.Fecha_alta;
+    const fechaAlta = typeof presupuestos.Fecha_alta === 'string' ? new Date(presupuestos.Fecha_alta) : presupuestos.Fecha_alta;
     
     // Formatear la fecha de alta como "DD/MM/YYYY"
     const fechaAltaFormateada = fechaAlta.toLocaleDateString();
@@ -75,13 +75,13 @@ const mostrar = (data) => {
     // Agregar la fila al resultado
     resultado += `
         <div class="row2">
-            <div class="col2 col-10">${facturas.Id_factura}</div>
+            <div class="col2 col-10">${presupuestos.Id_Presupuesto}</div>
             <div class="col2 col-10">${fechaAltaFormateada}</div>
-            <div class="col2 col-10">${facturas.Fecha_vencimiento}</div>
-            <div class="col2 col-30">${facturas.Id_cliente}</div>
-            <div class="col2 col-10">${facturas.Base_imponible}</div>
-            <div class="col2 col-10">${facturas.Total}</div>
-            <div class="col2 col-10">${facturas.Estado}</div>
+            <div class="col2 col-10">${presupuestos.Fecha_vencimiento}</div>
+            <div class="col2 col-30">${presupuestos.Id_cliente}</div>
+            <div class="col2 col-10">${presupuestos.Base_imponible}</div>
+            <div class="col2 col-10">${presupuestos.Total}</div>
+            <div class="col2 col-10">${presupuestos.Estado}</div>
             <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
@@ -89,12 +89,12 @@ const mostrar = (data) => {
 });
 
 
-  listado_facturas.innerHTML = resultado;
+  listado_presupuestos.innerHTML = resultado;
 }; 
 
 
 
-// ELIMINAR FACTURAS
+// ELIMINAR presupuestos
 const on = (element, event, selector, handler) => {
   element.addEventListener(event, (e) => {
     if (e.target.closest(selector)) {
@@ -107,7 +107,7 @@ on(document, "click", ".eliminar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
   const id = fila.firstElementChild.innerHTML;
   swal.fire({
-    title: "¿Estás seguro de quieres eliminar esta factura?",
+    title: "¿Estás seguro de quieres eliminar esta Presupuesto?",
     text: "¡Esta acción no se puede deshacer!",
     icon: "question",
     showCancelButton: true,
@@ -118,24 +118,24 @@ on(document, "click", ".eliminar-icono", (e) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      const urlBorrarFactura = "http://localhost:3000/api/v1/borrar_factura/";
-      fetch(urlBorrarFactura + id, {
+      const urlBorrarPresupuesto = "http://localhost:3000/api/v1/borrar_Presupuesto/";
+      fetch(urlBorrarPresupuesto + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          Id_factura: id,
+          Id_Presupuesto: id,
         }),
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error("Hubo un problema al eliminar la factura.");
+            throw new Error("Hubo un problema al eliminar la Presupuesto.");
           }
           return response.json();
         })
         .then((result) => {
           swal.fire({
-            title: "¡Factura eliminada!",
-            text: "La factura ha sido eliminada satisfactoriamente.",
+            title: "¡Presupuesto eliminada!",
+            text: "La Presupuesto ha sido eliminado satisfactoriamente.",
             icon: "success",
             iconColor: "#0798c4",
             confirmButtonColor: "#0798c4",
@@ -153,7 +153,7 @@ on(document, "click", ".eliminar-icono", (e) => {
         });
     } else {
       swal.fire({
-        title: "¡Factura NO eliminada!",
+        title: "¡Presupuesto NO eliminada!",
         text: "Todo a salvo!.",
         icon: "info",
         iconColor: "#0798c4",
@@ -166,15 +166,15 @@ on(document, "click", ".eliminar-icono", (e) => {
   });
 });
 
-// EDITAR FACTURAS
+// EDITAR presupuestos
 
-const urlEditarFactura = "http://localhost:3000/api/v1/editar_facturas/";
+const urlEditarPresupuesto = "http://localhost:3000/api/v1/editar_presupuestos/";
 
 on(document, "click", ".editar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
 
   // Obtener los valores de las columnas de la fila
-  const idFactura = fila.firstElementChild.innerHTML
+  const idPresupuesto = fila.firstElementChild.innerHTML
   const fechaVencimiento = fila.children[2].innerHTML;
   const cliente = fila.children[1].innerHTML;
   const tipo = fila.children[4].innerHTML;
@@ -187,7 +187,7 @@ on(document, "click", ".editar-icono", (e) => {
   const stockCosteIva = fila.children[4].innerHTML;
 
   // Mostrar los valores en la consola antes de asignarlos al modal
-  console.log("ID Factura:", idFactura);
+  console.log("ID Presupuesto:", idPresupuesto);
   console.log("Fecha de Vencimiento:", fechaVencimiento);
   console.log("Cliente:", cliente);
   console.log("Tipo:", tipo);
@@ -200,46 +200,46 @@ on(document, "click", ".editar-icono", (e) => {
   console.log("Coste con IVA:", stockCosteIva);
 
   // Asignar valores a los campos de entrada del modal de edición
-  document.getElementById("facturas_id_edit").value = idFactura;
-  document.getElementById("facturas_vencimiento_edit").value = fechaVencimiento;
-  document.getElementById("facturas_id_cliente_edit").value = cliente;
+  document.getElementById("presupuestos_id_edit").value = idPresupuesto;
+  document.getElementById("presupuestos_vencimiento_edit").value = fechaVencimiento;
+  document.getElementById("presupuestos_id_cliente_edit").value = cliente;
   document.getElementById("tipo_edit").value = tipo;
-  document.getElementById("facturas_nombre_cliente_edit").value = nombreCliente;
-  document.getElementById("facturas_apellidos_edit").value = apellidosCliente;
-  document.getElementById("facturas_fiscal_edit").value = idFiscal;
-  document.getElementById("facturas_direccion_edit").value = direccion;
-  document.getElementById("facturas_c_postal_edit").value = cPostal;
-  document.getElementById("facturas_localidad_edit").value = localidad;
-  document.getElementById("facturas_imponible_edit").value = stockCosteIva;
+  document.getElementById("presupuestos_nombre_cliente_edit").value = nombreCliente;
+  document.getElementById("presupuestos_apellidos_edit").value = apellidosCliente;
+  document.getElementById("presupuestos_fiscal_edit").value = idFiscal;
+  document.getElementById("presupuestos_direccion_edit").value = direccion;
+  document.getElementById("presupuestos_c_postal_edit").value = cPostal;
+  document.getElementById("presupuestos_localidad_edit").value = localidad;
+  document.getElementById("presupuestos_imponible_edit").value = stockCosteIva;
 
   // Mostrar el modal de edición
-  openModalFacturas_edit();
+  openModalpresupuestos_edit();
 });
 
 
 // Manejar el envío del formulario de edición
-document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
+document.querySelectorAll("#modal_alta_presupuestos_edit").forEach(form => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     // Obtener los valores del formulario de edición
-    const idFactura = form.document.getElementById("facturas_id_edit").value;
-    const fecha = form.document.getElementById("facturas_vencimiento_edit").value;
-    const idCliente = form.document.getElementById("facturas_id_cliente_edit").value;
+    const idPresupuesto = form.document.getElementById("presupuestos_id_edit").value;
+    const fecha = form.document.getElementById("presupuestos_vencimiento_edit").value;
+    const idCliente = form.document.getElementById("presupuestos_id_cliente_edit").value;
     const tipo = form.document.getElementById("tipo_edit").value;
-    const nombre = form.document.getElementById("facturas_nombre_cliente_edit").value;
-    const apellidos = form.document.getElementById("facturas_apellidos_edit").value;
-    const idFiscal = form.document.getElementById("facturas_fiscal_edit").value;
-    const direccion = form.document.getElementById("facturas_direccion_edit").value;
-    const cPostal = form.document.getElementById("facturas_c_postal_edit").value;
-    const localidad = form.document.getElementById("facturas_localidad_edit").value;
-    const vencimiento = form.document.getElementById("facturas_vencimiento_edit").value;
-    const estado = form.document.getElementById("facturas_estado_edit").value;
-    const imponible = form.document.getElementById("facturas_imponible_edit").value;
-    const total = form.document.getElementById("facturas_total_edit").value;
+    const nombre = form.document.getElementById("presupuestos_nombre_cliente_edit").value;
+    const apellidos = form.document.getElementById("presupuestos_apellidos_edit").value;
+    const idFiscal = form.document.getElementById("presupuestos_fiscal_edit").value;
+    const direccion = form.document.getElementById("presupuestos_direccion_edit").value;
+    const cPostal = form.document.getElementById("presupuestos_c_postal_edit").value;
+    const localidad = form.document.getElementById("presupuestos_localidad_edit").value;
+    const vencimiento = form.document.getElementById("presupuestos_vencimiento_edit").value;
+    const estado = form.document.getElementById("presupuestos_estado_edit").value;
+    const imponible = form.document.getElementById("presupuestos_imponible_edit").value;
+    const total = form.document.getElementById("presupuestos_total_edit").value;
 
     // Enviar la solicitud de edición al servidor
-    fetch(urlEditarFactura + idFactura, {
+    fetch(urlEditarPresupuesto + idPresupuesto, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -260,15 +260,15 @@ document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Hubo un problema al editar la factura. Por favor, inténtalo de nuevo más tarde.');
+          throw new Error('Hubo un problema al editar la Presupuesto. Por favor, inténtalo de nuevo más tarde.');
         }
         return response.json();
       })
       .then(response => {
         // Mostrar mensaje de éxito con SweetAlert
         swal.fire({
-          title: "¡Factura editada!",
-          text: "La factura ha sido editada satisfactoriamente.",
+          title: "¡Presupuesto editada!",
+          text: "La Presupuesto ha sido editada satisfactoriamente.",
           icon: "success",
           iconColor: "#0798c4",
           confirmButtonColor: "#0798c4",
@@ -282,7 +282,7 @@ document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
         swal.fire({
-          title: "Error al editar la factura",
+          title: "Error al editar la Presupuesto",
           text: error.message,
           icon: "error",
           iconColor: "#e6381c",
@@ -293,33 +293,33 @@ document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
 });
 
 
-//VER FACTURAS
+//VER presupuestos
 
 // Cuando se hace clic en el icono-ver
 document.addEventListener('click', (event) => {
   if (event.target.classList.contains('ver-icono')) {
-      const idFactura = obtenerIdFactura(event.target);
-      mostrarDetallesFacturaEnFacturasPDF(idFactura);
+      const idPresupuesto = obtenerIdPresupuesto(event.target);
+      mostrarDetallesPresupuestoEnpresupuestosPDF(idPresupuesto);
   }
 });
 
-// Función para obtener el ID de la factura desde el icono-ver
-function obtenerIdFactura(iconoVer) {
+// Función para obtener el ID de la Presupuesto desde el icono-ver
+function obtenerIdPresupuesto(iconoVer) {
   const fila = iconoVer.parentNode.parentNode;
   return fila.firstElementChild.innerHTML;
 }
 
-// Función para mostrar los detalles de la factura en facturasPDF.html
-async function mostrarDetallesFacturaEnFacturasPDF(idFactura) {
-  const url = `facturasPDF.html?id=${idFactura}`;
+// Función para mostrar los detalles de la Presupuesto en presupuestosPDF.html
+async function mostrarDetallesPresupuestoEnpresupuestosPDF(idPresupuesto) {
+  const url = `presupuestosPDF.html?id=${idPresupuesto}`;
   const response = await fetch(url);
   if (response.ok) {
-      // La solicitud fue exitosa, abre la página facturasPDF.html en una nueva pestaña o ventana
+      // La solicitud fue exitosa, abre la página presupuestosPDF.html en una nueva pestaña o ventana
       window.open(url);
   } else {
       // La solicitud falló, muestra un mensaje de error al usuario
-      console.error('Error al obtener los datos de la factura');
-      alert('Hubo un error al obtener los datos de la factura. Por favor, inténtelo de nuevo más tarde.');
+      console.error('Error al obtener los datos de la Presupuesto');
+      alert('Hubo un error al obtener los datos de la Presupuesto. Por favor, inténtelo de nuevo más tarde.');
   }
 }
  
@@ -349,32 +349,32 @@ async function mostrarDetallesFacturaEnFacturasPDF(idFactura) {
 
 on(document, "click", ".editar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;
-  const idFactura = fila.firstElementChild.innerHTML; //Obtener el ID de la factura desde el atributo data
-  // Aquí puedes utilizar el ID de la factura para mostrar los detalles, realizar una solicitud Fetch, etc.
-   console.log('Mostrar detalles de la factura con ID:', idFactura);
-  // O llamar a una función para mostrar los detalles de la factura
-  mostrarDetallesFactura(idFactura);
-  mostrarDetallesProductos(idFactura);
+  const idPresupuesto = fila.firstElementChild.innerHTML; //Obtener el ID de la Presupuesto desde el atributo data
+  // Aquí puedes utilizar el ID de la Presupuesto para mostrar los detalles, realizar una solicitud Fetch, etc.
+   console.log('Mostrar detalles de la Presupuesto con ID:', idPresupuesto);
+  // O llamar a una función para mostrar los detalles de la Presupuesto
+  mostrarDetallesPresupuesto(idPresupuesto);
+  mostrarDetallesProductos(idPresupuesto);
 });
 
 
-function mostrarDetallesFactura(idFactura) {
-  // Mostrar la plantilla de factura antes de obtener los detalles
+function mostrarDetallesPresupuesto(idPresupuesto) {
+  // Mostrar la plantilla de Presupuesto antes de obtener los detalles
   
 
-  // Realizar la solicitud Fetch para obtener los detalles de la factura
-  fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
+  // Realizar la solicitud Fetch para obtener los detalles de la Presupuesto
+  fetch(`http://localhost:3000/api/v1/listado_presupuestos_detalle/${idPresupuesto}`)
     .then(response => {
       if (!response.ok) {
-        throw new Error('Error al obtener los detalles de la factura');
+        throw new Error('Error al obtener los detalles de la Presupuesto');
       }
       return response.json();
     })
     .then(data => {
       if (data.length === 0) {
-        throw new Error('No se encontraron detalles para la factura especificada');
+        throw new Error('No se encontraron detalles para la Presupuesto especificada');
       }
-       //Rellenar los campos de la plantilla de factura con los datos obtenidos
+       //Rellenar los campos de la plantilla de Presupuesto con los datos obtenidos
       document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
       document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
       document.getElementById('plantilla_direccion').value = data.Direccion;
@@ -385,7 +385,7 @@ function mostrarDetallesFactura(idFactura) {
       document.getElementById('plantilla_base_imponible').value = (data.Base_imponible)  + ' €';
       document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;  
       document.getElementById('plantilla_total').value = data.Total + ' €';
-      document.getElementById('plantilla_id_factura').value = data.Id_factura;
+      document.getElementById('plantilla_id_Presupuesto').value = data.Id_Presupuesto;
       //document.getElementById('plantilla_descripcion').value = data.Descripcion;
 
       
@@ -398,19 +398,19 @@ function mostrarDetallesFactura(idFactura) {
         icon: 'error',
         iconColor: '#e6381c',
         title: 'Error al obtener detalles',
-        text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
+        text: 'Hubo un error al obtener los detalles de la Presupuesto. Por favor, inténtelo de nuevo más tarde.',
         confirmButtonColor: '#0798c4',
 
       });
     });
 } 
-// Función para mostrar los detalles de los productos asociados a la factura
-function mostrarDetallesProductos(idFactura) {
-  // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-  fetch(`http://localhost:3000/api/v1/listado_detalles_factura/${idFactura}`)
+// Función para mostrar los detalles de los productos asociados a la Presupuesto
+function mostrarDetallesProductos(idPresupuesto) {
+  // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la Presupuesto
+  fetch(`http://localhost:3000/api/v1/listado_detalles_Presupuesto/${idPresupuesto}`)
     .then(response => {
       if (!response.ok) {
-        throw new Error('Error al obtener los detalles de los productos asociados a la factura');
+        throw new Error('Error al obtener los detalles de los productos asociados a la Presupuesto');
       }
       return response.json();
     })
@@ -444,7 +444,7 @@ function mostrarDetallesProductos(idFactura) {
         icon: 'error',
         title: 'Error',
         iconColor: '#e6381c',
-        text: 'Hubo un error al obtener los detalles de los productos asociados a la factura. Por favor, inténtelo de nuevo más tarde.',
+        text: 'Hubo un error al obtener los detalles de los productos asociados a la Presupuesto. Por favor, inténtelo de nuevo más tarde.',
         confirmButtonColor: '#0798c4',
       });
     });

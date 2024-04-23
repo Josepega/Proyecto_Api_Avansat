@@ -1,22 +1,22 @@
 
 
-function mostrarDetallesFactura(idFactura) {
+function mostrarDetallesPresupuestos(idPresupuesto) {
     // Mostrar la plantilla de factura antes de obtener los detalles
-    document.querySelector('#plantilla_facturas').style.display = 'block';
+    document.querySelector('#plantilla_presupuestos').style.display = 'block';
   
     // Realizar la solicitud Fetch para obtener los detalles de la factura
-    fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
+    fetch(`http://localhost:3000/api/v1/listado_presupuestos_detalle/${idPresupuesto}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Error al obtener los detalles de la factura');
+          throw new Error('Error al obtener los detalles del presupuesto');
         }
         return response.json();
       })
       .then(data => {
         if (data.length === 0) {
-          throw new Error('No se encontraron detalles para la factura especificada');
+          throw new Error('No se encontraron detalles para el presupuesto especificado');
         }
-         //Rellenar los campos de la plantilla de factura con los datos obtenidos
+         //Rellenar los campos de la plantilla de presupuesto con los datos obtenidos
         document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
         document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
         document.getElementById('plantilla_direccion').value = data.Direccion;
@@ -40,19 +40,19 @@ function mostrarDetallesFactura(idFactura) {
           icon: 'error',
           iconColor: '#e6381c',
           title: 'Error al obtener detalles',
-          text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
+          text: 'Hubo un error al obtener los detalles del presupuesto. Por favor, inténtelo de nuevo más tarde.',
           confirmButtonColor: '#0798c4',
   
         });
       });
   } 
-  // Función para mostrar los detalles de los productos asociados a la factura
-  function mostrarDetallesProductos(idFactura) {
+  // Función para mostrar los detalles de los productos asociados al presupuesto
+  function mostrarDetallesProductos(idPresupuesto) {
     // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-    fetch(`http://localhost:3000/api/v1/listado_detalles_factura/${idFactura}`)
+    fetch(`http://localhost:3000/api/v1/listado_detalles_presupuestos/${idPresupuesto}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Error al obtener los detalles de los productos asociados a la factura');
+          throw new Error('Error al obtener los detalles de los productos asociados al presupuesto');
         }
         return response.json();
       })
@@ -86,7 +86,7 @@ function mostrarDetallesFactura(idFactura) {
           icon: 'error',
           title: 'Error',
           iconColor: '#e6381c',
-          text: 'Hubo un error al obtener los detalles de los productos asociados a la factura. Por favor, inténtelo de nuevo más tarde.',
+          text: 'Hubo un error al obtener los detalles de los productos asociados al presupuesto. Por favor, inténtelo de nuevo más tarde.',
           confirmButtonColor: '#0798c4',
         });
       });

@@ -1,104 +1,25 @@
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avansat app</title>
-    <link rel="icon" type="image/jpg" href="../img/favicon.png" />
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/facturas.css">
-    <link rel="stylesheet" href="../css/clientes.css">
     <link rel="stylesheet" href="../css/index.css">
-    <script src="../js/includes_html.js" defer></script>
-    <script src="../js/modals.js" defer></script>
-    <script src="../js/aside.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+   
+    <title>Document</title>
 </head>
-
 <body>
-    <!-- CONTENEDOR GENERAL -->
     <div class="container">
-        <!-- LATERAL IZQUIERDA -->
-      <aside id="izq"></aside>
-      <script>
-        // Cargar el aside usando JavaScript
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obtener el contenedor del aside
-            var asideContainer = document.getElementById("izq");
-            
-            // Cargar el aside desde aside.html usando fetch
-            fetch("aside.html")
-                .then(response => response.text())
-                .then(data => {
-                    // Insertar el contenido del aside en el contenedor
-                    asideContainer.innerHTML = data;
-                    
-                    // Ejecutar las funciones asociadas al aside
-                    botonToggle();
-                    manejarModalClientes();
-                    manejarModalStock();
-                    manejarModalFacturas();
-                    manejarModalServicios();
-
-
-
-
-                })
-                .catch(error => console.error("Error al cargar el aside:", error));
-        });
-    </script>
-        <!-- CONTENEDOR PRINCIPAL -->
-        <main id="principal">
-            <!-- BARRA NAV  -->
-            <div id="nav_container"></div><!-- NAV incrustado -->
-            <script>
-                // Cargar el aside usando JavaScript
-                document.addEventListener("DOMContentLoaded", function() {
-                    // Obtener el contenedor del aside
-                    var navContainer = document.querySelector("dropdownmenu");
-                    
-                    // Cargar el aside desde aside.html usando fetch
-                    fetch("nav.html")
-                        .then(response => response.text())
-                        .then(data => {
-                            // Insertar el contenido del aside en el contenedor
-                            nav_container.innerHTML = data;
-                            
-                            // Ejecutar las funciones asociadas al aside
-                            botonToggle();
-                            manejarModalClientes();
-                            manejarModalStock();
-                            manejarModalFacturas();
-                            manejarModalServicios();
-        
-        
-        
-        
-                        })
-                        .catch(error => console.error("Error al cargar el nav:", error));
-                });
-            </script>
-
-            <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
-            <div id="container_principal_general">
-                <!-------------------------  aquí va el inicio html por sección ------------------------------------->
-                <div class="container_principal">
-                    <div class="container">
-                        <div class="container_seccion">
-                            <div class="container_seccion_interior">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-
-
-
-            </div><!-------------------------  aquí va el final html por sección ------------------------------------->
-        </main>
-
-    </div><!-- FIN CONTENEDOR GENERAL -->
+        <div class="container_login">
+<div class="row"><img src="../img/avansat-logo-web-l.png" alt=""></div>
+<div class="row">
+    <div class="col-70"><input type="text" placeholder="Usuario" id="username"></div>
+</div>
+<div class="row">
+    <div class="col-70"><input type="password" placeholder="Contraseña" id="password"></div>
+</div>
+<div class="row">
+    <div class="col-20"><button id="login" class="btn">Entrar</button></div>
+</div>
+    </div>
 </body>
-
 </html>

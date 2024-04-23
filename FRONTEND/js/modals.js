@@ -566,7 +566,7 @@ function manejarModalFacturas() {
       document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
       document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
       document.getElementById('facturas_codigo').value = selectedStock.Codigo;
-      document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_coste).toFixed(2);
+      document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_venta).toFixed(2);
   
       // Ocultar la lista de resultados
       autocompleteResultsStock.style.display = "none";
@@ -664,7 +664,7 @@ function manejarModalFacturas() {
                           <div class="col3 col-40">${detalle.descripcion}</div>
                           <div class="col3 col-15">${detalle.precio}</div>
                           <div class="col3 col-15">${detalle.impuestos}</div>
-                          <div class="col3 col-15">${detalle.precioIva.toFixed(2)}</div>                                         
+                          <div class="col3 col-15">${detalle.precioIva * detalle.cantidad} </div>                                         
                           <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
         facturasAdd.appendChild(fila);
       });
@@ -687,10 +687,10 @@ function manejarModalFacturas() {
     // Función para calcular los totales
     const calcularTotales = () => {
       // Calcular la base imponible
-      const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precio), 0).toFixed(2);
+      const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precio) * curr.cantidad, 0).toFixed(2);
     
       // Actualizar el campo de base imponible en el HTML
-      document.getElementById("facturas_imponible").value = baseImponibleSum;
+      document.getElementById("facturas_imponible").value = baseImponibleSum ;
     
       // Calcular el total
   // Calcular el total como la suma de los precios con impuesto de cada detalle de la factura
@@ -814,6 +814,8 @@ function manejarModalFacturas() {
           const facturasEstado = document.getElementById("facturas_estado").value;
           const facturasPago = document.getElementById("facturas_tipo_pago").value;
           const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value).toFixed(2);
+        
+          
           const facturasTotal = parseFloat(document.getElementById("facturas_total").value).toFixed(2);
           const facturasIdStock = document.getElementById("facturas_id_detalle_stock").value;
           const facturasCantidad = document.getElementById("facturas_cantidad").value;
@@ -886,6 +888,532 @@ function manejarModalFacturas() {
                   swal.fire({
                     icon: "error",
                     title: "Error al agregar la factura",
+                    text: error.message,
+                    iconColor: "#e6381c",
+                    confirmButtonColor: "#0798c4",
+                });
+              });
+      });
+  });
+  };
+
+
+  // MODAL PRESUPUESTOS
+function manejarModalPresupuestos() {
+  const modalPresupuestos = document.querySelectorAll("#modal_alta_presupuestos");
+  const openModalPresupuestosButtons = document.querySelectorAll("#boton_presupuestos_alta");
+  const closeModalPresupuestosButtons = document.querySelectorAll("#close");
+  
+  function openModalPresupuestos() {
+    modalPresupuestos.forEach(function(modalPresupuestos) {
+      modalPresupuestos.style.display = "block";
+    });
+  }
+  
+  function closeModalPresupuestos() {
+    modalPresupuestos.forEach(function(modalPresupuestos) {
+      modalPresupuestos.style.display = "none";
+    });
+  }
+  
+  openModalPresupuestosButtons.forEach(function(element) {
+    element.addEventListener("click", openModalPresupuestos);
+  });
+  
+  closeModalPresupuestosButtons.forEach(function(element) {
+    element.addEventListener("click", closeModalPresupuestos);
+  });
+  
+  
+  let clientes = [];
+  
+  // AUTO COMPLET CLIENTES
+  // Función para buscar clientes por nombre
+  const searchClientes = (key) => {
+    fetch(`http://localhost:3000/api/v1/listado_clientes?Nombre=${key}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          clientes = data; // Asignar los datos de los clientes a la variable clientes
+          buildList();
+        }
+      })
+      .catch(error => {
+        console.error("Error al buscar clientes:", error);
+      });
+  };
+  
+  // Función para construir la lista de resultados
+  const buildList = () => {
+    const input = document.getElementById("presupuestos_nombre_cliente");
+    const autocompleteResults = document.getElementById("autocomplete-results_clientes");
+  
+    console.log("Clientes:", clientes);
+  
+    if (!clientes || clientes.length === 0) {
+      autocompleteResults.innerHTML = "";
+      return;
+    }
+  
+    const key = input.value.toLowerCase();
+  
+    const filteredClientes = clientes.filter(cliente => {
+      return cliente.Nombre.toLowerCase().startsWith(key);
+    }).sort((a, b) => {
+      // Ordenar alfabéticamente por el nombre
+      if (a.Nombre < b.Nombre) return -1;
+      if (a.Nombre > b.Nombre) return 1;
+      return 0;
+    });
+  
+    autocompleteResults.innerHTML = "";
+  
+    filteredClientes.slice(0, 10).forEach((cliente) => {
+      autocompleteResults.innerHTML += `<li>${cliente.Nombre} ${cliente.Apellidos}</li>`;
+    });
+  };
+  
+  // Agregar evento al input para buscar clientes
+  const inputClientes = document.getElementById("presupuestos_nombre_cliente");
+  const autocompleteResults = document.getElementById("autocomplete-results_clientes");
+  
+  inputClientes.addEventListener("keyup", (event) => {
+    autocompleteResults.style.display = "block";
+    const key = event.target.value;
+  
+    console.log(key);
+  
+    if (key.length > 0) {
+      searchClientes(key);
+    } else {
+      buildList();
+    }
+  });
+  
+  // Agregar evento a los elementos de la lista de resultados para seleccionar un cliente
+  autocompleteResults.addEventListener("click", (e) => {
+    if (e.target && e.target.nodeName == "LI") {
+      const selectedName = e.target.innerHTML;
+      const selectedCliente = clientes.find(cliente => `${cliente.Nombre} ${cliente.Apellidos}` === selectedName);
+      
+      // Rellenar los otros inputs con los datos del cliente seleccionado
+      inputClientes.value = selectedCliente.Nombre;
+      document.getElementById('presupuestos_id_cliente').value = selectedCliente.Id_cliente;
+      document.getElementById('presupuestos_nombre_cliente').value = selectedCliente.Nombre;
+      document.getElementById('presupuestos_apellidos').value = selectedCliente.Apellidos;
+      document.getElementById('presupuestos_direccion').value = selectedCliente.Direccion;
+      document.getElementById('presupuestos_fiscal').value = selectedCliente.Id_fiscal;
+      document.getElementById('presupuestos_direccion').value = selectedCliente.Direccion;
+      document.getElementById('presupuestos_c_postal').value = selectedCliente.C_postal;
+      document.getElementById('presupuestos_localidad').value = selectedCliente.Localidad;
+      document.getElementById('presupuestos_pais').value = selectedCliente.Pais;
+  
+      // Ocultar la lista de resultados
+      autocompleteResults.style.display = "none";
+    }
+  });
+  
+  // Cerrar la lista de resultados al pulsar fuera de ella
+  window.addEventListener("click", (event) => {
+    if (!autocompleteResults.contains(event.target)) {
+      autocompleteResults.style.display = "none";
+    }
+  });
+  
+  // AUTOCOMPLET STOCK
+  // Declarar la variable stock en un ámbito global
+  let stock = [];
+  
+  // Función para buscar stock por nombre
+  const searchStock = (key) => {
+    fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          stock = data; // Asignar los datos de stock a la variable stock
+          buildListStock();
+        }
+      })
+      .catch(error => {
+        console.error("Error al buscar stock:", error);
+      });
+  };
+  
+  // Función para construir la lista de resultados del autocompletado de stock
+  const buildListStock = () => {
+    const inputStock = document.getElementById("presupuestos_descripcion_stock");
+    const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+  
+    if (!stock || stock.length === 0) {
+      autocompleteResultsStock.innerHTML = "";
+      return;
+    }
+  
+    const key = inputStock.value.toLowerCase();
+  
+    const filteredStock = stock.filter(stock => {
+      return stock.Nombre.toLowerCase().startsWith(key);
+    }).sort((a, b) => {
+      // Ordenar alfabéticamente por el nombre
+      if (a.Nombre < b.Nombre) return -1;
+      if (a.Nombre > b.Nombre) return 1;
+      return 0;
+    });
+  
+    autocompleteResultsStock.innerHTML = "";
+  
+    filteredStock.slice(0, 10).forEach((stock) => {
+      autocompleteResultsStock.innerHTML += `<li>${stock.Nombre}</li>`;
+    });
+  };
+  
+  // Agregar evento al input para buscar stock
+  const inputStock = document.getElementById("presupuestos_descripcion_stock");
+  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+  
+  inputStock.addEventListener("keyup", (event) => {
+    autocompleteResultsStock.style.display = "block";
+    const key = event.target.value;
+  
+    if (key.length > 0) {
+      searchStock(key);
+    } else {
+      buildListStock();
+    }
+  });
+  
+  // Agregar evento a los elementos de la lista de resultados para seleccionar un stock
+  autocompleteResultsStock.addEventListener("click", (e) => {
+    if (e.target && e.target.nodeName == "LI") {
+      const selectedNameStock = e.target.innerHTML;
+      const selectedStock = stock.find(stock => stock.Nombre === selectedNameStock);
+      
+      // Rellenar los inputs relacionados con el stock seleccionado
+      document.getElementById('presupuestos_descripcion_stock').value = selectedStock.Nombre;
+      document.getElementById('presupuestos_id_detalle_stock').value = selectedStock.Id_stock;
+      document.getElementById('presupuestos_codigo').value = selectedStock.Codigo;
+      document.getElementById('presupuestos_precio').value = parseFloat(selectedStock.Precio_venta).toFixed(2);
+  
+      // Ocultar la lista de resultados
+      autocompleteResultsStock.style.display = "none";
+    }
+  });
+  
+  
+  // Datos imputs clientes
+  
+  const PresupuestosTipo = document.getElementById("tipo_presupuestos");
+  const PresupuestosId = document.getElementById("id_cliente");
+  const PresupuestosNombre = document.getElementById("presupuestos_nombre");
+  const PresupuestosApellido = document.getElementById("presupuestos_apellidos");
+  const PresupuestosFiscal = document.getElementById("presupuestos_fiscal");
+  const PresupuestosDireccion = document.getElementById("Presupuestos_direccion");
+  const PresupuestosCP = document.getElementById("presupuestos_c_postal");
+  const PresupuestosLocalidad = document.getElementById("presupuestos_localidad");
+  const PresupuestosPais = document.getElementById("presupuestos_pais");
+  
+  
+    const tipoCliente = document.getElementById("tipo_presupuestos");
+    const clienteApellidoOcultar = document.getElementById("presupuestos_apellidos_ocultar");
+    const clienteNombreOcultar = document.getElementById("presupuestos_nombre_ocultar");
+    const clienteNombreEmpresaOcular = document.getElementById("presupuestos_nombreEmpresa_ocultar");
+  
+    if (tipoCliente.value === "Empresa") {
+      clienteNombreEmpresaOcular.style.display = "block";
+      clienteApellidoOcultar.style.display = "none";
+      clienteNombreOcultar.style.display = "none";
+    } else {
+      clienteApellidoOcultar.style.display = "block";
+      clienteNombreOcultar.style.display = "block";
+      clienteNombreEmpresaOcular.style.display = "none";
+    }
+  
+    tipoCliente.addEventListener("change", () => {
+      if (tipoCliente.value === "Empresa") {
+        clienteNombreEmpresaOcular.style.display = "block";
+        clienteApellidoOcultar.style.display = "none";
+        clienteNombreOcultar.style.display = "none";
+      } else {
+        clienteNombreEmpresaOcular.style.display = "none";
+        clienteApellidoOcultar.style.display = "block";
+        clienteNombreOcultar.style.display = "block";
+      }
+    });
+  
+    // AÑADIR A LA FACTURA ITEMS
+  
+    var formPresupuestos = document.getElementById("alta_presupuestos");
+    var PresupuestosCantidad = document.getElementById("presupuestos_cantidad");
+    var PresupuestosCodigo = document.getElementById("presupuestos_codigo");
+    var PresupuestosStockCodigo = document.getElementById("presupuestos_id_detalle_stock");
+    var PresupuestosDescripcion = document.getElementById("presupuestos_descripcion");
+    var PresupuestosPrecio = parseFloat(document.getElementById("presupuestos_precio")).toFixed(2);
+    var PresupuestosImpuesto = document.getElementById("presupuestos_impuesto");
+    var PresupuestosTotal = parseFloat(document.getElementById("presupuestos_total")).toFixed(2);
+    var PresupuestosFecha = document.getElementById("presupuestos_alta");
+    const fechaActual = new Date().toISOString().split('T')[0];
+    PresupuestosFecha.value = fechaActual;
+    var PresupuestosAdd = document.getElementById("presupuestos_add");
+    var imagenAgregar = document.getElementById("icono-agregar");
+    var guardarPresupuestos = document.getElementById("boton_presupuestos_guardar");
+    
+    // Inicializar las sumas totales
+    let totalSum = 0;
+    let baseImponibleSum = 0;
+    
+    const arregloDetalle = [];
+    
+  
+    // Función para redibujar la tabla y recalcular los totales
+    const redibujarTabla = () => {
+      PresupuestosAdd.innerHTML = "";
+      let camposVacios = false; // Variable para rastrear si hay campos vacíos
+    
+      arregloDetalle.forEach((detalle, index) => {
+        // Verificar si algún campo en el detalle está vacío
+        if (
+          detalle.cantidad === "" ||
+          detalle.codigo === "" ||
+          detalle.descripcion === "" ||
+          detalle.precio === "" ||
+          detalle.impuestos === ""
+        ) {
+          camposVacios = true; // Marcar que hay campos vacíos
+          return; // Detener la ejecución si hay algún campo vacío
+        }
+    
+        // Si todos los campos del detalle están llenos, procede con la creación de la fila
+        let fila = document.createElement("div");
+        fila.classList.add("row");
+        fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
+                          <div class="col3 col-15">${detalle.codigo}</div>
+                          <div class="col3 col-40">${detalle.descripcion}</div>
+                          <div class="col3 col-15">${detalle.precio}</div>
+                          <div class="col3 col-15">${detalle.impuestos}</div>
+                          <div class="col3 col-15">${detalle.precioIva * detalle.cantidad} </div>                                         
+                          <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
+        PresupuestosAdd.appendChild(fila);
+      });
+    
+      // Agregar el evento de clic al botón de eliminar para cada fila
+      const eliminarBotones = document.querySelectorAll(".eliminar-icono_fila");
+      eliminarBotones.forEach((eliminarBoton) => {
+        eliminarBoton.addEventListener("click", (event) => {
+          const index = event.target.dataset.index;
+          eliminarFilaDetalle(index);
+        });
+      });
+    
+      // Si no hay campos vacíos, calcular los totales
+      if (!camposVacios) {
+        calcularTotales();
+      }
+    };
+    
+    // Función para calcular los totales
+    const calcularTotales = () => {
+      // Calcular la base imponible
+      const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precio) * curr.cantidad, 0).toFixed(2);
+    
+      // Actualizar el campo de base imponible en el HTML
+      document.getElementById("presupuestos_imponible").value = baseImponibleSum ;
+    
+      // Calcular el total
+  // Calcular el total como la suma de los precios con impuesto de cada detalle de la factura
+      const totalSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precioIva * curr.cantidad), 0).toFixed(2);
+    
+      // Actualizar el campo de total en el HTML
+      document.getElementById("presupuestos_total").value = totalSum;
+    };
+    
+  
+  // Función para eliminar la fila del detalle seleccionada
+  const eliminarFilaDetalle = (index) => {
+    // Verificar si el índice está dentro del rango de arregloDetalle
+    if (index >= 0 && index < arregloDetalle.length) {
+      // Eliminar la fila del detalle en la posición index
+      arregloDetalle.splice(index, 1);
+      redibujarTabla(); // Llamar a redibujarTabla para recalcular los totales
+      calcularTotales(); // Actualizar los totales después de eliminar la fila
+    } else {
+      swal.fire({
+        icon: "error",
+        iconColor: "#e6381c",
+        title: "No se pudo eliminar la fila del detalle",
+        text: "La fila del detalle especificada no existe",
+        confirmButtonColor: "#0798c4",
+      });
+    }
+  };
+  
+  
+  // Función para verificar si algún campo está vacío
+  const camposVacios = () => {
+    const cantidad = document.getElementById("presupuestos_cantidad").value.trim();
+    const codigo = document.getElementById("presupuestos_codigo").value.trim();
+    const descripcion = document.getElementById("presupuestos_descripcion_stock").value.trim();
+    const precio = document.getElementById("presupuestos_precio").value.trim();
+    const impuesto = document.getElementById("presupuestos_impuestos").value.trim();
+  
+    return cantidad === "" || codigo === "" || descripcion === "" || precio === "" || impuesto === "";
+  };
+  
+  // Modificar la función para añadir una fila al detalle
+  imagenAgregar.addEventListener("click", () => {
+    if (camposVacios()) {
+      // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
+      swal.fire({
+        icon: "info",
+        iconColor: "#e6381c",
+        title: "Campos vacíos",
+        text: "Todos los campos son obligatorios",
+        confirmButtonColor: "#0798c4",
+      });
+      return; // Detener la ejecución si hay campos vacíos
+    }
+  
+    // Si no hay campos vacíos, proceder con la lógica actual de agregar la fila al detalle
+    let PresupuestosCantidadInput = document.getElementById("presupuestos_cantidad").value;
+    if (!isNaN(PresupuestosCantidadInput)) { // Verificar si el valor es un número
+        let PresupuestosCantidad = (PresupuestosCantidadInput);
+        let PresupuestosCodigo = document.getElementById("presupuestos_codigo").value;
+        let PresupuestosCodigoStock = document.getElementById("presupuestos_id_detalle_stock").value;
+        let PresupuestosDescripcion = document.getElementById("presupuestos_descripcion_stock").value;
+        let PresupuestosPrecio = parseFloat(document.getElementById("presupuestos_precio").value.replace(',', '.')).toFixed(2);
+        let PresupuestosImpuesto = parseFloat(document.getElementById("presupuestos_impuestos").value.replace(',', '.')).toFixed(2);
+        let PresupuestosPrecioIva = PresupuestosPrecio * (1 + PresupuestosImpuesto / 100).toFixed(2);
+        let PresupuestosPrecioSubTotal = (PresupuestosPrecio * PresupuestosCantidad).toFixed(2);
+        let PresupuestosBaseImponible = PresupuestosPrecioSubTotal / (1 + PresupuestosImpuesto / 100).toFixed(2);
+  
+        let PresupuestosTotaldeTotales = (PresupuestosPrecioIva * PresupuestosCantidad).toFixed(2);
+  
+        // Agregar el detalle a la factura
+        const objetoDetalle = {
+            cantidad: PresupuestosCantidad,
+            codigo: document.getElementById("presupuestos_codigo").value,
+            id_stock: document.getElementById("presupuestos_id_detalle_stock").value,
+            descripcion: document.getElementById("presupuestos_descripcion_stock").value,
+            precio: PresupuestosPrecio,
+            impuestos: PresupuestosImpuesto,
+            precioIva: PresupuestosPrecioIva,
+        };
+        arregloDetalle.push(objetoDetalle);
+        redibujarTabla();
+  
+        // Actualizar los totales después de agregar el detalle
+        calcularTotales();
+    } else {
+        swal.fire({
+          title:"El valor de 'presupuestos_cantidad' no es un número válido.",
+          icon: "info",
+          iconColor: "#e6381c",
+          confirmButtonColor: "#0798c4",
+  
+        });
+    }
+    autocomplete_servicios_reset();
+  });
+  
+  
+    
+    function autocomplete_servicios_reset() {
+        const input = document.getElementById("presupuestos_descripcion_stock");
+        const cantidad = document.getElementById("presupuestos_cantidad");
+        const precio = document.getElementById("presupuestos_precio");
+        const codigo = document.getElementById("presupuestos_codigo");
+        const results = document.getElementById("autocomplete-results_stock");
+    
+        input.value = "";
+        cantidad.value = "";
+        precio.value = "";
+        codigo.value = "";
+        results.innerHTML = "";
+    };
+    //ALTA PRESUPUESTO
+    const BotonGuardarFactura = document.querySelectorAll("#boton_presupuestos_guardar");
+    BotonGuardarFactura.forEach(function (element) {
+      element.addEventListener("click", () => {
+          const PresupuestosAlta = new Date().toISOString().split('T')[0];
+          const PresupuestosCliente = document.getElementById("presupuestos_id_cliente").value;
+          const PresupuestosAlbaran = document.getElementById("presupuestos_albaran").value;
+          const PresupuestosVencimiento = document.getElementById("presupuestos_vencimiento").value;
+          const PresupuestosEstado = document.getElementById("presupuestos_estado").value;
+          const PresupuestosPago = document.getElementById("presupuestos_tipo_pago").value;
+          const PresupuestosImponible = parseFloat(document.getElementById("presupuestos_imponible").value).toFixed(2);
+        
+          
+          const PresupuestosTotal = parseFloat(document.getElementById("presupuestos_total").value).toFixed(2);
+          const PresupuestosIdStock = document.getElementById("presupuestos_id_detalle_stock").value;
+          const PresupuestosCantidad = document.getElementById("presupuestos_cantidad").value;
+  
+          // Validación de campos obligatorios
+          if (
+              PresupuestosCliente === "" ||
+              PresupuestosVencimiento === "" ||
+              PresupuestosEstado === "" ||
+              isNaN(PresupuestosTotal) ||
+              isNaN(PresupuestosImponible)
+          ) {
+              swal.fire({
+                  icon: "info",
+                  iconColor: "#e6381c",
+                  title: "Los campos marcados con * son obligatorios",
+                  text: "¡Completa los que te falten!",
+                  confirmButtonColor: "#0798c4",
+              });
+              return;
+          }
+  
+          // Formar el detalle de la factura en formato JSON
+          const detallePresupuestos = arregloDetalle.map(detalle => ({
+            Id_presupuesto: null, // Aquí se asignará el ID de la factura después de ser creada en el servidor
+            Id_cliente: PresupuestosCliente,
+            Cantidad: detalle.cantidad,
+            stock_Id_stock: detalle.id_stock,
+            Codigo: detalle.codigo
+        }));
+        
+  
+          // Realizar la solicitud HTTP POST al servidor para agregar la factura
+          const urlAltaPresupuesto = "http://localhost:3000/api/v1/alta_presupuesto"; // Cambiar la URL según la ruta en tu servidor
+          fetch(urlAltaPresupuesto, {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  Fecha_alta: PresupuestosAlta,
+                  Id_cliente: PresupuestosCliente,
+                  Albaran: PresupuestosAlbaran,
+                  Fecha_vencimiento: PresupuestosVencimiento,
+                  Estado: PresupuestosEstado,
+                  Forma_pago: PresupuestosPago,
+                  Base_imponible: PresupuestosImponible,
+                  Total: PresupuestosTotal,
+                  detalleFactura: JSON.stringify(detallePresupuestos) // Convertir a cadena JSON
+              }),
+          })
+              .then((response) => {
+                  if (!response.ok) {
+                      throw new Error("Error al agregar el presupuesto");
+                  }
+                  return response.json();
+              })
+              .then((data) => {
+                  swal.fire({
+                      title: "¡Presupuesto añadido correctamente!",
+                      icon: "success",
+                      iconColor: "#0798c4",
+                      confirmButtonColor: "#0798c4",
+                  });
+                  setTimeout(() => {
+                      location.reload();
+                  }, 3000);
+              })
+              .catch((error) => {
+                  swal.fire({
+                    icon: "error",
+                    title: "Error al agregar el presupuesto",
                     text: error.message,
                     iconColor: "#e6381c",
                     confirmButtonColor: "#0798c4",
