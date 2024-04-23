@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
   `Fecha_vencimiento` VARCHAR(45) NULL DEFAULT NULL,
   `Estado` VARCHAR(45) NULL DEFAULT NULL,
   `Forma_pago` VARCHAR(45) NULL DEFAULT NULL,
-  `Base_imponible` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Total` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Base_imponible` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Total` DECIMAL(8,2) NULL DEFAULT NULL,
   PRIMARY KEY (`Id_factura`, `Id_cliente`),
   CONSTRAINT `fk_facturas_clientes1`
     FOREIGN KEY (`Id_cliente`)
@@ -63,6 +63,9 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
+CREATE INDEX `fk_facturas_clientes1` ON `avansat_db`.`facturas` (`Id_cliente` ASC) VISIBLE;
+
+
 -- -----------------------------------------------------
 -- Table `avansat_db`.`stock`
 -- -----------------------------------------------------
@@ -71,10 +74,10 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`stock` (
   `Codigo` VARCHAR(45) NOT NULL,
   `Cantidad` INT(11) NOT NULL,
   `Nombre` VARCHAR(255) NOT NULL,
-  `Precio_coste` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_coste_iva` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_venta` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_venta_iva` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Precio_coste` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_coste_iva` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_venta` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_venta_iva` DECIMAL(8,2) NULL DEFAULT NULL,
   PRIMARY KEY (`Id_stock`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
@@ -104,6 +107,8 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+CREATE INDEX `fk_stock_has_facturas_stock1` ON `avansat_db`.`detalle_factura` (`stock_Id_stock` ASC) VISIBLE;
+
 
 -- -----------------------------------------------------
 -- Table `avansat_db`.`servicios`
@@ -112,10 +117,10 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`servicios` (
   `Id_servicio` INT(15) NOT NULL AUTO_INCREMENT,
   `Codigo` VARCHAR(45) NOT NULL,
   `Nombre` VARCHAR(255) NOT NULL,
-  `Precio_coste` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_coste_iva` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_venta` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Precio_venta_iva` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Precio_coste` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_coste_iva` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_venta` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Precio_venta_iva` DECIMAL(8,2) NULL DEFAULT NULL,
   PRIMARY KEY (`Id_servicio`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
@@ -132,8 +137,8 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`presupuestos` (
   `Fecha_vencimiento` VARCHAR(45) NULL DEFAULT NULL,
   `Estado` VARCHAR(45) NULL DEFAULT NULL,
   `Forma_pago` VARCHAR(45) NULL DEFAULT NULL,
-  `Base_imponible` DECIMAL(5,2) NULL DEFAULT NULL,
-  `Total` DECIMAL(5,2) NULL DEFAULT NULL,
+  `Base_imponible` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Total` DECIMAL(8,2) NULL DEFAULT NULL,
   `clientes_Id_cliente` INT(15) NOT NULL,
   PRIMARY KEY (`Id_presupuesto`, `clientes_Id_cliente`),
   CONSTRAINT `fk_presupuestos_clientes1`
@@ -144,6 +149,9 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`presupuestos` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `fk_presupuestos_clientes1_idx` ON `avansat_db`.`presupuestos` (`clientes_Id_cliente` ASC) VISIBLE;
+
 
 -- -----------------------------------------------------
 -- Table `avansat_db`.`detale_presupuesto`
@@ -165,6 +173,11 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detale_presupuesto` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE INDEX `fk_presupuestos_has_stock_stock1_idx` ON `avansat_db`.`detale_presupuesto` (`stock_Id_stock` ASC) VISIBLE;
+
+CREATE INDEX `fk_presupuestos_has_stock_presupuestos1_idx` ON `avansat_db`.`detale_presupuesto` (`presupuestos_Id_presupuesto` ASC, `presupuestos_clientes_Id_cliente` ASC) VISIBLE;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

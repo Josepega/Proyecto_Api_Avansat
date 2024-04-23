@@ -309,7 +309,7 @@ h4 {
   text-align:center;
   margin: 0px;
   font-size: 13px;
-  color: #054149;  
+  color: #000708;  
   padding:0px 10px;
   border-bottom: #5b1b02 solid 1px;
   height: 50px;
@@ -530,7 +530,7 @@ h1 {
     font-style: normal;
     font-weight: 400;
     font-size: 25px;
-    color: rgb(2, 103, 128);
+    color: rgb(0, 7, 9);
     padding-bottom: 40px;
     margin-left: 20px;
     margin-top: 30px;

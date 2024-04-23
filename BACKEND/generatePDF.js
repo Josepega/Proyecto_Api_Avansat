@@ -9,7 +9,7 @@ module.exports = async function generatePDF({
         headless: true,
         defaultViewport: {
             width: 750,
-            height: 500,
+            height: 1000,
             deviceScaleFactor: 1,
             isMobile: true,
             hasTouch: false,
