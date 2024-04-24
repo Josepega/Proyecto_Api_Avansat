@@ -807,10 +807,30 @@ function manejarModalFacturas() {
     const BotonGuardarFactura = document.querySelectorAll("#boton_facturas_guardar");
     BotonGuardarFactura.forEach(function (element) {
       element.addEventListener("click", () => {
-          const facturasAlta = new Date().toISOString().split('T')[0];
+          // Fecha de alta en formato ISO (YYYY-MM-DD)
+const facturasAlta = new Date().toISOString().split('T')[0];
+
+// Obtener el valor de vencimiento en días del elemento HTML
+const vencimientoDias = parseInt(document.getElementById("facturas_vencimiento").value);
+
+// Crear un objeto Date para la fecha de alta
+const fechaAlta = new Date(facturasAlta);
+
+// Calcular la fecha de vencimiento sumando los días de vencimiento a la fecha de alta
+const fechaVencimiento = new Date(fechaAlta);
+fechaVencimiento.setDate(fechaVencimiento.getDate() + vencimientoDias);
+
+// Formatear la fecha de vencimiento en el formato DD/MM/YYYY
+const diaVencimiento = fechaVencimiento.getDate();
+const mesVencimiento = fechaVencimiento.getMonth() + 1; // Sumamos 1 porque los meses van de 0 a 11
+const anioVencimiento = fechaVencimiento.getFullYear();
+const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencimiento}/${mesVencimiento < 10 ? '0' : ''}${mesVencimiento}/${anioVencimiento}`;
+
+// Establecer el valor de la fecha de vencimiento en el elemento HTML
+          facturasVencimiento = document.getElementById("facturas_vencimiento").value = fechaVencimientoFormateada;
+
           const facturasCliente = document.getElementById("facturas_id_cliente").value;
-          const facturasAlbaran = document.getElementById("facturas_albaran").value;
-          const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
+          const facturasAlbaran = document.getElementById("facturas_albaran").value;          
           const facturasEstado = document.getElementById("facturas_estado").value;
           const facturasPago = document.getElementById("facturas_tipo_pago").value;
           const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value).toFixed(2);
@@ -946,7 +966,7 @@ function manejarModalPresupuestos() {
   // Función para construir la lista de resultados
   const buildList = () => {
     const input = document.getElementById("presupuestos_nombre_cliente");
-    const autocompleteResults = document.getElementById("autocomplete-results_clientes");
+    const autocompleteResults = document.getElementById("autocomplete-results_clientes_presupuestos");
   
     console.log("Clientes:", clientes);
   
@@ -975,7 +995,7 @@ function manejarModalPresupuestos() {
   
   // Agregar evento al input para buscar clientes
   const inputClientes = document.getElementById("presupuestos_nombre_cliente");
-  const autocompleteResults = document.getElementById("autocomplete-results_clientes");
+  const autocompleteResults = document.getElementById("autocomplete-results_clientes_presupuestos");
   
   inputClientes.addEventListener("keyup", (event) => {
     autocompleteResults.style.display = "block";
@@ -1042,7 +1062,7 @@ function manejarModalPresupuestos() {
   // Función para construir la lista de resultados del autocompletado de stock
   const buildListStock = () => {
     const inputStock = document.getElementById("presupuestos_descripcion_stock");
-    const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+    const autocompleteResultsStock = document.getElementById("autocomplete-results_stock_presupuestos");
   
     if (!stock || stock.length === 0) {
       autocompleteResultsStock.innerHTML = "";
@@ -1069,7 +1089,7 @@ function manejarModalPresupuestos() {
   
   // Agregar evento al input para buscar stock
   const inputStock = document.getElementById("presupuestos_descripcion_stock");
-  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock_presupuestos");
   
   inputStock.addEventListener("keyup", (event) => {
     autocompleteResultsStock.style.display = "block";
@@ -1140,21 +1160,21 @@ function manejarModalPresupuestos() {
       }
     });
   
-    // AÑADIR A LA FACTURA ITEMS
+    // AÑADIR A LA PRESUPUESTO ITEMS
   
     var formPresupuestos = document.getElementById("alta_presupuestos");
-    var PresupuestosCantidad = document.getElementById("presupuestos_cantidad");
-    var PresupuestosCodigo = document.getElementById("presupuestos_codigo");
-    var PresupuestosStockCodigo = document.getElementById("presupuestos_id_detalle_stock");
-    var PresupuestosDescripcion = document.getElementById("presupuestos_descripcion");
-    var PresupuestosPrecio = parseFloat(document.getElementById("presupuestos_precio")).toFixed(2);
-    var PresupuestosImpuesto = document.getElementById("presupuestos_impuesto");
-    var PresupuestosTotal = parseFloat(document.getElementById("presupuestos_total")).toFixed(2);
-    var PresupuestosFecha = document.getElementById("presupuestos_alta");
+    var presupuestosCantidad = document.getElementById("presupuestos_cantidad");
+    var presupuestosCodigo = document.getElementById("presupuestos_codigo");
+    var presupuestosStockCodigo = document.getElementById("presupuestos_id_detalle_stock");
+    var pesupuestosDescripcion = document.getElementById("presupuestos_descripcion");
+    var presupuestosPrecio = parseFloat(document.getElementById("presupuestos_precio")).toFixed(2);
+    var presupuestosImpuesto = document.getElementById("presupuestos_impuesto");
+    var presupuestosTotal = parseFloat(document.getElementById("presupuestos_total")).toFixed(2);
+    var presupuestosFecha = document.getElementById("presupuestos_alta");
     const fechaActual = new Date().toISOString().split('T')[0];
-    PresupuestosFecha.value = fechaActual;
-    var PresupuestosAdd = document.getElementById("presupuestos_add");
-    var imagenAgregar = document.getElementById("icono-agregar");
+    presupuestosFecha.value = fechaActual;
+    var presupuestosAdd = document.getElementById("presupuestos_add");
+    var imagenAgregar = document.getElementById("icono-agregar_presupuestos");
     var guardarPresupuestos = document.getElementById("boton_presupuestos_guardar");
     
     // Inicializar las sumas totales
@@ -1166,7 +1186,7 @@ function manejarModalPresupuestos() {
   
     // Función para redibujar la tabla y recalcular los totales
     const redibujarTabla = () => {
-      PresupuestosAdd.innerHTML = "";
+      presupuestosAdd.innerHTML = "";
       let camposVacios = false; // Variable para rastrear si hay campos vacíos
     
       arregloDetalle.forEach((detalle, index) => {
@@ -1192,7 +1212,7 @@ function manejarModalPresupuestos() {
                           <div class="col3 col-15">${detalle.impuestos}</div>
                           <div class="col3 col-15">${detalle.precioIva * detalle.cantidad} </div>                                         
                           <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
-        PresupuestosAdd.appendChild(fila);
+        presupuestosAdd.appendChild(fila);
       });
     
       // Agregar el evento de clic al botón de eliminar para cada fila
@@ -1330,18 +1350,36 @@ function manejarModalPresupuestos() {
         results.innerHTML = "";
     };
     //ALTA PRESUPUESTO
-    const BotonGuardarFactura = document.querySelectorAll("#boton_presupuestos_guardar");
-    BotonGuardarFactura.forEach(function (element) {
+    const BotonGuardarPresupuesto = document.querySelectorAll("#boton_presupuestos_guardar");
+    BotonGuardarPresupuesto.forEach(function (element) {
       element.addEventListener("click", () => {
-          const PresupuestosAlta = new Date().toISOString().split('T')[0];
+          // Fecha de alta en formato ISO (YYYY-MM-DD)
+const PresupuestosAlta = new Date().toISOString().split('T')[0];
+
+// Obtener el valor de vencimiento en días del elemento HTML
+const vencimientoDias = parseInt(document.getElementById("presupuestos_vencimiento").value);
+
+// Crear un objeto Date para la fecha de alta
+const fechaAlta = new Date(PresupuestosAlta);
+
+// Calcular la fecha de vencimiento sumando los días de vencimiento a la fecha de alta
+const fechaVencimiento = new Date(fechaAlta);
+fechaVencimiento.setDate(fechaVencimiento.getDate() + vencimientoDias);
+
+// Formatear la fecha de vencimiento en el formato DD/MM/YYYY
+const diaVencimiento = fechaVencimiento.getDate();
+const mesVencimiento = fechaVencimiento.getMonth() + 1; // Sumamos 1 porque los meses van de 0 a 11
+const anioVencimiento = fechaVencimiento.getFullYear();
+const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencimiento}/${mesVencimiento < 10 ? '0' : ''}${mesVencimiento}/${anioVencimiento}`;
+
+// Establecer el valor de la fecha de vencimiento en el elemento HTML
+PresupuestosVencimiento = document.getElementById("presupuestos_vencimiento").value = fechaVencimientoFormateada;
+
           const PresupuestosCliente = document.getElementById("presupuestos_id_cliente").value;
-          const PresupuestosAlbaran = document.getElementById("presupuestos_albaran").value;
-          const PresupuestosVencimiento = document.getElementById("presupuestos_vencimiento").value;
+          const PresupuestosAlbaran = document.getElementById("presupuestos_albaran").value;          
           const PresupuestosEstado = document.getElementById("presupuestos_estado").value;
           const PresupuestosPago = document.getElementById("presupuestos_tipo_pago").value;
-          const PresupuestosImponible = parseFloat(document.getElementById("presupuestos_imponible").value).toFixed(2);
-        
-          
+          const PresupuestosImponible = parseFloat(document.getElementById("presupuestos_imponible").value).toFixed(2);          
           const PresupuestosTotal = parseFloat(document.getElementById("presupuestos_total").value).toFixed(2);
           const PresupuestosIdStock = document.getElementById("presupuestos_id_detalle_stock").value;
           const PresupuestosCantidad = document.getElementById("presupuestos_cantidad").value;
@@ -1364,35 +1402,39 @@ function manejarModalPresupuestos() {
               return;
           }
   
-          // Formar el detalle de la factura en formato JSON
-          const detallePresupuestos = arregloDetalle.map(detalle => ({
-            Id_presupuesto: null, // Aquí se asignará el ID de la factura después de ser creada en el servidor
-            Id_cliente: PresupuestosCliente,
-            Cantidad: detalle.cantidad,
-            stock_Id_stock: detalle.id_stock,
-            Codigo: detalle.codigo
-        }));
+        
+       // Formar el detalle del presupuesto en formato JSON
+const detallePresupuestos = arregloDetalle.map(detalle => ({
+  presupuestos_Id_presupuesto: null, // Aquí se asignará el ID del presupuesto después de ser creado en el servidor
+  presupuestos_Id_cliente: PresupuestosCliente,
+  Cantidad: detalle.cantidad,
+  stock_Id_stock: detalle.id_stock,
+  Codigo: detalle.codigo
+}));
+
         
   
-          // Realizar la solicitud HTTP POST al servidor para agregar la factura
-          const urlAltaPresupuesto = "http://localhost:3000/api/v1/alta_presupuesto"; // Cambiar la URL según la ruta en tu servidor
-          fetch(urlAltaPresupuesto, {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  Fecha_alta: PresupuestosAlta,
-                  Id_cliente: PresupuestosCliente,
-                  Albaran: PresupuestosAlbaran,
-                  Fecha_vencimiento: PresupuestosVencimiento,
-                  Estado: PresupuestosEstado,
-                  Forma_pago: PresupuestosPago,
-                  Base_imponible: PresupuestosImponible,
-                  Total: PresupuestosTotal,
-                  detalleFactura: JSON.stringify(detallePresupuestos) // Convertir a cadena JSON
-              }),
-          })
+   // Realizar la solicitud HTTP POST al servidor para agregar el presupuesto
+const urlAltaPresupuesto = "http://localhost:3000/api/v1/alta_presupuesto"; // Cambiar la URL según la ruta en tu servidor
+fetch(urlAltaPresupuesto, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        Fecha_alta: PresupuestosAlta,
+        Id_cliente: PresupuestosCliente,
+        Albaran: PresupuestosAlbaran,
+        Fecha_vencimiento: PresupuestosVencimiento,
+        Estado: PresupuestosEstado,
+        Forma_pago: PresupuestosPago,
+        Base_imponible: PresupuestosImponible,
+        Total: PresupuestosTotal,
+        detallePresupuestos: JSON.stringify(detallePresupuestos) // Convertir a cadena JSON
+    }),
+})
+
+
               .then((response) => {
                   if (!response.ok) {
                       throw new Error("Error al agregar el presupuesto");
@@ -1408,7 +1450,7 @@ function manejarModalPresupuestos() {
                   });
                   setTimeout(() => {
                       location.reload();
-                  }, 3000);
+                  }, 2000);
               })
               .catch((error) => {
                   swal.fire({

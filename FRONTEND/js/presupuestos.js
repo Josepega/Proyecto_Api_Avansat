@@ -75,7 +75,7 @@ const mostrar = (data) => {
     // Agregar la fila al resultado
     resultado += `
         <div class="row2">
-            <div class="col2 col-10">${presupuestos.Id_Presupuesto}</div>
+            <div class="col2 col-10">${presupuestos.Id_presupuesto}</div>
             <div class="col2 col-10">${fechaAltaFormateada}</div>
             <div class="col2 col-10">${presupuestos.Fecha_vencimiento}</div>
             <div class="col2 col-30">${presupuestos.Id_cliente}</div>

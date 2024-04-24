@@ -7,11 +7,11 @@ router.post("/alta_presupuesto", (req, res) => {
     const { Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = req.body;
   
     // Convertir la cadena JSON de detallePresupuesto en un array de objetos
-    const detallePresupuesto = JSON.parse(req.body.detallePresupuesto);
+const detallePresupuestos = JSON.parse(req.body.detallePresupuestos);
   
     // Insertar el nuevo presupuesto en la base de datos
-    const sqlFactura = `INSERT INTO presupuestos (Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    conexionMySQL.query(sqlPresupuestos, [Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total], (error, resultadoFactura) => {
+    const sqlPresupuestos = `INSERT INTO presupuestos (Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    conexionMySQL.query(sqlPresupuestos, [Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total], (error, resultadoPresupuestos) => {
       if (error) {
         return res.json({ "status": 500, "mensaje": "Error al crear la factura en el servidor. Error: " + error });
       }
@@ -19,10 +19,10 @@ router.post("/alta_presupuesto", (req, res) => {
       const idPresupuesto = resultadoPresupuestos.insertId;
   
       // Insertar el detalle del presupuesto en la base de datos
-      const sqlDetallePresupuesto = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
-      const valoresDetallePresupuesto = detallePresupuesto.map(detalle => [idPresupuesto, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
+      const sqlDetallePresupuestos = `INSERT INTO detalle_presupuesto (presupuestos_Id_presupuesto, presupuestos_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
+      const valoresDetallePresupuesto = detallePresupuestos.map(detalle => [idPresupuesto, detalle.presupuestos_Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
   
-      conexionMySQL.query(sqlDetallePresupuesto, [valoresDetallePresupuesto], (error, resultadoDetalle) => {
+      conexionMySQL.query(sqlDetallePresupuestos, [valoresDetallePresupuesto], (error, resultadoDetalle) => {
         if (error) {
           return res.json({ "status": 500, "mensaje": "Error al asociar detalles del presupuesto en el servidor. Error: " + error });
         }
@@ -44,16 +44,16 @@ router.post("/alta_presupuesto", (req, res) => {
         }
     })
   })
-  // RUTA PARA OBTENER LOS DETALLES BÁSICOS DE LA FACTURA
+  // RUTA PARA OBTENER LOS DETALLES BÁSICOS DEL PRESUPUESTO
   router.get("/listado_presupuestos_detalle/:idPresupuesto", (req, res) => {
     const idPresupuesto = req.params.idPresupuesto;
   
     // Consultar la base de datos para obtener los detalles básicos de la factura
     const sqlPresupuestos = `
-      SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total, f.Id_presupuesto,
+      SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, p.Base_imponible, p.Total, p.Id_presupuesto,p.Fecha_vencimiento, p.Fecha_alta
       FROM clientes c
-      JOIN presupuestos f ON c.Id_cliente = f.Id_cliente
-      WHERE f.Id_presupuesto = ?
+      JOIN presupuestos p ON c.Id_cliente = p.Id_cliente
+      WHERE p.Id_presupuesto = ?
     `;
   
     conexionMySQL.query(sqlPresupuestos, idPresupuesto, (error, presupuesto) => {
@@ -79,7 +79,7 @@ router.post("/alta_presupuesto", (req, res) => {
       SELECT df.Cantidad, s.Nombre AS Nombre_Producto, s.Precio_venta, s.Codigo
       FROM detalle_presupuesto df
       INNER JOIN stock s ON df.stock_Id_stock = s.Id_stock
-      WHERE df.presupuesto_Id_presupuesto = ?
+      WHERE df.presupuestos_Id_presupuesto = ?
     `;
   
     conexionMySQL.query(sqlDetalles, idPresupuesto, (error, detalles) => {
@@ -97,7 +97,7 @@ router.post("/alta_presupuesto", (req, res) => {
   
   
   
-  // RUTAS: BORRAR FACTURAS
+  // RUTAS: BORRAR PRESUPUESTOS
   router.delete("/borrar_presupuesto/:id", (req,res)=>{
     conexionMySQL.query('DELETE FROM presupuestos WHERE Id_presupuesto = ?', [req.params.id], function(error, filas){
         if(error){

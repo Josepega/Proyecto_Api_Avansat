@@ -77,7 +77,7 @@ const mostrar = (data) => {
         <div class="row2">
             <div class="col2 col-10">${facturas.Id_factura}</div>
             <div class="col2 col-10">${fechaAltaFormateada}</div>
-            <div class="col2 col-10">${facturas.Fecha_vencimiento}</div>
+            <div class="col2 col-10">${facturas.Fecha_vencimiento.replace(/-/g, '/')}</div>
             <div class="col2 col-30">${facturas.Id_cliente}</div>
             <div class="col2 col-10">${facturas.Base_imponible}</div>
             <div class="col2 col-10">${facturas.Total}</div>

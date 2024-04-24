@@ -13,7 +13,7 @@
     
 </head>
 <body>
-    <div class="plantilla_facturas" >
+    <div class="plantilla_presupuestos" >
         <div class="row">
             <div class="col col-30"><img src="../img/avansat-logo-web-l.png" style="height: 120px;"></div>
             <div class="col col-10"></div>
@@ -37,12 +37,12 @@
                     <input class="inputPlantilla" type="text" id="plantilla_c_postal" placeholder="CP"style="text-align: left;">
                     <input class="inputPlantilla" type="text" id="plantilla_pais" placeholder="Pais"style="text-align: left;">                    
                 </div>
-                <div class="col-20"></div>
-                <div class="col col-20" style="align-items: end;">
-                    <h1>Factura Nº </h1>
+                <div class="col-10"></div>
+                <div class="col col-30" style="align-items: end;">
+                    <h1>Presupuesto Nº </h1>
                 </div>
                 <div class="col col-15">
-                    <input class="inputPlantilla" type="text" id="plantilla_id_factura" placeholder="2024/0123" style= "text-align:center; font-size: 20px;" >
+                    <input class="inputPlantilla" type="text" id="plantilla_id_presupuesto" placeholder="2024/0123" style= "text-align:center; font-size: 20px;" >
                 </div>
             </div>
             <div class="row">
@@ -96,38 +96,38 @@
         
     </div>
     <script>
-        const idFactura = obtenerIdFacturaDeURL();
+        const idPresupuesto = obtenerIdPresupuestoDeURL();
     
-        // Mostrar los detalles de la factura usando el ID obtenido
-        if (idFactura) {
-            mostrarDetallesFactura(idFactura);
-            mostrarDetallesProductos(idFactura);
+        // Mostrar los detalles de la Presupuesto usando el ID obtenido
+        if (idPresupuesto) {
+            mostrarDetallesPresupuesto(idPresupuesto);
+            mostrarDetallesProductos(idPresupuesto);
         } else {
-            console.error('No se proporcionó un ID de factura en la URL');
-            alert('No se proporcionó un ID de factura en la URL. Por favor, inténtelo de nuevo.');
+            console.error('No se proporcionó un ID del Presupuesto en la URL');
+            alert('No se proporcionó un ID del Presupuesto en la URL. Por favor, inténtelo de nuevo.');
         }
     
-        // Función para obtener el ID de la factura de la URL
-        function obtenerIdFacturaDeURL() {
+        // Función para obtener el ID de la Presupuesto de la URL
+        function obtenerIdPresupuestoDeURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('id');
         }
     
-        // Función para mostrar los detalles de la factura
-        function mostrarDetallesFactura(idFactura) {
-            // Lógica para obtener y mostrar los detalles de la factura
-            fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
+        // Función para mostrar los detalles de la Presupuesto
+        function mostrarDetallesPresupuesto(idPresupuesto) {
+            // Lógica para obtener y mostrar los detalles de la Presupuesto
+            fetch(`http://localhost:3000/api/v1/listado_presupuestos_detalle/${idPresupuesto}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error al obtener los detalles de la factura');
+                        throw new Error('Error al obtener los detalles del Presupuesto');
                     }
                     return response.json();
                 })
                 .then(data => {
                     if (data.length === 0) {
-                        throw new Error('No se encontraron detalles para la factura especificada');
+                        throw new Error('No se encontraron detalles para el Presupuesto especificada');
                     }
-                    //Rellenar los campos de la plantilla de factura con los datos obtenidos
+                    //Rellenar los campos de la plantilla de Presupuesto con los datos obtenidos
                     document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
                     document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
                     document.getElementById('plantilla_direccion').value = data.Direccion;
@@ -145,11 +145,11 @@
 
                     // Establecer el valor formateado en el elemento HTML
                     document.getElementById('plantilla_emision').value = fechaFormateada;
-                    document.getElementById('plantilla_vencimiento').value = data.Fecha_vencimiento 
-                    document.getElementById('plantilla_base_imponible').value = data.Base_imponible  + ' €';
+                    document.getElementById('plantilla_vencimiento').value = data.Fecha_vencimiento;   
+                    document.getElementById('plantilla_base_imponible').value = (data.Base_imponible)  + ' €';
                     document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;  
                     document.getElementById('plantilla_total').value = data.Total + ' €';
-                    document.getElementById('plantilla_id_factura').value = data.Id_factura;
+                    document.getElementById('plantilla_id_presupuesto').value = data.Id_presupuesto;
                     //document.getElementById('plantilla_descripcion').value = data.Descripcion;
                 })
                 .catch(error => {
@@ -160,19 +160,19 @@
                         icon: 'error',
                         iconColor: '#e6381c',
                         title: 'Error al obtener detalles',
-                        text: 'Hubo un error al obtener los detalles de la factura. Por favor, inténtelo de nuevo más tarde.',
+                        text: 'Hubo un error al obtener los detalles del Presupuesto. Por favor, inténtelo de nuevo más tarde.',
                         confirmButtonColor: '#0798c4',
                     });
                 });
         } 
     
-        // Función para mostrar los detalles de los productos asociados a la factura
-        function mostrarDetallesProductos(idFactura) {
-            // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-            fetch(`http://localhost:3000/api/v1/listado_detalles_factura/${idFactura}`)
+        // Función para mostrar los detalles de los productos asociados a la Presupuesto
+        function mostrarDetallesProductos(idPresupuesto) {
+            // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la Presupuesto
+            fetch(`http://localhost:3000/api/v1/listado_detalles_presupuestos/${idPresupuesto}`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Error al obtener los detalles de los productos asociados a la factura');
+                        throw new Error('Error al obtener los detalles de los productos asociados al Presupuesto');
                     }
                     return response.json();
                 })
@@ -206,28 +206,28 @@
                         icon: 'error',
                         title: 'Error',
                         iconColor: '#e6381c',
-                        text: 'Hubo un error al obtener los detalles de los productos asociados a la factura. Por favor, inténtelo de nuevo más tarde.',
+                        text: 'Hubo un error al obtener los detalles de los productos asociados al Presupuesto. Por favor, inténtelo de nuevo más tarde.',
                         confirmButtonColor: '#0798c4',
                     });
                 });
         }
     
-        // Función para descargar la factura como PDF
-      // Función para descargar la factura como PDF
-function descargarFacturaComoPDF(idFactura) {
+        // Función para descargar la Presupuesto como PDF
+      // Función para descargar la Presupuesto como PDF
+function descargarPresupuestoComoPDF(idPresupuesto) {
     fetch ('/generatePDF', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ idFactura: idFactura }) // Utiliza idFactura en lugar de id
+        body: JSON.stringify({ idPresupuesto: idPresupuesto }) // Utiliza idPresupuesto en lugar de id
     })
     .then(response => response.blob())
     .then(blob => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `factura_${idFactura}.pdf`;
+        a.download = `presupuesto_${idPresupuesto}.pdf`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -245,24 +245,24 @@ function descargarFacturaComoPDF(idFactura) {
 
 // Asociar la función de descarga de PDF al evento click del botón de descarga
 document.getElementById('icono_pdf').addEventListener('click', () => {
-    const idFactura = obtenerIdFacturaDeURL(); // Obtener el idFactura antes de descargar el PDF
-    if (idFactura) {
-        descargarFacturaComoPDF(idFactura);
+    const idPresupuesto = obtenerIdPresupuestoDeURL(); // Obtener el idPresupuesto antes de descargar el PDF
+    if (idPresupuesto) {
+        descargarPresupuestoComoPDF(idPresupuesto);
     } else {
-        console.error('No se proporcionó un ID de factura en la URL');
-        alert('No se proporcionó un ID de factura en la URL. Por favor, inténtelo de nuevo.');
+        console.error('No se proporcionó un ID del Presupuesto en la URL');
+        alert('No se proporcionó un ID del Presupuesto en la URL. Por favor, inténtelo de nuevo.');
     }
 });
 
 
 
-// Función para imprimir la factura
-function imprimirFactura() {
+// Función para imprimir la Presupuesto
+function imprimirPresupuesto() {
     window.print(); // Utilizamos el método print() del objeto window para imprimir la página actual
 }
 
 // Asociar la función de impresión al evento click del icono de imprimir
-document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura);
+document.getElementById('icono_imprimir').addEventListener('click', imprimirPresupuesto);
 
     </script>
 </body>

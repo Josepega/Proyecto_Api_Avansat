@@ -1,22 +1,22 @@
 
 
-function mostrarDetallesPresupuestos(idPresupuesto) {
+function mostrarDetallesFacturas(idFactura) {
     // Mostrar la plantilla de factura antes de obtener los detalles
-    document.querySelector('#plantilla_presupuestos').style.display = 'block';
+    document.querySelector('#plantilla_facturas').style.display = 'block';
   
     // Realizar la solicitud Fetch para obtener los detalles de la factura
-    fetch(`http://localhost:3000/api/v1/listado_presupuestos_detalle/${idPresupuesto}`)
+    fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Error al obtener los detalles del presupuesto');
+          throw new Error('Error al obtener los detalles de la Factura');
         }
         return response.json();
       })
       .then(data => {
         if (data.length === 0) {
-          throw new Error('No se encontraron detalles para el presupuesto especificado');
+          throw new Error('No se encontraron detalles para la Factura especificado');
         }
-         //Rellenar los campos de la plantilla de presupuesto con los datos obtenidos
+         //Rellenar los campos de la plantilla de Factura con los datos obtenidos
         document.getElementById('plantilla_nombre').value = data.Nombre + ' ' + data.Apellidos;
         document.getElementById('plantilla_id_fiscal').value = "NIF: "+ data.Id_fiscal;
         document.getElementById('plantilla_direccion').value = data.Direccion;
@@ -40,19 +40,19 @@ function mostrarDetallesPresupuestos(idPresupuesto) {
           icon: 'error',
           iconColor: '#e6381c',
           title: 'Error al obtener detalles',
-          text: 'Hubo un error al obtener los detalles del presupuesto. Por favor, inténtelo de nuevo más tarde.',
+          text: 'Hubo un error al obtener los detalles de la Factura. Por favor, inténtelo de nuevo más tarde.',
           confirmButtonColor: '#0798c4',
   
         });
       });
   } 
-  // Función para mostrar los detalles de los productos asociados al presupuesto
-  function mostrarDetallesProductos(idPresupuesto) {
+  // Función para mostrar los detalles de los productos asociados al Factura
+  function mostrarDetallesProductos(idFactura) {
     // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-    fetch(`http://localhost:3000/api/v1/listado_detalles_presupuestos/${idPresupuesto}`)
+    fetch(`http://localhost:3000/api/v1/listado_detalles_facturas/${idFactura}`)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Error al obtener los detalles de los productos asociados al presupuesto');
+          throw new Error('Error al obtener los detalles de los productos asociados a la Factura');
         }
         return response.json();
       })
@@ -70,9 +70,9 @@ function mostrarDetallesPresupuestos(idPresupuesto) {
               <div class="col2 col-15">${producto.Codigo}</div>           
               <div class="col2 col-30">${producto.Nombre_Producto}</div>
               <div class="col2 col-10">${producto.Cantidad}</div>
-              <div class="col2 col-15">${producto.Precio_venta+" €"}</div>
+              <div class="col2 col-15">${producto.Precio_venta+" €D"}</div>
               <div class="col2 col-10">21%</div>
-              <div class="col2 col-10">${producto.Cantidad * producto.Precio_venta+" €"}</div>           
+              <div class="col2 col-10">${(producto.Cantidad * producto.Precio_venta).toFixed(2)+" €D"}</div>           
             </div>`;
             
           detallesDiv.appendChild(productoDiv);
@@ -86,7 +86,7 @@ function mostrarDetallesPresupuestos(idPresupuesto) {
           icon: 'error',
           title: 'Error',
           iconColor: '#e6381c',
-          text: 'Hubo un error al obtener los detalles de los productos asociados al presupuesto. Por favor, inténtelo de nuevo más tarde.',
+          text: 'Hubo un error al obtener los detalles de los productos asociados a la Factura. Por favor, inténtelo de nuevo más tarde.',
           confirmButtonColor: '#0798c4',
         });
       });

@@ -44,10 +44,10 @@ const mostrar = (data) => {
   if (!Array.isArray(data) || data.length === 0) {
     swal.fire({
       icon: "info",
-      iconColor: "#0b7593",
+      iconColor: "#0798c4",
       title: "No hay Servicios registrados",
       text: "Puedes crear servicios en el boton AÑADIR",
-      confirmButtonColor: "#055778",
+      confirmButtonColor: "#0798c4",
     });
     return;
   }
@@ -97,9 +97,9 @@ on(document, "click", ".eliminar-icono", (e) => {
     text: "¡Esta acción no se puede deshacer!",
     icon: "question",
     showCancelButton: true,
-    confirmButtonColor: "#055778",
-    cancelButtonColor: "#a0360f",
-    iconColor: "#db3208",
+    confirmButtonColor: "#0798c4",
+    cancelButtonColor: "#e6381c",
+    iconColor: "#e6381c",
     confirmButtonText: "Aceptar",
     cancelButtonText: "Cancelar",
 
@@ -124,8 +124,8 @@ on(document, "click", ".eliminar-icono", (e) => {
               title: "¡servicio eliminado!",
               text: "El artículo ha sido eliminado satisfactoriamente.",
               icon: "success",
-              iconColor: "#0b7593",
-              confirmButtonColor: "#055778",
+              iconColor: "#0798c4",
+              confirmButtonColor: "#0798c4",
             });
             setTimeout(() => {
               location.reload();
@@ -135,7 +135,8 @@ on(document, "click", ".eliminar-icono", (e) => {
         .catch((error) => {
           swal.fire("Error al eliminar el servicio", {
             icon: "error",
-            confirmButtonColor: "#055778",
+            iconColor: "#e6381c",
+            confirmButtonColor: "#0798c4",
           });
         });
     } else {
@@ -143,8 +144,8 @@ on(document, "click", ".eliminar-icono", (e) => {
         title: "¡Articulo NO eliminado!",
         text: "Todo a salvo!.",
         icon: "info",
-        iconColor: "#0b7593",
-        confirmButtonColor: "#055778",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
       });
     }
   });
@@ -222,8 +223,8 @@ formEdit.forEach(form => {
           title: "¡Servicio editado!",
           text: "El servicio ha sido editado satisfactoriamente.",
           icon: "success",
-          iconColor: "#0b7593",
-          confirmButtonColor: "#055778",
+          iconColor: "#e6381c",
+          confirmButtonColor: "#e6381c",
         });
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje

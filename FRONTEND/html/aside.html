@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/main.css"> 
     <link rel="stylesheet" href="../css/clientes.css">
     <link rel="stylesheet" href="../css/facturas.css"> 
+    <script src="../js/modals.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <title>Aside</title>
 </head> 
@@ -24,7 +25,7 @@
                 <li id="boton_facturas_alta"><a href="#"><img src="../img/icons/factura+.svg" alt="">Crear factura</a></li>
                 <li id="boton_servicios_alta"><a href="#"><img src="../img/icons/servicio+.svg" alt="">Añadir servicio</a></li>
                 <li id="boton_stock_alta"><a href="#"><img src="../img/icons/stock+.svg" alt="">Añadir stock</a></li> 
-                <li><a href=""><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
+                <li id="boton_presupuestos_alta"><a href="#"><img src="../img/icons/albaran+.svg" alt="">Crear presupuesto</a></li>
             </ul>
             <div id="container_busqueda">
                 <label for="busqueda">Buscar <span><img src="../img/icons/lupa.svg" alt=""></span></label>
@@ -416,6 +417,167 @@
             </form>
         </div>
     </div>
-    <script src="../js/modals.js"></script>
+    
+     <!-- MODAL ALTA PRESUPUESTOS -->
+  <div id= modal_alta_presupuestos class="modal">
+    <div id="container_interior_modal_presupuestos" class="modal_interior">
+        <form id="alta_presupuestos" class="formulario">
+
+            <div class="row">
+                <div class="col col-60"><img src="../img/avansat-app-presupuestos-alta.png" alt="" style="height: 40px;"></div>
+                <div class="col-3"><input type="text" id="presupuestos_id" disabled style="display: none;"></div>
+                <div class="col col-15">                        
+                    <input type="text" placeholder="Nº Albarán" id="presupuestos_albaran">
+                </div> 
+                <div class="col col-3"><input type="text" id="presupuestos_id_cliente" ></div>
+                <div class="col col-3"><input type="text" id="presupuestos_id_detalle_stock" style="display: none;"></div>
+                <div class="col-10"><button type="button" id="close" class="btn">Cerrar</button></div>                    
+            </div>
+<div class="row" style="height: 20px;"></div>
+            <div class="row"><!-- ROW DATOS CLIENTE 1-->
+                <div class="col col-15">
+                    <label>Tipo de cliente</label>
+                    <select name="tipo" id="tipo_presupuestos">
+                        <option value="Persona">Persona</option>
+                        <option value="Empresa">Empresa</option>
+                    </select>
+                </div>
+                <div class="col col-30 autocomplete_clientes" id="presupuestos_nombre_ocultar">    
+                    <input type="text" id="presupuestos_nombre_cliente" placeholder="Nombre Cliente">
+                    <ul id="autocomplete-results_clientes_presupuestos" class="autocomplete-results_clientes_presupuestos"></ul>
+                </div>
+
+                <div class="col col-30" id="presupuestos_apellidos_ocultar">                        
+                    <input type="text" id="presupuestos_apellidos" placeholder="Apellidos Cliente">
+                </div>
+                <div class="col col-50" id="presupuestos_nombreEmpresa_ocultar" >    
+                    <input type="text" id="presupuestos_nombre_empresa" placeholder="Nombre Empresa">
+                </div>
+                <div class="col col-15">                        
+                    <input type="text" id="presupuestos_fiscal" placeholder="ID Fiscal">
+                </div>
+            </div>
+            <div class="row"><!-- ROW DATOS CLIENTE 2 -->
+                <div class="col col-40">    
+                    <input type="text" placeholder="Dirección" id="presupuestos_direccion">
+                </div>
+                <div class="col col-15">                        
+                    <input type="number" placeholder="C.P." id="presupuestos_c_postal">
+                </div>
+                <div class="col col-15">                        
+                    <input type="text" placeholder="Localidad" id="presupuestos_localidad">
+                </div>
+                <div class="col col-15">                        
+                    <input type="text" placeholder="Pais" id="presupuestos_pais">
+                </div>
+            </div>
+
+            <div class="row"><!--  DATOS OCULTOS -->
+
+                <div class="col col-30" style="display:none">
+                    <label><span>*</span>Fecha alta</label> <input type="date" id="presupuestos_alta">
+                </div>
+                <div class="col col-30" style="display:none">
+                    <label><span>*</span>Estado</label>
+                    <select name="estado" id="presupuestos_estado">
+                        <option value="pendiente" selected="selected">Pendiente</option>
+                        <option value="cobrada">Cobrada</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+
+                <div class="col2 col-10">
+                    <h4>Cantidad</h4>
+                </div>
+                <div class="col2 col-10">
+                    <h4>Código</h4>
+                </div>
+                <div class="col2 col-40">
+                    <h4>Descripción</h4>
+                </div>
+                <div class="col2 col-15">
+                    <h4>Precio unitario</h4>
+                </div>
+                <div class="col2 col-15">
+                    <h4>IVA %</h4>
+                </div>
+                <div class="col2 col-15">
+                    <h4>Precio IVA inc</h4>
+                </div>
+                <div class="col2 col-15"><h4>Acciones</h4></div>
+
+
+            </div>
+            <div  id="presupuestos_add"></div>
+
+            <div id="presupuestos_items_add"><!-- ROW DATOS ARTICULO 1 -->
+                <div class="col col-10">
+                    <input type="number"  placeholder="Ej: 5" id="presupuestos_cantidad">
+                </div>
+                <div class="col col-10">
+                    <input type="text" placeholder="Ej: 123456" id="presupuestos_codigo">
+                </div>
+                <div class="col col-35 autocomplete_servicios">
+                    <input type="text" placeholder="Ej: Repuestos Varios" id="presupuestos_descripcion_stock">
+                    <ul id="autocomplete-results_stock_presupuestos" class="autocomplete-results_stock_presupuestos"></ul>
+                </div>
+              
+                <div class="col col-15">
+                    <input type="number" step="any" placeholder="Ej: 20,50" id="presupuestos_precio">
+                </div>
+                <div class="col col-10">
+                    <select name="impuestos" id="presupuestos_impuestos">
+                        <option value="21" selected="selected">21%</option>
+                        <option value="15">15%</option>
+                        <option value="10">10%</option>                                        
+                        <option value="5">5%</option>
+                        <option value="0">0%</option>                    
+                    </select>
+                </div>
+                <div class="col-20"></div>                               
+                <div class="col col-10"><img id="icono-agregar_presupuestos" class="agregar-icono" src="../img/icons/add.svg" alt=""></div>
+            </div>
+
+            <!-- BOTON GUARDAR TOTALES -->
+            <div id="separador"></div>
+            <div class="row">
+                <div class="col col-20">
+                    <label>Tipo Pago</label>
+                    <select name="tipo_pago" id="presupuestos_tipo_pago">   
+                        <option value="Transferencia" selected="selected">Transferencia</option>
+                        <option value="contado">Contado</option>
+                        <option value="efectivo">Efectivo</option>
+                        <option value="tarjeta">Tarjeta</option>
+                    </select>
+                </div>
+                <div class="col col-15">
+                    <label><span>*</span>Vencimiento</label>
+                    <select name="vencimiento" id="presupuestos_vencimiento">
+                        <option value="15">15 días</option>
+                        <option value="30" selected="selected">30 días</option>
+                        <option value="90">90 días</option>
+                    </select>
+                </div>                    
+                <div class="col col-20"></div>                 
+                <div class="col-20">
+                    <label>Base imponible</label>
+                    <input type="number" step="any" id="presupuestos_imponible" disabled>
+                </div>
+                <div class="col-20">
+                    <label>TOTAL</label>
+                    <input type="number"step="any" id="presupuestos_total" disabled>
+                </div>
+    
+            </div>
+            <div class="row">
+                <div class="col col-10">
+                    <button type="button" id="boton_presupuestos_guardar" class="btn">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html> 

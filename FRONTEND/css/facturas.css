@@ -14,7 +14,7 @@ body {
   justify-content:start;
  
 }
-.plantilla_facturas {
+.plantilla_facturas, .plantilla_presupuestos {
   width: 100%;
   height: 100%;
   display: flex;
@@ -26,12 +26,12 @@ body {
   padding: 20px;
   text-align: center;
 }
-.plantilla_facturas p {
+.plantilla_facturas p, .plantilla_presupuestos p {
   font-size: 16px;
   color: #050100;
   font-weight: 400;
 }
-.plantilla_facturas .col2 {
+.plantilla_facturas .col2, .plantilla_presupuestos .col2 {
   font-size: 15px;
 }
 h4 {
@@ -89,13 +89,13 @@ a {
   margin-bottom: 20px;
   border-bottom: #c07254 1px solid;
 }
-#facturas_add {
+#facturas_add, #presupuestos_add{
   display: inline-block;
   width: 100%;
   margin: 20px;
 
 }
-#facturas_items_add {
+#facturas_items_add, #presupuestos_items_add {
   width: 100%;
   height: 100%;
   display: flex;
@@ -104,14 +104,14 @@ a {
   align-items: center;
   margin-bottom: 20px;
 }
-#alta_facturas {
+#alta_facturas, #alta_presupuestos {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-.autocomplete_clientes, .autocomplete_servicios {
+.autocomplete_clientes, .autocomplete_servicios,  .autocomplete_stock {
     display: flex;
     display: flex;
     flex-direction: column;
@@ -123,7 +123,7 @@ a {
   
   
   
-  .autocomplete-results_clientes, .autocomplete-results_servicios, .autocomplete-results_stock{
+  .autocomplete-results_clientes, .autocomplete-results_clientes_presupuestos, .autocomplete-results_servicios, .autocomplete-results_servicios_presupuestos, .autocomplete-results_stock, .autocomplete-results_stock_presupuestos {
     display: none;
    /*  position: absolute; */
     width: 300px;
@@ -145,8 +145,21 @@ a {
     border-bottom: 2px solid #eee;
     border-left: 2px solid #eee;
   }
+  .autocomplete-results_clientes_presupuestos li, .autocomplete-results_servicios_presupuestos li, .autocomplete-results_stock_presupuestos li {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    border-right: 2px solid #eee;
+    border-bottom: 2px solid #eee;
+    border-left: 2px solid #eee;
+  }
   
   .autocomplete-results_clientes li:hover, .autocomplete-results_servicios li:hover, .autocomplete-results_stock li:hover {
+    background-color: #eee;
+    color: rgb(151, 50, 6);
+    cursor: pointer;
+  }
+  .autocomplete-results_clientes_presupuestos li:hover, .autocomplete-results_servicios_presupuestos li:hover, .autocomplete-results_stock_presupuestos li:hover {
     background-color: #eee;
     color: rgb(151, 50, 6);
     cursor: pointer;

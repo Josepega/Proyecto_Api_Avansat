@@ -52,7 +52,7 @@ router.get("/listado_facturas_detalle/:idFactura", (req, res) => {
 
   // Consultar la base de datos para obtener los detalles básicos de la factura
   const sqlFactura = `
-    SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total, f.Id_factura
+    SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total, f.Id_factura,f.Fecha_vencimiento, f.Fecha_alta
     FROM clientes c
     JOIN facturas f ON c.Id_cliente = f.Id_cliente
     WHERE f.Id_factura = ?
