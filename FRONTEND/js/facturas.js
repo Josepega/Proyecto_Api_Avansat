@@ -168,128 +168,95 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR FACTURAS
 
-const urlEditarFactura = "http://localhost:3000/api/v1/editar_facturas/";
+const urlEditarFactura = "http://localhost:3000/api/v1/editar_datos_factura/";
 
-on(document, "click", ".editar-icono", (e) => {
-  const fila = e.target.parentNode.parentNode;
+// Evento al hacer clic en el ícono de edición
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("editar-icono")) {
+    const fila = e.target.parentNode.parentNode;
+    const idFactura = fila.firstElementChild.innerHTML;
 
-  // Obtener los valores de las columnas de la fila
-  const idFactura = fila.firstElementChild.innerHTML
-  const fechaVencimiento = fila.children[2].innerHTML;
-  const cliente = fila.children[1].innerHTML;
-  const tipo = fila.children[4].innerHTML;
-  const nombreCliente = fila.children[4].innerHTML;
-  const apellidosCliente = fila.children[5].innerHTML;
-  const idFiscal = fila.children[6].innerHTML;
-  const direccion = fila.children[7].innerHTML;
-  const cPostal = fila.children[8].innerHTML;
-  const localidad = fila.children[9].innerHTML;
-  const stockCosteIva = fila.children[4].innerHTML;
-
-  // Mostrar los valores en la consola antes de asignarlos al modal
-  console.log("ID Factura:", idFactura);
-  console.log("Fecha de Vencimiento:", fechaVencimiento);
-  console.log("Cliente:", cliente);
-  console.log("Tipo:", tipo);
-  console.log("Nombre del Cliente:", nombreCliente);
-  console.log("Apellidos del Cliente:", apellidosCliente);
-  console.log("ID Fiscal:", idFiscal);
-  console.log("Dirección:", direccion);
-  console.log("Código Postal:", cPostal);
-  console.log("Localidad:", localidad);
-  console.log("Coste con IVA:", stockCosteIva);
-
-  // Asignar valores a los campos de entrada del modal de edición
-  document.getElementById("facturas_id_edit").value = idFactura;
-  document.getElementById("facturas_vencimiento_edit").value = fechaVencimiento;
-  document.getElementById("facturas_id_cliente_edit").value = cliente;
-  document.getElementById("tipo_edit").value = tipo;
-  document.getElementById("facturas_nombre_cliente_edit").value = nombreCliente;
-  document.getElementById("facturas_apellidos_edit").value = apellidosCliente;
-  document.getElementById("facturas_fiscal_edit").value = idFiscal;
-  document.getElementById("facturas_direccion_edit").value = direccion;
-  document.getElementById("facturas_c_postal_edit").value = cPostal;
-  document.getElementById("facturas_localidad_edit").value = localidad;
-  document.getElementById("facturas_imponible_edit").value = stockCosteIva;
-
-  // Mostrar el modal de edición
-  openModalFacturas_edit();
-});
-
-
-// Manejar el envío del formulario de edición
-document.querySelectorAll("#modal_alta_facturas_edit").forEach(form => {
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // Obtener los valores del formulario de edición
-    const idFactura = form.document.getElementById("facturas_id_edit").value;
-    const fecha = form.document.getElementById("facturas_vencimiento_edit").value;
-    const idCliente = form.document.getElementById("facturas_id_cliente_edit").value;
-    const tipo = form.document.getElementById("tipo_edit").value;
-    const nombre = form.document.getElementById("facturas_nombre_cliente_edit").value;
-    const apellidos = form.document.getElementById("facturas_apellidos_edit").value;
-    const idFiscal = form.document.getElementById("facturas_fiscal_edit").value;
-    const direccion = form.document.getElementById("facturas_direccion_edit").value;
-    const cPostal = form.document.getElementById("facturas_c_postal_edit").value;
-    const localidad = form.document.getElementById("facturas_localidad_edit").value;
-    const vencimiento = form.document.getElementById("facturas_vencimiento_edit").value;
-    const estado = form.document.getElementById("facturas_estado_edit").value;
-    const imponible = form.document.getElementById("facturas_imponible_edit").value;
-    const total = form.document.getElementById("facturas_total_edit").value;
-
-    // Enviar la solicitud de edición al servidor
-    fetch(urlEditarFactura + idFactura, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        Fecha_alta: fecha,
-        Cliente: idCliente,
-        Tipo: tipo,
-        Nombre: nombre,
-        Apellidos: apellidos,
-        Id_fiscal: idFiscal,
-        Direccion: direccion,
-        C_postal: cPostal,
-        Localidad: localidad,
-        Fecha_vencimiento: vencimiento,
-        Estado: estado,
-        Base_imponible: imponible,
-        Total: total
-      }),
-    })
+    // Realizar solicitud al servidor para obtener datos de la factura
+    fetch(urlEditarFactura + idFactura)
       .then(response => {
         if (!response.ok) {
-          throw new Error('Hubo un problema al editar la factura. Por favor, inténtalo de nuevo más tarde.');
+          throw new Error('Hubo un problema al obtener los datos de la factura.');
         }
         return response.json();
       })
-      .then(response => {
-        // Mostrar mensaje de éxito con SweetAlert
-        swal.fire({
-          title: "¡Factura editada!",
-          text: "La factura ha sido editada satisfactoriamente.",
-          icon: "success",
-          iconColor: "#0798c4",
-          confirmButtonColor: "#0798c4",
-        });
-
-        // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
-        setTimeout(() => {
-          location.reload();
-        }, 2000);
+      .then(data => {
+        // Asignar valores a los campos de entrada del modal de edición
+        document.getElementById("facturas_id_edit").value = data.Id_factura;
+        document.getElementById("facturas_vencimiento_edit").value = data.Fecha_vencimiento;
+        document.getElementById("facturas_id_cliente_edit").value = data.Id_cliente;
+        document.getElementById("tipo_edit").value = data.Tipo_cliente;
+        document.getElementById("facturas_nombre_cliente_edit").value = data.Nombre_cliente;
+        document.getElementById("facturas_apellidos_edit").value = data.Apellidos_cliente;
+        document.getElementById("facturas_fiscal_edit").value = data.Id_fiscal_cliente;
+        document.getElementById("facturas_direccion_edit").value = data.Direccion_cliente;
+        document.getElementById("facturas_c_postal_edit").value = data.C_postal_cliente;
+        document.getElementById("facturas_localidad_edit").value = data.Localidad_cliente;
+        document.getElementById("facturas_imponible_edit").value = data.Base_imponible;
+        
+        // Mostrar el modal de edición
+        openModalFacturas_edit();
       })
       .catch(error => {
         // Mostrar mensaje de error con SweetAlert
         swal.fire({
-          title: "Error al editar la factura",
+          title: "Error al obtener datos de la factura",
           text: error.message,
           icon: "error",
           iconColor: "#e6381c",
           confirmButtonColor: "#0798c4",
         });
       });
-  });
+  }
+});
+
+// Manejar el envío del formulario de edición
+document.querySelector("#modal_alta_facturas_edit form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+
+  // Enviar la solicitud de edición al servidor
+  fetch(urlEditarFactura + formData.get("idFactura"), {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(Object.fromEntries(formData.entries())),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Hubo un problema al editar la factura. Por favor, inténtalo de nuevo más tarde.');
+      }
+      return response.json();
+    })
+    .then(response => {
+      // Mostrar mensaje de éxito con SweetAlert
+      swal.fire({
+        title: "¡Factura editada!",
+        text: "La factura ha sido editada satisfactoriamente.",
+        icon: "success",
+        iconColor: "#0798c4",
+        confirmButtonColor: "#0798c4",
+      });
+
+      // Recargar la página después de un tiempo para dar tiempo a leer el mensaje
+      setTimeout(() => {
+        location.reload();
+      }, 2000);
+    })
+    .catch(error => {
+      // Mostrar mensaje de error con SweetAlert
+      swal.fire({
+        title: "Error al editar la factura",
+        text: error.message,
+        icon: "error",
+        iconColor: "#e6381c",
+        confirmButtonColor: "#0798c4",
+      });
+    });
 });
 
 

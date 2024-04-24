@@ -110,6 +110,86 @@ router.delete("/borrar_factura/:id", (req,res)=>{
   })
 })
 
+// Ruta para obtener los datos de una factura con sus detalles
+router.get('/datos_leer_factura/:idFactura', (req, res) => {
+  const idFactura = req.params.idFactura;
+
+  // Consulta SQL para obtener los datos de la factura con sus detalles
+  const query = `
+      SELECT 
+          f.Id_factura,
+          f.Fecha_alta,
+          f.Id_cliente,
+          c.Nombre AS Nombre_cliente,
+          c.Apellidos AS Apellidos_cliente,
+          c.Id_fiscal AS Id_fiscal_cliente,
+          c.Direccion AS Direccion_cliente,
+          c.C_postal AS C_postal_cliente,
+          c.Localidad AS Localidad_cliente,
+          c.Pais AS Pais_cliente,
+          c.Telefono AS Telefono_cliente,
+          c.Movil AS Movil_cliente,
+          c.Email AS Email_cliente,
+          f.Albaran,
+          f.Fecha_vencimiento,
+          f.Estado,
+          f.Forma_pago,
+          f.Base_imponible,
+          f.Total,
+          df.Cantidad AS Cantidad_detalle,
+          s.Codigo AS Codigo_stock,
+          s.Nombre AS Nombre_stock,
+          s.Precio_venta AS Precio_venta_stock,
+          s.Precio_venta_iva AS Precio_venta_iva_stock
+      FROM
+          facturas f
+              INNER JOIN
+          clientes c ON f.Id_cliente = c.Id_cliente
+              INNER JOIN
+          detalle_factura df ON f.Id_factura = df.facturas_Id_factura
+              AND f.Id_cliente = df.facturas_Id_cliente
+              INNER JOIN
+          stock s ON df.stock_Id_stock = s.Id_stock
+      WHERE
+          f.Id_factura = ?`;
+
+  // Ejecutar la consulta SQL con el ID de la factura proporcionado
+  connection.query(query, [idFactura], (error, results) => {
+      if (error) {
+          console.error('Error al obtener los datos de la factura:', error);
+          res.status(500).json({ error: 'Error al obtener los datos de la factura' });
+      } else {
+          // Devolver los resultados como JSON
+          res.json(results);
+      }
+  });
+});
+
+
+// Ruta para actualizar los datos de una factura
+router.put('/editar_datos_factura/:idFactura', (req, res) => {
+  const idFactura = req.params.idFactura;
+  const nuevosDatos = req.body; // Suponiendo que los nuevos datos se envían en el cuerpo de la solicitud
+
+  // Consulta SQL para actualizar los datos de la factura
+  const query = `
+      UPDATE facturas
+      SET ?
+      WHERE Id_factura = ?`;
+
+  // Ejecutar la consulta SQL con los nuevos datos y el ID de la factura proporcionado
+  connection.query(query, [nuevosDatos, idFactura], (error, results) => {
+      if (error) {
+          console.error('Error al actualizar los datos de la factura:', error);
+          res.status(500).json({ error: 'Error al actualizar los datos de la factura' });
+      } else {
+          res.json({ message: 'Datos de la factura actualizados correctamente' });
+      }
+  });
+});
+
+
+
 // RUTAS: EDITAR FACTURAS
 /* 
 router.get("/listado_autocomplete:key=key?", async (req, res) => {
