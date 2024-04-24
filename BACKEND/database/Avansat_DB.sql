@@ -169,6 +169,18 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_presupuesto` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+
+-- -----------------------------------------------------
+-- Table `avansat_db`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avansat_db`.`usuarios` (
+  `Id_usuario` VARCHAR(36) NULL,
+  `Email` VARCHAR(45) NULL,
+  `Nombre` VARCHAR(45) NULL,
+  `Fecha_creacion` DATETIME NULL DEFAULT CURRENT_TIMESTAMP)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -168,7 +168,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR FACTURAS
 
-const urlEditarFactura = "http://localhost:3000/api/v1/editar_datos_factura/";
+const urlEditarFactura = "http://localhost:3000/api/v1/datos_leer_factura/";
 
 // Evento al hacer clic en el ícono de edición
 document.addEventListener("click", (e) => {
