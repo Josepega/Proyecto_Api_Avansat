@@ -165,7 +165,6 @@ on(document, "click", ".eliminar-icono", (e) => {
     }
   });
 });
-
 // EDITAR FACTURAS
 
 const urlEditarFactura = "http://localhost:3000/api/v1/datos_leer_factura/";
@@ -186,17 +185,24 @@ document.addEventListener("click", (e) => {
       })
       .then(data => {
         // Asignar valores a los campos de entrada del modal de edición
-        document.getElementById("facturas_id_edit").value = data.Id_factura;
-        document.getElementById("facturas_vencimiento_edit").value = data.Fecha_vencimiento;
-        document.getElementById("facturas_id_cliente_edit").value = data.Id_cliente;
-        document.getElementById("tipo_edit").value = data.Tipo_cliente;
-        document.getElementById("facturas_nombre_cliente_edit").value = data.Nombre_cliente;
-        document.getElementById("facturas_apellidos_edit").value = data.Apellidos_cliente;
-        document.getElementById("facturas_fiscal_edit").value = data.Id_fiscal_cliente;
-        document.getElementById("facturas_direccion_edit").value = data.Direccion_cliente;
-        document.getElementById("facturas_c_postal_edit").value = data.C_postal_cliente;
-        document.getElementById("facturas_localidad_edit").value = data.Localidad_cliente;
-        document.getElementById("facturas_imponible_edit").value = data.Base_imponible;
+        const factura = data[0]; // Obtener la primera factura del arreglo de resultados
+        document.getElementById("facturas_id").value = factura.Id_factura; // Aquí asignamos el ID de la factura al campo oculto
+        document.getElementById("facturas_vencimiento_edit").value = factura.Fecha_vencimiento;
+        document.getElementById("facturas_id_cliente_edit").value = factura.Id_cliente;
+        
+        document.getElementById("tipo_edit").value = factura.Tipo_cliente;
+        document.getElementById("facturas_nombre_cliente_edit").value = factura.Nombre_cliente;
+        document.getElementById("facturas_apellidos_edit").value = factura.Apellidos_cliente;
+        document.getElementById("facturas_fiscal_edit").value = factura.Id_fiscal_cliente;
+        document.getElementById("facturas_direccion_edit").value = factura.Direccion_cliente;
+        document.getElementById("facturas_c_postal_edit").value = factura.C_postal_cliente;
+        document.getElementById("facturas_localidad_edit").value = factura.Localidad_cliente;
+        document.getElementById("facturas_pais_edit").value = factura.Pais_cliente;
+        document.getElementById("facturas_albaran_edit").value = factura.Albaran;        
+        document.getElementById("facturas_imponible_edit").value = factura.Base_imponible;
+        document.getElementById("facturas_total_edit").value = factura.Total;
+        // Asignar otros campos de acuerdo a la estructura de la factura
+        // ...
         
         // Mostrar el modal de edición
         openModalFacturas_edit();
@@ -213,15 +219,18 @@ document.addEventListener("click", (e) => {
       });
   }
 });
-
 // Manejar el envío del formulario de edición
 document.querySelector("#modal_alta_facturas_edit form").addEventListener("submit", (e) => {
   e.preventDefault();
-
+  
+  const idFactura = document.getElementById("facturas_id").value;
   const formData = new FormData(e.target);
 
+  // Obtener el ID de la factura del cuerpo de la solicitud PUT
+ 
+  console.log("ID de la factura:", idFactura);
   // Enviar la solicitud de edición al servidor
-  fetch(urlEditarFactura + formData.get("idFactura"), {
+  fetch("http://localhost:3000/api/v1/editar_datos_factura/" + idFactura, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(Object.fromEntries(formData.entries())),
@@ -258,6 +267,8 @@ document.querySelector("#modal_alta_facturas_edit form").addEventListener("submi
       });
     });
 });
+
+
 
 
 //VER FACTURAS

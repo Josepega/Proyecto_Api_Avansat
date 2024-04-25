@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avansat app</title>
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
+    <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/facturas.css">
-    <link rel="stylesheet" href="../css/clientes.css">
-    <link rel="stylesheet" href="../css/index.css">
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
@@ -19,52 +17,20 @@
 <body>
     <!-- CONTENEDOR GENERAL -->
     <div class="container">
-        <!-- LATERAL IZQUIERDA -->
-      <aside id="izq"></aside>
-      <script>
-        // Cargar el aside usando JavaScript
-        document.addEventListener("DOMContentLoaded", function() {
-            // Obtener el contenedor del aside
-            var asideContainer = document.getElementById("izq");
-            
-            // Cargar el aside desde aside.html usando fetch
-            fetch("aside.html")
-                .then(response => response.text())
-                .then(data => {
-                    // Insertar el contenido del aside en el contenedor
-                    asideContainer.innerHTML = data;
-                    
-                    // Ejecutar las funciones asociadas al aside
-                    botonToggle();
-                    manejarModalClientes();
-                    manejarModalStock();
-                    manejarModalFacturas();
-                    manejarModalServicios();
-                    manejarModalPresupuestos()
-
-
-
-
-                })
-                .catch(error => console.error("Error al cargar el aside:", error));
-        });
-    </script>
-        <!-- CONTENEDOR PRINCIPAL -->
-        <main id="principal">
-            <!-- BARRA NAV  -->
-            <div id="nav_container"></div><!-- NAV incrustado -->
+        <!-- ASIDE LATERAL IZQUIERDA -->
+        <aside id="izq">
             <script>
                 // Cargar el aside usando JavaScript
                 document.addEventListener("DOMContentLoaded", function() {
                     // Obtener el contenedor del aside
-                    var navContainer = document.querySelector("dropdownmenu");
+                    var asideContainer = document.getElementById("izq");
                     
                     // Cargar el aside desde aside.html usando fetch
-                    fetch("nav.html")
+                    fetch("aside.html")
                         .then(response => response.text())
                         .then(data => {
                             // Insertar el contenido del aside en el contenedor
-                            nav_container.innerHTML = data;
+                            asideContainer.innerHTML = data;
                             
                             // Ejecutar las funciones asociadas al aside
                             botonToggle();
@@ -72,34 +38,31 @@
                             manejarModalStock();
                             manejarModalFacturas();
                             manejarModalServicios();
+                            manejarModalPresupuestos()
         
         
         
         
                         })
-                        .catch(error => console.error("Error al cargar el nav:", error));
+                        .catch(error => console.error("Error al cargar el aside:", error));
                 });
             </script>
+        </aside>
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main id="principal">
+            <!-- BARRA NAV  -->
+            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
 
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
-            <div id="container_principal_general">
-                <!-------------------------  aquí va el inicio html por sección ------------------------------------->
-                <div class="container_principal">
-                    <div class="container">
-                        <div class="container_seccion">
-                            <div class="container_seccion_interior">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+             <!-------------------------  aquí va el inicio html por sección ------------------------------------->
+            <div id="container_principal">
+                
 
 
 
             </div><!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
-
     </div><!-- FIN CONTENEDOR GENERAL -->
 </body>
-
+ 
 </html>

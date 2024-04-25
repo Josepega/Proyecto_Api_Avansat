@@ -154,7 +154,7 @@ router.get('/datos_leer_factura/:idFactura', (req, res) => {
           f.Id_factura = ?`;
 
   // Ejecutar la consulta SQL con el ID de la factura proporcionado
-  connection.query(query, [idFactura], (error, results) => {
+  conexionMySQL.query(query, [idFactura], (error, results) => {
       if (error) {
           console.error('Error al obtener los datos de la factura:', error);
           res.status(500).json({ error: 'Error al obtener los datos de la factura' });
@@ -171,14 +171,17 @@ router.put('/editar_datos_factura/:idFactura', (req, res) => {
   const idFactura = req.params.idFactura;
   const nuevosDatos = req.body; // Suponiendo que los nuevos datos se envían en el cuerpo de la solicitud
 
+  // Campos que pueden ser actualizados
+  const { Fecha_alta, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = nuevosDatos;
+
   // Consulta SQL para actualizar los datos de la factura
   const query = `
       UPDATE facturas
-      SET ?
+      SET Fecha_alta = ?, Albaran = ?, Fecha_vencimiento = ?, Estado = ?, Forma_pago = ?, Base_imponible = ?, Total = ?
       WHERE Id_factura = ?`;
 
   // Ejecutar la consulta SQL con los nuevos datos y el ID de la factura proporcionado
-  connection.query(query, [nuevosDatos, idFactura], (error, results) => {
+  conexionMySQL.query(query, [Fecha_alta, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total, idFactura], (error, results) => {
       if (error) {
           console.error('Error al actualizar los datos de la factura:', error);
           res.status(500).json({ error: 'Error al actualizar los datos de la factura' });
@@ -187,6 +190,7 @@ router.put('/editar_datos_factura/:idFactura', (req, res) => {
       }
   });
 });
+
 
 
 

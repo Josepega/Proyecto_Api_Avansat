@@ -808,34 +808,32 @@ function manejarModalFacturas() {
     BotonGuardarFactura.forEach(function (element) {
       element.addEventListener("click", () => {
           // Fecha de alta en formato ISO (YYYY-MM-DD)
-const facturasAlta = new Date().toISOString().split('T')[0];
+
 
 // Obtener el valor de vencimiento en días del elemento HTML
 const vencimientoDias = parseInt(document.getElementById("facturas_vencimiento").value);
 
 // Crear un objeto Date para la fecha de alta
-const fechaAlta = new Date(facturasAlta);
+
 
 // Calcular la fecha de vencimiento sumando los días de vencimiento a la fecha de alta
-const fechaVencimiento = new Date(fechaAlta);
+/* const fechaVencimiento = new Date(fechaAlta);
 fechaVencimiento.setDate(fechaVencimiento.getDate() + vencimientoDias);
 
 // Formatear la fecha de vencimiento en el formato DD/MM/YYYY
 const diaVencimiento = fechaVencimiento.getDate();
 const mesVencimiento = fechaVencimiento.getMonth() + 1; // Sumamos 1 porque los meses van de 0 a 11
 const anioVencimiento = fechaVencimiento.getFullYear();
-const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencimiento}/${mesVencimiento < 10 ? '0' : ''}${mesVencimiento}/${anioVencimiento}`;
+const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencimiento}/${mesVencimiento < 10 ? '0' : ''}${mesVencimiento}/${anioVencimiento}`; */
 
 // Establecer el valor de la fecha de vencimiento en el elemento HTML
-          facturasVencimiento = document.getElementById("facturas_vencimiento").value = fechaVencimientoFormateada;
-
+          const facturasAlta = new Date().toISOString().split('T')[0];
+          const facturasVencimiento = document.getElementById("facturas_vencimiento").value;
           const facturasCliente = document.getElementById("facturas_id_cliente").value;
           const facturasAlbaran = document.getElementById("facturas_albaran").value;          
           const facturasEstado = document.getElementById("facturas_estado").value;
           const facturasPago = document.getElementById("facturas_tipo_pago").value;
-          const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value).toFixed(2);
-        
-          
+          const facturasImponible = parseFloat(document.getElementById("facturas_imponible").value).toFixed(2);          
           const facturasTotal = parseFloat(document.getElementById("facturas_total").value).toFixed(2);
           const facturasIdStock = document.getElementById("facturas_id_detalle_stock").value;
           const facturasCantidad = document.getElementById("facturas_cantidad").value;

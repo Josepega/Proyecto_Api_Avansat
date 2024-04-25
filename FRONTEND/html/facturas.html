@@ -100,10 +100,10 @@
 
                 <div class="row">
                     <div class="col col-60"><img src="../img/avansat-app-facturas-editar.png" alt="" style="height: 40px;margin-bottom: 40px;"></div>
-                    <div class="col-10"><input type="text" id="facturas_id_edit" disabled></div>
+                    <div class="col-10"><input type="text" name="Id_factura" id="facturas_id" disabled></div>
                     <div class="col col-15">
                         <label><span>*</span>Vencimiento</label>
-                        <select name="vencimiento" id="facturas_vencimiento_edit">
+                        <select  id="facturas_vencimiento_edit">
                             <option value="15">15 días</option>
                             <option value="30" selected="selected">30 días</option>
                             <option value="90">90 días</option>
@@ -167,9 +167,9 @@
                     <div class="col col-30" style="display:none">
                         <label><span>*</span>Fecha alta</label> <input type="date" id="facturas_alta_edit">
                     </div>
-                    <div class="col col-30" style="display:none">
+                    <div class="col col-30" >
                         <label><span>*</span>Estado</label>
-                        <select name="estado" id="facturas_estado_edit">
+                        <select  id="facturas_estado_edit">
                             <option value="pendiente" selected="selected">Pendiente</option>
                             <option value="cobrada">Cobrada</option>
                         </select>
@@ -218,7 +218,7 @@
                         <input type="number" step="any" placeholder="Ej: 20,50" id="facturas_precio_edit">
                     </div>
                     <div class="col col-10">
-                        <select name="impuestos" id="facturas_impuestos_edit">
+                        <select id="facturas_impuestos_edit">
                             <option value="21" selected="selected">21%</option>
                             <option value="15">15%</option>
                             <option value="10">10%</option>                                        
@@ -235,7 +235,7 @@
                 <div class="row">
                     <div class="col col-20">
                         <label>Tipo Pago</label>
-                        <select name="tipo_pago_edit" id="facturas_tipo_pago_edit">   
+                        <select  id="facturas_tipo_pago_edit">   
                             <option value="Transferencia" selected="selected">Transferencia</option>
                             <option value="contado">Contado</option>
                             <option value="efectivo">Efectivo</option>
@@ -259,7 +259,7 @@
                 </div>
                 <div class="row">
                     <div class="col col-20">
-                        <button type="button" id="boton_facturas_guardar_edit" class="btn">Guardar factura</button>
+                        <button type="submit" id="boton_facturas_guardar_edit" class="btn">Guardar factura</button>
                     </div>
                 </div>
             </form>
