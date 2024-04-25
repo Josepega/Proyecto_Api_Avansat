@@ -36,7 +36,7 @@ router.post("/alta_factura", (req, res) => {
 
 
 
-// RUTAS: LISTADO DE FACTURAS
+/* // RUTAS: LISTADO DE FACTURAS
 router.get('/listado_facturas/', (req,res)=>{
   conexionMySQL.query('SELECT * FROM facturas', (error,filas)=>{
       if(error){
@@ -45,7 +45,7 @@ router.get('/listado_facturas/', (req,res)=>{
           res.json(filas)
       }
   })
-})
+}) */
 // RUTA PARA OBTENER LOS DETALLES BÁSICOS DE LA FACTURA
 router.get("/listado_facturas_detalle/:idFactura", (req, res) => {
   const idFactura = req.params.idFactura;
@@ -170,26 +170,29 @@ router.get('/datos_leer_factura/:idFactura', (req, res) => {
 router.put('/editar_datos_factura/:idFactura', (req, res) => {
   const idFactura = req.params.idFactura;
   const nuevosDatos = req.body; // Suponiendo que los nuevos datos se envían en el cuerpo de la solicitud
-
+console.log('Datos recibidos para actualizar factura:', nuevosDatos);
   // Campos que pueden ser actualizados
   const { Fecha_alta, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = nuevosDatos;
 
-  // Consulta SQL para actualizar los datos de la factura
-  const query = `
-      UPDATE facturas
-      SET Fecha_alta = ?, Albaran = ?, Fecha_vencimiento = ?, Estado = ?, Forma_pago = ?, Base_imponible = ?, Total = ?
-      WHERE Id_factura = ?`;
+  // Consulta SQL para actualizar los datos de la factura, excluyendo el campo Id_cliente
+const query = `
+UPDATE facturas
+SET Fecha_alta = ?, Albaran = ?, Fecha_vencimiento = ?, Estado = ?, Forma_pago = ?, Base_imponible = ?, Total = ?
+WHERE Id_factura = ?`;
 
-  // Ejecutar la consulta SQL con los nuevos datos y el ID de la factura proporcionado
-  conexionMySQL.query(query, [Fecha_alta, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total, idFactura], (error, results) => {
-      if (error) {
-          console.error('Error al actualizar los datos de la factura:', error);
-          res.status(500).json({ error: 'Error al actualizar los datos de la factura' });
-      } else {
-          res.json({ message: 'Datos de la factura actualizados correctamente' });
-      }
-  });
+// Ejecutar la consulta SQL con los nuevos datos y el ID de la factura proporcionado
+conexionMySQL.query(query, [Fecha_alta, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total, idFactura], (error, results) => {
+if (error) {
+    console.error('Error al actualizar los datos de la factura:', error);
+    res.status(500).json({ error: 'Error al actualizar los datos de la factura' });
+} else {
+    res.json({ message: 'Datos de la factura actualizados correctamente' });
+}
 });
+
+  });
+
+
 
 
 
@@ -281,4 +284,32 @@ router.get('/listado_facturas', (req, res) => {
       res.status(500).send("Error en la edición del stock");
     }
   });
+
+// RUTA PARA NOMBRE CLIENTE EN FACTURAS
+
+router.get('/listado_facturas', (req, res) => {
+  // Consulta SQL para obtener el nombre y el apellido del cliente asociado a cada factura
+  const query = `
+    SELECT f.Id_factura, f.Fecha_alta, f.Fecha_vencimiento, CONCAT(c.Nombre, ' ', c.Apellidos) AS nombreCliente, f.Base_imponible, f.Total, f.Estado
+    FROM facturas f
+    INNER JOIN clientes c ON f.Id_cliente = c.Id_cliente;
+  `;
+
+  // Ejecutar la consulta SQL
+  conexionMySQL.query(query, (error, results) => {
+    if (error) {
+      console.error('Error al obtener los detalles de la factura:', error);
+      res.status(500).json({ error: 'Error al obtener los detalles de la factura' });
+    } else {
+      // Devolver los resultados de la consulta como respuesta
+      res.json(results);
+    }
+  });
+});
+
+
+
+
+
+
 module.exports = router;

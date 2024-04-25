@@ -46,11 +46,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col col-40"></div>
-               <div class="col col-20">Fecha de emisión: </div>
-               <input type="text" id="plantilla_emision"  class="inputPlantilla">
-               <div class="col col-20">Fecha de Vencimiento: </div>
-               <input type="text" id="plantilla_vencimiento"  class="inputPlantilla">                
+                <div class="col col-20"></div>
+               <div class="col col-30" style="text-align: right; margin-left: 10px;">Fecha de emisión: </div>
+               <input type="text" id="plantilla_emision" style=" text-align: left;"  class="inputPlantilla">
+               <div class="col col-30" style="text-align: right;margin-left: 10px;"> Vencimiento: </div>
+               <input type="text" id="plantilla_vencimiento" style=" text-align: left;"  class="inputPlantilla">                
             </div>
             <div class="row" style="height: 60px;" ></div>
             <div class="row">
@@ -145,7 +145,7 @@
 
                     // Establecer el valor formateado en el elemento HTML
                     document.getElementById('plantilla_emision').value = fechaFormateada;
-                    document.getElementById('plantilla_vencimiento').value = data.Fecha_vencimiento 
+                    document.getElementById('plantilla_vencimiento').value = data.Fecha_vencimiento + ' días' 
                     document.getElementById('plantilla_base_imponible').value = data.Base_imponible  + ' €';
                     document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;  
                     document.getElementById('plantilla_total').value = data.Total + ' €';

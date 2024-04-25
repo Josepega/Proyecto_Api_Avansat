@@ -100,17 +100,25 @@
 
                 <div class="row">
                     <div class="col col-60"><img src="../img/avansat-app-facturas-editar.png" alt="" style="height: 40px;margin-bottom: 40px;"></div>
-                    <div class="col-10"><input type="text" name="Id_factura" id="facturas_id" disabled></div>
+                    <div class="col-20"><input type="text" name="Id_factura" id="facturas_id" style="display: none;"></div>
                     <div class="col col-15">
                         <label><span>*</span>Vencimiento</label>
-                        <select  id="facturas_vencimiento_edit">
+                        <select  id="facturas_vencimiento_edit" name="Fecha_vencimiento">
                             <option value="15">15 días</option>
                             <option value="30" selected="selected">30 días</option>
                             <option value="90">90 días</option>
                         </select>
                     </div>
-                    <div class="col col-10"><input type="text" id="facturas_id_cliente_edit"></div>
-                    <div class="col col-10"><input type="text" id="facturas_id_detalle_stock_edit"></div>
+                    <div class="col col-30" >
+                        <label><span>*</span>Estado</label>
+                        <select  id="facturas_estado_edit" name="Estado">
+                            <option value="Pendiente" selected="selected">Pendiente</option>
+                            <option value="Cobrada">Cobrada</option>
+                            <option value="Anulada">Anulada</option>
+                        </select>
+                    </div>
+                    <input type="text" id="facturas_id_cliente_edit" name="Id_cliente" style="display: none;">
+                    <div class="col col-10"><input type="text" id="facturas_id_detalle_stock_edit" name="Id_stock" style="display: none;"></div>
 
                     <div class="col-10"><button type="button" id="close_edit" class="btn">Cerrar</button></div>
                     
@@ -119,64 +127,58 @@
                 <div class="row"><!-- ROW DATOS CLIENTE 1-->
                     <div class="col col-15">
                         <label>Tipo</label>
-                        <select name="tipo" id="tipo_edit">
+                        <select name="tipo" id="tipo_edit" name ="Tipo" style="display: none;">
                             <option value="Persona">Persona</option>
                             <option value="Empresa">Empresa</option>
                         </select>
                     </div>
                     <div class="col col-30 autocomplete_clientes" id="facturas_nombre_ocultar_edit">
                         <label><span>*</span>Nombre</label>
-                        <input type="text" id="facturas_nombre_cliente_edit" placeholder="Ej: Juan Antonio">
+                        <input type="text" id="facturas_nombre_cliente_edit" name="Nombre_cliente">
                         <ul id="autocomplete-results_clientes" class="autocomplete-results_clientes"></ul>
                     </div>
 
                     <div class="col col-30" id="facturas_apellidos_ocultar_edit">
                         <label><span>*</span>Apellidos</label>
-                        <input type="text" id="facturas_apellidos_edit" placeholder="Ej: Gómez Perez">
+                        <input type="text" id="facturas_apellidos_edit" name="Apellidos_cliente">
                     </div>
-                    <div class="col col-50" id="facturas_nombreEmpresa_ocultar_edit" >
+                    <div class="col col-50" id="facturas_nombreEmpresa_ocultar_edit" style="display: none;">
                         <label><span>*</span>Nombre de l empresa</label>
-                        <input type="text" id="facturas_nombre_empresa_edit" placeholder="Ej: Avansat">
+                        <input type="text" id="facturas_nombre_empresa_edit" placeholder="Ej: Avansat" >
                     </div>
                     <div class="col col-15">
                         <label><span>*</span>Id fiscal</label>
-                        <input type="text" id="facturas_fiscal_edit" placeholder="Ej: 12345678T">
+                        <input type="text" id="facturas_fiscal_edit" placeholder="Ej: 12345678T" name="Id_fiscal">
                     </div>
                 </div>
                 <div class="row"><!-- ROW DATOS CLIENTE 2 -->
                     <div class="col col-30">
                         <label><span>*</span>Dirección</label>
-                        <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="facturas_direccion_edit">
+                        <input type="text" placeholder="Ej: Aragó 222 piso 3A" id="facturas_direccion_edit" name="Direccion">
                     </div>
                     <div class="col col-15">
                         <label><span>*</span>C. postal</label>
-                        <input type="number" placeholder="Ej: 17300" id="facturas_c_postal_edit">
+                        <input type="number" placeholder="Ej: 17300" id="facturas_c_postal_edit" name="C_postal">
                     </div>
                     <div class="col col-15">
                         <label><span>*</span>Localidad</label>
-                        <input type="text" placeholder="Ej: Blanes" id="facturas_localidad_edit">
+                        <input type="text" placeholder="Ej: Blanes" id="facturas_localidad_edit" name="Localidad">
                     </div>
                     <div class="col col-15">
                         <label><span>*</span>Pais</label>
-                        <input type="text" placeholder="Ej: España" id="facturas_pais_edit">
+                        <input type="text" placeholder="Ej: España" id="facturas_pais_edit" name="Pais">
                     </div>
                 </div>
 
                 <div class="row"><!--  DATOS OCULTOS -->
 
                     <div class="col col-30" style="display:none">
-                        <label><span>*</span>Fecha alta</label> <input type="date" id="facturas_alta_edit">
+                        <label><span>*</span>Fecha alta</label> <input type="date" id="facturas_alta_edit" name="Fecha_alta">
                     </div>
-                    <div class="col col-30" >
-                        <label><span>*</span>Estado</label>
-                        <select  id="facturas_estado_edit">
-                            <option value="pendiente" selected="selected">Pendiente</option>
-                            <option value="cobrada">Cobrada</option>
-                        </select>
-                    </div>
+                   
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row" style="display: none;">
 
                     <div class="col2 col-10">
                         <h4>Cantidad</h4>
@@ -200,25 +202,25 @@
 
 
                 </div>
-                <div  id="facturas_add_edit"></div>
+                <div  id="facturas_add_edit" style="display: none;"></div>
 
-                <div id="facturas_items_add"><!-- ROW DATOS ARTICULO 1 -->
+                <div id="facturas_items_add" style="display: none;"><!-- ROW DATOS ARTICULO 1 -->
                     <div class="col col-10">
-                        <input type="number"  placeholder="Ej: 5" id="facturas_cantidad_edit">
+                        <input type="number"  placeholder="Ej: 5" id="facturas_cantidad_edit" name="Cantidad">
                     </div>
                     <div class="col col-10">
-                        <input type="text" placeholder="Ej: 123456" id="facturas_codigo_edit">
+                        <input type="text" placeholder="Ej: 123456" id="facturas_codigo_edit" name="Codigo">
                     </div>
                     <div class="col col-35 autocomplete_servicios">
-                        <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock_edit">
+                        <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock_edit" name="Articulo">
                         <ul id="autocomplete-results_stock" class="autocomplete-results_stock"></ul>
                     </div>
                   
                     <div class="col col-15">
-                        <input type="number" step="any" placeholder="Ej: 20,50" id="facturas_precio_edit">
+                        <input type="number" step="any" placeholder="Ej: 20,50" id="facturas_precio_edit" name="Precio" style="display: none;">
                     </div>
                     <div class="col col-10">
-                        <select id="facturas_impuestos_edit">
+                        <select style="display: none;" id="facturas_impuestos_edit" name="Impuestos" >
                             <option value="21" selected="selected">21%</option>
                             <option value="15">15%</option>
                             <option value="10">10%</option>                                        
@@ -235,7 +237,7 @@
                 <div class="row">
                     <div class="col col-20">
                         <label>Tipo Pago</label>
-                        <select  id="facturas_tipo_pago_edit">   
+                        <select  id="facturas_tipo_pago_edit" name="Forma_pago">   
                             <option value="Transferencia" selected="selected">Transferencia</option>
                             <option value="contado">Contado</option>
                             <option value="efectivo">Efectivo</option>
@@ -244,16 +246,16 @@
                     </div>
                     <div class="col col-20">
                         <label>N° Albarán</label>
-                        <input type="text" placeholder="Ej:789012" id="facturas_albaran_edit">
+                        <input type="text" placeholder="Ej:789012" id="facturas_albaran_edit" name="Albaran">
                     </div> 
                     <div class="col col-20"></div>                 
                     <div class="col-20">
                         <label>Base imponible</label>
-                        <input type="number" id="facturas_imponible_edit" disabled>
+                        <input type="number" id="facturas_imponible_edit"  name="Base_imponible">
                     </div>
                     <div class="col-20">
                         <label>TOTAL</label>
-                        <input type="number" id="facturas_total_edit" disabled>
+                        <input type="number" id="facturas_total_edit"  name="Total">
                     </div>
         
                 </div>

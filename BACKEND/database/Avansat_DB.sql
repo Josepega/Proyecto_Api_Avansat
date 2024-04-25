@@ -45,14 +45,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
   `Id_factura` INT(15) NOT NULL AUTO_INCREMENT,
-  `Fecha_alta` DATE NULL DEFAULT NULL,
-  `Id_cliente` INT(15) NOT NULL,
-  `Albaran` VARCHAR(45) NULL DEFAULT NULL,
-  `Fecha_vencimiento` VARCHAR(45) NULL DEFAULT NULL,
-  `Estado` VARCHAR(45) NULL DEFAULT NULL,
-  `Forma_pago` VARCHAR(45) NULL DEFAULT NULL,
-  `Base_imponible` DECIMAL(8,2) NULL DEFAULT NULL,
-  `Total` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Fecha_alta`date NULL ,
+  `Id_cliente` INT(15) NULL,
+  `Albaran` VARCHAR(45) NULL  ,
+  `Fecha_vencimiento` VARCHAR(45)  NULL ,
+  `Estado` VARCHAR(45) NULL ,
+  `Forma_pago` VARCHAR(45)  NULL  ,
+  `Base_imponible` DECIMAL(8,2)  NULL ,
+  `Total` DECIMAL(8,2)  NULL  ,
   PRIMARY KEY (`Id_factura`, `Id_cliente`),
   CONSTRAINT `fk_facturas_clientes1`
     FOREIGN KEY (`Id_cliente`)
@@ -205,4 +205,7 @@ INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `P
 INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '123654788', 450, 'Vaso Calentador Expansor ', 300, 366, 600, 710);
 
 COMMIT;
-
+select * from facturas;
+UPDATE facturas
+SET Fecha_alta = "2024-04-01", Albaran = "1235", Fecha_vencimiento = 2024-12-01, Estado = "Cobrada", Forma_pago = "Contado", Base_imponible = 200, Total = 230
+WHERE Id_factura = 10;

@@ -68,24 +68,25 @@ const mostrar = (data) => {
   data.forEach((facturas) => {
     // Convertir la fecha de alta a objeto Date si es un string
     const fechaAlta = typeof facturas.Fecha_alta === 'string' ? new Date(facturas.Fecha_alta) : facturas.Fecha_alta;
+    // Buscar el cliente correspondiente por su ID
+
     
-    // Formatear la fecha de alta como "DD/MM/YYYY"
-    const fechaAltaFormateada = fechaAlta.toLocaleDateString();
         
     // Agregar la fila al resultado
     resultado += `
-        <div class="row2">
-            <div class="col2 col-10">${facturas.Id_factura}</div>
-            <div class="col2 col-10">${fechaAltaFormateada}</div>
-            <div class="col2 col-10">${facturas.Fecha_vencimiento.replace(/-/g, '/')}</div>
-            <div class="col2 col-30">${facturas.Id_cliente}</div>
-            <div class="col2 col-10">${facturas.Base_imponible}</div>
-            <div class="col2 col-10">${facturas.Total}</div>
-            <div class="col2 col-10">${facturas.Estado}</div>
-            <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
-            <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
-            <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
-        </div>`;
+    <div class="row2">
+        <div class="col2 col-10">${facturas.Id_factura}</div>
+        <div class="col2 col-10">${fechaAlta.toLocaleDateString()}</div>
+        <div class="col2 col-10">${facturas.Fecha_vencimiento + ' días'}</div>
+        <div class="col2 col-30">${facturas.nombreCliente}</div>
+        <div class="col2 col-10">${facturas.Base_imponible}</div>
+        <div class="col2 col-10">${facturas.Total}</div>
+        <div class="col2 col-10 ${facturas.Estado === 'Pendiente' ? 'estado-Pendiente' : (facturas.Estado === 'Cobrada' ? 'estado-Cobrada' : 'estado-Anulada')}">${facturas.Estado}</div>
+        <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
+        <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
+        <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
+    </div>`;
+
 });
 
 
@@ -187,9 +188,10 @@ document.addEventListener("click", (e) => {
         // Asignar valores a los campos de entrada del modal de edición
         const factura = data[0]; // Obtener la primera factura del arreglo de resultados
         document.getElementById("facturas_id").value = factura.Id_factura; // Aquí asignamos el ID de la factura al campo oculto
+        document.getElementById("facturas_alta_edit").value = factura.Fecha_alta = new Date().toISOString().split('T')[0];;
         document.getElementById("facturas_vencimiento_edit").value = factura.Fecha_vencimiento;
-        document.getElementById("facturas_id_cliente_edit").value = factura.Id_cliente;
-        
+        document.getElementById("facturas_estado_edit").value = factura.Estado;
+        document.getElementById("facturas_id_cliente_edit").value = factura.Id_cliente;        
         document.getElementById("tipo_edit").value = factura.Tipo_cliente;
         document.getElementById("facturas_nombre_cliente_edit").value = factura.Nombre_cliente;
         document.getElementById("facturas_apellidos_edit").value = factura.Apellidos_cliente;
@@ -219,6 +221,8 @@ document.addEventListener("click", (e) => {
       });
   }
 });
+
+// Manejar el envío del formulario de edición
 // Manejar el envío del formulario de edición
 document.querySelector("#modal_alta_facturas_edit form").addEventListener("submit", (e) => {
   e.preventDefault();
@@ -226,14 +230,17 @@ document.querySelector("#modal_alta_facturas_edit form").addEventListener("submi
   const idFactura = document.getElementById("facturas_id").value;
   const formData = new FormData(e.target);
 
-  // Obtener el ID de la factura del cuerpo de la solicitud PUT
- 
-  console.log("ID de la factura:", idFactura);
-  // Enviar la solicitud de edición al servidor
+  // Obtener todos los datos del formulario
+  const formDataObject = Object.fromEntries(formData.entries());
+
+  // Mostrar los datos del formulario en la consola para verificar
+  console.log("Datos del formulario:", formDataObject);
+
+  // Enviar la solicitud de edición al servidor con todos los datos del formulario
   fetch("http://localhost:3000/api/v1/editar_datos_factura/" + idFactura, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(Object.fromEntries(formData.entries())),
+    body: JSON.stringify(formDataObject),
   })
     .then(response => {
       if (!response.ok) {
@@ -267,6 +274,7 @@ document.querySelector("#modal_alta_facturas_edit form").addEventListener("submi
       });
     });
 });
+
 
 
 
