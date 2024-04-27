@@ -5,17 +5,39 @@
   #icono_pdf {
     display: none;
   }
-  
-  #plantilla_factura h4 {
-    font-size: 10px;
+  h1 {
+    font-size: 15px;
   }
   
+   h4 {
+    font-size: 13px;
+  }
+  p {
+    font-size: 12px;
+  }
+
+.inputPlantilla {
+  font-size: 12px;
+
+}
+.col5 {
+  font-size: 10px;
+  
+}
+.col2 {
+  font-size: 11px;
+ 
+}
+.col {
+  font-size: 11px;
+}
   
   /* Establecer el formato de página */
   @page {
     size: A4; /* Establecer el tamaño del papel */
-    margin: 1cm; /* Establecer los márgenes de la página */
+    margin: 0.5cm; /* Establecer los márgenes de la página */
   }
+
   
   /* Ocultar el título de la página */
   title {

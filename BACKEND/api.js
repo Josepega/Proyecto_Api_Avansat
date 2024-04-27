@@ -14,6 +14,11 @@ api.use('/api/v1', require('./routes/servicios.routes.js'));
 api.use('/api/v1', require('./routes/facturas.routes.js'));
 api.use('/api/v1', require('./routes/stock.routes.js'));
 api.use('/api/v1', require('./routes/presupuestos.routes.js'));
+api.use('/api/v1', require('./routes/user.routes.js'));
+
+
+
+
 
 api.use("/generatePDF" , async (req, res) => {
   const pdfBuffer = await generatePDF({

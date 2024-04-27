@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Avansat Factura</title>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/facturas.css">
     <link rel="stylesheet" type="text/css" href="../css/imprimir.css">
@@ -46,30 +46,40 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col col-20"></div>
-               <div class="col col-30" style="text-align: right; margin-left: 10px;">Fecha de emisión: </div>
-               <input type="text" id="plantilla_emision" style=" text-align: left;"  class="inputPlantilla">
-               <div class="col col-30" style="text-align: right;margin-left: 10px;"> Vencimiento: </div>
-               <input type="text" id="plantilla_vencimiento" style=" text-align: left;"  class="inputPlantilla">                
+                <div class="col col-30"></div>
+                <div class="col col-15" style="align-items: end; margin-right: 5px;">Albarán:</div>
+                <div class="col col-10"style="align-items:left;">
+                    <input type="text" id="plantilla_albaran"  class="inputPlantilla">
+                </div>
+                <div class="col col-10" style="align-items: end; margin-right: 10px;">Fecha:</div>
+                <div class="col col-10" style="align-items: left;">
+                    <input type="text" id="plantilla_emision"  class="inputPlantilla">
+                </div>
+                <div class="col col-10" style="align-items: end; margin-right: 5px;" >Vencimiento:</div>
+                <div class="col col-10" style="align-items: left;">
+                    <input type="text" id="plantilla_vencimiento" class="inputPlantilla">
+                </div>
             </div>
+            
             <div class="row" style="height: 60px;" ></div>
             <div class="row">
                 <div class="col5 col-15"><h4>Código</h4></div>
-                <div class="col5 col-30"><h4>Descripción</h4></div>
-                <div class="col5 col-15"><h4>Cantidad</h4></div>
-                <div class="col5 col-20"><h4>Precio unitario</h4></div>
+                <div class="col5 col-40"><h4>Descripción</h4></div>
+                <div class="col5 col-10"><h4>Cantidad</h4></div>
+                <div class="col5 col-20"><h4>Precio Ud.</h4></div>
                 <div class="col5 col-10"><h4>IVA %</h4></div>
-                <div class="col5 col-20"><h4>Total IVA exc </h4></div>
+                <div class="col5 col-15"><h4>Total IVA exc </h4></div>
             </div>
             <div class="row" id="plantilla_add"></div>
         </div>
-        <div class="row">
-            <div class="col col-50" id="mensaje_transferencia">
-                <p style="color: rgb(27, 9, 1); font-weight: 400; font-size: 18px;">FORMA DE PAGO:</p><span>TRANSFERENCIA BANCARIA</span>
-           <p style="color: rgb(182, 60, 4);font-weight: 600; font-size: 20px;">ES19 0081 0120 3700 0137 4041</p>
+        <div class="row" style="justify-content: end;">
+            <div class="col-3"><input type="text" id="plantilla_forma_pago" style="display: none;"></div>
+            <div class="col col-50" id="mensaje_transferencia" style="display: none; padding-top: 20px;">
+                <p style="color: rgb(27, 9, 1); font-weight: 400; font-size: 16px;">FORMA DE PAGO:</p><span style="font-size: 14px;">TRANSFERENCIA BANCARIA</span>
+           <p style="color: rgb(182, 60, 4);font-weight: 600; font-size: 16px;">ES19 0081 0120 3700 0137 4041</p>
    
             </div>
-            <div class="col col-50">
+            <div class="col col-50" >
                 <div class="row">
                     <div class="col5 col-50">Base imponible</div> 
                     <div class="col5 col-50"style="background-color: rgb(236, 236, 231); font-weight: 600;"><input type=" text" id="plantilla_base_imponible" class="inputPlantilla"></div>               
@@ -146,6 +156,8 @@
                     // Establecer el valor formateado en el elemento HTML
                     document.getElementById('plantilla_emision').value = fechaFormateada;
                     document.getElementById('plantilla_vencimiento').value = data.Fecha_vencimiento + ' días' 
+                    document.getElementById('plantilla_albaran').value = data.Albaran;
+                    document.getElementById('plantilla_forma_pago').value = data.Forma_pago;
                     document.getElementById('plantilla_base_imponible').value = data.Base_imponible  + ' €';
                     document.getElementById('plantilla_iva').value = (data.Total - data.Base_imponible).toFixed(2)+ ' €' ;  
                     document.getElementById('plantilla_total').value = data.Total + ' €';
@@ -188,11 +200,11 @@
                         productoDiv.innerHTML = `
                             <div class="row2">
                                 <div class="col2 col-15">${producto.Codigo}</div>           
-                                <div class="col2 col-30">${producto.Nombre_Producto}</div>
-                                <div class="col2 col-15">${producto.Cantidad}</div>
+                                <div class="col2 col-40">${producto.Nombre_Producto}</div>
+                                <div class="col2 col-10">${producto.Cantidad}</div>
                                 <div class="col2 col-20">${producto.Precio_venta +" €"}</div>
                                 <div class="col2 col-10">21%</div>
-                                <div class="col2 col-20" style="background-color: rgb(236, 236, 231); font-weight: 400;">${(producto.Cantidad * producto.Precio_venta).toFixed(2) +" €"}</div>           
+                                <div class="col2 col-15" style="background-color: rgb(236, 236, 231); font-weight: 400;">${(producto.Cantidad * producto.Precio_venta).toFixed(2) +" €"}</div>           
                             </div>`;
                         
                         detallesDiv.appendChild(productoDiv);
@@ -264,6 +276,25 @@ function imprimirFactura() {
 // Asociar la función de impresión al evento click del icono de imprimir
 document.getElementById('icono_imprimir').addEventListener('click', imprimirFactura);
 
+
+
+
     </script>
+    <script>
+        setTimeout(mostrarMensajeTransferencia, 1000); // Esperar 1 segundo antes de ejecutar la función
+    
+        function mostrarMensajeTransferencia() {
+            const formaPago = document.getElementById('plantilla_forma_pago').value;
+            const mensajeTransferenciaDiv = document.getElementById('mensaje_transferencia');
+    
+            if (formaPago === 'Transferencia') {
+                mensajeTransferenciaDiv.style.display = 'block';
+            } else {
+                mensajeTransferenciaDiv.style.display = 'none';
+            }
+        }
+    </script>
+    
+    
 </body>
 </html>

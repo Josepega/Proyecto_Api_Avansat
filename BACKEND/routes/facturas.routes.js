@@ -52,7 +52,7 @@ router.get("/listado_facturas_detalle/:idFactura", (req, res) => {
 
   // Consultar la base de datos para obtener los detalles básicos de la factura
   const sqlFactura = `
-    SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total, f.Id_factura,f.Fecha_vencimiento, f.Fecha_alta
+    SELECT c.Nombre, c.Apellidos, c.Id_fiscal, c.Direccion, c.C_postal, c.Localidad, c.Pais, f.Base_imponible, f.Total,f.Forma_pago, f.Id_factura,f.Fecha_vencimiento, f.Fecha_alta, f.Albaran
     FROM clientes c
     JOIN facturas f ON c.Id_cliente = f.Id_cliente
     WHERE f.Id_factura = ?
@@ -287,10 +287,10 @@ router.get('/listado_facturas', (req, res) => {
 
 // RUTA PARA NOMBRE CLIENTE EN FACTURAS
 
-router.get('/listado_facturas', (req, res) => {
+router.get('/listado_facturas/', (req, res) => {
   // Consulta SQL para obtener el nombre y el apellido del cliente asociado a cada factura
   const query = `
-    SELECT f.Id_factura, f.Fecha_alta, f.Fecha_vencimiento, CONCAT(c.Nombre, ' ', c.Apellidos) AS nombreCliente, f.Base_imponible, f.Total, f.Estado
+    SELECT f.Id_factura, f.Fecha_alta, f.Fecha_vencimiento, f.Forma_pago, CONCAT(c.Nombre, ' ', c.Apellidos) AS nombreCliente, f.Base_imponible, f.Total, f.Estado
     FROM facturas f
     INNER JOIN clientes c ON f.Id_cliente = c.Id_cliente;
   `;

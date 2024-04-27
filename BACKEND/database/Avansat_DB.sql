@@ -174,10 +174,10 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `avansat_db`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`usuarios` (
-  `Id_usuario` VARCHAR(36) NULL,
-  `Email` VARCHAR(45) NULL,
-  `Nombre` VARCHAR(45) NULL,
-  `Fecha_creacion` DATETIME NULL DEFAULT CURRENT_TIMESTAMP)
+  `Id_usuario` INT primary key auto_increment,
+  `email` VARCHAR(45) not  NULL,
+  `password` VARCHAR(45) not NULL
+ )
 ENGINE = InnoDB;
 
 
@@ -192,6 +192,7 @@ START TRANSACTION;
 USE `avansat_db`;
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'Juan Antonio', 'Bautista', '32014728P', 'Gran via de las cortes catalanas 555', '08014', 'Barcelona', 'España', '985231478', '689698710', NULL);
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Avansat', 'Empresa', '75412387K', 'C/ Carretas 2345 5º2', '17562', 'Gerona', 'España', '965878795', '656874123', NULL);
+INSERT INTO usuarios (Id_usuario, email, password) VALUES (DEFAULT,'info@avansat.cat', 'Josemanu72');
 
 COMMIT;
 
@@ -206,6 +207,5 @@ INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `P
 
 COMMIT;
 select * from facturas;
-UPDATE facturas
-SET Fecha_alta = "2024-04-01", Albaran = "1235", Fecha_vencimiento = 2024-12-01, Estado = "Cobrada", Forma_pago = "Contado", Base_imponible = 200, Total = 230
-WHERE Id_factura = 10;
+
+insert into usuarios 

@@ -69,12 +69,12 @@
                         <label><span>*</span>Apellidos</label>
                         <input type="text" placeholder="Ej: Gutierrez Ruiz" id="clientes_apellidos">
                     </div>
-                    <div class="col col-50" id="clientes_nombreEmpresa_ocultar"  style="display: none;">
+                    <div class="col col-50" id="clientes_nombreEmpresa_ocultar"style="display:none">
                         <label><span>*</span>Nombre de la empresa</label>
                         <input type="text"  placeholder="Ej: Avansat" class="clientes_nombre">
                     </div>
                     <div class="col col-15">
-                        <label><span>*</span>DNI</label>
+                        <label><span>*</span>Id fiscal</label>
                         <input type="text" placeholder="NIF / DNI / NIE" id="clientes_idFiscal">
                     </div>
                 </div>
@@ -273,7 +273,7 @@
                 </div>
 <div class="row" style="height: 20px;"></div>
                 <div class="row"><!-- ROW DATOS CLIENTE 1-->
-                    <div class="col col-15">
+                    <div class="col col-3" style="display: none;">
                         <label>Tipo de cliente</label>
                         <select name="tipo" id="tipo">
                             <option value="Persona">Persona</option>
@@ -288,7 +288,7 @@
                     <div class="col col-30" id="facturas_apellidos_ocultar">                        
                         <input type="text" id="facturas_apellidos" placeholder="Apellidos Cliente">
                     </div>
-                    <div class="col col-50" id="facturas_nombreEmpresa_ocultar" >    
+                    <div class="col col-50" id="facturas_nombreEmpresa_ocultar" style="display: none;">    
                         <input type="text" id="facturas_nombre_empresa" placeholder="Nombre Empresa">
                     </div>
                     <div class="col col-15">                        
@@ -309,6 +309,36 @@
                         <input type="text" placeholder="Pais" id="facturas_pais">
                     </div>
                 </div>
+                <script>
+                    // Obtener referencia al elemento select
+                    const tipoCliente = document.getElementById('tipo');
+
+                    // Obtener referencias a los elementos de nombre, apellidos y nombre de empresa
+                    const clienteApellidoInput = document.getElementById('facturas_apellidos');
+                    const clienteNombreOcultar = document.getElementById('facturas_nombre_ocultar');
+                    const clienteNombreEmpresaOcultar = document.getElementById('facturas_nombreEmpresa_ocultar');
+
+                    // Agregar un listener para detectar cambios en el select
+                    tipoCliente.addEventListener('change', () => {
+                        if (tipoCliente.value === 'Empresa') {
+                            // Ocultar el campo de nombre y apellido, y mostrar el campo de nombre de empresa
+                            clienteNombreOcultar.style.display = 'none';
+                            clienteApellidoInput.style.display = 'none';
+                            clienteNombreEmpresaOcultar.style.display = 'block';
+
+                            // Agregar un guion al campo de apellido para evitar el alerta de campo obligatorio
+                            clienteApellidoInput.value = '-';
+                        } else {
+                            // Mostrar el campo de nombre y apellido, y ocultar el campo de nombre de empresa
+                            clienteNombreOcultar.style.display = 'block';
+                            clienteApellidoInput.style.display = 'block';
+                            clienteNombreEmpresaOcultar.style.display = 'none';
+
+                            // Limpiar el campo de apellido si se cambia de tipo de cliente
+                            clienteApellidoInput.value = '';
+                        }
+                    });
+                </script>
 
                 <div class="row"><!--  DATOS OCULTOS -->
 
@@ -318,8 +348,9 @@
                     <div class="col col-30" style="display:none">
                         <label><span>*</span>Estado</label>
                         <select name="estado" id="facturas_estado">
-                            <option value="pendiente" selected="selected">Pendiente</option>
-                            <option value="cobrada">Cobrada</option>
+                            <option value="Pendiente" selected="selected">Pendiente</option>
+                            <option value="Cobrada">Cobrada</option>
+                            <option value="Anulada">Anulada</option>
                         </select>
                     </div>
                 </div>
@@ -385,9 +416,8 @@
                         <label>Tipo Pago</label>
                         <select name="tipo_pago" id="facturas_tipo_pago">   
                             <option value="Transferencia" selected="selected">Transferencia</option>
-                            <option value="contado">Contado</option>
-                            <option value="efectivo">Efectivo</option>
-                            <option value="tarjeta">Tarjeta</option>
+                            <option value="Contado">Contado</option>                            
+                            <option value="Tarjeta">Tarjeta</option>
                         </select>
                     </div>
                     <div class="col col-15">
@@ -480,8 +510,9 @@
                 <div class="col col-30" style="display:none">
                     <label><span>*</span>Estado</label>
                     <select name="estado" id="presupuestos_estado">
-                        <option value="pendiente" selected="selected">Pendiente</option>
-                        <option value="cobrada">Cobrada</option>
+                        <option value="Pendiente" selected="selected">Pendiente</option>
+                        <option value="Aceptado">Aceptado</option>
+                        <option value="Anulado">Anulado</option>
                     </select>
                 </div>
             </div>
@@ -547,9 +578,8 @@
                     <label>Tipo Pago</label>
                     <select name="tipo_pago" id="presupuestos_tipo_pago">   
                         <option value="Transferencia" selected="selected">Transferencia</option>
-                        <option value="contado">Contado</option>
-                        <option value="efectivo">Efectivo</option>
-                        <option value="tarjeta">Tarjeta</option>
+                        <option value="Contado">Contado</option>                        
+                        <option value="Tarjeta">Tarjeta</option>
                     </select>
                 </div>
                 <div class="col col-15">

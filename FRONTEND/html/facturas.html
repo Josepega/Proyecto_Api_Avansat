@@ -79,7 +79,7 @@
                                         <div class="col2 col-10"><h4>Fecha alta</h4></div>
                                         <div class="col2 col-10"><h4>Vencimiento</h4></div>
                                         <div class="col2 col-20"><h4>Cliente</h4></div>
-                                        <div class="col2 col-15"><h4>Base imponible</h4></div>
+                                        <div class="col2 col-10"><h4>Forma pago</h4></div>
                                         <div class="col2 col-10"><h4>Total</h4></div>
                                         <div class="col2 col-10"><h4>Estado</h4></div>                                    
                                         <div class="col2 col-5"><h4>Editar</h4></div> <!-- Espacio para el ícono de editar -->
@@ -143,7 +143,7 @@
                         <input type="text" id="facturas_apellidos_edit" name="Apellidos_cliente">
                     </div>
                     <div class="col col-50" id="facturas_nombreEmpresa_ocultar_edit" style="display: none;">
-                        <label><span>*</span>Nombre de l empresa</label>
+                        <label><span>*</span>Nombre de la empresa</label>
                         <input type="text" id="facturas_nombre_empresa_edit" placeholder="Ej: Avansat" >
                     </div>
                     <div class="col col-15">
@@ -239,9 +239,8 @@
                         <label>Tipo Pago</label>
                         <select  id="facturas_tipo_pago_edit" name="Forma_pago">   
                             <option value="Transferencia" selected="selected">Transferencia</option>
-                            <option value="contado">Contado</option>
-                            <option value="efectivo">Efectivo</option>
-                            <option value="tarjeta">Tarjeta</option>
+                            <option value="Contado">Contado</option>
+                            <option value="Tarjeta">Tarjeta</option>
                         </select>
                     </div>
                     <div class="col col-20">
