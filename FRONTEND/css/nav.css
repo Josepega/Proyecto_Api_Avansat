@@ -1,7 +1,16 @@
 /*----------------- BARRA NAVEGACIÓN SUPERIOR ---------------- */
 
 #container_login {
-    width: 20%;
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: rgb(0, 8, 11);
+  }
+  #container_exit {
+    width: 10%;
     height: 100%;
     display: flex;
     justify-content: center;

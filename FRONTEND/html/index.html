@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/index.css">
-   
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <script src="../js/index.js" defer></script>
+    <title>Inicio de sesión</title>
 </head>
 <body>
     <div class="container">
         <div class="container_login">
-<div class="row"><img src="../img/avansat-logo-web-l.png" alt=""></div>
-<div class="row">
-    <div class="col-70"><input type="text" placeholder="Usuario" id="username"></div>
-</div>
-<div class="row">
-    <div class="col-70"><input type="password" placeholder="Contraseña" id="password"></div>
-</div>
-<div class="row">
-    <div class="col-20"><button id="login" class="btn">Entrar</button></div>
-</div>
+            <div class="row"><img src="../img/avansat-logo-web-l.png" alt=""></div>
+            <form id="loginForm">
+                <div class="row">
+                    <div class="col col-70">
+                        <input type="email" id="email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-70">
+                        <input type="password" id="password" placeholder="Contraseña">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-40">
+                        <button type="submit" id="IniciarSesion" class="btn">Iniciar sesión</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
     <script src="../js/modals.js " defer></script>
     <script src="../js/aside.js" defer></script>
+    <script src="../js/nav.js" defer></script>
     <link rel="stylesheet" href="../css/nav.css" />
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/facturas.css" />
@@ -13,7 +14,7 @@
   </head>
 
   <body>
-    <nav class="dropdownmenu">
+    <nav class="dropdownmenu" id="nav">
       <ul>
         <!-- INICIO  -->
         
@@ -98,10 +99,10 @@
           </ul>
         </li>
       </ul>
-      <div id="container_login">
-        <p>Usuario: admin</p>
-        <p>Salir</p>
-        <img src="../img/icons/exit.svg" alt="" />
+      <div id="container_login"></div>
+      <div id="container_exit">
+        <p>Salir</p>  
+        <img src="../img/icons/exit.svg" alt="" id="logoutButton" />
       </div>
     </nav>
   </body>

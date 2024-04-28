@@ -173,12 +173,15 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `avansat_db`.`usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `avansat_db`.`usuarios` (
-  `Id_usuario` INT primary key auto_increment,
-  `email` VARCHAR(45) not  NULL,
-  `password` VARCHAR(45) not NULL
- )
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS usuarios (
+  `idUsuarios` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(150) NULL ,
+  `contrasena` VARCHAR(150) NULL,
+  `mail` VARCHAR(45) NULL ,
+  `numPersonas` INT(11) NULL,
+  PRIMARY KEY (`idUsuarios`)
+  );
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -192,10 +195,10 @@ START TRANSACTION;
 USE `avansat_db`;
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'Juan Antonio', 'Bautista', '32014728P', 'Gran via de las cortes catalanas 555', '08014', 'Barcelona', 'España', '985231478', '689698710', NULL);
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Avansat', 'Empresa', '75412387K', 'C/ Carretas 2345 5º2', '17562', 'Gerona', 'España', '965878795', '656874123', NULL);
-INSERT INTO usuarios (Id_usuario, email, password) VALUES (DEFAULT,'info@avansat.cat', 'Josemanu72');
+INSERT INTO usuarios (nombre,  mail, contrasena) VALUES ('Jose Manuel', 'info@avansat.cat', '123');
 
 COMMIT;
-
+select * from usuarios;
 
 -- -----------------------------------------------------
 -- Data for table `avansat_db`.`stock`
@@ -207,5 +210,4 @@ INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `P
 
 COMMIT;
 select * from facturas;
-
-insert into usuarios 
+select * from usuarios;

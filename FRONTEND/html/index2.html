@@ -11,6 +11,7 @@
     <script src="../js/includes_html.js" defer></script>
     <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
+    <script src="../js/nav.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 </head>
 
@@ -51,7 +52,27 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
-            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+            <script>
+                // Cargar el aside usando JavaScript
+                document.addEventListener("DOMContentLoaded", function() {
+                    // Obtener el contenedor del aside
+                    var navContainer = document.getElementById("principal");
+                    
+                    // Cargar el aside desde aside.html usando fetch
+                    fetch("nav.html")
+                        .then(response => response.text())
+                        .then(data => {
+                            // Insertar el contenido del aside en el contenedor
+                            navContainer.innerHTML = data;
+                            
+                            // Ejecutar las funciones asociadas al aside
+                            cerrarSesion();
+                            obtenerNombreUser();       
+        
+                        })
+                        .catch(error => console.error("Error al cargar el Nav:", error));
+                });
+            </script>
 
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
              <!-------------------------  aquí va el inicio html por sección ------------------------------------->
