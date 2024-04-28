@@ -89,6 +89,49 @@ router.post("/alta_servicio", (req, res) => {
     }
   });
   
+  // LISTADO 5 ULTIMOS SERVICIOS
+
+// Endpoint para obtener las últimas 5 facturas y el total facturado
+router.get('/servicios_ultimos', (req, res) => {
+  // Consulta para obtener las últimas 5 facturas
+  const queryUltimosServicios = `
+    SELECT Codigo, Nombre, Precio_coste
+    FROM servicios
+    ORDER BY Id_servicio DESC
+    LIMIT 5
+  `;
+
+  // Consulta para obtener el total facturado
+  const queryTotalServicios = `
+  SELECT SUM(Precio_venta_iva) AS total_servicios
+  FROM servicios
+  `;
+
+  // Ejecutar ambas consultas en paralelo
+  conexionMySQL.query(queryUltimosServicios, (errUltimos, resultUltimos) => {
+    if (errUltimos) {
+      console.error('Error al obtener los últimos servicios:', errUltimos);
+      res.status(500).send('Error al obtener los servicios');
+      return;
+    }
+
+    conexionMySQL.query(queryTotalServicios, (errTotal, resultTotal) => {
+      if (errTotal) {
+        console.error('Error al obtener el total de servicios:', errTotal);
+        res.status(500).send('Error al obtener el total de servicios');
+        return;
+      }
+
+      // Enviar respuesta con los resultados
+      res.json({
+        ultimos_servicios: resultUltimos,
+        total_servicios: resultTotal[0].total_servicios
+      });
+    });
+  });
+});
+
+
 
 
 module.exports = router

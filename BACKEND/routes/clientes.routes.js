@@ -107,5 +107,45 @@ router.post("/alta_cliente", (req, res) => {
     }
   });
   
+// LISTADO 5 CLIENTES
 
+// Endpoint para obtener las últimas 5 facturas y el total facturado
+router.get('/clientes_ultimos', (req, res) => {
+  // Consulta para obtener las últimas 5 facturas
+  const queryUltimosClientes = `
+    SELECT Id_cliente, Tipo_cliente, Nombre, Apellidos
+    FROM clientes
+    ORDER BY Id_cliente DESC
+    LIMIT 5
+  `;
+
+  // Consulta para obtener el total facturado
+  const queryTotalClientes = `
+  SELECT COUNT(*) AS total_clientes
+  FROM clientes
+  `;
+
+  // Ejecutar ambas consultas en paralelo
+  conexionMySQL.query(queryUltimosClientes, (errUltimos, resultUltimos) => {
+    if (errUltimos) {
+      console.error('Error al obtener los últimos clientes:', errUltimos);
+      res.status(500).send('Error al obtener los ´clientes');
+      return;
+    }
+
+    conexionMySQL.query(queryTotalClientes, (errTotal, resultTotal) => {
+      if (errTotal) {
+        console.error('Error al obtener el total de clientes:', errTotal);
+        res.status(500).send('Error al obtener el total de clientes');
+        return;
+      }
+
+      // Enviar respuesta con los resultados
+      res.json({
+        ultimos_clientes: resultUltimos,
+        total_clientes: resultTotal[0].total_clientes
+      });
+    });
+  });
+});
   module.exports = router;

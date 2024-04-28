@@ -109,21 +109,53 @@ const detallePresupuestos = JSON.parse(req.body.detallePresupuestos);
   })
 
 
+// LISTADO 5 PRESUPUESTOS Y TOTAL PRESUPUESTADO
+
+// Endpoint para obtener los últimos 5 PRE y el total facturado
+router.get('/presupuestos_ultimas', (req, res) => {
+  // Consulta para obtener las últimas 5 presupuestos
+  const queryUltimosPresupuestos = `
+    SELECT Id_presupuesto, Fecha_alta, Estado, Total
+    FROM presupuestos
+    ORDER BY Fecha_alta DESC
+    LIMIT 3
+  `;
+
+  // Consulta para obtener el total facturado
+  const queryTotalPresupuestos = `
+    SELECT SUM(Total) AS total_presupuestos
+    FROM presupuestos
+  `;
+
+  // Ejecutar ambas consultas en paralelo
+  conexionMySQL.query(queryUltimosPresupuestos, (errUltimas, resultUltimas) => {
+    if (errUltimas) {
+      console.error('Error al obtener los últimos presupuestos:', errUltimas);
+      res.status(500).send('Error al obtener los últimos presupuestos');
+      return;
+    }
+
+    conexionMySQL.query(queryTotalPresupuestos, (errTotal, resultTotal) => {
+      if (errTotal) {
+        console.error('Error al obtener el total presupuestado:', errTotal);
+        res.status(500).send('Error al obtener el total presupuestado');
+        return;
+      }
+
+      // Enviar respuesta con los resultados
+      res.json({
+        ultimos_presupuestos: resultUltimas,
+        total_presupuestos: resultTotal[0].total_presupuestos
+      });
+    });
+  });
+});
 
 
 
-/* -----------------------------------------------------------PRESUPUESTOS---------------------------------------------------------------------------------------------------------------- */
-
-// RUTAS: ALTA PRESUPUESTO 
 
 
-// RUTAS: LISTADO DE PRESUPUESTOS
 
-
-// RUTAS: BORRAR PRESUPUESTOS
-
-
-// RUTAS: EDITAR PRESUPUESTOS
 
 
 

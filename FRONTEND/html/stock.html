@@ -9,9 +9,9 @@
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/stock.js" defer></script>
-    <script src="../js/includes_html.js" defer></script>
     <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
+    <script src="../js/nav.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 
 </head>
@@ -52,8 +52,34 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
-            <div data-include="../html/nav.html"></div><!-- NAV incrustado -->
+            <nav id="barra-navegacion" class="dropdownmenu">
+                <!-- Contenido del menú de navegación -->
+                <script>
+                    // Cargar el menú de navegación usando JavaScript
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Obtener el contenedor del menú de navegación
+                        var navContainer = document.getElementById("barra-navegacion");
 
+                        // Cargar el menú de navegación desde nav.html usando fetch
+                        fetch("nav.html")
+                            .then(response => response.text())
+                            .then(data => {
+                                // Insertar el contenido del menú de navegación en el contenedor
+                                navContainer.innerHTML = data;
+
+                                // Ejecutar las funciones asociadas al menú de navegación, si es necesario
+                                cerrarSesion();
+                                obtenerNombreUser();
+                                manejarModalClientes();
+                                manejarModalStock();
+                                manejarModalFacturas();
+                                manejarModalServicios();
+                                manejarModalPresupuestos();         
+                            })
+                            .catch(error => console.error("Error al cargar el menú de navegación:", error));
+                    });
+                </script>
+                </nav>
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
             <div id="container_principal_general" class="container_principal">
                 <!-------------------------  aquí va el inicio html por sección ------------------------------------->

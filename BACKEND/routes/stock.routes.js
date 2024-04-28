@@ -97,6 +97,47 @@ router.post("/alta_stock", (req, res) => {
   }
 });
 
+// LISTADO 5 ULTIMOS STOCKS 
+
+// Endpoint para obtener las últimas 5 facturas y el total facturado
+router.get('/stock_ultimos', (req, res) => {
+  // Consulta para obtener las últimas 5 facturas
+  const queryUltimosStock = `
+    SELECT Codigo, Nombre, Precio_coste
+    FROM stock
+    ORDER BY Id_stock DESC
+    LIMIT 5
+  `;
+
+  // Consulta para obtener el total facturado
+  const queryTotalStock = `
+  SELECT SUM(Precio_venta_iva) AS total_stock
+  FROM stock
+  `;
+
+  // Ejecutar ambas consultas en paralelo
+  conexionMySQL.query(queryUltimosStock, (errUltimos, resultUltimos) => {
+    if (errUltimos) {
+      console.error('Error al obtener los últimos Stock:', errUltimos);
+      res.status(500).send('Error al obtener el Stock');
+      return;
+    }
+
+    conexionMySQL.query(queryTotalStock, (errTotal, resultTotal) => {
+      if (errTotal) {
+        console.error('Error al obtener el total de Stock:', errTotal);
+        res.status(500).send('Error al obtener el total de Stock');
+        return;
+      }
+
+      // Enviar respuesta con los resultados
+      res.json({
+        ultimos_stock: resultUltimos,
+        total_stock: resultTotal[0].total_stock
+      });
+    });
+  });
+});
 
 
 

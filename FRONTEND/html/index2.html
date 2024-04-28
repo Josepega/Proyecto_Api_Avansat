@@ -8,7 +8,8 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
-    <script src="../js/includes_html.js" defer></script>
+    <link rel="stylesheet" href="../css/index2.css">
+    <script src="../js/index2.js" defer></script>
     <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
     <script src="../js/nav.js" defer></script>
@@ -39,11 +40,7 @@
                             manejarModalStock();
                             manejarModalFacturas();
                             manejarModalServicios();
-                            manejarModalPresupuestos()
-        
-        
-        
-        
+                            manejarModalPresupuestos();
                         })
                         .catch(error => console.error("Error al cargar el aside:", error));
                 });
@@ -52,36 +49,80 @@
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
             <!-- BARRA NAV  -->
-            <script>
-                // Cargar el aside usando JavaScript
-                document.addEventListener("DOMContentLoaded", function() {
-                    // Obtener el contenedor del aside
-                    var navContainer = document.getElementById("principal");
-                    
-                    // Cargar el aside desde aside.html usando fetch
-                    fetch("nav.html")
-                        .then(response => response.text())
-                        .then(data => {
-                            // Insertar el contenido del aside en el contenedor
-                            navContainer.innerHTML = data;
-                            
-                            // Ejecutar las funciones asociadas al aside
-                            cerrarSesion();
-                            obtenerNombreUser();       
-        
-                        })
-                        .catch(error => console.error("Error al cargar el Nav:", error));
-                });
-            </script>
+                <nav id="barra-navegacion" class="dropdownmenu">
+                <!-- Contenido del menú de navegación -->
+                <script>
+                    // Cargar el menú de navegación usando JavaScript
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Obtener el contenedor del menú de navegación
+                        var navContainer = document.getElementById("barra-navegacion");
 
+                        // Cargar el menú de navegación desde nav.html usando fetch
+                        fetch("nav.html")
+                            .then(response => response.text())
+                            .then(data => {
+                                // Insertar el contenido del menú de navegación en el contenedor
+                                navContainer.innerHTML = data;
+
+                                // Ejecutar las funciones asociadas al menú de navegación, si es necesario
+                                cerrarSesion();
+                                obtenerNombreUser();
+                                manejarModalClientes();
+                                manejarModalStock();
+                                manejarModalFacturas();
+                                manejarModalServicios();
+                                manejarModalPresupuestos();       
+                            })
+                            .catch(error => console.error("Error al cargar el menú de navegación:", error));
+                    });
+                </script>
+                </nav>
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
-             <!-------------------------  aquí va el inicio html por sección ------------------------------------->
-            <div id="container_principal">
+            <!-------------------------  aquí va el inicio html por sección ------------------------------------->
+            <div id="container_principal_tarjetas">
+                
+               <div class="tarjeta">
+                <p style="margin-bottom: 5px; color: rgb(88, 4, 4);font-size: 18px;">Últimas Facturas añadidas</p>
+                <div class="tarjeta_interior" id="listado_facturas">
+                    <div class="row"></div>                  
+                </div> 
+            </div>
+           
+            <div class="tarjeta">
+                <p style="margin-bottom: 5px; color: rgb(88, 4, 4);font-size: 18px;">Últimos Clientes añadidos</p>
+                <div class="tarjeta_interior" id="listado_clientes">
+                    <div class="row"></div>                  
+                </div> 
+            </div>
+            <div class="tarjeta">
+                <p style="margin-bottom: 5px; color: rgb(88, 4, 4);font-size: 18px;">Últimos Stocks añadidos</p>
+                <div class="tarjeta_interior" id="listado_stock">
+                    <div class="row"></div>                  
+                </div> 
+            </div>
+            
+            <div class="tarjeta">
+                <p style="margin-bottom: 5px; color: rgb(88, 4, 4);font-size: 18px;">Últimos Servicios añadidos</p>
+                <div class="tarjeta_interior" id="listado_servicios">
+                    <div class="row"></div>                  
+                </div> 
+            </div>
+            <div class="tarjeta">
+                <p style="margin-bottom: 5px; color: rgb(88, 4, 4);font-size: 18px;">Últimos Presupuestos añadidos</p>
+                <div class="tarjeta_interior" id="listado_presupuestos">
+                    <div class="row"></div>                  
+                </div> 
+            </div>
+            <div class="tarjeta">
+                <div class="tarjeta_interior">
+                    
+                </div> 
+            </div>
+            
                 
 
-
-
-            </div><!-------------------------  aquí va el final html por sección ------------------------------------->
+            </div>
+            <!-------------------------  aquí va el final html por sección ------------------------------------->
         </main>
     </div><!-- FIN CONTENEDOR GENERAL -->
 </body>

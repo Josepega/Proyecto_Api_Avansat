@@ -193,72 +193,7 @@ if (error) {
   });
 
 
-
-
-
-
-// RUTAS: EDITAR FACTURAS
-/* 
-router.get("/listado_autocomplete:key=key?", async (req, res) => {
-  try {
-    const key = req.query.key; // Usa req.query.keyid para obtener el parámetro de consulta
-    
-    // Consultas SQL corregidas con comillas invertidas y cláusula WHERE
-    const sqlServicios = `SELECT * FROM servicios`;
-    const sqlStock = `SELECT * FROM stock `;
-
-    // Ejecuta las consultas SQL
-   const serviciosResult = await conexionMySQL.query(sqlServicios);
-    const stockResult = await conexionMySQL.query(sqlStock);
-
-    res.json({
-      "status": 200,
-      "mensaje": "consulta creada exitosamente",
-      "servicios": serviciosResult,
-      "stock": stockResult
-    });
-  } catch (error) {
-    res.status(500).json({
-      "status": 500,
-      "mensaje": "Error al crear la consulta. Error: " + error.message
-    });
-  }
-}); */
-/* 
- // RUTAS: LISTADO DE STOCK Y SERVICIOS
-router.get('/listado_facturas', (req, res) => {
-  try {
-    // Consulta a la tabla de stock
-    conexionMySQL.query('SELECT * FROM facturas', (errorStock, filasStock) => {
-      if (errorStock) {
-        throw errorStock;
-      } else {
-        // Consulta a la tabla de servicios 
-        conexionMySQL.query('SELECT * FROM servicios', (errorServicios, filasServicios) => {
-          if (errorServicios) {
-            throw errorServicios;
-          } else {
-            // Devolver ambos conjuntos de resultados en un objeto JSON
-            res.json({
-              "status": 200,
-              "mensaje": "Datos obtenidos exitosamente",
-              "stock": filasStock,
-              "servicios": filasServicios
-            });
-          }
-        });
-      }
-    });
-  } catch (error) {
-    res.status(500).json({
-      "status": 500,
-      "mensaje": "Error al obtener datos. Error: " + error.message
-    });
-  }
-}); 
- */
-
-  // RUTAS: EDITAR STOCK
+  // RUTAS: EDITAR FACTURAS
   
   router.put("/editar_facturas/:idFactura", async (req, res) => {
     try {
@@ -307,8 +242,47 @@ router.get('/listado_facturas/', (req, res) => {
   });
 });
 
+// LISTADO 5 FACTURAS Y TOTAL FACTURADO
 
+// Endpoint para obtener las últimas 5 facturas y el total facturado
+router.get('/facturas_ultimas', (req, res) => {
+  // Consulta para obtener las últimas 5 facturas
+  const queryUltimasFacturas = `
+    SELECT Id_factura, Fecha_alta, Estado, Total
+    FROM facturas
+    ORDER BY Fecha_alta DESC
+    LIMIT 3
+  `;
 
+  // Consulta para obtener el total facturado
+  const queryTotalFacturado = `
+    SELECT SUM(Total) AS total_facturado
+    FROM facturas
+  `;
+
+  // Ejecutar ambas consultas en paralelo
+  conexionMySQL.query(queryUltimasFacturas, (errUltimas, resultUltimas) => {
+    if (errUltimas) {
+      console.error('Error al obtener las últimas facturas:', errUltimas);
+      res.status(500).send('Error al obtener las últimas facturas');
+      return;
+    }
+
+    conexionMySQL.query(queryTotalFacturado, (errTotal, resultTotal) => {
+      if (errTotal) {
+        console.error('Error al obtener el total facturado:', errTotal);
+        res.status(500).send('Error al obtener el total facturado');
+        return;
+      }
+
+      // Enviar respuesta con los resultados
+      res.json({
+        ultimas_facturas: resultUltimas,
+        total_facturado: resultTotal[0].total_facturado
+      });
+    });
+  });
+});
 
 
 
