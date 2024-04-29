@@ -494,84 +494,103 @@ function manejarModalFacturas() {
     }
   });
   
-  // AUTOCOMPLET STOCK
-  // Declarar la variable stock en un ámbito global
-  let stock = [];
-  
-  // Función para buscar stock por nombre
-  const searchStock = (key) => {
-    fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          stock = data; // Asignar los datos de stock a la variable stock
-          buildListStock();
-        }
-      })
-      .catch(error => {
-        console.error("Error al buscar stock:", error);
-      });
-  };
-  
-  // Función para construir la lista de resultados del autocompletado de stock
-  const buildListStock = () => {
-    const inputStock = document.getElementById("facturas_descripcion_stock");
-    const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
-  
-    if (!stock || stock.length === 0) {
-      autocompleteResultsStock.innerHTML = "";
-      return;
-    }
-  
-    const key = inputStock.value.toLowerCase();
-  
-    const filteredStock = stock.filter(stock => {
-      return stock.Nombre.toLowerCase().startsWith(key);
-    }).sort((a, b) => {
-      // Ordenar alfabéticamente por el nombre
-      if (a.Nombre < b.Nombre) return -1;
-      if (a.Nombre > b.Nombre) return 1;
-      return 0;
+// Declarar las variables globales para stock y servicios
+let stock = [];
+let servicios = [];
+
+// Función para buscar tanto en stock como en servicios por nombre
+const searchItems = (key) => {
+  // Realizar la búsqueda en stock
+  fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
+        stock = data; // Asignar los datos de stock a la variable stock
+        buildListItems(); // Construir la lista de resultados
+      }
+    })
+    .catch(error => {
+      console.error("Error al buscar stock:", error);
     });
-  
-    autocompleteResultsStock.innerHTML = "";
-  
-    filteredStock.slice(0, 10).forEach((stock) => {
-      autocompleteResultsStock.innerHTML += `<li>${stock.Nombre}</li>`;
+
+  // Realizar la búsqueda en servicios
+  fetch(`http://localhost:3000/api/v1/listado_servicios?Nombre=${key}`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data)) {
+        servicios = data; // Asignar los datos de servicios a la variable servicios
+        buildListItems(); // Construir la lista de resultados
+      }
+    })
+    .catch(error => {
+      console.error("Error al buscar servicios:", error);
     });
-  };
-  
-  // Agregar evento al input para buscar stock
-  const inputStock = document.getElementById("facturas_descripcion_stock");
-  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
-  
-  inputStock.addEventListener("keyup", (event) => {
-    autocompleteResultsStock.style.display = "block";
-    const key = event.target.value;
-  
-    if (key.length > 0) {
-      searchStock(key);
-    } else {
-      buildListStock();
-    }
+};
+
+// Función para construir la lista de resultados del autocompletado de stock y servicios
+const buildListItems = () => {
+  const input = document.getElementById("facturas_descripcion_stock");
+  const autocompleteResults = document.getElementById("autocomplete-results_stock");
+
+  // Combinar los resultados de stock y servicios en un solo array
+  const combinedResults = [...stock, ...servicios];
+
+  if (!combinedResults || combinedResults.length === 0) {
+    autocompleteResults.innerHTML = "";
+    return;
+  }
+
+  const key = input.value.toLowerCase();
+
+  const filteredResults = combinedResults.filter(item => {
+    return item.Nombre.toLowerCase().startsWith(key);
+  }).sort((a, b) => {
+    // Ordenar alfabéticamente por el nombre
+    if (a.Nombre < b.Nombre) return -1;
+    if (a.Nombre > b.Nombre) return 1;
+    return 0;
   });
-  
-  // Agregar evento a los elementos de la lista de resultados para seleccionar un stock
-  autocompleteResultsStock.addEventListener("click", (e) => {
-    if (e.target && e.target.nodeName == "LI") {
-      const selectedNameStock = e.target.innerHTML;
-      const selectedStock = stock.find(stock => stock.Nombre === selectedNameStock);
-      
-      // Rellenar los inputs relacionados con el stock seleccionado
-      document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
-      document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
-      document.getElementById('facturas_codigo').value = selectedStock.Codigo;
-      document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_venta).toFixed(2);
-  
-      // Ocultar la lista de resultados
-      autocompleteResultsStock.style.display = "none";
-    }
+
+  autocompleteResults.innerHTML = "";
+
+  filteredResults.slice(0, 10).forEach((item) => {
+    autocompleteResults.innerHTML += `<li>${item.Nombre}</li>`;
   });
+};
+
+// Agregar evento al input para buscar stock y servicios
+const input = document.getElementById("facturas_descripcion_stock");
+const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+
+input.addEventListener("keyup", (event) => {
+  autocompleteResultsStock.style.display = "block";
+  const key = event.target.value;
+
+  if (key.length > 0) {
+    searchItems(key); // Realizar la búsqueda en stock y servicios
+  } else {
+    buildListItems(); // Construir la lista de resultados vacía
+  }
+});
+
+// Agregar evento a los elementos de la lista de resultados para seleccionar un ítem
+autocompleteResultsStock.addEventListener("click", (e) => {
+  if (e.target && e.target.nodeName == "LI") {
+    const selectedName = e.target.innerHTML;
+    const selectedItem = stock.find(item => item.Nombre === selectedName) || servicios.find(item => item.Nombre === selectedName);
+    
+    // Rellenar los inputs relacionados con el ítem seleccionado
+    document.getElementById('facturas_descripcion_stock').value = selectedItem.Nombre;
+    document.getElementById('facturas_id_detalle_stock').value = selectedItem.Id_stock;
+    document.getElementById('facturas_codigo').value = selectedItem.Codigo;
+    document.getElementById('facturas_precio').value = parseFloat(selectedItem.Precio_venta).toFixed(2);
+
+    // Ocultar la lista de resultados
+    autocompleteResultsStock.style.display = "none";
+  }
+});
+
+
   
   
   // Datos imputs clientes
@@ -733,61 +752,68 @@ function manejarModalFacturas() {
   };
   
   // Modificar la función para añadir una fila al detalle
-  imagenAgregar.addEventListener("click", () => {
-    if (camposVacios()) {
-      // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
-      swal.fire({
-        icon: "info",
-        iconColor: "#e6381c",
-        title: "Campos vacíos",
-        text: "Todos los campos son obligatorios",
-        confirmButtonColor: "#0798c4",
-      });
-      return; // Detener la ejecución si hay campos vacíos
+imagenAgregar.addEventListener("click", () => {
+  if (camposVacios()) {
+    // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
+    swal.fire({
+      icon: "info",
+      iconColor: "#e6381c",
+      title: "Campos vacíos en el detalle",
+      text: "Todos los campos son obligatorios",
+      confirmButtonColor: "#0798c4",
+    });
+    return; // Detener la ejecución si hay campos vacíos
+  }
+
+  // Si no hay campos vacíos, proceder con la lógica para agregar la fila al detalle
+  let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
+  if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
+    let facturasCantidad = parseFloat(facturasCantidadInput);
+    let facturasCodigo = document.getElementById("facturas_codigo").value;
+    let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
+    let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
+    let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.')).toFixed(2);
+    let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.')).toFixed(2);
+    let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100).toFixed(2);
+    let facturasPrecioSubTotal = (facturasPrecio * facturasCantidad).toFixed(2);
+    let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100).toFixed(2);
+    let facturasTotaldeTotales = (facturasPrecioIva * facturasCantidad).toFixed(2);
+
+    // Verificar si el ítem ya está en el arregloDetalle
+    const indiceExistente = arregloDetalle.findIndex(item => item.codigo === facturasCodigo);
+    if (indiceExistente !== -1) { // El ítem ya está en la factura
+      // Sumar la cantidad al ítem existente
+      arregloDetalle[indiceExistente].cantidad += facturasCantidad;
+    } else { // El ítem no está en la factura
+      // Agregar el detalle a la factura
+      const objetoDetalle = {
+        cantidad: facturasCantidad,
+        codigo: facturasCodigo,
+        id_stock: facturasCodigoStock,
+        descripcion: facturasDescripcion,
+        precio: facturasPrecio,
+        impuestos: facturasImpuesto,
+        precioIva: facturasPrecioIva,
+      };
+      arregloDetalle.push(objetoDetalle);
     }
-  
-    // Si no hay campos vacíos, proceder con la lógica actual de agregar la fila al detalle
-    let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
-    if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
-        let facturasCantidad = (facturasCantidadInput);
-        let facturasCodigo = document.getElementById("facturas_codigo").value;
-        let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
-        let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
-        let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.')).toFixed(2);
-        let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.')).toFixed(2);
-        let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100).toFixed(2);
-        let facturasPrecioSubTotal = (facturasPrecio * facturasCantidad).toFixed(2);
-        let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100).toFixed(2);
-  
-        let facturasTotaldeTotales = (facturasPrecioIva * facturasCantidad).toFixed(2);
-  
-        // Agregar el detalle a la factura
-        const objetoDetalle = {
-            cantidad: facturasCantidad,
-            codigo: document.getElementById("facturas_codigo").value,
-            id_stock: document.getElementById("facturas_id_detalle_stock").value,
-            descripcion: document.getElementById("facturas_descripcion_stock").value,
-            precio: facturasPrecio,
-            impuestos: facturasImpuesto,
-            precioIva: facturasPrecioIva,
-        };
-        arregloDetalle.push(objetoDetalle);
-        redibujarTabla();
-  
-        // Actualizar los totales después de agregar el detalle
-        calcularTotales();
-    } else {
-        swal.fire({
-          title:"El valor de 'facturas_cantidad' no es un número válido.",
-          icon: "info",
-          iconColor: "#e6381c",
-          confirmButtonColor: "#0798c4",
-  
-        });
-    }
-    autocomplete_servicios_reset();
-  });
-  
+
+    // Redibujar la tabla con los detalles actualizados
+    redibujarTabla();
+
+    // Calcular los totales después de agregar el detalle
+    calcularTotales();
+  } else {
+    swal.fire({
+      title: "El valor de 'facturas_cantidad' no es un número válido.",
+      icon: "info",
+      iconColor: "#e6381c",
+      confirmButtonColor: "#0798c4",
+    });
+  }
+  autocomplete_servicios_reset();
+});
+
   
     
     function autocomplete_servicios_reset() {
@@ -914,8 +940,6 @@ const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencim
       });
   });
   };
-
-
   // MODAL PRESUPUESTOS
 function manejarModalPresupuestos() {
   const modalPresupuestos = document.querySelectorAll("#modal_alta_presupuestos");

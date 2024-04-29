@@ -88,11 +88,10 @@ const mostrar = (data) => {
   data.forEach((cliente) => {
     resultado += `
         <div class="row2">
-            <div class="col2 col-10">${cliente.Id_cliente}</div>
-            <div class="col2 col-10">${cliente.Tipo_cliente}</div>
-            <div class="col2 col-10">${cliente.Nombre}</div>
-            <div class="col2 col-10">${cliente.Apellidos || ""}</div>
-            <div class="col2 col-10">${cliente.Id_fiscal}</div>
+            <div class="col2 col-5">${cliente.Id_cliente}</div>
+            <div class="col2 col-5">${cliente.Tipo_cliente}</div>
+            <div class="col2 col-20">${cliente.Nombre +" " + cliente.Apellidos}</div>           
+            <div class="col2 col-5">${cliente.Id_fiscal}</div>
             <div class="col2 col-20">${cliente.Direccion}</div>
             <div class="col2 col-5">${cliente.C_postal}</div>
             <div class="col2 col-10">${cliente.Localidad}</div>

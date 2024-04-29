@@ -57,8 +57,8 @@ form.addEventListener("submit", (e) => {
     fetch("http://localhost:3000/api/v1/login", {
         method: "POST",
         body: JSON.stringify({
-            email: emailInput.value,
-            password: passwordInput.value
+            Email: emailInput.value,
+            Password: passwordInput.value
         }),
         headers: {
             "Content-Type": "application/json"

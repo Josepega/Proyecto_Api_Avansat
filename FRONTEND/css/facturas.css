@@ -181,7 +181,7 @@ a {
   height: 20px;
 }
 .estado-Pendiente {
-  color: rgb(236, 75, 12);
+  color: rgb(179, 56, 7);
   font-weight: 500;
 }
 .estado-Anulada {
@@ -190,6 +190,6 @@ a {
 }
 
 .estado-Cobrada {
-  color: rgb(11, 194, 226);
+  color: rgb(10, 145, 6);
   font-weight: 500;
 }
