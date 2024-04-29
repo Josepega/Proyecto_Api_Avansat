@@ -97,6 +97,7 @@ router.post("/alta_stock", (req, res) => {
   }
 });
 
+
 // LISTADO 5 ULTIMOS STOCKS 
 
 // Endpoint para obtener las últimas 5 facturas y el total facturado
@@ -138,7 +139,5 @@ router.get('/stock_ultimos', (req, res) => {
     });
   });
 });
-
-
 
  module.exports = router;

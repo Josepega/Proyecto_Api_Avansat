@@ -154,8 +154,18 @@ router.get('/presupuestos_ultimas', (req, res) => {
 
 
 
+/* -----------------------------------------------------------PRESUPUESTOS---------------------------------------------------------------------------------------------------------------- */
+
+// RUTAS: ALTA PRESUPUESTO 
 
 
+// RUTAS: LISTADO DE PRESUPUESTOS
+
+
+// RUTAS: BORRAR PRESUPUESTOS
+
+
+// RUTAS: EDITAR PRESUPUESTOS
 
 
 

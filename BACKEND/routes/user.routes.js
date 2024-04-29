@@ -10,11 +10,11 @@ router.use(bodyParser.json());
 
 // Definir la ruta para la autenticación de usuarios
 router.post("/login", (req, res) => {
-    const email = req.body.Email;
-    const password = req.body.Password;
+    const email = req.body.email;
+    const password = req.body.password;
   
     // Consulta SQL para verificar las credenciales en la base de datos
-    const sqlQuery = "SELECT Id_usuario, Nombre FROM usuarios WHERE Email = ? AND Password = ?";
+    const sqlQuery = "SELECT idUsuarios, nombre FROM usuarios WHERE mail = ? AND contrasena = ?";
     conexionMySQL.query(sqlQuery, [email, password], (err, results) => {
       if (err) {
         // Error al ejecutar la consulta
@@ -25,8 +25,8 @@ router.post("/login", (req, res) => {
   
       if (results.length > 0) {
         // Credenciales válidas, enviar respuesta de autenticación exitosa
-        const userId = results[0].Id_usuario;
-        const userName = results[0].Nombre;
+        const userId = results[0].idUsuarios;
+        const userName = results[0].nombre;
         res.json({ authenticated: true, userId: userId, userName: userName });
       } else {
         // Credenciales inválidas, enviar respuesta de autenticación fallida

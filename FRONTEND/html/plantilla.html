@@ -8,9 +8,9 @@
     <link rel="icon" type="image/jpg" href="../img/favicon.png" />
     <!-- <link rel="stylesheet" href="../css/index.css"> -->
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/nav.js"></script>
     <script src="../js/modals.js" defer></script>
     <script src="../js/aside.js" defer></script>
-    <script src="../js/nav.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 </head>
 
@@ -50,35 +50,28 @@
         </aside>
         <!-- CONTENEDOR PRINCIPAL -->
         <main id="principal">
-           <!-- BARRA NAV  -->
-           <nav id="barra-navegacion" class="dropdownmenu">
-            <!-- Contenido del menú de navegación -->
+            <!-- BARRA NAV  -->
             <script>
-                // Cargar el menú de navegación usando JavaScript
+                // Cargar el aside usando JavaScript
                 document.addEventListener("DOMContentLoaded", function() {
-                    // Obtener el contenedor del menú de navegación
-                    var navContainer = document.getElementById("barra-navegacion");
-
-                    // Cargar el menú de navegación desde nav.html usando fetch
+                    // Obtener el contenedor del aside
+                    var navContainer = document.getElementById("principal");
+                    
+                    // Cargar el aside desde aside.html usando fetch
                     fetch("nav.html")
                         .then(response => response.text())
                         .then(data => {
-                            // Insertar el contenido del menú de navegación en el contenedor
+                            // Insertar el contenido del aside en el contenedor
                             navContainer.innerHTML = data;
-
-                            // Ejecutar las funciones asociadas al menú de navegación, si es necesario
-                                cerrarSesion();
-                                obtenerNombreUser();
-                                manejarModalClientes();
-                                manejarModalStock();
-                                manejarModalFacturas();
-                                manejarModalServicios();
-                                manejarModalPresupuestos();         
+                            
+                            // Ejecutar las funciones asociadas al aside
+                            cerrarSesion();
+                            obtenerNombreUser();       
+        
                         })
-                        .catch(error => console.error("Error al cargar el menú de navegación:", error));
+                        .catch(error => console.error("Error al cargar el Nav:", error));
                 });
             </script>
-            </nav>
 
             <!-- CONTENEDOR GENERAL PRINCIPAL EX IFRAME -->
              <!-------------------------  aquí va el inicio html por sección ------------------------------------->

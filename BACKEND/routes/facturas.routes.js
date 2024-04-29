@@ -21,8 +21,8 @@ router.post("/alta_factura", (req, res) => {
     const idFactura = resultadoFactura.insertId;
 
     // Insertar el detalle de la factura
-    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, stock_Id_stock, servicios_Id_servicio, Cantidad, Codigo) VALUES ?`;
-    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.stock_Id_stock, detalle.servicios_Id_servicio, detalle.Cantidad, detalle.Codigo]);
+    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
+    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
 
     conexionMySQL.query(sqlDetalleFactura, [valoresDetalleFactura], (error, resultadoDetalle) => {
       if (error) {
@@ -32,6 +32,7 @@ router.post("/alta_factura", (req, res) => {
     });
   });
 });
+
 
 
 
@@ -77,19 +78,9 @@ router.get("/listado_detalles_factura/:idFactura", (req, res) => {
 
   // Consultar la base de datos para obtener los detalles de los productos asociados a la factura
   const sqlDetalles = `
-    SELECT 
-      df.Cantidad AS Cantidad_Stock, 
-      s.Nombre AS Nombre_Stock, 
-      s.Precio_venta AS Precio_Stock, 
-      s.Codigo AS Codigo_Stock,
-      sf.Cantidad AS Cantidad_Servicio, 
-      se.Nombre AS Nombre_Servicio, 
-      se.Precio_venta AS Precio_Servicio, 
-      se.Codigo AS Codigo_Servicio
+    SELECT df.Cantidad, s.Nombre AS Nombre_Producto, s.Precio_venta, s.Codigo
     FROM detalle_factura df
-    LEFT JOIN stock s ON df.stock_Id_stock = s.Id_stock
-    LEFT JOIN servicios_factura sf ON df.facturas_Id_factura = sf.facturas_Id_factura
-    LEFT JOIN servicios se ON sf.servicios_Id_servicio = se.Id_servicio
+    INNER JOIN stock s ON df.stock_Id_stock = s.Id_stock
     WHERE df.facturas_Id_factura = ?
   `;
 
@@ -202,7 +193,72 @@ if (error) {
   });
 
 
-  // RUTAS: EDITAR FACTURAS
+
+
+
+
+// RUTAS: EDITAR FACTURAS
+/* 
+router.get("/listado_autocomplete:key=key?", async (req, res) => {
+  try {
+    const key = req.query.key; // Usa req.query.keyid para obtener el parámetro de consulta
+    
+    // Consultas SQL corregidas con comillas invertidas y cláusula WHERE
+    const sqlServicios = `SELECT * FROM servicios`;
+    const sqlStock = `SELECT * FROM stock `;
+
+    // Ejecuta las consultas SQL
+   const serviciosResult = await conexionMySQL.query(sqlServicios);
+    const stockResult = await conexionMySQL.query(sqlStock);
+
+    res.json({
+      "status": 200,
+      "mensaje": "consulta creada exitosamente",
+      "servicios": serviciosResult,
+      "stock": stockResult
+    });
+  } catch (error) {
+    res.status(500).json({
+      "status": 500,
+      "mensaje": "Error al crear la consulta. Error: " + error.message
+    });
+  }
+}); */
+/* 
+ // RUTAS: LISTADO DE STOCK Y SERVICIOS
+router.get('/listado_facturas', (req, res) => {
+  try {
+    // Consulta a la tabla de stock
+    conexionMySQL.query('SELECT * FROM facturas', (errorStock, filasStock) => {
+      if (errorStock) {
+        throw errorStock;
+      } else {
+        // Consulta a la tabla de servicios 
+        conexionMySQL.query('SELECT * FROM servicios', (errorServicios, filasServicios) => {
+          if (errorServicios) {
+            throw errorServicios;
+          } else {
+            // Devolver ambos conjuntos de resultados en un objeto JSON
+            res.json({
+              "status": 200,
+              "mensaje": "Datos obtenidos exitosamente",
+              "stock": filasStock,
+              "servicios": filasServicios
+            });
+          }
+        });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      "status": 500,
+      "mensaje": "Error al obtener datos. Error: " + error.message
+    });
+  }
+}); 
+ */
+
+  // RUTAS: EDITAR STOCK
   
   router.put("/editar_facturas/:idFactura", async (req, res) => {
     try {
@@ -251,6 +307,7 @@ router.get('/listado_facturas/', (req, res) => {
   });
 });
 
+
 // LISTADO 5 FACTURAS Y TOTAL FACTURADO
 
 // Endpoint para obtener las últimas 5 facturas y el total facturado
@@ -292,6 +349,8 @@ router.get('/facturas_ultimas', (req, res) => {
     });
   });
 });
+
+
 
 
 

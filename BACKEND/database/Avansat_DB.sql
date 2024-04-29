@@ -45,14 +45,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
   `Id_factura` INT(15) NOT NULL AUTO_INCREMENT,
-  `Fecha_alta` DATE NULL DEFAULT NULL,
-  `Id_cliente` INT(15) NOT NULL,
-  `Albaran` VARCHAR(45) NULL DEFAULT NULL,
-  `Fecha_vencimiento` VARCHAR(45) NULL DEFAULT NULL,
-  `Estado` VARCHAR(45) NULL DEFAULT NULL,
-  `Forma_pago` VARCHAR(45) NULL DEFAULT NULL,
-  `Base_imponible` DECIMAL(8,2) NULL DEFAULT NULL,
-  `Total` DECIMAL(8,2) NULL DEFAULT NULL,
+  `Fecha_alta`date NULL ,
+  `Id_cliente` INT(15) NULL,
+  `Albaran` VARCHAR(45) NULL  ,
+  `Fecha_vencimiento` VARCHAR(45)  NULL ,
+  `Estado` VARCHAR(45) NULL ,
+  `Forma_pago` VARCHAR(45)  NULL  ,
+  `Base_imponible` DECIMAL(8,2)  NULL ,
+  `Total` DECIMAL(8,2)  NULL  ,
   PRIMARY KEY (`Id_factura`, `Id_cliente`),
   CONSTRAINT `fk_facturas_clientes1`
     FOREIGN KEY (`Id_cliente`)
@@ -62,8 +62,6 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`facturas` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_facturas_clientes1` ON `avansat_db`.`facturas` (`Id_cliente` ASC) INVISIBLE;
 
 
 -- -----------------------------------------------------
@@ -85,6 +83,29 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `avansat_db`.`detalle_factura`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
+  `facturas_Id_factura` INT(15) NOT NULL,
+  `facturas_Id_cliente` INT(15) NOT NULL,
+  `Cantidad` INT(15) NULL DEFAULT NULL,
+  `stock_Id_stock` INT(15) NOT NULL,
+  `Codigo` VARCHAR(45) NULL,
+  PRIMARY KEY (`facturas_Id_factura`, `facturas_Id_cliente`, `stock_Id_stock`),
+  CONSTRAINT `fk_stock_has_facturas_facturas1`
+    FOREIGN KEY (`facturas_Id_factura` , `facturas_Id_cliente`)
+    REFERENCES `avansat_db`.`facturas` (`Id_factura` , `Id_cliente`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_stock_has_facturas_stock1`
+    FOREIGN KEY (`stock_Id_stock`)
+    REFERENCES `avansat_db`.`stock` (`Id_stock`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
 -- Table `avansat_db`.`servicios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `avansat_db`.`servicios` (
@@ -99,40 +120,6 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`servicios` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `avansat_db`.`detalle_factura`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
-  `facturas_Id_factura` INT(15) NOT NULL,
-  `facturas_Id_cliente` INT(15) NOT NULL,
-  `Cantidad` INT(15) NULL DEFAULT NULL,
-  `stock_Id_stock` INT(15) NOT NULL,
-  `Codigo` VARCHAR(45) NULL,
-  `servicios_Id_servicio` INT(15) NOT NULL,
-  PRIMARY KEY (`facturas_Id_factura`, `facturas_Id_cliente`, `stock_Id_stock`, `servicios_Id_servicio`),
-  CONSTRAINT `fk_stock_has_facturas_facturas1`
-    FOREIGN KEY (`facturas_Id_factura` , `facturas_Id_cliente`)
-    REFERENCES `avansat_db`.`facturas` (`Id_factura` , `Id_cliente`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_stock_has_facturas_stock1`
-    FOREIGN KEY (`stock_Id_stock`)
-    REFERENCES `avansat_db`.`stock` (`Id_stock`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_detalle_factura_servicios1`
-    FOREIGN KEY (`servicios_Id_servicio`)
-    REFERENCES `avansat_db`.`servicios` (`Id_servicio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_stock_has_facturas_stock1` ON `avansat_db`.`detalle_factura` (`stock_Id_stock` ASC) VISIBLE;
-
-CREATE INDEX `fk_detalle_factura_servicios1_idx` ON `avansat_db`.`detalle_factura` (`servicios_Id_servicio` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
@@ -158,8 +145,6 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
-CREATE INDEX `fk_presupuestos_clientes1_idx` ON `avansat_db`.`presupuestos` (`Id_cliente` ASC) VISIBLE;
-
 
 -- -----------------------------------------------------
 -- Table `avansat_db`.`detalle_presupuesto`
@@ -170,8 +155,7 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_presupuesto` (
   `Cantidad` INT(15) NULL,
   `stock_Id_stock` INT(15) NOT NULL,
   `Codigo` VARCHAR(45) NULL,
-  `servicios_Id_servicio` INT(15) NOT NULL,
-  PRIMARY KEY (`presupuestos_Id_presupuesto`, `presupuestos_Id_cliente`, `stock_Id_stock`, `servicios_Id_servicio`),
+  PRIMARY KEY (`presupuestos_Id_presupuesto`, `presupuestos_Id_cliente`, `stock_Id_stock`),
   CONSTRAINT `fk_presupuestos_has_stock_presupuestos1`
     FOREIGN KEY (`presupuestos_Id_presupuesto` , `presupuestos_Id_cliente`)
     REFERENCES `avansat_db`.`presupuestos` (`Id_presupuesto` , `Id_cliente`)
@@ -181,30 +165,23 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_presupuesto` (
     FOREIGN KEY (`stock_Id_stock`)
     REFERENCES `avansat_db`.`stock` (`Id_stock`)
     ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_detalle_presupuesto_servicios1`
-    FOREIGN KEY (`servicios_Id_servicio`)
-    REFERENCES `avansat_db`.`servicios` (`Id_servicio`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-CREATE INDEX `fk_presupuestos_has_stock_stock1_idx` ON `avansat_db`.`detalle_presupuesto` (`stock_Id_stock` ASC) VISIBLE;
-
-CREATE INDEX `fk_detalle_presupuesto_servicios1_idx` ON `avansat_db`.`detalle_presupuesto` (`servicios_Id_servicio` ASC) VISIBLE;
 
 
 -- -----------------------------------------------------
 -- Table `avansat_db`.`usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `avansat_db`.`usuarios` (
-  `Id_usuario` INT(15) NOT NULL AUTO_INCREMENT,
-  `Nombre` VARCHAR(255) NULL,
-  `Email` VARCHAR(255) NULL,
-  `Password` VARCHAR(45) NULL,
-  PRIMARY KEY (`Id_usuario`))
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS usuarios (
+  `idUsuarios` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(150) NULL ,
+  `contrasena` VARCHAR(150) NULL,
+  `mail` VARCHAR(45) NULL ,
+  `numPersonas` INT(11) NULL,
+  PRIMARY KEY (`idUsuarios`)
+  );
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
@@ -218,11 +195,10 @@ START TRANSACTION;
 USE `avansat_db`;
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'Juan Antonio', 'Bautista', '32014728P', 'Gran via de las cortes catalanas 555', '08014', 'Barcelona', 'España', '985231478', '689698710', NULL);
 INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Avansat', 'Empresa', '75412387K', 'C/ Carretas 2345 5º2', '17562', 'Gerona', 'España', '965878795', '656874123', NULL);
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'María ', 'Torres Castro', '65140758G', 'Entenza 187 6º 7', '08014', 'Barcelona', 'España', NULL, '650123854', 'ingo@inglow.es');
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Glowers S.A.', 'Empresa', '77458777T', 'Campanares 245 Nave 3', '17800', 'Gerona', 'España', '987412547', NULL, 'info@glowers.es');
+INSERT INTO usuarios (nombre,  mail, contrasena) VALUES ('Jose Manuel', 'info@avansat.cat', 'Josemanu72');
 
 COMMIT;
-
+select * from usuarios;
 
 -- -----------------------------------------------------
 -- Data for table `avansat_db`.`stock`
@@ -231,29 +207,7 @@ START TRANSACTION;
 USE `avansat_db`;
 INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '123456789', 200, 'Repuesto Genérigo Fagor', 100, 121, 200, 242);
 INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '123654788', 450, 'Vaso Calentador Expansor ', 300, 366, 600, 710);
-INSERT INTO `avansat_db`.`stock` (`Id_stock`, `Codigo`, `Cantidad`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '1254788', 200, 'Quemador Pila USBT', 125.75, 165, 217.00, 267);
 
 COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `avansat_db`.`servicios`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `avansat_db`;
-INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '321654', 'Horas Trabajo', 30, 36.66, 60, 61.22);
-INSERT INTO `avansat_db`.`servicios` (`Id_servicio`, `Codigo`, `Nombre`, `Precio_coste`, `Precio_coste_iva`, `Precio_venta`, `Precio_venta_iva`) VALUES (DEFAULT, '321789', 'Revision Caldera', 40, 47, 70, 71.44);
-
-COMMIT;
-
-
--- -----------------------------------------------------
--- Data for table `avansat_db`.`usuarios`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `avansat_db`;
-INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'info@avansat.cat', 'José Manuel', 'Josemanu72');
-INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'soporte@avansat.cat', 'Josepe', '5132352a');
-
-COMMIT;
-
+select * from facturas;
+select * from usuarios;
