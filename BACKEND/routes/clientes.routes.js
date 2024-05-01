@@ -116,7 +116,7 @@ router.get('/clientes_ultimos', (req, res) => {
     SELECT Id_cliente, Tipo_cliente, Nombre, Apellidos
     FROM clientes
     ORDER BY Id_cliente DESC
-    LIMIT 5
+    LIMIT 3
   `;
 
   // Consulta para obtener el total facturado
@@ -148,6 +148,4 @@ router.get('/clientes_ultimos', (req, res) => {
     });
   });
 });
-
-
   module.exports = router;

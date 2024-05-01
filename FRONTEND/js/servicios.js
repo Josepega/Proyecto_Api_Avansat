@@ -223,8 +223,8 @@ formEdit.forEach(form => {
           title: "¡Servicio editado!",
           text: "El servicio ha sido editado satisfactoriamente.",
           icon: "success",
-          iconColor: "#e6381c",
-          confirmButtonColor: "#e6381c",
+          iconColor: "#0798c4",
+          confirmButtonColor: "#0798c4",
         });
 
         // Recargar la página después de un tiempo para dar tiempo a leer el mensaje

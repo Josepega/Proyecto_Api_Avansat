@@ -125,10 +125,10 @@ a {
   .autocomplete-results_clientes, .autocomplete-results_clientes_presupuestos, .autocomplete-results_servicios, .autocomplete-results_servicios_presupuestos, .autocomplete-results_stock, .autocomplete-results_stock_presupuestos {
     display: none;
    /*  position: absolute; */
-    width: 300px;
-    top: 300px;
-    margin-top: -2px;
-    font-size: 1.3em;
+    width: 100%;
+    top: 100%;
+    margin-top: -10px;
+    font-size: 16px; /* Tamaño de la fuente */
     color: #000508;
     list-style: none;
     margin: 0;
@@ -181,7 +181,7 @@ a {
   height: 20px;
 }
 .estado-Pendiente {
-  color: rgb(236, 75, 12);
+  color: rgb(179, 56, 7);
   font-weight: 500;
 }
 .estado-Anulada {
@@ -190,6 +190,6 @@ a {
 }
 
 .estado-Cobrada {
-  color: rgb(11, 194, 226);
+  color: rgb(10, 145, 6);
   font-weight: 500;
 }

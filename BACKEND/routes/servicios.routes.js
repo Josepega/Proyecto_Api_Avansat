@@ -98,7 +98,7 @@ router.get('/servicios_ultimos', (req, res) => {
     SELECT Codigo, Nombre, Precio_coste
     FROM servicios
     ORDER BY Id_servicio DESC
-    LIMIT 5
+    LIMIT 3
   `;
 
   // Consulta para obtener el total facturado
@@ -130,6 +130,7 @@ router.get('/servicios_ultimos', (req, res) => {
     });
   });
 });
+
 
 
 

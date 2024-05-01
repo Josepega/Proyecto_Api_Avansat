@@ -69,11 +69,7 @@
                             // Ejecutar las funciones asociadas al menú de navegación, si es necesario
                                 cerrarSesion();
                                 obtenerNombreUser();
-                                manejarModalClientes();
-                                manejarModalStock();
-                                manejarModalFacturas();
-                                manejarModalServicios();
-                                manejarModalPresupuestos();          
+                                       
                         })
                         .catch(error => console.error("Error al cargar el menú de navegación:", error));
                 });
@@ -93,12 +89,10 @@
                         <div class="row">
                             <div class="col2 col-5"><h4>ID</h4></div>
                             <div class="col2 col-5"><h4>Tipo</h4></div>
-                            <div class="col2 col-20"><h4>Nombre</h4></div>                            
-                            <div class="col2 col-5"><h4>ID Fiscal</h4></div>
-                            <div class="col2 col-20"><h4>Dirección</h4></div>
-                            <div class="col2 col-5"><h4>C.P.</h4></div>
-                            <div class="col2 col-10"><h4>Localidad</h4></div>
-                            <div class="col2 col-5"><h4>País</h4></div>
+                            <div class="col2 col-15"><h4>Nombre</h4></div>
+                            <div class="col2 col-15"><h4>Apellidos</h4></div>           
+                            <div class="col2 col-25"><h4>Dirección</h4></div>                    
+                            <div class="col2 col-10"><h4>Localidad</h4></div>                        
                             <div class="col2 col-10"><h4>Teléfono</h4></div>
                             <div class="col2 col-10"><h4>Móvil</h4></div>
                             <div class="col2 col-15"><h4>Email</h4></div>

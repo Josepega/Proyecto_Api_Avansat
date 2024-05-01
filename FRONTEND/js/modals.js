@@ -313,11 +313,11 @@ function manejarModalServicios() {
         isNaN(serviciosPrecioVenta)
       ) {
         swal.fire({
-          icon: "error",
-          iconColor: "#fa5807",
+          icon: "info",
+          iconColor: "#e6381c",
           title: "Los campos marcados con * son obligatorios",
           text: "¡Completa los que te falten!",
-          confirmButtonColor: "#055778",
+          confirmButtonColor: "#0798c4",
         });
         return;
       }
@@ -348,8 +348,8 @@ function manejarModalServicios() {
         swal.fire({
           title: "¡Servicio añadido correctamente!",
           icon: "success",
-          iconColor: "#0b7593",
-          confirmButtonColor: "#055778",
+          iconColor: "#0798c4",
+          confirmButtonColor: "#0798c4",
         });
         setTimeout(() => {
           location.reload();
@@ -360,8 +360,8 @@ function manejarModalServicios() {
           title: "Error al agregar el servicio",
           text: "Por favor, intenta de nuevo.",
           icon: "error",
-          iconColor: "#fa5807",
-          confirmButtonColor: "#055778",
+          iconColor: "#e6381c",
+          confirmButtonColor: "#0798c4",
         });
       });
     });
@@ -494,7 +494,7 @@ function manejarModalFacturas() {
     }
   });
   
-  // AUTOCOMPLET STOCK
+ // AUTOCOMPLET STOCK
   // Declarar la variable stock en un ámbito global
   let stock = [];
   
@@ -536,42 +536,46 @@ function manejarModalFacturas() {
   
     autocompleteResultsStock.innerHTML = "";
   
-    filteredStock.slice(0, 10).forEach((stock) => {
+    filteredStock.slice(0, 5).forEach((stock) => {
       autocompleteResultsStock.innerHTML += `<li>${stock.Nombre}</li>`;
     });
   };
   
   // Agregar evento al input para buscar stock
-  const inputStock = document.getElementById("facturas_descripcion_stock");
-  const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
-  
-  inputStock.addEventListener("keyup", (event) => {
+const inputStock = document.getElementById("facturas_descripcion_stock");
+const autocompleteResultsStock = document.getElementById("autocomplete-results_stock");
+
+// Agregar evento al documento para cerrar el autocompletado cuando se haga clic fuera
+document.addEventListener("click", (event) => {
+    if (event.target !== inputStock && event.target !== autocompleteResultsStock) {
+        autocompleteResultsStock.style.display = "none";
+    }
+});
+
+inputStock.addEventListener("keyup", (event) => {
     autocompleteResultsStock.style.display = "block";
     const key = event.target.value;
-  
     if (key.length > 0) {
-      searchStock(key);
+        searchStock(key);
     } else {
-      buildListStock();
+        buildListStock();
     }
-  });
-  
-  // Agregar evento a los elementos de la lista de resultados para seleccionar un stock
-  autocompleteResultsStock.addEventListener("click", (e) => {
+});
+
+// Agregar evento a los elementos de la lista de resultados para seleccionar un stock
+autocompleteResultsStock.addEventListener("click", (e) => {
     if (e.target && e.target.nodeName == "LI") {
-      const selectedNameStock = e.target.innerHTML;
-      const selectedStock = stock.find(stock => stock.Nombre === selectedNameStock);
-      
-      // Rellenar los inputs relacionados con el stock seleccionado
-      document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
-      document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
-      document.getElementById('facturas_codigo').value = selectedStock.Codigo;
-      document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_venta).toFixed(2);
-  
-      // Ocultar la lista de resultados
-      autocompleteResultsStock.style.display = "none";
+        const selectedNameStock = e.target.innerHTML;
+        const selectedStock = stock.find(stock => stock.Nombre === selectedNameStock);
+        document.getElementById('facturas_descripcion_stock').value = selectedStock.Nombre;
+        document.getElementById('facturas_id_detalle_stock').value = selectedStock.Id_stock;
+        document.getElementById('facturas_codigo').value = selectedStock.Codigo;
+        document.getElementById('facturas_precio').value = parseFloat(selectedStock.Precio_venta).toFixed(2);
+        autocompleteResultsStock.style.display = "none";
     }
-  });
+});
+
+
   
   
   // Datos imputs clientes
@@ -733,61 +737,68 @@ function manejarModalFacturas() {
   };
   
   // Modificar la función para añadir una fila al detalle
-  imagenAgregar.addEventListener("click", () => {
-    if (camposVacios()) {
+  // Modificar la función para añadir una fila al detalle
+imagenAgregar.addEventListener("click", () => {
+  if (camposVacios()) {
       // Mostrar un mensaje de error o deshabilitar el botón "Añadir"
       swal.fire({
-        icon: "info",
-        iconColor: "#e6381c",
-        title: "Campos vacíos",
-        text: "Todos los campos son obligatorios",
-        confirmButtonColor: "#0798c4",
+          icon: "info",
+          iconColor: "#e6381c",
+          title: "Campos vacíos",
+          text: "Todos los campos son obligatorios",
+          confirmButtonColor: "#0798c4",
       });
       return; // Detener la ejecución si hay campos vacíos
-    }
-  
-    // Si no hay campos vacíos, proceder con la lógica actual de agregar la fila al detalle
-    let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
-    if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
-        let facturasCantidad = (facturasCantidadInput);
-        let facturasCodigo = document.getElementById("facturas_codigo").value;
-        let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
-        let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
-        let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.')).toFixed(2);
-        let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.')).toFixed(2);
-        let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100).toFixed(2);
-        let facturasPrecioSubTotal = (facturasPrecio * facturasCantidad).toFixed(2);
-        let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100).toFixed(2);
-  
-        let facturasTotaldeTotales = (facturasPrecioIva * facturasCantidad).toFixed(2);
-  
-        // Agregar el detalle a la factura
-        const objetoDetalle = {
-            cantidad: facturasCantidad,
-            codigo: document.getElementById("facturas_codigo").value,
-            id_stock: document.getElementById("facturas_id_detalle_stock").value,
-            descripcion: document.getElementById("facturas_descripcion_stock").value,
-            precio: facturasPrecio,
-            impuestos: facturasImpuesto,
-            precioIva: facturasPrecioIva,
-        };
-        arregloDetalle.push(objetoDetalle);
-        redibujarTabla();
-  
-        // Actualizar los totales después de agregar el detalle
-        calcularTotales();
-    } else {
-        swal.fire({
-          title:"El valor de 'facturas_cantidad' no es un número válido.",
+  }
+
+  // Si no hay campos vacíos, proceder con la lógica actual de agregar la fila al detalle
+  let facturasCantidadInput = document.getElementById("facturas_cantidad").value;
+  if (!isNaN(facturasCantidadInput)) { // Verificar si el valor es un número
+      let facturasCantidad = parseInt(facturasCantidadInput); // Convertir la cantidad a entero
+      let facturasCodigo = document.getElementById("facturas_codigo").value;
+      let facturasCodigoStock = document.getElementById("facturas_id_detalle_stock").value;
+      let facturasDescripcion = document.getElementById("facturas_descripcion_stock").value;
+      let facturasPrecio = parseFloat(document.getElementById("facturas_precio").value.replace(',', '.')).toFixed(2);
+      let facturasImpuesto = parseFloat(document.getElementById("facturas_impuestos").value.replace(',', '.')).toFixed(2);
+      let facturasPrecioIva = facturasPrecio * (1 + facturasImpuesto / 100).toFixed(2);
+      let facturasPrecioSubTotal = (facturasPrecio * facturasCantidad).toFixed(2);
+      let facturasBaseImponible = facturasPrecioSubTotal / (1 + facturasImpuesto / 100).toFixed(2);
+
+      let facturasTotaldeTotales = (facturasPrecioIva * facturasCantidad).toFixed(2);
+
+      // Verificar si el artículo ya está en la factura
+      const indexExistente = arregloDetalle.findIndex(detalle => detalle.codigo === facturasCodigo);
+      if (indexExistente !== -1) {
+          // Si el artículo ya está en la factura, sumar la cantidad
+          arregloDetalle[indexExistente].cantidad += facturasCantidad;
+      } else {
+          // Si el artículo no está en la factura, agregarlo
+          const objetoDetalle = {
+              cantidad: facturasCantidad,
+              codigo: facturasCodigo,
+              id_stock: facturasCodigoStock,
+              descripcion: facturasDescripcion,
+              precio: facturasPrecio,
+              impuestos: facturasImpuesto,
+              precioIva: facturasPrecioIva,
+          };
+          arregloDetalle.push(objetoDetalle);
+      }
+      redibujarTabla();
+
+      // Actualizar los totales después de agregar el detalle
+      calcularTotales();
+  } else {
+      swal.fire({
+          title: "El valor de 'facturas_cantidad' no es un número válido.",
           icon: "info",
           iconColor: "#e6381c",
           confirmButtonColor: "#0798c4",
-  
-        });
-    }
-    autocomplete_servicios_reset();
-  });
-  
+      });
+  }
+  autocomplete_servicios_reset();
+});
+
   
     
     function autocomplete_servicios_reset() {
@@ -914,7 +925,6 @@ const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencim
       });
   });
   };
-
 
   // MODAL PRESUPUESTOS
 function manejarModalPresupuestos() {

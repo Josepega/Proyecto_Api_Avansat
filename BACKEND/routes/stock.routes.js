@@ -97,7 +97,6 @@ router.post("/alta_stock", (req, res) => {
   }
 });
 
-
 // LISTADO 5 ULTIMOS STOCKS 
 
 // Endpoint para obtener las últimas 5 facturas y el total facturado
@@ -107,13 +106,13 @@ router.get('/stock_ultimos', (req, res) => {
     SELECT Codigo, Nombre, Precio_coste
     FROM stock
     ORDER BY Id_stock DESC
-    LIMIT 5
+    LIMIT 3
   `;
 
-  // Consulta para obtener el total facturado
+  // Consulta para obtener el total valor stock
   const queryTotalStock = `
-  SELECT SUM(Precio_venta_iva) AS total_stock
-  FROM stock
+  SELECT SUM(s.Cantidad * s.Precio_coste) AS total_stock
+  FROM stock s
   `;
 
   // Ejecutar ambas consultas en paralelo
@@ -139,5 +138,7 @@ router.get('/stock_ultimos', (req, res) => {
     });
   });
 });
+
+
 
  module.exports = router;
