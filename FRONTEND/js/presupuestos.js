@@ -78,10 +78,10 @@ const mostrar = (data) => {
             <div class="col2 col-10">${presupuestos.Id_presupuesto}</div>
             <div class="col2 col-10">${fechaAltaFormateada}</div>
             <div class="col2 col-10">${presupuestos.Fecha_vencimiento}</div>
-            <div class="col2 col-30">${presupuestos.Id_cliente}</div>
-            <div class="col2 col-10">${presupuestos.Base_imponible}</div>
-            <div class="col2 col-10">${presupuestos.Total}</div>
-            <div class="col2 col-10">${presupuestos.Estado}</div>
+            <div class="col2 col-30">${presupuestos.nombreCliente}</div>
+            <div class="col2 col-10">${presupuestos.Base_imponible + ' €'}</div>
+            <div class="col2 col-10">${presupuestos.Total + ' €'}</div>
+            <div class="col2 col-10 ${presupuestos.Estado === 'Pendiente' ? 'estado-Pendiente' : (presupuestos.Estado === 'Aceptado' ? 'estado-Aceptado' : 'estado-Anulado')}">${presupuestos.Estado}</div>
             <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
             <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>

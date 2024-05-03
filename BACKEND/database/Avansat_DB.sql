@@ -1,3 +1,4 @@
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -62,8 +63,6 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
-
-
 -- -----------------------------------------------------
 -- Table `avansat_db`.`stock`
 -- -----------------------------------------------------
@@ -104,8 +103,6 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_factura` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
-
 
 -- -----------------------------------------------------
 -- Table `avansat_db`.`servicios`
@@ -149,7 +146,6 @@ AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8;
 
 
-
 -- -----------------------------------------------------
 -- Table `avansat_db`.`detalle_presupuesto`
 -- -----------------------------------------------------
@@ -173,8 +169,6 @@ CREATE TABLE IF NOT EXISTS `avansat_db`.`detalle_presupuesto` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
-
 -- -----------------------------------------------------
 -- Table `avansat_db`.`usuarios`
 -- -----------------------------------------------------
@@ -192,22 +186,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `avansat_db`.`clientes`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `avansat_db`;
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'Juan Antonio', 'Bautista', '32014728P', 'Gran via de las cortes catalanas 555', '08014', 'Barcelona', 'España', '985231478', '689698710', NULL);
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Avansat', 'Empresa', '75412387K', 'C/ Carretas 2345 5º2', '17562', 'Gerona', 'España', '965878795', '656874123', NULL);
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Persona', 'María ', 'Torres Castro', '65140758G', 'Entenza 187 6º 7', '08014', 'Barcelona', 'España', NULL, '650123854', 'ingo@inglow.es');
-INSERT INTO `avansat_db`.`clientes` (`Id_cliente`, `Tipo_cliente`, `Nombre`, `Apellidos`, `Id_fiscal`, `Direccion`, `C_postal`, `Localidad`, `Pais`, `Telefono`, `Movil`, `Email`) VALUES (DEFAULT, 'Empresa', 'Glowers S.A.', 'Empresa', '77458777T', 'Campanares 245 Nave 3', '17800', 'Gerona', 'España', '987412547', NULL, 'info@glowers.es');
-
-COMMIT;
-
-
-
-
-
--- -----------------------------------------------------
 -- Data for table `avansat_db`.`servicios`
 -- -----------------------------------------------------
 START TRANSACTION;
@@ -223,10 +201,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `avansat_db`;
-INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'info@avansat.cat', 'José Manuel', 'Josemanu72');
-INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'soporte@avansat.cat', 'Josepe', '5132352a');
+INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'José Manuel', 'info@avansat.cat', 'Josemanu72');
+INSERT INTO `avansat_db`.`usuarios` (`Id_usuario`, `Nombre`, `Email`, `Password`) VALUES (DEFAULT, 'Josepe', 'soporte@avansat.cat', '5132352a');
 
 COMMIT;
-select * from stock;
-SELECT SUM(s.Cantidad * s.Precio_venta_iva) AS total_stock
-FROM stock s;
+

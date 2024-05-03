@@ -67,7 +67,7 @@ const mostrar = (data) => {
   data.forEach((stock) => {
     resultado += `
         <div class="row2">
-            <div class="col2 col-5">${stock.Id_stock}</div>
+            <div class="col2 col-5" style="display:none">${stock.Id_stock}</div>
             <div class="col2 col-10">${stock.Codigo}</div>
             <div class="col2 col-5">${stock.Cantidad}</div>
             <div class="col2 col-30">${stock.Nombre}</div>

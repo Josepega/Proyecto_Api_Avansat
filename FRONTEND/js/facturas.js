@@ -75,16 +75,16 @@ const mostrar = (data) => {
     // Agregar la fila al resultado
     resultado += `
     <div class="row2">
-        <div class="col2 col-5">${facturas.Id_factura}</div>
+        <div class="col2 col-10">${facturas.Id_factura}</div>
         <div class="col2 col-10">${fechaAlta.toLocaleDateString()}</div>
         <div class="col2 col-10">${facturas.Fecha_vencimiento + ' días'}</div>
-        <div class="col2 col-20">${facturas.nombreCliente}</div>
+        <div class="col2 col-30">${facturas.nombreCliente}</div>
         <div class="col2 col-10">${facturas.Forma_pago}</div>
-        <div class="col2 col-10">${facturas.Total}</div>
+        <div class="col2 col-10">${facturas.Total + ' €'}</div>
         <div class="col2 col-10 ${facturas.Estado === 'Pendiente' ? 'estado-Pendiente' : (facturas.Estado === 'Cobrada' ? 'estado-Cobrada' : 'estado-Anulada')}">${facturas.Estado}</div>
         <div class="col2 col-5"><img src="../img/icons/editar.svg" class="editar-icono"></div>
         <div class="col2 col-5"><img src="../img/icons/eliminar.svg" class="eliminar-icono"></div>
-        <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono"></div>
+        <div class="col2 col-5"><img src="../img/icons/ver.svg" class="ver-icono" style="height: 18px;"></div>
     </div>`;
 
 });

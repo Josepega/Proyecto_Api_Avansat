@@ -34,7 +34,7 @@ const detallePresupuestos = JSON.parse(req.body.detallePresupuestos);
   
   
   
-  // RUTAS: LISTADO DE PRESUPUESTOS
+  /* // RUTAS: LISTADO DE PRESUPUESTOS
   router.get('/listado_presupuestos/', (req,res)=>{
     conexionMySQL.query('SELECT * FROM presupuestos', (error,filas)=>{
         if(error){
@@ -43,7 +43,7 @@ const detallePresupuestos = JSON.parse(req.body.detallePresupuestos);
             res.json(filas)
         }
     })
-  })
+  }) */
   // RUTA PARA OBTENER LOS DETALLES BÁSICOS DEL PRESUPUESTO
   router.get("/listado_presupuestos_detalle/:idPresupuesto", (req, res) => {
     const idPresupuesto = req.params.idPresupuesto;
@@ -107,6 +107,28 @@ const detallePresupuestos = JSON.parse(req.body.detallePresupuestos);
         }
     })
   })
+
+// RUTA PARA NOMBRE CLIENTE EN PRESUPUESTO
+
+router.get('/listado_presupuestos/', (req, res) => {
+  // Consulta SQL para obtener el nombre y el apellido del cliente asociado a cada factura
+  const query = `
+    SELECT p.Id_presupuesto, p.Fecha_alta, p.Fecha_vencimiento, p.Forma_pago, CONCAT(c.Nombre, ' ', c.Apellidos) AS nombreCliente, p.Base_imponible, p.Total, p.Estado
+    FROM presupuestos p 
+    INNER JOIN clientes c ON p.Id_cliente = c.Id_cliente;
+  `;
+
+  // Ejecutar la consulta SQL
+  conexionMySQL.query(query, (error, results) => {
+    if (error) {
+      console.error('Error al obtener los detalles del presupuesto:', error);
+      res.status(500).json({ error: 'Error al obtener los detalles del presupuesto' });
+    } else {
+      // Devolver los resultados de la consulta como respuesta
+      res.json(results);
+    }
+  });
+});
 
 
 // LISTADO 5 PRESUPUESTOS Y TOTAL PRESUPUESTADO

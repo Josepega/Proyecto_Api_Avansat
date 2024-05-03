@@ -141,4 +141,35 @@ router.get('/stock_ultimos', (req, res) => {
 
 
 
+// Ruta para verificar el stock de un producto
+router.get('/verificar_stock', async (req, res) => {
+  const { stockId, cantidad } = req.query;
+
+  try {
+    // Buscar el producto en la base de datos
+    const producto = await Stock.findById(stockId);
+
+    if (!producto) {
+      // Si el producto no se encuentra, devolver un error
+      return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    }
+
+    // Verificar si hay suficiente stock para la cantidad deseada
+    if (producto.Cantidad >= cantidad) {
+      // Si hay suficiente stock, devolver una respuesta indicando que es suficiente
+      return res.json({ suficiente: true });
+    } else {
+      // Si el stock es insuficiente, devolver una respuesta indicando que es insuficiente
+      return res.json({ suficiente: false });
+    }
+  } catch (error) {
+    // Manejar cualquier error
+    console.error('Error al verificar stock:', error);
+    return res.status(500).json({ mensaje: 'Error al verificar stock' });
+  }
+});
+
+module.exports = router;
+
+
  module.exports = router;

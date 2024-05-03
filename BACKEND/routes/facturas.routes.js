@@ -4,37 +4,65 @@ const conexionMySQL = require("../conexionMySQL");
 
 
 
-// RUTAS: ALTA FACTURA / ALTA DETALLE FACTURA
 router.post("/alta_factura", (req, res) => {
   const { Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total } = req.body;
-
-  // Convertir la cadena JSON de detalleFactura en un array de objetos
   const detalleFactura = JSON.parse(req.body.detalleFactura);
 
-  // Insertar la nueva factura en la base de datos
-  const sqlFactura = `INSERT INTO facturas (Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-  conexionMySQL.query(sqlFactura, [Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total], (error, resultadoFactura) => {
-    if (error) {
-      return res.json({ "status": 500, "mensaje": "Error al crear la factura en el servidor. Error: " + error });
-    }
+  // Verificar si hay stock suficiente para cada producto
+  const sinStock = detalleFactura.some(detalle => detalle.Cantidad <= 0 || detalle.stock_Id_stock <= 0);
 
-    const idFactura = resultadoFactura.insertId;
+  if (sinStock) {
+    // Mostrar alerta de SweetAlert si hay productos sin stock
+    return res.json({ "status": 400, "mensaje": "Algunos productos no tienen stock disponible." });
+  }
 
-    // Insertar el detalle de la factura
-    const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
-    const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
-
-    conexionMySQL.query(sqlDetalleFactura, [valoresDetalleFactura], (error, resultadoDetalle) => {
+  conexionMySQL.beginTransaction(function(err) {
+    if (err) { throw err; }
+    
+    const sqlFactura = `INSERT INTO facturas (Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    conexionMySQL.query(sqlFactura, [Fecha_alta, Id_cliente, Albaran, Fecha_vencimiento, Estado, Forma_pago, Base_imponible, Total], (error, resultadoFactura) => {
       if (error) {
-        return res.json({ "status": 500, "mensaje": "Error al asociar detalles a la factura en el servidor. Error: " + error });
+        return conexionMySQL.rollback(function() {
+          return res.json({ "status": 500, "mensaje": "Error al crear la factura en el servidor. Error: " + error });
+        });
       }
-      return res.json({ "status": 200, "mensaje": "Factura creada exitosamente." });
+
+      const idFactura = resultadoFactura.insertId;
+
+      const sqlDetalleFactura = `INSERT INTO detalle_factura (facturas_Id_factura, facturas_Id_cliente, Cantidad, stock_Id_stock, Codigo) VALUES ?`;
+      const valoresDetalleFactura = detalleFactura.map(detalle => [idFactura, detalle.Id_cliente, detalle.Cantidad, detalle.stock_Id_stock, detalle.Codigo]);
+
+      conexionMySQL.query(sqlDetalleFactura, [valoresDetalleFactura], (error, resultadoDetalle) => {
+        if (error) {
+          return conexionMySQL.rollback(function() {
+            return res.json({ "status": 500, "mensaje": "Error al asociar detalles a la factura en el servidor. Error: " + error });
+          });
+        }
+
+        // Actualizar el stock
+        const sqlActualizarStock = `UPDATE stock SET Cantidad = Cantidad - ? WHERE Id_stock = ?`;
+        detalleFactura.forEach(detalle => {
+          conexionMySQL.query(sqlActualizarStock, [detalle.Cantidad, detalle.stock_Id_stock], (error, resultadoStock) => {
+            if (error) {
+              return conexionMySQL.rollback(function() {
+                return res.json({ "status": 500, "mensaje": "Error al actualizar el stock en el servidor. Error: " + error });
+              });
+            }
+          });
+        });
+
+        conexionMySQL.commit(function(err) {
+          if (err) {
+            return conexionMySQL.rollback(function() {
+              return res.json({ "status": 500, "mensaje": "Error al realizar el commit en el servidor. Error: " + err });
+            });
+          }
+          return res.json({ "status": 200, "mensaje": "Factura creada exitosamente." });
+        });
+      });
     });
   });
 });
-
-
-
 
 
 /* // RUTAS: LISTADO DE FACTURAS

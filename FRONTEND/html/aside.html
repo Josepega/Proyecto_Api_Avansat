@@ -281,7 +281,7 @@
                         </select>
                     </div>
                     <div class="col col-30 autocomplete_clientes" id="facturas_nombre_ocultar">    
-                        <input type="text" id="facturas_nombre_cliente" placeholder="Nombre Cliente">
+                        <input type="text" id="facturas_nombre_cliente" placeholder="Nombre Cliente"  autocomplete="random123">
                         <ul id="autocomplete-results_clientes" class="autocomplete-results_clientes"></ul>
                     </div>
 
@@ -389,7 +389,7 @@
                         <input type="text" placeholder="Ej: 123456" id="facturas_codigo">
                     </div>
                     <div class="col col-35 autocomplete_servicios">
-                        <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock">
+                        <input type="text" placeholder="Ej: Repuestos Varios" id="facturas_descripcion_stock"  autocomplete="random123">
                         <ul id="autocomplete-results_stock" class="autocomplete-results_stock"></ul>
                     </div>
                   
@@ -455,11 +455,11 @@
 
             <div class="row">
                 <div class="col col-60"><img src="../img/avansat-app-presupuestos-alta.png" alt="" style="height: 40px;"></div>
-                <div class="col-3"><input type="text" id="presupuestos_id" disabled style="display: none;"></div>
+                <div class="col-3"><input type="text" id="presupuestos_id" disabled style="display:none;"></div>
                 <div class="col col-15">                        
                     <input type="text" placeholder="Nº Albarán" id="presupuestos_albaran">
                 </div> 
-                <div class="col col-3"><input type="text" id="presupuestos_id_cliente" ></div>
+                <div class="col col-3"><input type="text" id="presupuestos_id_cliente" style="display: none;"></div>
                 <div class="col col-3"><input type="text" id="presupuestos_id_detalle_stock" style="display: none;"></div>
                 <div class="col-10"><button type="button" id="close" class="btn">Cerrar</button></div>                    
             </div>
@@ -473,7 +473,7 @@
                     </select>
                 </div>
                 <div class="col col-30 autocomplete_clientes" id="presupuestos_nombre_ocultar">    
-                    <input type="text" id="presupuestos_nombre_cliente" placeholder="Nombre Cliente">
+                    <input type="text" id="presupuestos_nombre_cliente" placeholder="Nombre Cliente"  autocomplete="random123">
                     <ul id="autocomplete-results_clientes_presupuestos" class="autocomplete-results_clientes_presupuestos"></ul>
                 </div>
 
@@ -551,7 +551,7 @@
                     <input type="text" placeholder="Ej: 123456" id="presupuestos_codigo">
                 </div>
                 <div class="col col-35 autocomplete_servicios">
-                    <input type="text" placeholder="Ej: Repuestos Varios" id="presupuestos_descripcion_stock">
+                    <input type="text" placeholder="Ej: Repuestos Varios" id="presupuestos_descripcion_stock"  autocomplete="random123">
                     <ul id="autocomplete-results_stock_presupuestos" class="autocomplete-results_stock_presupuestos"></ul>
                 </div>
               
@@ -574,7 +574,7 @@
             <!-- BOTON GUARDAR TOTALES -->
             <div id="separador"></div>
             <div class="row">
-                <div class="col col-20">
+                <div class="col col-20" style="display:none">
                     <label>Tipo Pago</label>
                     <select name="tipo_pago" id="presupuestos_tipo_pago">   
                         <option value="Transferencia" selected="selected">Transferencia</option>
