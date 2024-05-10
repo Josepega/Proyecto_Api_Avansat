@@ -666,9 +666,9 @@ autocompleteResultsStock.addEventListener("click", (e) => {
         fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
                           <div class="col3 col-15">${detalle.codigo}</div>
                           <div class="col3 col-40">${detalle.descripcion}</div>
-                          <div class="col3 col-15">${detalle.precio}</div>
+                          <div class="col3 col-15">${parseFloat(detalle.precio).toFixed(2) + " €"}</div>
                           <div class="col3 col-15">${detalle.impuestos}</div>
-                          <div class="col3 col-15">${detalle.precioIva * detalle.cantidad} </div>                                         
+                          <div class="col3 col-15">${parseFloat(detalle.precioIva * detalle.cantidad).toFixed(2) + " €"} </div>                                         
                           <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
         facturasAdd.appendChild(fila);
       });
@@ -691,7 +691,7 @@ autocompleteResultsStock.addEventListener("click", (e) => {
     // Función para calcular los totales
     const calcularTotales = () => {
       // Calcular la base imponible
-      const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precio) * curr.cantidad, 0).toFixed(2);
+      const baseImponibleSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precio) * curr.cantidad, 0).toFixed(2) ;
     
       // Actualizar el campo de base imponible en el HTML
       document.getElementById("facturas_imponible").value = baseImponibleSum ;
@@ -701,7 +701,7 @@ autocompleteResultsStock.addEventListener("click", (e) => {
       const totalSum = arregloDetalle.reduce((acc, curr) => acc + parseFloat(curr.precioIva * curr.cantidad), 0).toFixed(2);
     
       // Actualizar el campo de total en el HTML
-      document.getElementById("facturas_total").value = totalSum;
+      document.getElementById("facturas_total").value = totalSum ;
     };
     
   
@@ -1216,9 +1216,9 @@ function manejarModalPresupuestos() {
         fila.innerHTML = `<div class="col3 col-10">${detalle.cantidad}</div>
                           <div class="col3 col-15">${detalle.codigo}</div>
                           <div class="col3 col-40">${detalle.descripcion}</div>
-                          <div class="col3 col-15">${detalle.precio}</div>
+                          <div class="col3 col-15">${parseFloat(detalle.precio).toFixed(2) + " €"}</div>
                           <div class="col3 col-15">${detalle.impuestos}</div>
-                          <div class="col3 col-15">${detalle.precioIva * detalle.cantidad} </div>                                         
+                          <div class="col3 col-15">${parseFloat(detalle.precioIva * detalle.cantidad).toFixed(2)+" €"} </div>                                         
                           <div class="col3 col-10"><img src="../img/icons/eliminar.svg" class="eliminar-icono_fila" data-index="${index}"></div>`;
         presupuestosAdd.appendChild(fila);
       });

@@ -75,7 +75,7 @@ form.addEventListener("submit", (e) => {
         localStorage.setItem("usuario", data.userName);
         // Llamar a la función para obtener y mostrar el nombre de usuario en el nav
         
-            showSuccessAndReload("Bienvenido  : " + data.userName);
+            showSuccessAndReload("Bienvenido   " + data.userName);
             // Redireccionar a index2.html después de 2 segundos
             setTimeout(() => {
                 window.location.href = "index2.html";

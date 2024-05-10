@@ -188,7 +188,7 @@ document.addEventListener("click", (e) => {
         // Asignar valores a los campos de entrada del modal de edición
         const factura = data[0]; // Obtener la primera factura del arreglo de resultados
         document.getElementById("facturas_id").value = factura.Id_factura; // Aquí asignamos el ID de la factura al campo oculto
-        document.getElementById("facturas_alta_edit").value = factura.Fecha_alta = new Date().toISOString().split('T')[0];;
+        document.getElementById("facturas_alta_edit").value = factura.Fecha_alta;
         document.getElementById("facturas_vencimiento_edit").value = factura.Fecha_vencimiento;
         document.getElementById("facturas_estado_edit").value = factura.Estado;
         document.getElementById("facturas_id_cliente_edit").value = factura.Id_cliente;        
