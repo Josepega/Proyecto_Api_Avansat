@@ -10,7 +10,6 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema avansat_db
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `avansat_db` ;
 
 -- -----------------------------------------------------
 -- Schema avansat_db

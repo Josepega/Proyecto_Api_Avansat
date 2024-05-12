@@ -2,9 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const port = process.env.PORT || 3000;
 const api = express();
+const path = require('path');
 
 const generatePDF = require("./generatePDF");
-
 
 api.use(express.json());
 api.use(cors());
@@ -16,14 +16,69 @@ api.use('/api/v1', require('./routes/stock.routes.js'));
 api.use('/api/v1', require('./routes/presupuestos.routes.js'));
 api.use('/api/v1', require('./routes/user.routes.js'));
 
+// Middleware para servir archivos estáticos
+api.use(express.static(path.join(__dirname, '../frontend')));
+
+// Ruta para servir index.html
+api.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'index.html'));
+});
+
+// Ruta para servir index2.html
+api.get('/index2.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'index2.html'));
+});
+// Ruta para servir nav.html
+api.get('/nav.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'nav.html'));
+});
+
+// Ruta para servir servicios.html
+api.get('/servicios.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'servicios.html'));
+});
+
+// Ruta para servir stock.html
+api.get('/stock.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'stock.html'));
+});
+
+// Ruta para servir aside.html
+api.get('/aside.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'aside.html'));
+});
+
+// Ruta para servir clientes.html
+api.get('/clientes.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'clientes.html'));
+});
+
+// Ruta para servir facturas.html
+api.get('/facturas.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'facturas.html'));
+});
+
+// Ruta para servir presupuestos.html
+api.get('/presupuestos.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'presupuestos.html'));
+});
+
+// Ruta para servir presupuestosPDF.html
+api.get('/presupuestosPDF.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'presupuestosPDF.html'));
+});
+
+// Ruta para servir facturasPDF.html
+api.get('/facturasPDF.html', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/html', 'facturasPDF.html'));
+});
 
 
-
-
-api.use("/generatePDF" , async (req, res) => {
+// Middleware para generar PDF
+api.use("/generatePDF", async (req, res) => {
   const pdfBuffer = await generatePDF({
     url: req.body.url
-  })
+  });
   res
     .status(200)
     .set({
@@ -34,19 +89,7 @@ api.use("/generatePDF" , async (req, res) => {
     .end(pdfBuffer);
 });
 
-
-
-
-
-// go to: http://localhost:3000/api-docs/ for api documentation
-require("./swagger/swagger.config.js")(api);
-
-
-
-
-api.use(express.urlencoded({ extended: true }));
-api.use(express.json());
-
+// Ruta para guardar PDF
 api.post('/savePDF', (req, res) => {
     const pdfData = req.body.pdf;
 
@@ -57,6 +100,9 @@ api.post('/savePDF', (req, res) => {
     res.send('PDF guardado correctamente');
 });
 
-api.listen(3000, () => {
-    console.log('Servidor iniciado en el puerto 3000');
+// Ruta para la documentación de la API
+require("./swagger/swagger.config.js")(api);
+
+api.listen(port, () => {
+    console.log(`Servidor iniciado en el puerto ${port}`);
 });

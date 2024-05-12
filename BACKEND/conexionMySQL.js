@@ -2,10 +2,10 @@ const mysql = require('mysql2');
 const util = require('util'); 
 
 const conexionMySQL = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'Avansat_DB'
+    host: '109.176.199.4',
+    user: 'josepega',
+    password: 'Josemanu72',
+    database: 'avansatDB'
 });
 
 // PROMISE
