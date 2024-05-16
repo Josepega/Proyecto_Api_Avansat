@@ -1,10 +1,33 @@
 const express = require("express");
 const cors = require("cors");
+const path = require('path');
+const generatePDF = require("./generatePDF");
+
 const port = process.env.PORT || 3000;
 const api = express();
-const path = require('path');
 
-const generatePDF = require("./generatePDF");
+// Función para actualizar las URLs en los middlewares
+const updateMiddlewareURLs = (middleware) => {
+  return (req, res, next) => {
+    if (req.url.includes('localhost')) {
+      req.url = req.url.replace('localhost', 'app.avansat.cat');
+    }
+    middleware(req, res, next);
+  };
+};
+
+// Función para actualizar todos los middlewares
+const updateAllMiddlewares = (app) => {
+  app._router.stack.forEach((layer) => {
+    if (layer.route) {
+      layer.route.stack.forEach((routeLayer) => {
+        routeLayer.handle = updateMiddlewareURLs(routeLayer.handle);
+      });
+    } else if (layer.name === 'bound dispatch') {
+      layer.handle = updateMiddlewareURLs(layer.handle);
+    }
+  });
+};
 
 api.use(express.json());
 api.use(cors());
@@ -28,6 +51,7 @@ api.get('/', (req, res) => {
 api.get('/index2.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/html', 'index2.html'));
 });
+
 // Ruta para servir nav.html
 api.get('/nav.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/html', 'nav.html'));
@@ -73,7 +97,6 @@ api.get('/facturasPDF.html', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/html', 'facturasPDF.html'));
 });
 
-
 // Middleware para generar PDF
 api.use("/generatePDF", async (req, res) => {
   const pdfBuffer = await generatePDF({
@@ -82,8 +105,8 @@ api.use("/generatePDF", async (req, res) => {
   res
     .status(200)
     .set({
-      "Acces-Control-Allow-Origin": "*",
-      "Acces-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
       "Content-Type": "application/pdf",
     })
     .end(pdfBuffer);
@@ -102,6 +125,9 @@ api.post('/savePDF', (req, res) => {
 
 // Ruta para la documentación de la API
 require("./swagger/swagger.config.js")(api);
+
+// Actualiza todos los middlewares
+updateAllMiddlewares(api);
 
 api.listen(port, () => {
     console.log(`Servidor iniciado en el puerto ${port}`);

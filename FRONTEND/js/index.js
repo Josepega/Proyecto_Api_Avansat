@@ -54,7 +54,7 @@ form.addEventListener("submit", (e) => {
         return;
     }
 
-    fetch("http://localhost:3000/api/v1/login", {
+    fetch("https://app.avansat.cat/api/v1/login", {
         method: "POST",
         body: JSON.stringify({
             Email: emailInput.value,

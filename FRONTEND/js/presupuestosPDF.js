@@ -48,7 +48,7 @@ function mostrarDetallesPresupuesto(idPresupuesto) {
   // Función para mostrar los detalles de los productos asociados al presupuesto
   function mostrarDetallesProductos(idPresupuesto) {
     // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-    fetch(`http://localhost:3000/api/v1/listado_detalles_presupuestos/${idPresupuesto}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_detalles_presupuestos/${idPresupuesto}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener los detalles de los productos asociados al presupuesto');

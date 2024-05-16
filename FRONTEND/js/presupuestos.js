@@ -38,7 +38,7 @@ openModalpresupuestosButtons_edit.forEach(function (element) {
   
 // LISTADO DE presupuestos
 
-const urlListadopresupuestos = "http://localhost:3000/api/v1/listado_presupuestos/";
+const urlListadopresupuestos = "https://app.avansat.cat/api/v1/listado_presupuestos/";
 const listado_presupuestos = document.querySelector("#listado_presupuestos");
 
 fetch(urlListadopresupuestos)
@@ -118,7 +118,7 @@ on(document, "click", ".eliminar-icono", (e) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      const urlBorrarPresupuesto = "http://localhost:3000/api/v1/borrar_Presupuesto/";
+      const urlBorrarPresupuesto = "https://app.avansat.cat/api/v1/borrar_Presupuesto/";
       fetch(urlBorrarPresupuesto + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -168,7 +168,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR presupuestos
 
-const urlEditarPresupuesto = "http://localhost:3000/api/v1/editar_presupuestos/";
+const urlEditarPresupuesto = "https://app.avansat.cat/api/v1/editar_presupuestos/";
 
 on(document, "click", ".editar-icono", (e) => {
   const fila = e.target.parentNode.parentNode;

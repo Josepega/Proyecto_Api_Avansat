@@ -38,7 +38,7 @@ openModalFacturasButtons_edit.forEach(function (element) {
   
 // LISTADO DE FACTURAS
 
-const urlListadoFacturas = "http://localhost:3000/api/v1/listado_facturas/";
+const urlListadoFacturas = "https://app.avansat.cat/api/v1/listado_facturas/";
 const listado_facturas = document.querySelector("#listado_facturas");
 
 fetch(urlListadoFacturas)
@@ -119,7 +119,7 @@ on(document, "click", ".eliminar-icono", (e) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      const urlBorrarFactura = "http://localhost:3000/api/v1/borrar_factura/";
+      const urlBorrarFactura = "https://app.avansat.cat/api/v1/borrar_factura/";
       fetch(urlBorrarFactura + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -168,7 +168,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 });
 // EDITAR FACTURAS
 
-const urlEditarFactura = "http://localhost:3000/api/v1/datos_leer_factura/";
+const urlEditarFactura = "https://app.avansat.cat/api/v1/datos_leer_factura/";
 
 // Evento al hacer clic en el ícono de edición
 document.addEventListener("click", (e) => {
@@ -238,7 +238,7 @@ document.querySelector("#modal_alta_facturas_edit form").addEventListener("submi
   console.log("Datos del formulario:", formDataObject);
 
   // Enviar la solicitud de edición al servidor con todos los datos del formulario
-  fetch("http://localhost:3000/api/v1/editar_datos_factura/" + idFactura, {
+  fetch("https://app.avansat.cat/api/v1/editar_datos_factura/" + idFactura, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(formDataObject),

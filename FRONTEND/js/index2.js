@@ -1,7 +1,7 @@
 // TARJETA DE FACTURAS
 
 // URL del endpoint para obtener el listado de facturas y el total facturado
-const urlFacturas = "http://localhost:3000/api/v1/facturas_ultimas";
+const urlFacturas = "https://app.avansat.cat/api/v1/facturas_ultimas";
 const listado_facturas = document.querySelector("#listado_facturas");
 
 // Función para formatear la fecha
@@ -48,7 +48,7 @@ const mostrar = (data) => {
 
 // TARJETA DE CLIENTES
 // URL del endpoint para obtener el listado de clientes y el total clientedo
-const urlClientes = "http://localhost:3000/api/v1/clientes_ultimos";
+const urlClientes = "https://app.avansat.cat/api/v1/clientes_ultimos";
 const listado_clientes = document.querySelector("#listado_clientes");
 
 // Función para formatear la fecha
@@ -92,7 +92,7 @@ const mostrarClientes = (data) => {
 // TARJETA DE STOCKS
 
 // URL del endpoint para obtener el listado de stock y el total stockdo
-const urlStock = "http://localhost:3000/api/v1/stock_ultimos";
+const urlStock = "https://app.avansat.cat/api/v1/stock_ultimos";
 const listado_stock = document.querySelector("#listado_stock");
 
 // Función para formatear la fecha
@@ -136,7 +136,7 @@ const mostrarStock = (data) => {
 // TARJETA DE SERVICIOS
 
 // URL del endpoint para obtener el listado de servicios y el total serviciosdo
-const urlServicios = "http://localhost:3000/api/v1/servicios_ultimos";
+const urlServicios = "https://app.avansat.cat/api/v1/servicios_ultimos";
 const listado_servicios = document.querySelector("#listado_servicios");
 
 // Función para formatear la fecha
@@ -180,7 +180,7 @@ const mostrarServicios = (data) => {
 // TARJETA DE PRESUPUESTOS
 
 // URL del endpoint para obtener el listado de presupuestos y el total presupuestosdo
-const urlPresupuestos = "http://localhost:3000/api/v1/presupuestos_ultimas";
+const urlPresupuestos = "https://app.avansat.cat/api/v1/presupuestos_ultimas";
 const listado_presupuestos = document.querySelector("#listado_presupuestos");
 
 // Obtener los datos de las presupuestos desde el servidor

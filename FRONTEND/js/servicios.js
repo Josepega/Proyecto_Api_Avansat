@@ -32,7 +32,7 @@ openModalButtons_edit.forEach(function (element) {
 
 
 // LISTADO DE SERVICIOS
-const urlListadoServicios = "http://localhost:3000/api/v1/listado_servicios";
+const urlListadoServicios = "https://app.avansat.cat/api/v1/listado_servicios";
 const listado_servicios = document.querySelector("#listado_servicios");
 
 fetch(urlListadoServicios)
@@ -105,7 +105,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = "http://localhost:3000/api/v1/borrar_servicio/";
+      const url = "https://app.avansat.cat/api/v1/borrar_servicio/";
       fetch(url + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -152,7 +152,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 });
 // EDITAR SERVICIO
 // Manejar el envío del formulario de edición
-const urlEditar = "http://localhost:3000/api/v1/editar_servicio/";
+const urlEditar = "https://app.avansat.cat/api/v1/editar_servicio/";
 
 // Cuando se hace clic en el botón de editar cliente
 document.addEventListener("click", function(event) {

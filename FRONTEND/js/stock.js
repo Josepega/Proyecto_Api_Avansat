@@ -36,7 +36,7 @@ openModalStockButtons_edit.forEach(function (element) {
 
 
 // LISTADO DE STOCK
-const urlListado = "http://localhost:3000/api/v1/listado_stock";
+const urlListado = "https://app.avansat.cat/api/v1/listado_stock";
 const listado_stock = document.querySelector("#listado_stock");
 
 fetch(urlListado)
@@ -110,7 +110,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
   }).then((result) => {
     if (result.isConfirmed) {
-      const urlDeleteStock = "http://localhost:3000/api/v1/borrar_stock/";
+      const urlDeleteStock = "https://app.avansat.cat/api/v1/borrar_stock/";
       fetch(urlDeleteStock + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -159,7 +159,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR STOCK
 
-let urlEditar = "http://localhost:3000/api/v1/editar_stock/";
+let urlEditar = "https://app.avansat.cat/api/v1/editar_stock/";
 
 
 // Cuando se hace clic en el botón de editar cliente

@@ -5,7 +5,7 @@ function mostrarDetallesFacturas(idFactura) {
     document.querySelector('#plantilla_facturas').style.display = 'block';
   
     // Realizar la solicitud Fetch para obtener los detalles de la factura
-    fetch(`http://localhost:3000/api/v1/listado_facturas_detalle/${idFactura}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_facturas_detalle/${idFactura}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener los detalles de la Factura');
@@ -49,7 +49,7 @@ function mostrarDetallesFacturas(idFactura) {
   // Función para mostrar los detalles de los productos asociados al Factura
   function mostrarDetallesProductos(idFactura) {
     // Realizar la solicitud Fetch para obtener los detalles de los productos asociados a la factura
-    fetch(`http://localhost:3000/api/v1/listado_detalles_facturas/${idFactura}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_detalles_facturas/${idFactura}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener los detalles de los productos asociados a la Factura');

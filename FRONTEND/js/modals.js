@@ -110,7 +110,7 @@ function manejarModalClientes() {
       } 
 
       // Realizar la solicitud HTTP POST al servidor
-      const urlAlta = "http://localhost:3000/api/v1/alta_cliente";
+      const urlAlta = "https://app.avansat.cat/api/v1/alta_cliente";
       fetch(urlAlta, {
         method: "POST",
         headers: {
@@ -221,7 +221,7 @@ function manejarModalClientes() {
         }
   
         // Realizar la solicitud HTTP POST al servidor
-        const urlAltaStock = "http://localhost:3000/api/v1/alta_stock";
+        const urlAltaStock = "https://app.avansat.cat/api/v1/alta_stock";
         fetch(urlAltaStock, {
           method: "POST",
           headers: {
@@ -323,7 +323,7 @@ function manejarModalServicios() {
       }
 
       // Realizar la solicitud HTTP POST al servidor
-      const urlAltaServicio = "http://localhost:3000/api/v1/alta_servicio";
+      const urlAltaServicio = "https://app.avansat.cat/api/v1/alta_servicio";
       fetch(urlAltaServicio, {
         method: "POST",
         headers: {
@@ -404,7 +404,7 @@ function manejarModalFacturas() {
   // AUTO COMPLET CLIENTES
   // Función para buscar clientes por nombre
   const searchClientes = (key) => {
-    fetch(`http://localhost:3000/api/v1/listado_clientes?Nombre=${key}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_clientes?Nombre=${key}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -500,7 +500,7 @@ function manejarModalFacturas() {
   
   // Función para buscar stock por nombre
   const searchStock = (key) => {
-    fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_stock?Nombre=${key}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -878,7 +878,7 @@ const fechaVencimientoFormateada = `${diaVencimiento < 10 ? '0' : ''}${diaVencim
         
   
           // Realizar la solicitud HTTP POST al servidor para agregar la factura
-          const urlAltaFactura = "http://localhost:3000/api/v1/alta_factura"; // Cambiar la URL según la ruta en tu servidor
+          const urlAltaFactura = "https://app.avansat.cat/api/v1/alta_factura"; // Cambiar la URL según la ruta en tu servidor
           fetch(urlAltaFactura, {
               method: "POST",
               headers: {
@@ -958,7 +958,7 @@ function manejarModalPresupuestos() {
   // AUTO COMPLET CLIENTES
   // Función para buscar clientes por nombre
   const searchClientes = (key) => {
-    fetch(`http://localhost:3000/api/v1/listado_clientes?Nombre=${key}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_clientes?Nombre=${key}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -1054,7 +1054,7 @@ function manejarModalPresupuestos() {
   
   // Función para buscar stock por nombre
   const searchStock = (key) => {
-    fetch(`http://localhost:3000/api/v1/listado_stock?Nombre=${key}`)
+    fetch(`https://app.avansat.cat/api/v1/listado_stock?Nombre=${key}`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data)) {
@@ -1423,7 +1423,7 @@ const detallePresupuestos = arregloDetalle.map(detalle => ({
         
   
    // Realizar la solicitud HTTP POST al servidor para agregar el presupuesto
-const urlAltaPresupuesto = "http://localhost:3000/api/v1/alta_presupuesto"; // Cambiar la URL según la ruta en tu servidor
+const urlAltaPresupuesto = "https://app.avansat.cat/api/v1/alta_presupuesto"; // Cambiar la URL según la ruta en tu servidor
 fetch(urlAltaPresupuesto, {
     method: "POST",
     headers: {

@@ -2,7 +2,7 @@ const mysql = require('mysql2');
 const util = require('util'); 
 
 const conexionMySQL = mysql.createConnection({
-    host: '109.176.199.4',
+    host: 'localhost',
     user: 'josepega',
     password: 'Josemanu72',
     database: 'avansatDB'

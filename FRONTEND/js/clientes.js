@@ -57,7 +57,7 @@ openModalClientesButtons_edit.forEach(function (element) {
 
 
 // LISTADO DE CLIENTES
-const urlListado = "http://localhost:3000/api/v1/listado_clientes";
+const urlListado = "https://app.avansat.cat/api/v1/listado_clientes";
 const listado_clientes = document.querySelector("#listado_clientes");
 
 fetch(urlListado)
@@ -134,7 +134,7 @@ on(document, "click", ".eliminar-icono", (e) => {
    
   }).then((result) => {
     if (result.isConfirmed) {
-      const url = "http://localhost:3000/api/v1/borrar_cliente/";
+      const url = "https://app.avansat.cat/api/v1/borrar_cliente/";
       fetch(url + id, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -188,7 +188,7 @@ on(document, "click", ".eliminar-icono", (e) => {
 
 // EDITAR CLIENTE
 
-let urlEditar = "http://localhost:3000/api/v1/editar_cliente/";
+let urlEditar = "https://app.avansat.cat/api/v1/editar_cliente/";
 
 
 // Cuando se hace clic en el botón de editar cliente
